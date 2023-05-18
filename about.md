@@ -68,7 +68,7 @@ build new theories of conflict emergence and escalation. PaCE will build a repos
 grammar of patterns—to be used as the building blocks of new theories.
 
 # Funding
-PaCE is funded by ERC grant 101002240 and is hosted at the Department of Political Science at Trinity College Dublin. 
+PaCE is funded by ERC grant 101002240 and is hosted at the Department of Political Science at Trinity College Dublin. ..
 
 
 
