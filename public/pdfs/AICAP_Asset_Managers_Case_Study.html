@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clairient Asset Managers Case Study</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+            background: white;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #1e40af;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 300;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0;
+            color: #1e40af;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #1e40af;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #374151;
+            margin-top: 25px;
+        }
+        .highlight {
+            background-color: #f0f4ff;
+            border-left: 4px solid #1e40af;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .metric {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        .metric-value {
+            font-size: 32px;
+            font-weight: 300;
+            color: #1e40af;
+            margin-bottom: 5px;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        @media print {
+            body { padding: 20px; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Clairient</div>
+        <h1>Asset Managers: Portfolio Optimization with Geopolitical Intelligence</h1>
+        <p style="margin: 10px 0 0 0; font-size: 14px; color: #6b7280;">Case Study & Implementation Guide</p>
+    </div>
+
+    <h2>Executive Summary</h2>
+    <p>Asset managers face increasing volatility from geopolitical events that traditional risk models fail to capture. Clairient's predictive geopolitical intelligence enables portfolio optimization through early identification of conflict and instability risks, resulting in superior risk-adjusted returns.</p>
+
+    <div class="highlight">
+        <strong>Key Value Proposition:</strong> Integrate forward-looking geopolitical risk signals into portfolio construction and monitoring to reduce drawdowns, optimize Sharpe ratios, and enhance alpha generation.
+    </div>
+
+    <h2>Problem Statement</h2>
+    <h3>Traditional Risk Models Are Reactive</h3>
+    <ul>
+        <li>Historical volatility measures fail to predict geopolitical shocks</li>
+        <li>Country risk ratings update after events occur, not before</li>
+        <li>Correlation-based models break down during crisis periods</li>
+        <li>ESG screening lacks forward-looking conflict assessment</li>
+    </ul>
+
+    <h3>Market Impact of Geopolitical Events</h3>
+    <ul>
+        <li>Russia-Ukraine conflict: -20% MSCI Russia in February 2022</li>
+        <li>Arab Spring: -30% Egyptian equities in Q1 2011</li>
+        <li>Hong Kong protests: -12% Hang Seng in Q3 2019</li>
+        <li>Turkish crisis: -45% Turkish Lira in 2018</li>
+    </ul>
+
+    <h2>Clairient Solution</h2>
+    <h3>Predictive Geopolitical Risk Scoring</h3>
+    <p>Our AI models analyze 1,000+ real-time data sources to generate 2-6 month forward-looking risk scores for 195 countries, providing early warning signals before traditional metrics react.</p>
+
+    <h3>Portfolio Integration Methods</h3>
+    <ul>
+        <li><strong>Risk-Weighted Allocation:</strong> Adjust country/regional weights based on predicted instability</li>
+        <li><strong>Dynamic Hedging:</strong> Implement currency and volatility hedges ahead of predicted events</li>
+        <li><strong>Sector Rotation:</strong> Overweight defensive sectors in high-risk geographies</li>
+        <li><strong>ESG Enhancement:</strong> Incorporate conflict-sensitive screening into sustainable investing</li>
+    </ul>
+
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">+340bp</div>
+            <div class="metric-label">Alpha vs benchmark</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">1.45</div>
+            <div class="metric-label">Sharpe ratio improvement</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">-25%</div>
+            <div class="metric-label">Maximum drawdown reduction</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">2-6</div>
+            <div class="metric-label">Months early warning</div>
+        </div>
+    </div>
+
+    <h2>Implementation Framework</h2>
+    <h3>Phase 1: Risk Assessment Integration (Month 1-2)</h3>
+    <ul>
+        <li>Install Clairient risk feeds into existing portfolio management systems</li>
+        <li>Calibrate risk thresholds based on portfolio mandates and risk tolerance</li>
+        <li>Establish monitoring dashboards for real-time geopolitical risk tracking</li>
+    </ul>
+
+    <h3>Phase 2: Portfolio Optimization (Month 2-4)</h3>
+    <ul>
+        <li>Integrate geopolitical risk scores into asset allocation models</li>
+        <li>Implement dynamic rebalancing triggers based on risk level changes</li>
+        <li>Develop hedging strategies for high-risk exposure periods</li>
+    </ul>
+
+    <h3>Phase 3: Performance Monitoring (Month 4+)</h3>
+    <ul>
+        <li>Track attribution of geopolitical alpha generation</li>
+        <li>Refine model parameters based on performance results</li>
+        <li>Expand to additional asset classes and geographies</li>
+    </ul>
+
+    <h2>Case Study: Emerging Market Fund</h2>
+    <div class="highlight">
+        <p><strong>Challenge:</strong> $2.5B emerging market equity fund experienced significant drawdowns from unexpected geopolitical events, underperforming benchmark by 180bp annually.</p>
+        
+        <p><strong>Solution:</strong> Integrated Clairient's geopolitical risk scores into portfolio construction, implementing dynamic country weight adjustments and tactical hedging strategies.</p>
+        
+        <p><strong>Results (12 months):</strong></p>
+        <ul>
+            <li>+340bp outperformance vs. benchmark</li>
+            <li>65% reduction in geopolitical event-driven losses</li>
+            <li>Improved Sharpe ratio from 0.85 to 1.45</li>
+            <li>Enhanced client retention and asset gathering</li>
+        </ul>
+    </div>
+
+    <h2>Technical Integration</h2>
+    <h3>Data Delivery</h3>
+    <ul>
+        <li>Real-time API feeds with 15-minute update frequency</li>
+        <li>Historical data back to 2010 for backtesting</li>
+        <li>Risk forecasts with confidence intervals and scenario analysis</li>
+        <li>Integration with major portfolio management systems (Aladdin, Charles River, etc.)</li>
+    </ul>
+
+    <h3>Risk Metrics</h3>
+    <ul>
+        <li>Country-level instability scores (0-100 scale)</li>
+        <li>Regional contagion risk indicators</li>
+        <li>Sector-specific impact assessments</li>
+        <li>Currency devaluation probability models</li>
+    </ul>
+
+    <h2>ROI Analysis</h2>
+    <h3>Revenue Enhancement</h3>
+    <ul>
+        <li>Performance fees on alpha generation: $8.5M annually (typical $2.5B fund)</li>
+        <li>Asset gathering from improved performance: $500M AUM increase</li>
+        <li>Premium pricing for geopolitically-aware strategies</li>
+    </ul>
+
+    <h3>Risk Mitigation</h3>
+    <ul>
+        <li>Reduced drawdowns preserve client assets and confidence</li>
+        <li>Lower volatility enables higher leverage and capacity</li>
+        <li>Enhanced ESG credentials attract sustainable investing mandates</li>
+    </ul>
+
+    <h2>Getting Started</h2>
+    <p>Implementation typically takes 4-6 weeks from contract signing to full deployment. Our team provides dedicated support including:</p>
+    <ul>
+        <li>Technical integration assistance</li>
+        <li>Portfolio manager training and certification</li>
+        <li>Ongoing model calibration and optimization</li>
+        <li>Quarterly performance reviews and strategy refinement</li>
+    </ul>
+
+    <div class="footer">
+        <p>Clairient | Predictive Geopolitical Intelligence | contact@clairient.com</p>
+        <p>This document contains proprietary and confidential information. © 2024 Clairient Technologies.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="#fafbfc"/>
+  
+  <!-- Particle flow animation background -->
+  <defs>
+    <!-- Flow gradients -->
+    <linearGradient id="flowGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0"/>
+      <stop offset="30%" style="stop-color:#1e40af;stop-opacity:0.04"/>
+      <stop offset="70%" style="stop-color:#3b82f6;stop-opacity:0.06"/>
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-100,-100;100,100;-100,-100" dur="20s" repeatCount="indefinite"/>
+    </linearGradient>
+    
+    <linearGradient id="flowGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0"/>
+      <stop offset="40%" style="stop-color:#3b82f6;stop-opacity:0.03"/>
+      <stop offset="60%" style="stop-color:#1e40af;stop-opacity:0.05"/>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="100,-100;-100,100;100,-100" dur="25s" repeatCount="indefinite"/>
+    </linearGradient>
+    
+    <!-- Particle trail gradient -->
+    <radialGradient id="particleGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background flow fields -->
+  <rect width="1920" height="1080" fill="url(#flowGrad1)" opacity="0.4"/>
+  <rect width="1920" height="1080" fill="url(#flowGrad2)" opacity="0.3"/>
+  
+  <!-- Animated particles -->
+  <g opacity="0.15">
+    <!-- Large particles -->
+    <circle r="3" fill="#1e40af">
+      <animateMotion dur="30s" repeatCount="indefinite" rotate="auto">
+        <path d="M -50 200 Q 500 100 960 300 T 1970 400"/>
+      </animateMotion>
+      <animate attributeName="r" values="3;5;3;1;3" dur="30s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle r="2" fill="#3b82f6">
+      <animateMotion dur="35s" repeatCount="indefinite" rotate="auto" begin="5s">
+        <path d="M 1970 600 Q 1400 500 960 650 T -50 800"/>
+      </animateMotion>
+      <animate attributeName="r" values="2;4;2;1;2" dur="35s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle r="2.5" fill="#1e40af">
+      <animateMotion dur="28s" repeatCount="indefinite" rotate="auto" begin="10s">
+        <path d="M 200 -50 Q 600 400 1200 300 T 1500 1130"/>
+      </animateMotion>
+      <animate attributeName="r" values="2.5;4;2.5;1.5;2.5" dur="28s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle r="3" fill="#3b82f6">
+      <animateMotion dur="32s" repeatCount="indefinite" rotate="auto" begin="15s">
+        <path d="M 1800 -50 Q 1200 400 600 500 T 100 1130"/>
+      </animateMotion>
+      <animate attributeName="r" values="3;5;3;2;3" dur="32s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Medium particles -->
+  <g opacity="0.08">
+    <circle r="1.5" fill="#1e40af">
+      <animateMotion dur="25s" repeatCount="indefinite" begin="2s">
+        <path d="M 100 300 Q 800 200 1400 400 T 1820 300"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="2" fill="#3b82f6">
+      <animateMotion dur="22s" repeatCount="indefinite" begin="8s">
+        <path d="M 1820 700 Q 1100 600 400 700 T 100 600"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="1" fill="#1e40af">
+      <animateMotion dur="27s" repeatCount="indefinite" begin="12s">
+        <path d="M 600 100 Q 1200 500 1600 200 T 900 900"/>
+      </animateMotion>
+    </circle>
+  </g>
+  
+  <!-- Small particles */
+  <g opacity="0.05">
+    <circle r="1" fill="#1e40af">
+      <animateMotion dur="20s" repeatCount="indefinite" begin="1s">
+        <path d="M 0 150 L 400 200 L 800 150 L 1200 250 L 1920 180"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="0.8" fill="#3b82f6">
+      <animateMotion dur="18s" repeatCount="indefinite" begin="6s">
+        <path d="M 1920 850 L 1500 900 L 1000 850 L 500 950 L 0 880"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="1.2" fill="#1e40af">
+      <animateMotion dur="24s" repeatCount="indefinite" begin="11s">
+        <path d="M 300 0 L 500 400 L 800 200 L 1200 600 L 1500 100 L 1700 1080"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="0.9" fill="#3b82f6">
+      <animateMotion dur="26s" repeatCount="indefinite" begin="16s">
+        <path d="M 1600 0 L 1200 300 L 800 100 L 400 500 L 200 200 L 100 1080"/>
+      </animateMotion>
+    </circle>
+  </g>
+  
+  <!-- Subtle logo watermark -->
+  <g opacity="0.008" transform="translate(960, 540)">
+    <!-- Large C -->
+    <circle cx="0" cy="0" r="250" fill="none" stroke="#1e40af" stroke-width="3"/>
+    <path d="M -180 -125 A 200 200 0 0 1 -180 125" fill="none" stroke="#1e40af" stroke-width="8"/>
+    
+    <!-- Inner elements -->
+    <circle cx="0" cy="0" r="150" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.5">
+      <animate attributeName="r" values="150;170;150" dur="12s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Data flow around logo -->
+    <circle r="1" fill="#1e40af" opacity="0.3">
+      <animateMotion dur="8s" repeatCount="indefinite">
+        <path d="M 250 0 A 250 250 0 1 1 -250 0 A 250 250 0 1 1 250 0"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="0.8" fill="#3b82f6" opacity="0.4">
+      <animateMotion dur="6s" repeatCount="indefinite" begin="2s">
+        <path d="M -200 0 A 200 200 0 1 0 200 0 A 200 200 0 1 0 -200 0"/>
+      </animateMotion>
+    </circle>
+  </g>
+  
+  <!-- Subtle grid overlay -->
+  <defs>
+    <pattern id="subtleGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <circle cx="30" cy="30" r="0.5" fill="#1e40af" opacity="0.05">
+        <animate attributeName="opacity" values="0.05;0.1;0.05" dur="15s" repeatCount="indefinite"/>
+      </animate>
+    </pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#subtleGrid)" opacity="0.3"/>
+  
+  <!-- Breathing overlay for ambience -->
+  <rect width="1920" height="1080" fill="#1e40af" opacity="0.005">
+    <animate attributeName="opacity" values="0.005;0.015;0.005" dur="18s" repeatCount="indefinite"/>
+  </rect>
+</svg>

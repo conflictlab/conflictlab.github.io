@@ -1,0 +1,118 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="#fefefe"/>
+  
+  <!-- Animated background with subtle logo integration -->
+  <defs>
+    <!-- Logo-inspired gradient -->
+    <radialGradient id="logoGrad" cx="0.5" cy="0.5" r="0.8">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.02"/>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0"/>
+    </radialGradient>
+    
+    <!-- Pulse gradient for logo -->
+    <radialGradient id="pulseGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.08">
+        <animate attributeName="stop-opacity" values="0.08;0.03;0.08" dur="6s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0"/>
+    </radialGradient>
+    
+    <!-- Moving gradient for connections -->
+    <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:0.04">
+        <animate attributeName="stop-opacity" values="0.04;0.08;0.04" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;100 0;0 0" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Large subtle logo watermark in center -->
+  <g transform="translate(960, 540)" opacity="0.02">
+    <!-- Stylized "C" for Clairient -->
+    <circle cx="0" cy="0" r="120" fill="none" stroke="#1e40af" stroke-width="8"/>
+    <path d="M -80 -60 A 100 100 0 0 1 -80 60" fill="none" stroke="#1e40af" stroke-width="12"/>
+    
+    <!-- Subtle pulse animation -->
+    <circle cx="0" cy="0" r="120" fill="url(#pulseGrad)"/>
+  </g>
+  
+  <!-- Floating logo elements (smaller) -->
+  <g opacity="0.015">
+    <!-- Top left -->
+    <g transform="translate(200, 200)">
+      <circle cx="0" cy="0" r="40" fill="none" stroke="#1e40af" stroke-width="2"/>
+      <path d="M -25 -20 A 30 30 0 0 1 -25 20" fill="none" stroke="#3b82f6" stroke-width="3"/>
+      <animateTransform attributeName="transform" type="translate" values="200,200;220,180;200,200" dur="12s" repeatCount="indefinite"/>
+    </g>
+    
+    <!-- Top right -->
+    <g transform="translate(1720, 180)">
+      <circle cx="0" cy="0" r="35" fill="none" stroke="#3b82f6" stroke-width="2"/>
+      <path d="M -22 -18 A 25 25 0 0 1 -22 18" fill="none" stroke="#1e40af" stroke-width="3"/>
+      <animateTransform attributeName="transform" type="translate" values="1720,180;1700,200;1720,180" dur="10s" repeatCount="indefinite"/>
+    </g>
+    
+    <!-- Bottom left -->
+    <g transform="translate(150, 900)">
+      <circle cx="0" cy="0" r="30" fill="none" stroke="#1e40af" stroke-width="2"/>
+      <path d="M -20 -15 A 20 20 0 0 1 -20 15" fill="none" stroke="#3b82f6" stroke-width="2"/>
+      <animateTransform attributeName="transform" type="translate" values="150,900;170,920;150,900" dur="14s" repeatCount="indefinite"/>
+    </g>
+    
+    <!-- Bottom right -->
+    <g transform="translate(1800, 850)">
+      <circle cx="0" cy="0" r="25" fill="none" stroke="#3b82f6" stroke-width="2"/>
+      <path d="M -18 -12 A 18 18 0 0 1 -18 12" fill="none" stroke="#1e40af" stroke-width="2"/>
+      <animateTransform attributeName="transform" type="translate" values="1800,850;1780,870;1800,850" dur="11s" repeatCount="indefinite"/>
+    </g>
+  </g>
+  
+  <!-- Connecting lines with flow animation -->
+  <g opacity="0.015">
+    <!-- Horizontal connections -->
+    <line x1="200" y1="200" x2="960" y2="540" stroke="url(#flowGrad)" stroke-width="1"/>
+    <line x1="960" y1="540" x2="1720" y2="180" stroke="url(#flowGrad)" stroke-width="1"/>
+    <line x1="150" y1="900" x2="960" y2="540" stroke="url(#flowGrad)" stroke-width="1"/>
+    <line x1="960" y1="540" x2="1800" y2="850" stroke="url(#flowGrad)" stroke-width="1"/>
+    
+    <!-- Subtle data flow particles -->
+    <circle r="2" fill="#1e40af" opacity="0.2">
+      <animateMotion dur="8s" repeatCount="indefinite">
+        <path d="M 200 200 Q 580 370 960 540"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="1.5" fill="#3b82f6" opacity="0.15">
+      <animateMotion dur="10s" repeatCount="indefinite" begin="2s">
+        <path d="M 1720 180 Q 1340 360 960 540"/>
+      </animateMotion>
+    </circle>
+    
+    <circle r="2" fill="#1e40af" opacity="0.2">
+      <animateMotion dur="12s" repeatCount="indefinite" begin="4s">
+        <path d="M 150 900 Q 555 720 960 540"/>
+      </animateMotion>
+    </circle>
+  </g>
+  
+  <!-- Subtle geometric patterns -->
+  <g opacity="0.008">
+    <!-- Grid pattern -->
+    <defs>
+      <pattern id="gridPattern" width="80" height="80" patternUnits="userSpaceOnUse">
+        <circle cx="40" cy="40" r="1" fill="#1e40af" opacity="0.3"/>
+        <line x1="0" y1="40" x2="80" y2="40" stroke="#1e40af" stroke-width="0.5" opacity="0.2"/>
+        <line x1="40" y1="0" x2="40" y2="80" stroke="#1e40af" stroke-width="0.5" opacity="0.2"/>
+      </pattern>
+    </defs>
+    <rect width="1920" height="1080" fill="url(#gridPattern)"/>
+  </g>
+  
+  <!-- Breathing/pulsing overlay for depth -->
+  <rect width="1920" height="1080" fill="url(#logoGrad)" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.8;0.5" dur="15s" repeatCount="indefinite"/>
+  </rect>
+</svg>

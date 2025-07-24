@@ -1,0 +1,28 @@
+{
+  "sectors": [
+    {
+      "name": "Asset Managers",
+      "useCase": "Portfolio optimization, risk-weighted returns",
+      "description": "Integrate predictive geopolitical risk into portfolio construction and monitoring to reduce drawdowns and optimize Sharpe ratios.",
+      "icon": "TrendingUp"
+    },
+    {
+      "name": "Insurers",
+      "useCase": "SRCC underwriting, pricing, reinsurance models",
+      "description": "Anticipate, price, and manage risk from civil unrest including strikes, riots, and civil commotion.",
+      "icon": "Shield"
+    },
+    {
+      "name": "ESG Funds",
+      "useCase": "Conflict-sensitive screening and sustainability compliance",
+      "description": "Enhance ESG screening with conflict-aligned scoring and geopolitical sustainability metrics.",
+      "icon": "Leaf"
+    },
+    {
+      "name": "Governments",
+      "useCase": "Emergency response coordination and strategic readiness",
+      "description": "Plan emergency response and enhance strategic planning with predictive conflict models and forward-looking geopolitical risk analysis.",
+      "icon": "Users"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "coreCapabilities": [
+    {
+      "title": "Conflict & Protest Forecasting",
+      "description": "Predictive modeling of violence, unrest, and instability at subnational levels using RNNs, LSTMs, and temporal clustering.",
+      "icon": "AlertTriangle"
+    },
+    {
+      "title": "Exposure-Based Risk Modeling", 
+      "description": "Converts regional instability forecasts into financial or operational risk estimates for specific firms, supply chains, or portfolios.",
+      "icon": "TrendingDown"
+    },
+    {
+      "title": "Geopolitical ESG Analytics",
+      "description": "Aligns forecasts with EU Taxonomy and SFDR criteria for sustainable investment screening.",
+      "icon": "Leaf"
+    },
+    {
+      "title": "API + Dashboard Delivery",
+      "description": "Forecasts accessible via JSON API, CSV downloads, and a web-based dashboard for analysts and executives.",
+      "icon": "Monitor"
+    }
+  ],
+  "products": [
+    {
+      "name": "Portfolio Risk Intelligence (PRI)",
+      "description": "Enables asset managers and quant teams to integrate predictive geopolitical risk into portfolio construction and monitoring.",
+      "useCases": [
+        "Rebalance portfolios to reduce exposure to regions with rising conflict or protest risk",
+        "Incorporate AICAP scores into quantitative models for Sharpe-optimized returns",
+        "Backtest risk-adjusted returns using historical AICAP forecast accuracy",
+        "Monitor geopolitical risk concentration across sovereign and corporate holdings"
+      ],
+      "features": [
+        "Asset-level conflict exposure scores",
+        "Monthly forecast updates with API access",
+        "Portfolio screening, alerts, and dashboard visualizations",
+        "Integration-ready with Excel, Python, or portfolio management platforms"
+      ],
+      "audience": "Institutional investors, hedge funds, ESG fund managers, quant researchers"
+    },
+    {
+      "name": "Catastrophic Civil Risk Forecast (CCRF)",
+      "description": "Empowers insurers and reinsurers to anticipate, price, and manage risk from civil unrest, including SRCC (strikes, riots, civil commotion).",
+      "useCases": [
+        "Improve pricing accuracy for SRCC cover in high-risk regions",
+        "Simulate correlated risk in multi-country reinsurance portfolios",
+        "Support treaty negotiation and loss mitigation strategy"
+      ],
+      "features": [
+        "Regional SRCC risk forecasts (1-12 month horizon)",
+        "Dashboard and batch data delivery",
+        "Integration-ready with Touchstone/Oasis",
+        "Historical validation and confidence metrics"
+      ],
+      "audience": "Political risk underwriters, reinsurance analysts, catastrophe modelers"
+    },
+    {
+      "name": "GeoESG Compliance Engine (GCE)",
+      "description": "Enhances ESG screening and sustainable finance compliance by flagging corporate and sovereign exposure to conflict-prone geographies.",
+      "useCases": [
+        "Filter portfolios for firms operating in or sourcing from unstable regions",
+        "Score sovereign issuers for conflict or repression indicators",
+        "Document conflict exposure in ESG reporting frameworks"
+      ],
+      "features": [
+        "Conflict-aligned ESG scoring per issuer",
+        "Geographic filters and portfolio scorecards",
+        "Reporting modules for regulators or clients",
+        "Downloadable datasets, PDF reports, and API access"
+      ],
+      "audience": "ESG analysts, fund managers, compliance officers, data vendors"
+    },
+    {
+      "name": "Conflict Early Warning Portal (CEWP)",
+      "description": "Supports journalists, NGOs, and humanitarian planners with structured, open-access forecasts of global conflict risk.",
+      "useCases": [
+        "Plan emergency response based on predictive conflict models",
+        "Support journalism with forecast-informed visual narratives",
+        "Power advocacy campaigns with early warning insights"
+      ],
+      "features": [
+        "Regional dashboards and live forecast feeds",
+        "Embedded map visualizations",
+        "Public/freemium access with user-level tools",
+        "Exportable charts and country briefs"
+      ],
+      "audience": "Newsrooms, humanitarian NGOs, international advocacy groups"
+    },
+    {
+      "name": "Conflict-Sensitive Equity Screening",
+      "description": "Screens public companies for exposure to conflict-affected countries using forecast-adjusted scoring.",
+      "useCases": [
+        "Detect firms at risk due to operations in unstable countries (e.g., DRC, Nigeria)",
+        "Monitor stock price volatility after forecasted conflict events",
+        "Support analyst briefings and risk-adjusted target price revisions"
+      ],
+      "features": [
+        "Firm-country conflict exposure database",
+        "Forecast overlays on equity performance",
+        "Custom filters by region, sector, or exposure type",
+        "PDF/CSV downloads and automated alerts"
+      ],
+      "audience": "Equity analysts, ESG screeners, risk consultants"
+    }
+  ]
+}

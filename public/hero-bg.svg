@@ -1,0 +1,70 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="#f8fafc"/>
+  
+  <!-- Subtle geometric network pattern -->
+  <defs>
+    <!-- Gradient definitions -->
+    <radialGradient id="nodeGradient" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0.02"/>
+    </radialGradient>
+    
+    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.02"/>
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:0.05"/>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0.02"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Network nodes -->
+  <circle cx="200" cy="200" r="60" fill="url(#nodeGradient)"/>
+  <circle cx="800" cy="150" r="80" fill="url(#nodeGradient)"/>
+  <circle cx="1400" cy="300" r="70" fill="url(#nodeGradient)"/>
+  <circle cx="400" cy="500" r="90" fill="url(#nodeGradient)"/>
+  <circle cx="1200" cy="600" r="65" fill="url(#nodeGradient)"/>
+  <circle cx="600" cy="800" r="75" fill="url(#nodeGradient)"/>
+  <circle cx="1600" cy="750" r="55" fill="url(#nodeGradient)"/>
+  <circle cx="300" cy="900" r="85" fill="url(#nodeGradient)"/>
+  <circle cx="1000" cy="400" r="70" fill="url(#nodeGradient)"/>
+  <circle cx="1500" cy="950" r="60" fill="url(#nodeGradient)"/>
+  
+  <!-- Connection lines -->
+  <line x1="200" y1="200" x2="800" y2="150" stroke="url(#lineGradient)" stroke-width="1"/>
+  <line x1="800" y1="150" x2="1400" y2="300" stroke="url(#lineGradient)" stroke-width="1"/>
+  <line x1="400" y1="500" x2="1000" y2="400" stroke="url(#lineGradient)" stroke-width="1"/>
+  <line x1="1000" y1="400" x2="1200" y2="600" stroke="url(#lineGradient)" stroke-width="1"/>
+  <line x1="600" y1="800" x2="1200" y2="600" stroke="url(#lineGradient)" stroke-width="1"/>
+  <line x1="300" y1="900" x2="600" y2="800" stroke="url(#lineGradient)" stroke-width="1"/>
+  <line x1="1400" y1="300" x2="1600" y2="750" stroke="url(#lineGradient)" stroke-width="1"/>
+  <line x1="1200" y1="600" x2="1500" y2="950" stroke="url(#lineGradient)" stroke-width="1"/>
+  
+  <!-- Data flow indicators -->
+  <circle cx="500" cy="175" r="2" fill="#1e40af" opacity="0.3">
+    <animate attributeName="cx" values="200;800" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.6;0" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="1100" cy="225" r="2" fill="#3b82f6" opacity="0.3">
+    <animate attributeName="cx" values="800;1400" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.6;0" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="700" cy="450" r="2" fill="#1e40af" opacity="0.3">
+    <animate attributeName="cx" values="400;1000" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="500;400" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.6;0" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- World map outline (very subtle) -->
+  <g opacity="0.02" stroke="#1e40af" stroke-width="0.5" fill="none">
+    <!-- North America -->
+    <path d="M200 300 L350 280 L380 350 L320 380 L250 370 L180 340 Z"/>
+    <!-- Europe -->
+    <path d="M500 280 L580 275 L590 320 L560 340 L520 335 L490 310 Z"/>
+    <!-- Asia -->
+    <path d="M800 260 L1100 250 L1120 350 L1050 380 L850 370 L780 320 Z"/>
+    <!-- Africa -->
+    <path d="M520 400 L580 390 L600 500 L570 550 L540 540 L510 480 Z"/>
+  </g>
+</svg>
