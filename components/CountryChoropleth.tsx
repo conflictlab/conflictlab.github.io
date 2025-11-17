@@ -200,7 +200,7 @@ export default function CountryChoropleth({ items }: Props) {
                 onEachFeature={(feature, layer) => {
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
-                  layer.bindTooltip(`${name}: ${val}`, { sticky: true })
+                  layer.bindTooltip(`${name}: ${Math.round(val)}`, { sticky: true })
                 }}
               />
             )}
