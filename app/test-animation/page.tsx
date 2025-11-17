@@ -16,7 +16,7 @@ export default function TestAnimation() {
               <li><strong>Processing Geopolitical Data:</strong> Real-time analysis of economic, social, political signals</li>
               <li><strong>Generating Risk Predictions:</strong> Output layer produces conflict risk, stability, and impact predictions</li>
             </ul>
-            <p className="mt-4 text-sm">Visualizes Luscint's AI engine transforming raw data into actionable intelligence</p>
+            <p className="mt-4 text-sm">Visualizes Luscint&#39;s AI engine transforming raw data into actionable intelligence</p>
             <p className="mt-2 text-sm text-blue-600">Watch data flow through layers with pulsing neurons and connection weights!</p>
           </div>
         </div>

@@ -52,6 +52,7 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.base }}
           BASE_PATH: ${{ steps.base.outputs.base }}
+          SKIP_PREBUILD: '1'
         run: npm run build
 
       - name: Setup Pages
