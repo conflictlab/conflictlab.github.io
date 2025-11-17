@@ -17,10 +17,46 @@ const InterferenceAnimation: React.FC = () => {
   const timeRef = useRef(0)
   const phaseRef = useRef(0) // 0: chaos, 1: resolving, 2: clarity, 3: evolving
   const phaseTimerRef = useRef(0)
+  const waveSourcesRef = useRef<WaveSource[]>([])
 
   const CANVAS_WIDTH = 800
   const CANVAS_HEIGHT = 600
   const RESOLUTION = 4 // Higher = more detailed but slower
+
+  // Initialize wave sources once (chaotic + coherent sets)
+  const ensureWaveSources = () => {
+    if (waveSourcesRef.current.length > 0) return
+    const chaoticCount = 7
+    const coherentCount = 5
+    const sources: WaveSource[] = []
+    // Chaotic sources — random placement and phases, active initially
+    for (let i = 0; i < chaoticCount; i++) {
+      sources.push({
+        x: Math.random() * CANVAS_WIDTH,
+        y: Math.random() * CANVAS_HEIGHT,
+        frequency: 0.06 + Math.random() * 0.06,
+        amplitude: 20 + Math.random() * 30,
+        phase: Math.random() * Math.PI * 2,
+        active: true,
+      })
+    }
+    // Coherent sources — arranged around center line, inactive initially
+    const cx = CANVAS_WIDTH / 2
+    const cy = CANVAS_HEIGHT / 2
+    const radius = Math.min(CANVAS_WIDTH, CANVAS_HEIGHT) * 0.25
+    for (let i = 0; i < coherentCount; i++) {
+      const ang = (i / coherentCount) * Math.PI * 2
+      sources.push({
+        x: cx + Math.cos(ang) * radius,
+        y: cy + Math.sin(ang) * radius,
+        frequency: 0.08,
+        amplitude: 28,
+        phase: 0,
+        active: false,
+      })
+    }
+    waveSourcesRef.current = sources
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -29,7 +65,8 @@ const InterferenceAnimation: React.FC = () => {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Wave sources configuration - moved outside useEffect to avoid hook issues
+    // Ensure sources are available for animation
+    ensureWaveSources()
 
     // Calculate wave interference at a point
     const calculateWaveAt = (x: number, y: number, time: number): number => {
