@@ -32,6 +32,16 @@ npm run build
 
 This creates an optimized production build in the `out/` directory.
 
+Fast local build (skip data prebuild):
+
+```bash
+# Option A (Mac/Linux):
+SKIP_PREBUILD=1 npm run build
+
+# Option B:
+npm run build:fast
+```
+
 During the build, data steps run automatically:
 - Sync latest national forecast CSVs from GitHub and snapshot them
 - Generate PRIO‑GRID GeoJSON (`public/data/grid/{period}.geo.json`) from the live grid CSV

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prebuild": "node scripts/sync-forecasts-from-github.js --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv && node scripts/prio-csv-to-geojson.js --csv https://raw.githubusercontent.com/ThomasSchinca/Live_3D_forecast/main/df_output.csv && node scripts/geojson-to-month-points.js",
+    "build:fast": "next build",
+    "prebuild": "node scripts/prebuild.js",
     "start": "next start",
     "lint": "next lint",
     "csv:snapshot": "node scripts/csv-to-snapshot.js",
