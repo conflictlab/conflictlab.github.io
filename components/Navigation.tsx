@@ -8,6 +8,7 @@ import { Menu, X } from 'lucide-react'
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   
   const isActive = (path: string) => {
     if (path === '/' && pathname === '/') return true
@@ -21,7 +22,7 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img src="/logo.png" alt="Luscint" className="h-8 w-8 mr-3" />
+              <img src={`${base}/logo.png`} alt="Luscint" className="h-8 w-8 mr-3" />
               <span className="text-2xl font-light text-clairient-blue">Luscint</span>
             </Link>
           </div>
