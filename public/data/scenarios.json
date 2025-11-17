@@ -1,0 +1,15 @@
+{
+  "sce_dictionary": {
+    "Algeria": [
+      10.0, 10.4, 10.8, 11.1, 11.5, 11.9, 12.2, 12.0, 11.6, 11.1, 10.7, 10.3
+    ],
+    "France": [
+      4.2, 4.3, 4.5, 4.6, 4.8, 5.0, 5.1, 5.0, 4.9, 4.7, 4.5, 4.3
+    ],
+    "United States": [
+      8.1, 8.3, 8.6, 8.9, 9.1, 9.3, 9.6, 9.4, 9.1, 8.7, 8.4, 8.2
+    ]
+  },
+  "_note": "Starter scenarios for local testing. Replace by running: node scripts/convert-scenarios-pkl.js --src /path/to/sce_dictionary.pkl --out public/data/scenarios.json"
+}
+
