@@ -48,6 +48,9 @@ jobs:
         id: base
         run: echo "base=/${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
 
+      - name: Remove API routes for static export
+        run: rm -rf app/api
+
       - name: Build (Next.js export + data prebuild)
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.base }}
