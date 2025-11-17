@@ -334,7 +334,7 @@ export default function PrioGridMap({ period }: Props) {
                       geometry: squarePoly(p.lon, p.lat, 0.25), // 0.5° cells → half-size 0.25°
                     }
                   })
-                }}
+                } as any}
                 style={style as any}
                 onEachFeature={(feature, layer) => {
                   const v = Number(feature?.properties?.[`m${month}`] ?? 0)
