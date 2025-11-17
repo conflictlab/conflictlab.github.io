@@ -8,9 +8,10 @@ type CountryValue = { name: string; iso3?: string; value?: number; months?: numb
 
 interface Props {
   items: CountryValue[]
+  onSelect?: (name: string) => void
 }
 
-export default function CountryChoropleth({ items }: Props) {
+export default function CountryChoropleth({ items, onSelect }: Props) {
   const [world, setWorld] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [month, setMonth] = useState<number>(1)
@@ -200,7 +201,10 @@ export default function CountryChoropleth({ items }: Props) {
                 onEachFeature={(feature, layer) => {
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
-                  layer.bindTooltip(`${name}: ${Math.round(val)}`, { sticky: true })
+                  layer.bindTooltip(`${name}: ${Number(val.toFixed(1))}`, { sticky: true })
+                  layer.on('click', () => {
+                    if (name) onSelect?.(String(name))
+                  })
                 }}
               />
             )}

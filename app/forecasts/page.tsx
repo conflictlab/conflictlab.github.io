@@ -11,7 +11,7 @@ import RawCsvDownloader from '@/components/RawCsvDownloader'
 import ReleaseNotes from '@/components/ReleaseNotes'
 import ApiLink from '@/components/ApiLink'
 import dynamic from 'next/dynamic'
-const CountryChoropleth = dynamic(() => import('@/components/CountryChoropleth'), { ssr: false })
+const CountryScenarioPanel = dynamic(() => import('@/components/CountryScenarioPanel'), { ssr: false })
 
 function bandFromIndex(idx: number): 'low' | 'medium' | 'high' {
   if (idx < 33) return 'low'
@@ -171,10 +171,10 @@ export default async function ForecastsPage() {
         </div>
       </section>
 
-      {/* Country Choropleth */}
+      {/* Country Choropleth + Scenario panel */}
       <section className="py-8 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <CountryChoropleth items={countryMapItems} />
+          <CountryScenarioPanel items={countryMapItems} />
         </div>
       </section>
 

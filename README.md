@@ -75,6 +75,15 @@ npm run grid:build
 
 # Build monthly point JSONs from the polygon GeoJSON (used by the map for speed)
 node scripts/geojson-to-month-points.js --period 2025-10
+
+Scenario utilities (local testing)
+
+```bash
+# Convert sce_dictionary.pkl to JSON (requires Python 3)
+node scripts/convert-scenarios-pkl.js --src /path/to/sce_dictionary.pkl --out public/data/scenarios.json
+```
+
+Then run the site and click a country on the forecasts page to see the scenario plot.
 ```
 
 CI automation (GitHub Actions)
