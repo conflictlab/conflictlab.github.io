@@ -6,6 +6,20 @@ import DriverBadges from '@/components/DriverBadges'
 
 interface Params { params: { entity: string } }
 
+// Pre-generate all entity pages for static export
+export async function generateStaticParams() {
+  const snap = readSnapshot('latest')
+  const seen = new Set<string>()
+  const out: Array<{ entity: string }> = []
+  for (const e of snap.entities) {
+    const ids = [e.id, e.iso3].filter(Boolean).map((s) => String(s).toLowerCase())
+    for (const id of ids) {
+      if (!seen.has(id)) { seen.add(id); out.push({ entity: id }) }
+    }
+  }
+  return out
+}
+
 export default async function ForecastEntityPage({ params }: Params) {
   const { entity } = params
   const snap = readSnapshot('latest')
@@ -55,4 +69,3 @@ export default async function ForecastEntityPage({ params }: Params) {
     </div>
   )
 }
-
