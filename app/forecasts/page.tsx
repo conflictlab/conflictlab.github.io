@@ -10,7 +10,8 @@ import { getEntityHorizonMonths } from '@/lib/forecasts'
 import RawCsvDownloader from '@/components/RawCsvDownloader'
 import ReleaseNotes from '@/components/ReleaseNotes'
 import ApiLink from '@/components/ApiLink'
-import CountryChoropleth from '@/components/CountryChoropleth'
+import dynamic from 'next/dynamic'
+const CountryChoropleth = dynamic(() => import('@/components/CountryChoropleth'), { ssr: false })
 
 function bandFromIndex(idx: number): 'low' | 'medium' | 'high' {
   if (idx < 33) return 'low'
