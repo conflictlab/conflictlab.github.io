@@ -42,14 +42,15 @@ export default function CountryScenarioPanel({ items }: Props) {
   const data = useMemo(() => {
     if (!scenarios || !selected) return null
     const key = normalizeName(selected)
-    // Accept several shapes: {country: [...]}, {countries: {country: [...] }}, {sce_dictionary: {...}}
+    const iso3 = (items.find(it => normalizeName(it.name) === key)?.iso3 || '').toUpperCase()
+    // Accept several shapes: {country: [...]}, {countries: {country: [...] }}, {sce_dictionary: {...}}; also try ISO3
     const tryKeys = [
-      scenarios[key],
-      scenarios[selected],
-      scenarios?.countries?.[selected],
-      scenarios?.countries?.[key],
-      scenarios?.sce_dictionary?.[selected],
-      scenarios?.sce_dictionary?.[key],
+      scenarios[key], scenarios[selected],
+      iso3 ? scenarios[iso3] : undefined,
+      scenarios?.countries?.[selected], scenarios?.countries?.[key],
+      iso3 ? scenarios?.countries?.[iso3] : undefined,
+      scenarios?.sce_dictionary?.[selected], scenarios?.sce_dictionary?.[key],
+      iso3 ? scenarios?.sce_dictionary?.[iso3] : undefined,
     ]
     for (const cand of tryKeys) {
       if (!cand) continue
@@ -116,4 +117,3 @@ function ScenarioChart({ values, width = 720, height = 220 }: { values: number[]
 }
 
 function normalizeName(s: string) { return s.toLowerCase().normalize('NFKD').replace(/[^a-z\s\-']/g,'').trim() }
-
