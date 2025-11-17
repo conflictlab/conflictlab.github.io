@@ -229,7 +229,7 @@ export default async function ForecastsPage() {
             <h2 className="section-heading mb-0">Predicted Fatalities (1, 3, 6‑month)</h2>
           </div>
           <p className="text-sm text-gray-600 mb-4">Table shows next‑month predicted fatalities per entity and Δ MoM versus the previous forecast file.</p>
-          <Collapsible title="table" initiallyCollapsed={true}>
+          <Collapsible title="table" initiallyCollapsed={false}>
             <RiskIndexTable rows={rows} />
           </Collapsible>
         </div>
