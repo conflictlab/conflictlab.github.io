@@ -13,7 +13,7 @@ export default function DTWShowcase({
   const rafRef = useRef<number>()
   const [playing, setPlaying] = useState(true)
   const [preset, setPreset] = useState<Preset>(initialPreset)
-  const [speed, setSpeed] = useState(1)
+  const [speed, setSpeed] = useState(5)
 
   // Layout: top series A (h=120), center cost matrix (h=240), bottom series B (h=120)
   const layout = useMemo(() => ({
@@ -98,7 +98,7 @@ export default function DTWShowcase({
       drawCostAndPath(ctx, cost, path, layout.mid, t)
 
       // alignment lines along the revealed portion of path
-      const reveal = Math.floor((path.length - 1) * easeInOut(Math.min(1, t / 250)))
+      const reveal = Math.floor((path.length - 1) * easeInOut(Math.min(1, t / 60)))
       ctx.save()
       ctx.globalAlpha = 0.25
       ctx.strokeStyle = '#6b7280'
@@ -138,8 +138,16 @@ export default function DTWShowcase({
             {playing ? 'Pause' : 'Play'}
           </button>
           <label className="text-gray-600">Speed</label>
-          <input type="range" min={0.2} max={3} step={0.2} value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))} />
+          <input
+            type="range"
+            min={0.5}
+            max={5}
+            step={0.5}
+            value={speed}
+            onChange={(e) => setSpeed(Number(e.target.value))}
+            className="range"
+            style={{ accentColor: '#1e40af', width: 160 }}
+          />
         </div>
       </div>
       <canvas ref={canvasRef} width={width} height={height} />
@@ -199,7 +207,7 @@ function drawCostAndPath(
   ctx.strokeRect(box.x + 0.5, box.y + 0.5, box.w - 1, box.h - 1)
 
   // reveal optimal path
-  const reveal = Math.floor((path.length - 1) * easeInOut(Math.min(1, t / 250)))
+      const reveal = Math.floor((path.length - 1) * easeInOut(Math.min(1, t / 150)))
   ctx.save()
   ctx.strokeStyle = '#111827'
   ctx.lineWidth = 2
@@ -265,4 +273,3 @@ function heatColor(v: number): [number, number, number] {
 function easeInOut(x: number) {
   return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2
 }
-

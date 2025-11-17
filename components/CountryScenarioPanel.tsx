@@ -15,6 +15,7 @@ type ScenariosMap = Record<string, any>
 export default function CountryScenarioPanel({ items }: Props) {
   const [selected, setSelected] = useState<string | null>(null)
   const [scenarios, setScenarios] = useState<ScenariosMap | null>(null)
+  const [minmax, setMinmax] = useState<any | null>(null)
   const [err, setErr] = useState<string | null>(null)
 
   useEffect(() => {
@@ -31,6 +32,11 @@ export default function CountryScenarioPanel({ items }: Props) {
         if (!res.ok) return
         const json = await res.json()
         if (!cancelled) setScenarios(json)
+        // Try minmax alongside scenarios
+        try {
+          const mm = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/data/minmax.json`)
+          if (mm.ok) { const m = await mm.json(); if (!cancelled) setMinmax(m) }
+        } catch {}
       } catch (e: any) {
         if (!cancelled) setErr(e?.message || 'Failed to load scenarios')
       }
@@ -44,21 +50,51 @@ export default function CountryScenarioPanel({ items }: Props) {
     if (!scenarios || !selected) return null as null | Record<string, number[]>
     const key = normalizeName(selected)
     const iso3 = (items.find(it => normalizeName(it.name) === key)?.iso3 || '').toUpperCase()
-    const unlog = (arr: number[]) => arr.map((v) => {
-      const n = Number(v)
-      const out = Math.pow(10, n)
-      return Number.isFinite(out) ? out : 0
-    })
+    const fuzzyGet = (container: any, name: string) => {
+      if (!container || typeof container !== 'object') return undefined
+      if (container[name] !== undefined) return container[name]
+      const normName = normalizeName(name)
+      let bestKey: string | null = null
+      for (const k of Object.keys(container)) {
+        const nk = normalizeName(String(k))
+        if (nk === normName) { bestKey = k; break }
+        if (!bestKey && (nk.startsWith(normName) || normName.startsWith(nk))) bestKey = k
+      }
+      return bestKey ? container[bestKey] : undefined
+    }
+
     const candidates = [
-      scenarios[selected], scenarios[key], iso3 ? scenarios[iso3] : undefined,
-      scenarios?.countries?.[selected], scenarios?.countries?.[key], iso3 ? scenarios?.countries?.[iso3] : undefined,
-      scenarios?.sce_dictionary?.[selected], scenarios?.sce_dictionary?.[key], iso3 ? scenarios?.sce_dictionary?.[iso3] : undefined,
+      fuzzyGet(scenarios, selected), fuzzyGet(scenarios, key), iso3 ? fuzzyGet(scenarios, iso3) : undefined,
+      fuzzyGet(scenarios?.countries, selected), fuzzyGet(scenarios?.countries, key), iso3 ? fuzzyGet(scenarios?.countries, iso3) : undefined,
+      fuzzyGet(scenarios?.sce_dictionary, selected), fuzzyGet(scenarios?.sce_dictionary, key), iso3 ? fuzzyGet(scenarios?.sce_dictionary, iso3) : undefined,
     ]
 
     const out: Record<string, number[]> = {}
+    const denorm = (label: string, arr: number[]): number[] => {
+      if (!minmax) return arr
+      const get = (container: any, name: string) => {
+        if (!container || typeof container !== 'object') return undefined
+        if (container[name] !== undefined) return container[name]
+        const normName = normalizeName(name)
+        let bestKey: string | null = null
+        for (const k of Object.keys(container)) {
+          const nk = normalizeName(String(k))
+          if (nk === normName) { bestKey = k; break }
+          if (!bestKey && (nk.startsWith(normName) || normName.startsWith(nk))) bestKey = k
+        }
+        return bestKey ? container[bestKey] : undefined
+      }
+      const countryMM = get(minmax, selected!) || get(minmax, iso3)
+      const mm = countryMM?.[label]
+      if (!mm || typeof mm.min !== 'number' || typeof mm.max !== 'number') return arr
+      const min = mm.min, max = mm.max
+      const span = max - min
+      if (!Number.isFinite(span) || span === 0) return arr
+      return arr.map(v => (Number(v) * span) + min)
+    }
     const addSeries = (label: string, arr: any) => {
       if (Array.isArray(arr) && arr.every((x) => typeof x === 'number')) {
-        out[label] = unlog(arr as number[])
+        out[label] = denorm(label, arr as number[])
       }
     }
     const scanObject = (obj: any) => {

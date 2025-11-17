@@ -331,7 +331,7 @@ export default function PrioGridMap({ period }: Props) {
                 style={style as any}
                 onEachFeature={(feature, layer) => {
                   const v = Number(feature?.properties?.[`m${month}`] ?? 0)
-                  layer.bindTooltip(`m${month}: ${Math.round(v)}` , { sticky: true })
+                  layer.bindTooltip(`m${month}: ${Number(v.toFixed(1))}` , { sticky: true })
                 }}
               />
             )}
@@ -353,7 +353,7 @@ export default function PrioGridMap({ period }: Props) {
                 style={style as any}
                 onEachFeature={(feature, layer) => {
                   const v = Number(feature?.properties?.[`m${month}`] ?? 0)
-                  layer.bindTooltip(`m${month}: ${Math.round(v)}` , { sticky: true })
+                  layer.bindTooltip(`m${month}: ${Number(v.toFixed(1))}` , { sticky: true })
                 }}
               />
             )}

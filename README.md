@@ -84,6 +84,10 @@ node scripts/convert-scenarios-pkl.js --src /path/to/sce_dictionary.pkl --out pu
 ```
 
 Then run the site and click a country on the forecasts page to see the scenario plot.
+
+CI monthly refresh
+- The workflow `.github/workflows/sync-forecasts.yml` downloads `sce_dictionary.pkl` from `ThomasSchinca/Pace-map-risk@main` (override via repo variables `SCE_REPO`, `SCE_PATH`, `SCE_BRANCH`).
+- It converts it to `public/data/scenarios.json` and commits it, so the site stays up to date.
 ```
 
 CI automation (GitHub Actions)

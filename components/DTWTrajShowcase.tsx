@@ -6,8 +6,8 @@ export default function DTWTrajShowcase({ width = 980, height = 420 }: { width?:
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const raf = useRef<number>()
   const [playing, setPlaying] = useState(true)
-  // Slower default animation speed
-  const [speed, setSpeed] = useState(0.12)
+  // Faster default animation speed
+  const [speed, setSpeed] = useState(0.4)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -109,7 +109,7 @@ export default function DTWTrajShowcase({ width = 980, height = 420 }: { width?:
       ctx.save()
       ctx.strokeStyle = '#0f172a'
       // Thicker line on the right-hand side panel
-      ctx.lineWidth = 4
+      ctx.lineWidth = 5
       ctx.beginPath()
       const kInt = Math.floor(k)
       for (let idx = 0; idx <= kInt; idx++) {

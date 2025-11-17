@@ -8,6 +8,7 @@ interface Props { items: Item[] }
 export default function ScenariosGrid({ items }: Props) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   const [data, setData] = useState<any | null>(null)
+  const [minmax, setMinmax] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [query, setQuery] = useState('')
 
@@ -20,6 +21,10 @@ export default function ScenariosGrid({ items }: Props) {
         if (!res.ok) throw new Error(`Failed to load scenarios.json (${res.status})`)
         const json = await res.json()
         if (!cancelled) setData(json)
+        try {
+          const mm = await fetch(`${base}/data/minmax.json`)
+          if (mm.ok) { const m = await mm.json(); if (!cancelled) setMinmax(m) }
+        } catch {}
       } catch (e: any) {
         if (!cancelled) setError(e?.message || 'Failed to load scenarios.json')
       }
@@ -31,7 +36,7 @@ export default function ScenariosGrid({ items }: Props) {
   const list = useMemo(() => {
     const out: Array<{ name: string; iso3?: string; series: number[] | null }>= []
     for (const it of items) {
-      const s = getSeries(data, it.name, it.iso3)
+      const s = getSeries(data, minmax, it.name, it.iso3)
       out.push({ name: it.name, iso3: it.iso3, series: s })
     }
     if (query.trim()) {
@@ -74,23 +79,30 @@ export default function ScenariosGrid({ items }: Props) {
   )
 }
 
-function getSeries(scenarios: any, name?: string, iso3?: string): number[] | null {
+function getSeries(scenarios: any, minmax: any, name?: string, iso3?: string): number[] | null {
   if (!scenarios) return null
-  const unlog = (arr: number[]) => arr.map(v => {
-    const n = Number(v)
-    const out = Math.pow(10, n)
-    return Number.isFinite(out) ? out : 0
-  })
+  const fuzzyGet = (container: any, nm: string) => {
+    if (!container || typeof container !== 'object') return undefined
+    if (container[nm] !== undefined) return container[nm]
+    const normName = normalizeName(nm)
+    let bestKey: string | null = null
+    for (const k of Object.keys(container)) {
+      const nk = normalizeName(String(k))
+      if (nk === normName) { bestKey = k; break }
+      if (!bestKey && (nk.startsWith(normName) || normName.startsWith(nk))) bestKey = k
+    }
+    return bestKey ? container[bestKey] : undefined
+  }
   const candidates: any[] = []
   const nm = (name || '').toString()
   const norm = normalizeName(nm)
   const codes = [iso3, (iso3 || '').toUpperCase()].filter(Boolean)
   // Try multiple likely shapes/keys
-  if (nm) candidates.push(scenarios[nm], scenarios[norm])
-  if (scenarios.sce_dictionary) candidates.push(scenarios.sce_dictionary[nm], scenarios.sce_dictionary[norm])
-  if (scenarios.countries) candidates.push(scenarios.countries[nm], scenarios.countries[norm])
+  if (nm) candidates.push(fuzzyGet(scenarios, nm), fuzzyGet(scenarios, norm))
+  if (scenarios.sce_dictionary) candidates.push(fuzzyGet(scenarios.sce_dictionary, nm), fuzzyGet(scenarios.sce_dictionary, norm))
+  if (scenarios.countries) candidates.push(fuzzyGet(scenarios.countries, nm), fuzzyGet(scenarios.countries, norm))
   for (const c of codes) {
-    candidates.push(scenarios[c as any], scenarios.sce_dictionary?.[c as any], scenarios.countries?.[c as any])
+    candidates.push(fuzzyGet(scenarios, c as any), fuzzyGet(scenarios.sce_dictionary, c as any), fuzzyGet(scenarios.countries, c as any))
   }
   const parseTS = (obj: any): number[] | null => {
     if (!obj || typeof obj !== 'object') return null
@@ -100,28 +112,43 @@ function getSeries(scenarios: any, name?: string, iso3?: string): number[] | nul
     const first = obj[dateKeys[0]]
     if (Array.isArray(first)) {
       // Return the first scenario column as baseline
-      return unlog(dateKeys.map(dk => {
+      const arr = dateKeys.map(dk => {
         const v = obj[dk]
         const n = Array.isArray(v) ? Number(v[0] ?? 0) : Number(v ?? 0)
         return Number.isFinite(n) ? n : 0
-      }))
+      })
+      // denormalize with s1 if available
+      const mm = fuzzyGet(minmax, name || '') || fuzzyGet(minmax, (iso3 || '').toUpperCase())
+      const mms1 = mm?.s1
+      if (mms1 && typeof mms1.min === 'number' && typeof mms1.max === 'number') {
+        const min = mms1.min, max = mms1.max, span = max - min
+        if (Number.isFinite(span) && span !== 0) return arr.map(v => v * span + min)
+      }
+      return arr
     }
-    return unlog(dateKeys.map(dk => {
+    const arr = dateKeys.map(dk => {
       const n = Number(obj[dk] ?? 0)
       return Number.isFinite(n) ? n : 0
-    }))
+    })
+    const mm = fuzzyGet(minmax, name || '') || fuzzyGet(minmax, (iso3 || '').toUpperCase())
+    const mms1 = mm?.s1
+    if (mms1 && typeof mms1.min === 'number' && typeof mms1.max === 'number') {
+      const min = mms1.min, max = mms1.max, span = max - min
+      if (Number.isFinite(span) && span !== 0) return arr.map(v => v * span + min)
+    }
+    return arr
   }
   for (const cand of candidates) {
     if (!cand) continue
     if (Array.isArray(cand)) {
-      if (cand.every((x) => typeof x === 'number')) return unlog(cand as number[])
+      if (cand.every((x) => typeof x === 'number')) return cand as number[]
       for (const el of cand) { const s = parseTS(el); if (s) return s }
-      for (const el of cand) { if (Array.isArray(el?.values)) return unlog(el.values); if (Array.isArray(el?.series)) return unlog(el.series); if (Array.isArray(el?.months)) return unlog(el.months) }
+      for (const el of cand) { if (Array.isArray(el?.values)) return el.values; if (Array.isArray(el?.series)) return el.series; if (Array.isArray(el?.months)) return el.months }
     } else if (typeof cand === 'object') {
       const s = parseTS(cand); if (s) return s
-      if (Array.isArray(cand?.values)) return unlog(cand.values)
-      if (Array.isArray(cand?.series)) return unlog(cand.series)
-      if (Array.isArray(cand?.months)) return unlog(cand.months)
+      if (Array.isArray(cand?.values)) return cand.values
+      if (Array.isArray(cand?.series)) return cand.series
+      if (Array.isArray(cand?.months)) return cand.months
     }
   }
   return null
