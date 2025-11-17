@@ -58,6 +58,24 @@ jobs:
         id: base
         run: echo "base=/${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
 
+      - name: Generate grid CSV assets
+        run: |
+          set -e
+          # Generate combined CSVs for all available GeoJSON periods
+          for f in public/data/grid/*.geo.json; do
+            [ -e "$f" ] || continue
+            per=$(basename "$f" .geo.json)
+            echo "Building combined CSV for $per"
+            node scripts/grid-geojson-to-csv.js --period "$per" || true
+          done
+          # Generate per-month CSVs (m1..m6) for all available monthly JSON periods
+          for m in public/data/grid/*-m1.json; do
+            [ -e "$m" ] || continue
+            per=$(basename "${m%-m1.json}")
+            echo "Building monthly CSVs for $per"
+            node scripts/grid-month-points-to-csv.js --period "$per" || true
+          done
+
       - name: Remove API routes for static export
         run: rm -rf app/api
 

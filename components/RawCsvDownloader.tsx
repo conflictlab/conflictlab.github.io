@@ -6,6 +6,7 @@ interface Item { period: string }
 interface Props { items: Item[] }
 
 export default function RawCsvDownloader({ items }: Props) {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [busy, setBusy] = useState<null | { total: number; done: number }>(null)
 
@@ -25,7 +26,7 @@ export default function RawCsvDownloader({ items }: Props) {
 
   async function downloadOne(period: string) {
     try {
-      const res = await fetch(`/data/csv/${period}.csv`)
+      const res = await fetch(`${base}/data/csv/${period}.csv`)
       if (!res.ok) return
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
@@ -117,7 +118,7 @@ export default function RawCsvDownloader({ items }: Props) {
   async function buildZip(periods: string[]) {
     const files: { name: string; data: Uint8Array }[] = []
     for (const p of periods) {
-      const res = await fetch(`/data/csv/${p}.csv`)
+      const res = await fetch(`${base}/data/csv/${p}.csv`)
       if (!res.ok) continue
       const ab = await res.arrayBuffer()
       files.push({ name: `forecasts-${p}.csv`, data: new Uint8Array(ab) })
@@ -200,7 +201,7 @@ export default function RawCsvDownloader({ items }: Props) {
       </div>
       <ul className="space-y-1 max-h-64 overflow-auto pr-1">
         {items.map(({ period }) => (
-          <li key={period} className="flex items-center justify-between">
+          <li key={period} className="flex items-center">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -211,11 +212,6 @@ export default function RawCsvDownloader({ items }: Props) {
               />
               <span className="text-gray-700 text-sm">{period}</span>
             </label>
-            <button
-              className="text-clairient-blue hover:text-clairient-dark text-sm"
-              onClick={() => downloadOne(period)}
-              disabled={busy !== null}
-            >download</button>
           </li>
         ))}
       </ul>
