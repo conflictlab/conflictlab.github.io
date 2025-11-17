@@ -1,6 +1,6 @@
 # Luscint Website
 
-A professional website for Luscint - an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling.
+Website for Luscint - an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling.
 
 ## 🚀 Quick Start
 
