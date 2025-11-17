@@ -213,7 +213,7 @@ export default function RawCsvDownloader({ items }: Props) {
             </label>
             <button
               className="text-clairient-blue hover:text-clairient-dark text-sm"
-              onClick={() => downloadMany([period])}
+              onClick={() => downloadOne(period)}
               disabled={busy !== null}
             >download</button>
           </li>
