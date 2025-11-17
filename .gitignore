@@ -5,6 +5,17 @@
 /.pnp
 .pnp.js
 
+# local virtual envs and temp
+.venv*
+tmp/
+sce_dictionary.pkl
+Scenarios.pkl
+
+# local tooling / AI assistants
+.claude/
+.claude
+claude/
+
 # testing
 /coverage
 
