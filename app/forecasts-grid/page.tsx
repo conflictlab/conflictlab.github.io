@@ -2,10 +2,9 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 import { readSnapshot, getAvailablePeriods } from '@/lib/forecasts'
+import ApiLink from '@/components/ApiLink'
 import fs from 'fs'
 import path from 'path'
-import RawCsvDownloader from '@/components/RawCsvDownloader'
-import ApiLink from '@/components/ApiLink'
 
 function endPeriodFrom(start: string): string | null {
   const parts = start.split('-')
@@ -31,6 +30,20 @@ function formatDMY(iso: string): string {
 export default async function ForecastsGridPage() {
   const snap = readSnapshot('latest')
   const end = endPeriodFrom(snap.period) || snap.period
+  // Determine latest available grid period present under public/data/grid
+  let gridPeriod = snap.period
+  try {
+    const gridDir = path.join(process.cwd(), 'public', 'data', 'grid')
+    const files = fs.readdirSync(gridDir)
+    const periods = files
+      .map((f) => {
+        const m = f.match(/(\d{4}-\d{2})(?:\.geo\.json|\-m1\.json|\.csv)$/)
+        return m ? m[1] : null
+      })
+      .filter((p): p is string => !!p)
+      .sort()
+    if (periods.length) gridPeriod = periods[periods.length - 1]
+  } catch {}
   // Compute totals like the country page
   const periods = getAvailablePeriods()
   const currentIdx = periods.indexOf(snap.period)
@@ -42,14 +55,16 @@ export default async function ForecastsGridPage() {
   const countriesCovered = snap.entities.filter((e) => (e.entityType || 'country') === 'country').length
   // Total number of PRIO‑GRID 0.5° cells (pre‑computed): 720 x 360 = 259,200
   const GRID_TOTAL_CELLS = 259200
-  // Build list of downloadable CSVs (latest + recent periods)
-  const allPeriods = getAvailablePeriods()
-  const recent = allPeriods.slice(-12).reverse()
-  const rawDir = path.join(process.cwd(), 'content', 'forecasts', 'csv')
-  const downloads = recent.map((p) => ({
-    period: p,
-    hasRaw: fs.existsSync(path.join(rawDir, `${p}.csv`)),
-  }))
+  // Build list of grid asset links (GeoJSON polygons + monthly points)
+  const gridLinks = [
+    { path: `/data/grid/${gridPeriod}-m1.csv`, label: `${gridPeriod}-m1.csv (month 1 points)` },
+    { path: `/data/grid/${gridPeriod}-m2.csv`, label: `${gridPeriod}-m2.csv (month 2 points)` },
+    { path: `/data/grid/${gridPeriod}-m3.csv`, label: `${gridPeriod}-m3.csv (month 3 points)` },
+    { path: `/data/grid/${gridPeriod}-m4.csv`, label: `${gridPeriod}-m4.csv (month 4 points)` },
+    { path: `/data/grid/${gridPeriod}-m5.csv`, label: `${gridPeriod}-m5.csv (month 5 points)` },
+    { path: `/data/grid/${gridPeriod}-m6.csv`, label: `${gridPeriod}-m6.csv (month 6 points)` },
+  ]
+  const combinedCsv = { path: `/data/grid/${gridPeriod}.csv`, label: `${gridPeriod}.csv (all months as columns)` }
   return (
     <div>
       <section className="py-16 hero-background-network-image">
@@ -91,22 +106,32 @@ export default async function ForecastsGridPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <PrioGridMap period={snap.period} />
 
-        {/* Downloads (same structure as country page) */}
+        {/* Downloads: Grid assets (polygons + monthly points) */}
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="space-y-6">
             <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <h3 className="text-lg font-light text-gray-900 mb-1">Download Raw CSVs</h3>
-              <p className="text-xs text-gray-500 mb-3">Six‑month‑ahead predictions made in the selected month (original files)</p>
-              <RawCsvDownloader items={downloads.filter(d => d.hasRaw).map(d => ({ period: d.period }))} />
+              <h3 className="text-lg font-light text-gray-900 mb-1">Download Grid Data</h3>
+              <p className="text-xs text-gray-500 mb-3">Polygons and precomputed monthly centroid points for the current period.</p>
+              <ul className="text-sm text-gray-700 space-y-1">
+                {gridLinks.map((l) => (
+                  <li key={l.path}><ApiLink path={l.path} label={l.label} /></li>
+                ))}
+                <li className="mt-2 pt-2 border-t border-gray-100"><ApiLink path={combinedCsv.path} label={combinedCsv.label} /></li>
+              </ul>
             </div>
             <div className="border border-gray-200 rounded-lg p-4 bg-white">
               <h3 className="text-lg font-light text-gray-900 mb-2">Direct URLs</h3>
-              <p className="text-xs text-gray-500 mb-2">Use these links in curl, Excel, Google Sheets, or Power BI.</p>
+              <p className="text-xs text-gray-500 mb-2">Use these links in curl, scripts, or GIS tools.</p>
               <ul className="text-sm text-gray-700 space-y-1">
-                <li><ApiLink path="/data/csv/latest.csv" label="latest.csv" /></li>
-                <li><ApiLink path={`/data/csv/${snap.period}.csv`} label={`${snap.period}.csv`} /></li>
+                <li><ApiLink path={`/data/grid/${snap.period}.geo.json`} label={`${snap.period}.geo.json`} /></li>
+                <li><ApiLink path={`/data/grid/${snap.period}-m1.json`} label={`${snap.period}-m1.json`} /></li>
+                <li><ApiLink path={`/data/grid/${snap.period}-m2.json`} label={`${snap.period}-m2.json`} /></li>
+                <li><ApiLink path={`/data/grid/${snap.period}-m3.json`} label={`${snap.period}-m3.json`} /></li>
+                <li><ApiLink path={`/data/grid/${snap.period}-m4.json`} label={`${snap.period}-m4.json`} /></li>
+                <li><ApiLink path={`/data/grid/${snap.period}-m5.json`} label={`${snap.period}-m5.json`} /></li>
+                <li><ApiLink path={`/data/grid/${snap.period}-m6.json`} label={`${snap.period}-m6.json`} /></li>
               </ul>
-              <p className="text-xs text-gray-500 mt-2">Example: <code>curl -L [URL] -o file.csv</code></p>
+              <p className="text-xs text-gray-500 mt-2">Example: <code>curl -L [URL] -o file.json</code></p>
             </div>
           </div>
           <div className="lg:col-span-2" />

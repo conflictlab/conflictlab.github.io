@@ -21,9 +21,14 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    concurrency:
+      group: sync-forecasts
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,10 +58,27 @@ jobs:
       - name: Build monthly point JSONs
         run: node scripts/geojson-to-month-points.js
 
+      - name: Build grid CSV for current period
+        run: node scripts/grid-geojson-to-csv.js
+
+      - name: Build per-month grid CSVs (m1..m6)
+        run: node scripts/grid-month-points-to-csv.js
+
       - name: Commit changes (if any)
         run: |
+          set -e
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add content/forecasts public/data/csv public/data/grid || true
-          git diff --cached --quiet || git commit -m "chore: sync forecasts + grid assets (centroids, geojson, monthly points)"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: sync forecasts + grid assets (centroids, geojson, monthly points)"
+          fi
+          # Rebase on latest main to avoid non-fast-forward push failures
+          git fetch origin main
+          if ! git pull --rebase origin main; then
+            echo "Rebase failed; aborting rebase and skipping push to avoid conflicts." >&2
+            git rebase --abort || true
+            exit 1
+          fi
+          # Push rebased commit (or no-op if nothing changed)
+          git push origin HEAD:main
