@@ -17,6 +17,9 @@ on:
       - 'postcss.config.js'
       - 'tsconfig.json'
       - '.github/workflows/deploy-pages.yml'
+  workflow_run:
+    workflows: ["Sync Forecast CSVs"]
+    types: [completed]
   workflow_dispatch: {}
 
 permissions:
@@ -32,8 +35,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout (push)
+        if: github.event_name != 'workflow_run'
         uses: actions/checkout@v4
+
+      - name: Checkout (workflow_run)
+        if: github.event_name == 'workflow_run'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -52,6 +62,7 @@ jobs:
         run: rm -rf app/api
 
       - name: Build (Next.js export + data prebuild)
+        if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.base }}
           BASE_PATH: ${{ steps.base.outputs.base }}
