@@ -32,6 +32,14 @@ function endPeriodFrom(start: string): string | null {
   return `${ey}-${em}`
 }
 
+function formatDMY(iso: string): string {
+  const dt = new Date(iso)
+  const dd = String(dt.getDate()).padStart(2, '0')
+  const mm = String(dt.getMonth() + 1).padStart(2, '0')
+  const yyyy = dt.getFullYear()
+  return `${dd}/${mm}/${yyyy}`
+}
+
 export default async function ForecastsPage() {
   const snapshot = readSnapshot('latest')
   // Compute deltas vs previous period
@@ -133,7 +141,7 @@ export default async function ForecastsPage() {
           <p className="text-gray-700 font-light mb-2">
             Forecasts for the period {snapshot.period} to {endPeriodFrom(snapshot.period) || snapshot.period}
             <span className="text-gray-400"> · </span>
-            Updated: {new Date(snapshot.generatedAt).toLocaleDateString()}
+            Updated: {formatDMY(snapshot.generatedAt)}
           </p>
           <div className="mb-5">
           <div className="inline-flex rounded-lg border border-clairient-blue overflow-hidden shadow-sm">
