@@ -147,15 +147,30 @@ export default function CountryChoropleth({ items }: Props) {
     <div className="border border-gray-200 rounded-lg p-4 bg-white">
       <div className="flex items-center justify-between mb-2">
         <div className="text-sm text-gray-700">Country map — Predicted fatalities</div>
-        <div className="flex items-center gap-3">
-          <div className="text-xs text-gray-500 hidden sm:block">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
-          <div className="flex items-center gap-2 text-sm text-gray-700">
-            <span>Months ahead:</span>
-            <input type="range" min={1} max={6} value={month} onChange={(e) => setMonth(Number(e.target.value))} />
-            <span className="w-8 text-right">{month}</span>
+          <div className="flex items-center gap-3">
+            <div className="text-xs text-gray-500 hidden sm:block">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
+            <div className="flex items-center gap-3 text-sm text-gray-700">
+              <span className="whitespace-nowrap">Months ahead:</span>
+              <div className="w-56 md:w-72">
+                <input
+                  type="range"
+                  min={1}
+                  max={6}
+                  value={month}
+                  onChange={(e) => setMonth(Number(e.target.value))}
+                  className="range"
+                  style={{ accentColor: '#1e40af' }}
+                />
+                <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+                  {[1,2,3,4,5,6].map(n => (
+                    <span key={n}>{n}m</span>
+                  ))}
+                </div>
+              </div>
+              <span className="w-6 text-right font-medium">{month}</span>
+            </div>
           </div>
         </div>
-      </div>
       <div className="h-[420px] md:h-[520px] rounded overflow-hidden">
         {error && (
           <div className="h-full flex items-center justify-center text-sm text-gray-600">{error}</div>
