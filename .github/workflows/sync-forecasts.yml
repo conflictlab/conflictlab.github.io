@@ -1,0 +1,57 @@
+name: Sync Forecast CSVs
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'scripts/**'
+      - 'content/forecasts/**'
+      - 'content/priogrid_cellshp/**'
+      - 'package.json'
+      - 'app/forecasts-grid/**'
+      - 'components/PrioGridMap.tsx'
+      - '.github/workflows/sync-forecasts.yml'
+  schedule:
+    - cron: '0 3 1 * *' # 03:00 UTC on the 1st of every month
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync forecasts from GitHub CSVs
+        run: |
+          npm run csv:sync:github -- \
+            --repo ThomasSchinca/Pace-map-risk \
+            --dir Historical_Predictions \
+            --branch main \
+            --latestOnly \
+            --saveCsv
+      - name: Build PRIO-GRID centroids from shapefile
+        run: npm run grid:centroids
+      - name: Build PRIO-GRID GeoJSON from live CSV
+        run: npm run grid:build
+
+      - name: Build monthly point JSONs
+        run: node scripts/geojson-to-month-points.js
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add content/forecasts public/data/csv public/data/grid || true
+          git diff --cached --quiet || git commit -m "chore: sync forecasts + grid assets (centroids, geojson, monthly points)"
+          git push

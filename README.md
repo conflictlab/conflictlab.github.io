@@ -1,6 +1,6 @@
-# Clairient Website
+# Luscint Website
 
-A professional website for Clairient - an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling.
+A professional website for Luscint - an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling.
 
 ## 🚀 Quick Start
 
@@ -32,10 +32,92 @@ npm run build
 
 This creates an optimized production build in the `out/` directory.
 
+During the build, data steps run automatically:
+- Sync latest national forecast CSVs from GitHub and snapshot them
+- Generate PRIO‑GRID GeoJSON (`public/data/grid/{period}.geo.json`) from the live grid CSV
+- Generate monthly point JSONs (`public/data/grid/{period}-m{1..6}.json`) for fast grid rendering
+
+## 🧾 Command Cheat Sheet
+
+Common one-liners you’ll likely use.
+
+Development
+
+```bash
+npm install
+npm run dev
+```
+
+Build/Export
+
+```bash
+npm run build
+```
+
+Grid data utilities
+
+```bash
+# Build centroids from the PRIO-GRID shapefile (one-time / when shapefile changes)
+npm run grid:centroids
+
+# Build polygon GeoJSON from the live grid CSV
+npm run grid:build
+
+# Build monthly point JSONs from the polygon GeoJSON (used by the map for speed)
+node scripts/geojson-to-month-points.js --period 2025-10
+```
+
+CI automation (GitHub Actions)
+- `.github/workflows/sync-forecasts.yml` runs on `main` pushes and monthly schedule:
+  - Syncs forecast CSVs, rebuilds centroids, builds GeoJSON, builds monthly points
+  - Commits generated files under `content/forecasts`, `public/data/csv`, and `public/data/grid`
+
+Forecast CSV sync (from GitHub)
+
+Monthly (latest only, public repo — no token):
+
+```bash
+npm run csv:sync:github -- --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv
+```
+
+All periods (one-time backfill):
+
+```bash
+npm run csv:sync:github -- --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --saveCsv
+```
+
+Optionally use a token to avoid API rate limits:
+
+```bash
+npm run csv:sync:github -- --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv --token $GITHUB_TOKEN
+```
+
+Raw CSV downloads (from the site)
+
+```bash
+curl -L http://localhost:3000/api/v1/forecasts/raw/latest -o latest.csv
+curl -L http://localhost:3000/api/v1/forecasts/raw/2025-11 -o 2025-11.csv
+```
+
+Generated CSV (from JSON snapshot)
+
+```bash
+curl -L http://localhost:3000/api/v1/forecasts/csv/latest -o forecasts-latest.csv
+curl -L http://localhost:3000/api/v1/forecasts/csv/2025-11 -o forecasts-2025-11.csv
+```
+
+Convert a local CSV into a snapshot
+
+```bash
+node scripts/csv-to-snapshot.js --csv content/forecasts/2025-12.csv --period 2025-12 \
+  --generatedAt 2025-12-01T00:00:00Z --version 1.0 \
+  --releaseNote "Calibration v3.3" --releaseNote "Added macro inputs"
+```
+
 ## 📁 Project Structure
 
 ```
-clairient-website/
+luscint-website/
 ├── app/                    # Next.js App Router pages
 │   ├── about/             # About page
 │   ├── contact/           # Contact page
@@ -95,7 +177,7 @@ All website content is stored in JSON files in the `/content/` directory for eas
 The site uses Tailwind CSS for styling:
 - Global styles: `/app/globals.css`
 - Component classes: `.btn-primary`, `.btn-secondary`, `.section-heading`
-- Colors: `clairient-blue`, `clairient-light`, `clairient-dark`
+- Colors: `clairient-blue`, `clairient-light`, `clairient-dark` (brand colors)
 
 ### Adding New Pages
 
@@ -105,36 +187,26 @@ The site uses Tailwind CSS for styling:
 
 ## 🚀 Deployment Options
 
-### Option 1: Vercel (Recommended)
+### Option 1: GitHub Pages (Recommended)
 
-1. **Create a Vercel account** at [vercel.com](https://vercel.com)
+This repo is configured for static export and automatic deployment to GitHub Pages.
 
-2. **Push to GitHub**:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/yourusername/clairient-website.git
-   git push -u origin main
-   ```
+1. Enable GitHub Pages in your repository settings (Pages → Build and deployment → Source: GitHub Actions)
+2. Push to `main`. The workflow `.github/workflows/deploy-pages.yml` will:
+   - Build the site (including data prebuild steps)
+   - Export static files to `out/`
+   - Publish to GitHub Pages
 
-3. **Deploy on Vercel**:
-   - Go to [vercel.com/import](https://vercel.com/import)
-   - Import your GitHub repository
-   - Vercel will automatically detect Next.js and deploy
-   - Your site will be live at `https://your-project.vercel.app`
+Your site will be available at `https://<user>.github.io/<repo>/`.
 
-### Option 2: Netlify
+### Option 2: Vercel
+
+You can deploy to Vercel by connecting the repo in the Vercel dashboard or by adding a custom workflow. This repo is optimized for GitHub Pages by default.
+
+### Option 3: Netlify
 
 1. Build the project: `npm run build`
 2. Drag the `out/` folder to [Netlify Drop](https://app.netlify.com/drop)
-
-### Option 3: GitHub Pages
-
-1. Uncomment the GitHub Actions workflow in `.github/workflows/deploy.yml`
-2. Push to GitHub
-3. Enable GitHub Pages in repository settings
 
 ## 🔧 Configuration
 
@@ -143,7 +215,7 @@ The site uses Tailwind CSS for styling:
 Create a `.env.local` file for local development:
 ```
 # Add any environment variables here
-# NEXT_PUBLIC_API_URL=https://api.clairient.com
+# NEXT_PUBLIC_API_URL=https://api.luscint.com
 ```
 
 ### Custom Domain
@@ -151,7 +223,7 @@ Create a `.env.local` file for local development:
 To use a custom domain:
 1. Add `CNAME` file to `/public/` with your domain
 2. Configure DNS settings with your domain provider
-3. Update Vercel domain settings (if using Vercel)
+3. Update Vercel domain settings (if using Vercel) or add a CNAME for GitHub Pages
 
 ## 🔌 Future API Integration
 
@@ -182,6 +254,47 @@ useEffect(() => {
     .then(data => setForecasts(data))
 }, [])
 ```
+
+## 📊 Using Forecast CSVs from GitHub
+
+If your forecasts are stored as CSV files in a GitHub repository (one file per period, named like `YYYY-MM.csv`), you can sync them into `content/forecasts/` as JSON snapshots used by the Forecasts pages.
+
+1) One‑time or ad‑hoc sync
+
+```bash
+npm run csv:sync:github -- \\
+  --repo your-org/your-repo \\
+  --dir path/to/csvs \\
+  --branch main \\
+  --token $GITHUB_TOKEN      # optional, recommended to avoid rate limits
+```
+
+Options:
+- `--latestOnly` to fetch only the newest period.
+- You can also set env vars instead: `GITHUB_REPO`, `GITHUB_DIR`, `GITHUB_BRANCH`, `GITHUB_TOKEN`.
+
+The script converts matching `*.csv` files (deriving `YYYY-MM` from the filename) into `content/forecasts/YYYY-MM.json` and updates `content/forecasts/latest.json`. The Forecasts pages and API read from these JSON snapshots automatically.
+
+Keep original CSVs (to allow raw downloads):
+
+```bash
+npm run csv:sync:github -- --repo your-org/your-repo --dir path/to/csvs --branch main --saveCsv
+```
+
+When `--saveCsv` is used, raw files are stored under `content/forecasts/csv/` and you can expose them via:
+
+- `/api/v1/forecasts/raw/latest.csv`
+- `/api/v1/forecasts/raw/<YYYY-MM>.csv`
+
+2) Use in CI before build
+
+```bash
+npm ci
+npm run csv:sync:github -- --repo your-org/your-repo --dir path/to/csvs --branch main --latestOnly --saveCsv --token $GITHUB_TOKEN
+npm run build
+```
+
+CSV schema is documented at `scripts/csv-to-snapshot.js`.
 
 ## 📱 Mobile Optimization
 
@@ -243,7 +356,7 @@ The site is optimized for:
 
 ## 📄 License
 
-This project is proprietary to Clairient. All rights reserved.
+This project is proprietary to Luscint. All rights reserved.
 
 ---
 

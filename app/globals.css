@@ -9,7 +9,9 @@
   }
   
   body {
-    @apply text-gray-900 bg-white font-light;
+    @apply text-gray-900 font-light;
+    /* Subtle site-wide background to match hero's light gray tone */
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     line-height: 1.6;
   }
 
@@ -179,6 +181,152 @@
   .hero-background-intel a:hover {
     color: #93c5fd;
     border-color: #93c5fd;
+  }
+
+  /* Professional neutral hero background */
+  .hero-background-pro {
+    background:
+      radial-gradient(1200px 800px at 20% 10%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 60%),
+      radial-gradient(1000px 700px at 80% 80%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
+      linear-gradient(180deg, #0b1220 0%, #0e1a2a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-background-pro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      url('/real-world-map.svg') center/90% no-repeat;
+    opacity: 0.06;
+    filter: grayscale(100%);
+  }
+
+  .hero-background-pro::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 100px,
+        rgba(148, 163, 184, 0.06) 101px,
+        rgba(148, 163, 184, 0.06) 102px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 100px,
+        rgba(148, 163, 184, 0.04) 101px,
+        rgba(148, 163, 184, 0.04) 102px
+      );
+    opacity: 0.35;
+    transform: rotate(0.25deg);
+  }
+
+  .hero-background-pro h1,
+  .hero-background-pro p,
+  .hero-background-pro a {
+    color: white;
+  }
+
+  .hero-background-pro .word-highlight {
+    color: #60a5fa;
+    font-weight: 500;
+  }
+
+  /* Light hero with faint grayscale world map */
+  .hero-background-map-light {
+    background:
+      linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-background-map-light::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/accurate-world-map.svg') center/85% no-repeat;
+    opacity: 0.16;
+    filter: grayscale(100%) contrast(1.25) brightness(0.85);
+    mix-blend-mode: multiply;
+  }
+
+  /* Minimalist abstract network (nodes + edges) */
+  .hero-background-network {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-background-network::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/hero-bg-network.svg') center/cover no-repeat;
+    opacity: 0.12;
+  }
+
+  /* Network photo provided by user (fallback-safe) */
+  .hero-background-network-image {
+    background:
+      linear-gradient(180deg, #ffffff 0%, #f8fafc 100%),
+      url('/hero-bg-network.svg') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-background-network-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/network-minimalist.jpg');
+    background-repeat: no-repeat;
+    background-size: 70vmin auto; /* scale relative to viewport */
+    background-position: right bottom; /* push to viewport edge */
+    opacity: 0.12;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  .hero-background-network-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/network-minimalist.jpg');
+    background-repeat: no-repeat;
+    background-size: 70vmin auto;
+    /* Use same anchor as ::before, rotation will mirror to top-left visually */
+    background-position: right bottom;
+    opacity: 0.12;
+    mix-blend-mode: multiply;
+    transform: rotate(180deg);
+    transform-origin: center center;
+    pointer-events: none;
+  }
+
+  /* Transparent logo watermark overlay helper */
+  .logo-watermark {
+    position: relative;
+  }
+  .logo-watermark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    width: min(30vw, 160px);
+    aspect-ratio: 1 / 1;
+    transform: translateY(-50%) rotate(-8deg);
+    background: url('/logo.png') center/contain no-repeat;
+    opacity: 1;
+    pointer-events: none;
+    mix-blend-mode: normal;
   }
 
   @keyframes logoBackground {
@@ -482,11 +630,16 @@
     /* Reserve space for the full text */
     width: auto;
     min-width: fit-content;
+    /* Preserve a gap after the animated text so the following word never collides */
+    padding-right: 0.25em;
   }
 
   .word-highlight::before {
-    content: attr(data-text);
+    /* Reserve the final width + a trailing non‑breaking space */
+    content: attr(data-text) '\00a0';
     visibility: hidden;
+    display: inline-block;
+    line-height: inherit;
     /* This reserves the space */
   }
 
@@ -712,4 +865,390 @@
       opacity: 0.8;
     }
   }
+
+  /* High-tech animated background */
+  .hero-tech-bg {
+    background: 
+      linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-tech-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 60% 20%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+      linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.03) 50%, transparent 70%),
+      linear-gradient(-45deg, transparent 40%, rgba(16, 185, 129, 0.02) 60%, transparent 80%);
+    animation: techFlow 20s ease-in-out infinite;
+  }
+
+  .hero-tech-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 100px,
+        rgba(59, 130, 246, 0.02) 101px,
+        rgba(59, 130, 246, 0.02) 102px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 150px,
+        rgba(16, 185, 129, 0.015) 151px,
+        rgba(16, 185, 129, 0.015) 152px
+      ),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 200px,
+        rgba(245, 158, 11, 0.01) 201px,
+        rgba(245, 158, 11, 0.01) 202px
+      );
+    animation: techGrid 30s linear infinite;
+  }
+
+  @keyframes techFlow {
+    0%, 100% {
+      transform: translateX(0) translateY(0) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translateX(20px) translateY(-10px) scale(1.02);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translateX(-10px) translateY(15px) scale(0.98);
+      opacity: 0.9;
+    }
+    75% {
+      transform: translateX(15px) translateY(-5px) scale(1.01);
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes techGrid {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50px, -50px) rotate(0.5deg);
+    }
+  }
+
+  /* Override text colors for tech background */
+  .hero-tech-bg h1,
+  .hero-tech-bg p,
+  .hero-tech-bg a {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-tech-bg .word-highlight {
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  .hero-tech-bg a {
+    color: #60a5fa;
+    border-color: #60a5fa;
+  }
+
+  .hero-tech-bg a:hover {
+    color: #93c5fd;
+    border-color: #93c5fd;
+  }
+
+  /* Vector Backgrounds for Subpages - Fuller, Non-Moving Designs */
+  
+  /* Network topology background - Comprehensive neural network */
+  .bg-network-pattern {
+    background: 
+      linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%),
+      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.18) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.14) 0%, transparent 40%),
+      radial-gradient(circle at 60% 20%, rgba(245, 158, 11, 0.12) 0%, transparent 30%),
+      radial-gradient(circle at 15% 80%, rgba(59, 130, 246, 0.16) 0%, transparent 35%),
+      radial-gradient(circle at 85% 40%, rgba(16, 185, 129, 0.15) 0%, transparent 38%);
+    position: relative;
+  }
+
+  .bg-network-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 120px,
+        rgba(59, 130, 246, 0.08) 121px,
+        rgba(59, 130, 246, 0.08) 123px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 150px,
+        rgba(16, 185, 129, 0.06) 151px,
+        rgba(16, 185, 129, 0.06) 153px
+      );
+    opacity: 0.9;
+  }
+
+  .bg-network-pattern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.22) 0%, transparent 8%),
+      radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.18) 0%, transparent 6%),
+      radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
+      radial-gradient(circle at 90% 60%, rgba(59, 130, 246, 0.14) 0%, transparent 4%),
+      radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.20) 0%, transparent 7%),
+      radial-gradient(circle at 65% 85%, rgba(245, 158, 11, 0.16) 0%, transparent 6%);
+    opacity: 0.9;
+  }
+
+  /* Data visualization background - Comprehensive AI brain structure */
+  .bg-data-pattern {
+    background: 
+      linear-gradient(135deg, #fefefe 0%, #f8fafc 100%),
+      radial-gradient(ellipse at 30% 40%, rgba(59, 130, 246, 0.20) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(16, 185, 129, 0.18) 0%, transparent 45%),
+      radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.14) 0%, transparent 35%),
+      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.16) 0%, transparent 40%);
+    position: relative;
+  }
+
+  .bg-data-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        30deg,
+        transparent,
+        transparent 80px,
+        rgba(59, 130, 246, 0.07) 81px,
+        rgba(59, 130, 246, 0.07) 83px
+      ),
+      repeating-linear-gradient(
+        -30deg,
+        transparent,
+        transparent 100px,
+        rgba(16, 185, 129, 0.05) 101px,
+        rgba(16, 185, 129, 0.05) 103px
+      );
+    opacity: 0.9;
+  }
+
+  .bg-data-pattern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 35% 30%, rgba(59, 130, 246, 0.18) 0%, transparent 6%),
+      radial-gradient(circle at 65% 70%, rgba(16, 185, 129, 0.16) 0%, transparent 5%),
+      radial-gradient(circle at 15% 60%, rgba(147, 51, 234, 0.14) 0%, transparent 4%),
+      radial-gradient(circle at 85% 40%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
+      radial-gradient(circle at 50% 85%, rgba(59, 130, 246, 0.12) 0%, transparent 3%);
+    opacity: 0.9;
+  }
+
+  /* Geographic/mapping background - Comprehensive global pattern */
+  .bg-geo-pattern {
+    background: 
+      linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%),
+      radial-gradient(ellipse at 25% 30%, rgba(16, 185, 129, 0.22) 0%, transparent 60%),
+      radial-gradient(ellipse at 75% 70%, rgba(59, 130, 246, 0.18) 0%, transparent 55%),
+      radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.14) 0%, transparent 45%),
+      radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.16) 0%, transparent 50%);
+    position: relative;
+  }
+
+  .bg-geo-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 100px,
+        rgba(16, 185, 129, 0.08) 101px,
+        rgba(16, 185, 129, 0.08) 103px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 120px,
+        rgba(59, 130, 246, 0.07) 121px,
+        rgba(59, 130, 246, 0.07) 123px
+      );
+    opacity: 0.9;
+  }
+
+  .bg-geo-pattern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 25%, rgba(16, 185, 129, 0.18) 0%, transparent 8%),
+      radial-gradient(circle at 80% 75%, rgba(59, 130, 246, 0.16) 0%, transparent 7%),
+      radial-gradient(circle at 60% 40%, rgba(245, 158, 11, 0.14) 0%, transparent 6%),
+      radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 5%),
+      radial-gradient(circle at 90% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 4%);
+    opacity: 0.9;
+  }
+
+  /* Analytics/dashboard background - Comprehensive data visualization */
+  .bg-analytics-pattern {
+    background: 
+      linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%),
+      radial-gradient(ellipse at 20% 25%, rgba(147, 51, 234, 0.18) 0%, transparent 45%),
+      radial-gradient(ellipse at 80% 75%, rgba(59, 130, 246, 0.16) 0%, transparent 50%),
+      radial-gradient(circle at 60% 15%, rgba(16, 185, 129, 0.14) 0%, transparent 40%),
+      radial-gradient(circle at 15% 85%, rgba(245, 158, 11, 0.15) 0%, transparent 42%);
+    position: relative;
+  }
+
+  .bg-analytics-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        15deg,
+        transparent,
+        transparent 90px,
+        rgba(147, 51, 234, 0.07) 91px,
+        rgba(147, 51, 234, 0.07) 93px
+      ),
+      repeating-linear-gradient(
+        75deg,
+        transparent,
+        transparent 110px,
+        rgba(59, 130, 246, 0.06) 111px,
+        rgba(59, 130, 246, 0.06) 113px
+      );
+    opacity: 0.9;
+  }
+
+  .bg-analytics-pattern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 30% 20%, rgba(147, 51, 234, 0.16) 0%, transparent 5%),
+      radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.14) 0%, transparent 4%),
+      radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.12) 0%, transparent 6%),
+      radial-gradient(circle at 25% 70%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
+      radial-gradient(circle at 55% 55%, rgba(147, 51, 234, 0.11) 0%, transparent 3%);
+    opacity: 0.9;
+  }
+
+  /* Comprehensive tech grid background - Fuller geometric design */
+  .bg-grid-pattern {
+    background: 
+      linear-gradient(135deg, #ffffff 0%, #f8fafc 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 80px,
+        rgba(59, 130, 246, 0.14) 81px,
+        rgba(59, 130, 246, 0.14) 82px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 80px,
+        rgba(16, 185, 129, 0.12) 81px,
+        rgba(16, 185, 129, 0.12) 82px
+      ),
+      radial-gradient(ellipse at 40% 30%, rgba(59, 130, 246, 0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 70%, rgba(16, 185, 129, 0.16) 0%, transparent 45%),
+      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.14) 0%, transparent 35%);
+    position: relative;
+  }
+
+  .bg-grid-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 140px,
+        rgba(59, 130, 246, 0.07) 141px,
+        rgba(59, 130, 246, 0.07) 143px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 160px,
+        rgba(16, 185, 129, 0.06) 161px,
+        rgba(16, 185, 129, 0.06) 163px
+      );
+    opacity: 0.9;
+  }
+
+  .bg-grid-pattern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.16) 0%, transparent 7%),
+      radial-gradient(circle at 75% 25%, rgba(16, 185, 129, 0.14) 0%, transparent 6%),
+      radial-gradient(circle at 25% 75%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
+      radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.12) 0%, transparent 4%),
+      radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.11) 0%, transparent 8%);
+    opacity: 0.9;
+  }
+
+  /* Static backgrounds - no animations for improved performance and stability */
 }

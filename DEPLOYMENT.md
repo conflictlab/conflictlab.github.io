@@ -2,44 +2,67 @@
 
 ## GitHub Pages Deployment
 
-This Next.js website is configured for static export and can be deployed to GitHub Pages using the following methods.
+This Next.js website is configured for static export and can be deployed to GitHub Pages using browser-based methods.
 
 ### Prerequisites
 
 - GitHub account
-- Git installed locally
-- Node.js and npm installed
+- Node.js and npm installed locally (for building the website)
 
-### Method 1: GitHub Actions (Recommended)
+### Method 1: GitHub Web Interface Upload (Recommended)
 
-1. **Initialize Git Repository** (if not already done):
+1. **Build the Website Locally**:
    ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
+   npm install
+   npm run build
+   ```
+   This creates an `out` folder with your static website files.
+
+   Optional (sync forecasts from GitHub CSVs before build):
+   ```bash
+   npm run csv:sync:github -- --repo your-org/your-repo --dir path/to/csvs --branch main --latestOnly --token $GITHUB_TOKEN
    ```
 
 2. **Create GitHub Repository**:
-   - Go to GitHub and create a new repository
-   - Name it something like `your-website` or `company-website`
-   - Don't initialize with README (since you already have files)
+   - Go to [GitHub.com](https://github.com) and sign in
+   - Click the "+" icon in the top right → "New repository"
+   - Name it something like `luscint-website` or `your-website`
+   - Make it public (required for free GitHub Pages)
+   - Check "Add a README file"
+   - Click "Create repository"
 
-3. **Connect Local Repository to GitHub**:
-   ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-   git branch -M main
-   git push -u origin main
-   ```
+3. **Upload Website Files**:
+   - In your new repository, click "uploading an existing file"
+   - Open your local `out` folder and select all files (Ctrl/Cmd+A)
+   - Drag and drop all files into the GitHub upload area
+   - Add a commit message like "Deploy website"
+   - Click "Commit changes"
 
-4. **Create GitHub Actions Workflow**:
-   Create `.github/workflows/deploy.yml`:
+4. **Enable GitHub Pages**:
+   - Go to your repository's "Settings" tab
+   - Scroll down to "Pages" in the left sidebar
+   - Under "Source", select "Deploy from a branch"
+   - Choose "main" branch and "/ (root)" folder
+   - Click "Save"
+
+5. **Get Your Website URL**:
+   - GitHub will show you the URL where your site is published
+   - It will be: `https://YOUR_USERNAME.github.io/YOUR_REPOSITORY/`
+   - Wait 1-2 minutes for deployment to complete
+
+### Method 2: GitHub Actions (Browser Setup)
+
+1. **Build and Upload Files** (same as Method 1, steps 1-3)
+
+2. **Create GitHub Actions Workflow**:
+   - In your repository, click "Create new file"
+   - Name it `.github/workflows/deploy.yml`
+   - Copy and paste this content:
    ```yaml
    name: Deploy to GitHub Pages
 
    on:
      push:
-       branches: [ main ]
-     pull_request:
        branches: [ main ]
 
    jobs:
@@ -58,76 +81,56 @@ This Next.js website is configured for static export and can be deployed to GitH
          - name: Install dependencies
            run: npm ci
 
+         - name: Sync forecasts from GitHub CSVs
+           run: npm run csv:sync:github -- --repo your-org/your-repo --dir path/to/csvs --branch main --latestOnly
+           env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
          - name: Build
            run: npm run build
 
          - name: Deploy to GitHub Pages
            uses: peaceiris/actions-gh-pages@v3
-           if: github.ref == 'refs/heads/main'
            with:
              github_token: ${{ secrets.GITHUB_TOKEN }}
              publish_dir: ./out
    ```
+   - Click "Commit changes"
 
-5. **Enable GitHub Pages**:
-   - Go to your repository settings
-   - Navigate to "Pages" section
-   - Set source to "Deploy from a branch"
-   - Select `gh-pages` branch and `/ (root)` folder
-   - Save the settings
+3. **Upload Your Source Code**:
+   - Create a new file called `package.json` and copy your local package.json content
+   - Upload all your source files (app/, components/, content/, public/, etc.)
+   - Do NOT upload the `out` folder - GitHub Actions will build it
 
-6. **Push Changes**:
-   ```bash
-   git add .
-   git commit -m "Add GitHub Actions deployment workflow"
-   git push
-   ```
+4. **Enable GitHub Pages**:
+   - Go to Settings → Pages
+   - Select "GitHub Actions" as the source
+   - Your site will auto-deploy when you push changes
 
-### Method 2: Manual Deployment
+### Method 3: Direct File Management
 
-1. **Build the Website**:
-   ```bash
-   npm install
-   npm run build
-   ```
+For quick updates without rebuilding:
 
-2. **Initialize Git in Output Directory**:
-   ```bash
-   cd out
-   git init
-   git add .
-   git commit -m "Deploy website"
-   ```
+1. **Make Changes Locally** and run `npm run build`
+2. **Update Files via Browser**:
+   - Go to your repository on GitHub
+   - Click on the file you want to update
+   - Click the pencil icon to edit
+   - Copy and paste new content
+   - Commit changes
 
-3. **Push to GitHub Pages Branch**:
-   ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-   git branch -M gh-pages
-   git push -u origin gh-pages
-   ```
+### Updating Your Website
 
-4. **Enable GitHub Pages** (same as Method 1, step 5)
+**For Method 1 (Manual Upload)**:
+1. Make changes locally
+2. Run `npm run build`
+3. Delete old files in GitHub repository
+4. Upload new files from the `out` folder
 
-### Method 3: Using gh-pages Package
-
-1. **Install gh-pages**:
-   ```bash
-   npm install --save-dev gh-pages
-   ```
-
-2. **Add Deploy Script** to `package.json`:
-   ```json
-   {
-     "scripts": {
-       "deploy": "next build && gh-pages -d out"
-     }
-   }
-   ```
-
-3. **Deploy**:
-   ```bash
-   npm run deploy
-   ```
+**For Method 2 (GitHub Actions)**:
+1. Make changes locally
+2. Upload changed source files via GitHub web interface
+3. GitHub automatically rebuilds and deploys
 
 ### Configuration Notes
 

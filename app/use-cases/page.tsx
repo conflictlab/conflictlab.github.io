@@ -14,7 +14,7 @@ export default function UseCases() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-24 bg-white">
+      <section className="py-24 hero-background-network-image">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
             Use Cases
@@ -78,22 +78,7 @@ export default function UseCases() {
         </div>
       </section>
 
-      {/* Simple CTA */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-lg text-gray-600 mb-8 font-light">
-            Ready to see how it works for your organization?
-          </p>
-          <div className="space-x-8">
-            <Link href="/dashboard" className="text-link">
-              View Demo
-            </Link>
-            <Link href="/contact" className="text-link">
-              Start Discussion
-            </Link>
-          </div>
-        </div>
-      </section>
+      
     </>
   )
 }

@@ -16,8 +16,8 @@ export default function Contact() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="py-24 bg-white">
+      {/* Hero Section with transparent logo watermark */}
+      <section className="py-24 hero-background-network-image logo-watermark">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
             Contact
@@ -44,10 +44,6 @@ export default function Contact() {
                   >
                     {companyData.contact.email}
                   </a>
-                </div>
-                <div>
-                  <div className="font-medium mb-1">Response Time</div>
-                  <div className="text-gray-600">Typically within 24 hours</div>
                 </div>
               </div>
             </div>
@@ -78,7 +74,7 @@ export default function Contact() {
                   Message sent successfully
                 </h4>
                 <p className="text-green-600">
-                  We'll be in touch within 24 hours.
+                  We&rsquo;ll be in touch within 24 hours.
                 </p>
               </div>
             ) : (

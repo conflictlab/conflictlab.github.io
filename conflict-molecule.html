@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conflict Diffusion Molecule - 3D Network Visualization</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0e1a;
+            color: #e2e8f0;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .molecule-container {
+            perspective: 2000px;
+            perspective-origin: 50% 50%;
+            width: 800px;
+            height: 600px;
+            position: relative;
+        }
+
+        .molecule {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: moleculeRotation 25s infinite linear;
+        }
+
+        /* Conflict nodes (atoms) */
+        .conflict-node {
+            position: absolute;
+            border-radius: 50%;
+            transform-style: preserve-3d;
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+            cursor: pointer;
+        }
+
+        /* Different conflict intensities */
+        .node-intensity-1 {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(252, 165, 165, 0.9), rgba(239, 68, 68, 0.7));
+            border: 2px solid rgba(239, 68, 68, 0.8);
+        }
+
+        .node-intensity-2 {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(248, 113, 113, 0.9), rgba(220, 38, 38, 0.8));
+            border: 2px solid rgba(220, 38, 38, 0.9);
+        }
+
+        .node-intensity-3 {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.9), rgba(153, 27, 27, 0.8));
+            border: 3px solid rgba(153, 27, 27, 1);
+            animation: intensePulse 2s ease-in-out infinite;
+        }
+
+        /* Connection bonds */
+        .bond {
+            position: absolute;
+            background: linear-gradient(90deg, 
+                rgba(239, 68, 68, 0.8) 0%,
+                rgba(220, 38, 38, 0.6) 50%,
+                rgba(239, 68, 68, 0.8) 100%);
+            height: 3px;
+            border-radius: 2px;
+            transform-origin: 0 50%;
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+            animation: bondPulse 3s ease-in-out infinite;
+        }
+
+        /* Strong bonds for close conflicts */
+        .bond-strong {
+            height: 5px;
+            background: linear-gradient(90deg, 
+                rgba(153, 27, 27, 0.9) 0%,
+                rgba(220, 38, 38, 0.8) 50%,
+                rgba(153, 27, 27, 0.9) 100%);
+            box-shadow: 0 0 15px rgba(153, 27, 27, 0.6);
+        }
+
+        /* Weak bonds for distant connections */
+        .bond-weak {
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(248, 113, 113, 0.6) 0%,
+                rgba(252, 165, 165, 0.4) 50%,
+                rgba(248, 113, 113, 0.6) 100%);
+            animation-duration: 5s;
+        }
+
+        /* Diffusion wave effects */
+        .diffusion-wave {
+            position: absolute;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                transparent 0%,
+                rgba(220, 38, 38, 0.1) 70%,
+                transparent 100%);
+            animation: waveExpansion 4s ease-out infinite;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes moleculeRotation {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            33% { transform: rotateX(120deg) rotateY(120deg) rotateZ(60deg); }
+            66% { transform: rotateX(240deg) rotateY(240deg) rotateZ(120deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); }
+        }
+
+        @keyframes intensePulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(153, 27, 27, 0.6);
+            }
+            50% { 
+                transform: scale(1.2);
+                box-shadow: 0 0 40px rgba(153, 27, 27, 0.9);
+            }
+        }
+
+        @keyframes bondPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes waveExpansion {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes unfoldAnimation {
+            0% {
+                transform: scale(0.1) translateZ(0px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1) translateZ(var(--final-z, 0px));
+                opacity: 1;
+            }
+        }
+
+        /* Info panel */
+        .info-panel {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            max-width: 300px;
+        }
+
+        .info-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .control-button {
+            background: rgba(220, 38, 38, 0.8);
+            border: 1px solid rgba(220, 38, 38, 1);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin: 2px;
+            transition: all 0.2s;
+        }
+
+        .control-button:hover {
+            background: rgba(153, 27, 27, 0.9);
+        }
+
+        .time-display {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            font-family: 'Monaco', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="molecule-container">
+        <div class="molecule" id="molecule">
+            <!-- Nodes and bonds will be generated by JavaScript -->
+        </div>
+        
+        <!-- Diffusion wave effects -->
+        <div class="diffusion-wave" id="wave1" style="width: 100px; height: 100px; top: 50%; left: 50%; margin: -50px;"></div>
+        <div class="diffusion-wave" id="wave2" style="width: 150px; height: 150px; top: 40%; left: 60%; margin: -75px; animation-delay: 1s;"></div>
+        <div class="diffusion-wave" id="wave3" style="width: 120px; height: 120px; top: 60%; left: 40%; margin: -60px; animation-delay: 2s;"></div>
+    </div>
+
+    <div class="info-panel">
+        <div class="info-title">Conflict Diffusion Molecule</div>
+        <div class="info-text">
+            Each node represents a conflict event. Bonds show how conflicts spread through 
+            networks over time. Watch as the molecular structure unfolds, revealing the 
+            complex interconnections of geopolitical tensions.
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="time-display" id="timeDisplay">t = 0 months</div>
+        <button class="control-button" onclick="pauseRotation()">Pause</button>
+        <button class="control-button" onclick="resumeRotation()">Resume</button>
+        <button class="control-button" onclick="triggerUnfold()">Unfold</button>
+        <button class="control-button" onclick="resetMolecule()">Reset</button>
+    </div>
+
+    <script>
+        // Molecule configuration
+        const nodes = [
+            // Core cluster (initial outbreak)
+            { id: 'core1', x: 400, y: 300, z: 0, intensity: 3, time: 0 },
+            { id: 'core2', x: 420, y: 280, z: 20, intensity: 2, time: 1 },
+            { id: 'core3', x: 380, y: 320, z: -20, intensity: 2, time: 2 },
+            
+            // Secondary cluster (spread)
+            { id: 'sec1', x: 300, y: 200, z: 50, intensity: 2, time: 3 },
+            { id: 'sec2', x: 280, y: 220, z: 30, intensity: 1, time: 4 },
+            { id: 'sec3', x: 320, y: 180, z: 70, intensity: 1, time: 5 },
+            
+            // Tertiary cluster (distant spread)
+            { id: 'ter1', x: 550, y: 400, z: -50, intensity: 1, time: 6 },
+            { id: 'ter2', x: 570, y: 420, z: -30, intensity: 1, time: 7 },
+            { id: 'ter3', x: 530, y: 380, z: -70, intensity: 2, time: 8 },
+            
+            // Network cluster (fourth wave)
+            { id: 'net1', x: 250, y: 450, z: 40, intensity: 1, time: 9 },
+            { id: 'net2', x: 200, y: 400, z: 60, intensity: 1, time: 10 },
+            { id: 'net3', x: 180, y: 380, z: 80, intensity: 2, time: 11 },
+            
+            // Isolated nodes (sporadic conflicts)
+            { id: 'iso1', x: 600, y: 150, z: 100, intensity: 1, time: 12 },
+            { id: 'iso2', x: 150, y: 250, z: -100, intensity: 1, time: 13 },
+            { id: 'iso3', x: 650, y: 500, z: 90, intensity: 1, time: 14 }
+        ];
+
+        const connections = [
+            // Core cluster connections
+            { from: 'core1', to: 'core2', strength: 'strong' },
+            { from: 'core1', to: 'core3', strength: 'strong' },
+            { from: 'core2', to: 'core3', strength: 'normal' },
+            
+            // Core to secondary spread
+            { from: 'core1', to: 'sec1', strength: 'normal' },
+            { from: 'core2', to: 'sec2', strength: 'weak' },
+            { from: 'sec1', to: 'sec2', strength: 'normal' },
+            { from: 'sec1', to: 'sec3', strength: 'normal' },
+            
+            // Secondary to tertiary
+            { from: 'sec1', to: 'ter1', strength: 'weak' },
+            { from: 'ter1', to: 'ter2', strength: 'normal' },
+            { from: 'ter1', to: 'ter3', strength: 'normal' },
+            { from: 'ter2', to: 'ter3', strength: 'weak' },
+            
+            // Network connections
+            { from: 'core3', to: 'net1', strength: 'weak' },
+            { from: 'net1', to: 'net2', strength: 'normal' },
+            { from: 'net2', to: 'net3', strength: 'strong' },
+            
+            // Isolated connections
+            { from: 'sec3', to: 'iso1', strength: 'weak' },
+            { from: 'net2', to: 'iso2', strength: 'weak' },
+            { from: 'ter3', to: 'iso3', strength: 'weak' },
+            
+            // Cross-cluster weak links
+            { from: 'core1', to: 'ter1', strength: 'weak' },
+            { from: 'sec1', to: 'net1', strength: 'weak' },
+            { from: 'ter2', to: 'net3', strength: 'weak' }
+        ];
+
+        let currentTime = 0;
+        let isUnfolding = false;
+        let rotationPaused = false;
+
+        function createMolecule() {
+            const molecule = document.getElementById('molecule');
+            molecule.innerHTML = '';
+
+            // Create nodes
+            nodes.forEach(node => {
+                const nodeElement = document.createElement('div');
+                nodeElement.className = `conflict-node node-intensity-${node.intensity}`;
+                nodeElement.id = node.id;
+                nodeElement.style.left = `${node.x}px`;
+                nodeElement.style.top = `${node.y}px`;
+                nodeElement.style.transform = `translateZ(${node.z}px)`;
+                nodeElement.style.opacity = node.time <= currentTime ? '1' : '0.2';
+                
+                // Add click interaction
+                nodeElement.addEventListener('click', () => {
+                    showNodeInfo(node);
+                });
+                
+                molecule.appendChild(nodeElement);
+            });
+
+            // Create bonds
+            connections.forEach(connection => {
+                const fromNode = nodes.find(n => n.id === connection.from);
+                const toNode = nodes.find(n => n.id === connection.to);
+                
+                if (fromNode && toNode) {
+                    const bondElement = document.createElement('div');
+                    bondElement.className = `bond ${connection.strength === 'strong' ? 'bond-strong' : connection.strength === 'weak' ? 'bond-weak' : ''}`;
+                    
+                    // Calculate bond position and rotation
+                    const dx = toNode.x - fromNode.x;
+                    const dy = toNode.y - fromNode.y;
+                    const dz = toNode.z - fromNode.z;
+                    const length = Math.sqrt(dx*dx + dy*dy);
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    
+                    bondElement.style.left = `${fromNode.x}px`;
+                    bondElement.style.top = `${fromNode.y}px`;
+                    bondElement.style.width = `${length}px`;
+                    bondElement.style.transform = `translateZ(${fromNode.z + dz/2}px) rotate(${angle}deg)`;
+                    bondElement.style.opacity = (fromNode.time <= currentTime && toNode.time <= currentTime) ? '1' : '0.2';
+                    
+                    molecule.appendChild(bondElement);
+                }
+            });
+        }
+
+        function updateTimeDisplay() {
+            document.getElementById('timeDisplay').textContent = `t = ${Math.floor(currentTime)} months`;
+        }
+
+        function animateUnfolding() {
+            nodes.forEach((node, index) => {
+                const nodeElement = document.getElementById(node.id);
+                if (node.time <= currentTime) {
+                    nodeElement.style.animation = `unfoldAnimation 2s ease-out ${index * 0.2}s forwards`;
+                    nodeElement.style.setProperty('--final-z', `${node.z}px`);
+                }
+            });
+        }
+
+        function triggerUnfold() {
+            isUnfolding = true;
+            currentTime = Math.min(15, currentTime + 3);
+            createMolecule();
+            animateUnfolding();
+            updateTimeDisplay();
+        }
+
+        function pauseRotation() {
+            rotationPaused = true;
+            document.querySelector('.molecule').style.animationPlayState = 'paused';
+        }
+
+        function resumeRotation() {
+            rotationPaused = false;
+            document.querySelector('.molecule').style.animationPlayState = 'running';
+        }
+
+        function resetMolecule() {
+            currentTime = 0;
+            isUnfolding = false;
+            createMolecule();
+            updateTimeDisplay();
+            resumeRotation();
+        }
+
+        function showNodeInfo(node) {
+            const intensity = ['Low', 'Medium', 'High'][node.intensity - 1];
+            alert(`Conflict Node ${node.id}\nIntensity: ${intensity}\nTime: ${node.time} months\nPosition: (${node.x}, ${node.y}, ${node.z})`);
+        }
+
+        // Auto-evolution
+        setInterval(() => {
+            if (!isUnfolding && currentTime < 15) {
+                currentTime += 0.1;
+                createMolecule();
+                updateTimeDisplay();
+            }
+        }, 500);
+
+        // Mouse interaction
+        let isDragging = false;
+        let startX, startY;
+
+        document.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.molecule-container')) {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                pauseRotation();
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                const molecule = document.querySelector('.molecule');
+                molecule.style.transform = `rotateY(${deltaX}deg) rotateX(${-deltaY}deg)`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                resumeRotation();
+            }
+        });
+
+        // Initialize
+        createMolecule();
+        updateTimeDisplay();
+    </script>
+</body>
+</html>

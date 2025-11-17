@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Data Cube</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        .cube-container {
+            text-align: center;
+        }
+        
+        .cube-wrapper {
+            perspective: 1000px;
+            display: inline-block;
+        }
+        
+        .cube {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 8s infinite linear;
+            margin: 50px;
+        }
+        
+        .face {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            opacity: 0.7;
+        }
+        
+        /* Gas diffusion patterns from center source */
+        .front {
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(255,50,50,0.9) 0%,
+                rgba(255,80,80,0.7) 15%,
+                rgba(255,120,120,0.5) 30%,
+                rgba(255,160,160,0.3) 45%,
+                rgba(255,200,200,0.15) 60%,
+                rgba(255,220,220,0.05) 80%,
+                transparent 100%);
+            transform: translateZ(150px);
+        }
+        
+        .back {
+            background: radial-gradient(circle at 60% 40%, 
+                rgba(255,60,60,0.6) 0%,
+                rgba(255,100,100,0.4) 20%,
+                rgba(255,140,140,0.25) 40%,
+                rgba(255,180,180,0.1) 65%,
+                transparent 90%);
+            transform: translateZ(-150px) rotateY(180deg);
+        }
+        
+        .right {
+            background: radial-gradient(circle at 40% 60%, 
+                rgba(255,70,70,0.8) 0%,
+                rgba(255,110,110,0.6) 18%,
+                rgba(255,150,150,0.4) 35%,
+                rgba(255,190,190,0.2) 55%,
+                rgba(255,210,210,0.08) 75%,
+                transparent 95%);
+            transform: rotateY(90deg) translateZ(150px);
+        }
+        
+        .left {
+            background: radial-gradient(circle at 70% 30%, 
+                rgba(255,80,80,0.7) 0%,
+                rgba(255,120,120,0.5) 22%,
+                rgba(255,160,160,0.3) 42%,
+                rgba(255,200,200,0.15) 62%,
+                transparent 85%);
+            transform: rotateY(-90deg) translateZ(150px);
+        }
+        
+        .top {
+            background: radial-gradient(circle at 50% 70%, 
+                rgba(255,40,40,0.85) 0%,
+                rgba(255,90,90,0.65) 16%,
+                rgba(255,130,130,0.45) 32%,
+                rgba(255,170,170,0.25) 50%,
+                rgba(255,200,200,0.1) 70%,
+                transparent 92%);
+            transform: rotateX(90deg) translateZ(150px);
+        }
+        
+        .bottom {
+            background: radial-gradient(circle at 30% 50%, 
+                rgba(255,90,90,0.6) 0%,
+                rgba(255,130,130,0.4) 25%,
+                rgba(255,170,170,0.2) 50%,
+                rgba(255,200,200,0.08) 75%,
+                transparent 100%);
+            transform: rotateX(-90deg) translateZ(150px);
+        }
+        
+        /* Axis labels */
+        .axis-label {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .x-axis { bottom: -30px; right: 50px; }
+        .y-axis { top: 50px; right: -40px; }
+        .z-axis { top: -30px; left: 50px; }
+        
+        /* Gas particles simulation */
+        .gas-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,50,50,0.6);
+            box-shadow: 0 0 8px rgba(255,50,50,0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .particle-small { width: 4px; height: 4px; }
+        .particle-medium { width: 6px; height: 6px; }
+        .particle-large { width: 8px; height: 8px; }
+        
+        .particle-1 { animation-delay: 0s; animation-duration: 3s; }
+        .particle-2 { animation-delay: 0.5s; animation-duration: 3.5s; }
+        .particle-3 { animation-delay: 1s; animation-duration: 2.8s; }
+        .particle-4 { animation-delay: 1.5s; animation-duration: 3.2s; }
+        .particle-5 { animation-delay: 2s; animation-duration: 2.9s; }
+        
+        @keyframes rotateCube {
+            from { transform: rotateX(15deg) rotateY(0deg) rotateZ(5deg); }
+            to { transform: rotateX(15deg) rotateY(360deg) rotateZ(5deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1); 
+                opacity: 0.8;
+            }
+            25% { 
+                transform: translate(10px, -15px) scale(0.9); 
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translate(-8px, 12px) scale(1.1); 
+                opacity: 0.4;
+            }
+            75% { 
+                transform: translate(15px, 8px) scale(0.95); 
+                opacity: 0.7;
+            }
+        }
+        
+        /* Hover effect */
+        .cube:hover {
+            animation-play-state: paused;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #3730A3;
+        }
+    </style>
+</head>
+<body>
+    <div class="cube-container">
+        <h2>3D Gas Diffusion Simulation</h2>
+        <div class="cube-wrapper">
+            <div class="cube" id="cube">
+                <div class="face front">
+                    <!-- Gas diffusion particles - concentrated near center, dispersing outward -->
+                    <div class="gas-particle particle-large particle-1" style="top: 48%; left: 48%;"></div>
+                    <div class="gas-particle particle-medium particle-2" style="top: 42%; left: 55%;"></div>
+                    <div class="gas-particle particle-small particle-3" style="top: 35%; left: 40%;"></div>
+                    <div class="gas-particle particle-small particle-4" style="top: 58%; left: 35%;"></div>
+                    <div class="gas-particle particle-medium particle-5" style="top: 65%; left: 60%;"></div>
+                    <div class="gas-particle particle-small particle-1" style="top: 25%; left: 65%;"></div>
+                    <div class="gas-particle particle-small particle-3" style="top: 75%; left: 25%;"></div>
+                </div>
+                <div class="face back">
+                    <div class="gas-particle particle-medium particle-2" style="top: 58%; left: 38%;"></div>
+                    <div class="gas-particle particle-small particle-4" style="top: 45%; left: 45%;"></div>
+                    <div class="gas-particle particle-small particle-1" style="top: 35%; left: 55%;"></div>
+                    <div class="gas-particle particle-small particle-5" style="top: 70%; left: 70%;"></div>
+                    <div class="gas-particle particle-small particle-3" style="top: 80%; left: 30%;"></div>
+                </div>
+                <div class="face right">
+                    <div class="gas-particle particle-medium particle-3" style="top: 58%; left: 42%;"></div>
+                    <div class="gas-particle particle-small particle-1" style="top: 40%; left: 50%;"></div>
+                    <div class="gas-particle particle-small particle-5" style="top: 30%; left: 35%;"></div>
+                    <div class="gas-particle particle-small particle-2" style="top: 75%; left: 55%;"></div>
+                    <div class="gas-particle particle-small particle-4" style="top: 85%; left: 40%;"></div>
+                </div>
+                <div class="face left">
+                    <div class="gas-particle particle-medium particle-4" style="top: 32%; left: 68%;"></div>
+                    <div class="gas-particle particle-small particle-2" style="top: 45%; left: 55%;"></div>
+                    <div class="gas-particle particle-small particle-1" style="top: 60%; left: 40%;"></div>
+                    <div class="gas-particle particle-small particle-5" style="top: 25%; left: 80%;"></div>
+                    <div class="gas-particle particle-small particle-3" style="top: 80%; left: 75%;"></div>
+                </div>
+                <div class="face top">
+                    <div class="gas-particle particle-medium particle-5" style="top: 68%; left: 52%;"></div>
+                    <div class="gas-particle particle-small particle-3" style="top: 55%; left: 45%;"></div>
+                    <div class="gas-particle particle-small particle-1" style="top: 40%; left: 60%;"></div>
+                    <div class="gas-particle particle-small particle-4" style="top: 75%; left: 35%;"></div>
+                    <div class="gas-particle particle-small particle-2" style="top: 30%; left: 75%;"></div>
+                </div>
+                <div class="face bottom">
+                    <div class="gas-particle particle-medium particle-1" style="top: 48%; left: 32%;"></div>
+                    <div class="gas-particle particle-small particle-4" style="top: 40%; left: 45%;"></div>
+                    <div class="gas-particle particle-small particle-2" style="top: 65%; left: 55%;"></div>
+                    <div class="gas-particle particle-small particle-5" style="top: 25%; left: 70%;"></div>
+                    <div class="gas-particle particle-small particle-3" style="top: 80%; left: 20%;"></div>
+                </div>
+                
+                <!-- Axis labels -->
+                <div class="axis-label x-axis">X</div>
+                <div class="axis-label y-axis">Y</div>
+                <div class="axis-label z-axis">Z</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="pauseAnimation()">Pause</button>
+            <button onclick="resumeAnimation()">Resume</button>
+            <button onclick="changeSpeed('slow')">Slow</button>
+            <button onclick="changeSpeed('fast')">Fast</button>
+        </div>
+    </div>
+
+    <script>
+        const cube = document.getElementById('cube');
+        let isPaused = false;
+        
+        function pauseAnimation() {
+            cube.style.animationPlayState = 'paused';
+            isPaused = true;
+        }
+        
+        function resumeAnimation() {
+            cube.style.animationPlayState = 'running';
+            isPaused = false;
+        }
+        
+        function changeSpeed(speed) {
+            if (speed === 'slow') {
+                cube.style.animationDuration = '12s';
+            } else if (speed === 'fast') {
+                cube.style.animationDuration = '4s';
+            }
+        }
+        
+        // Add mouse interaction
+        cube.addEventListener('mouseenter', () => {
+            if (!isPaused) {
+                cube.style.animationPlayState = 'paused';
+            }
+        });
+        
+        cube.addEventListener('mouseleave', () => {
+            if (!isPaused) {
+                cube.style.animationPlayState = 'running';
+            }
+        });
+    </script>
+</body>
+</html>

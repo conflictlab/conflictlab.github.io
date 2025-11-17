@@ -21,8 +21,8 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img src="/logo.png" alt="Clarint" className="h-8 w-8 mr-3" />
-              <span className="text-2xl font-light text-clairient-blue">Clarint</span>
+              <img src="/logo.png" alt="Luscint" className="h-8 w-8 mr-3" />
+              <span className="text-2xl font-light text-clairient-blue">Luscint</span>
             </Link>
           </div>
           
@@ -39,6 +39,16 @@ export default function Navigation() {
               Technology
             </Link>
             <Link 
+              href="/forecasts" 
+              className={`transition-colors font-light ${
+                isActive('/forecasts') 
+                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1' 
+                  : 'text-gray-600 hover:text-clairient-blue'
+              }`}
+            >
+              Forecasts
+            </Link>
+            <Link 
               href="/use-cases" 
               className={`transition-colors font-light ${
                 isActive('/use-cases') 
@@ -48,16 +58,7 @@ export default function Navigation() {
             >
               Use Cases
             </Link>
-            <Link 
-              href="/dashboard" 
-              className={`transition-colors font-light ${
-                isActive('/dashboard') 
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1' 
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Demo
-            </Link>
+            
             <Link 
               href="/contact" 
               className={`transition-colors font-light ${
@@ -97,6 +98,16 @@ export default function Navigation() {
               Technology
             </Link>
             <Link 
+              href="/forecasts" 
+              className={`block px-3 py-2 font-light ${
+                isActive('/forecasts') 
+                  ? 'text-clairient-blue bg-blue-50' 
+                  : 'text-gray-600 hover:text-clairient-blue'
+              }`}
+            >
+              Forecasts
+            </Link>
+            <Link 
               href="/use-cases" 
               className={`block px-3 py-2 font-light ${
                 isActive('/use-cases') 
@@ -106,16 +117,7 @@ export default function Navigation() {
             >
               Use Cases
             </Link>
-            <Link 
-              href="/dashboard" 
-              className={`block px-3 py-2 font-light ${
-                isActive('/dashboard') 
-                  ? 'text-clairient-blue bg-blue-50' 
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Demo
-            </Link>
+            
             <Link 
               href="/contact" 
               className={`block px-3 py-2 font-light ${

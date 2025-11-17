@@ -1,0 +1,156 @@
+{
+  "version": "1.0",
+  "generatedAt": "2025-11-01T00:00:00Z",
+  "period": "2025-11",
+  "releaseNotes": [
+    "Model calibration updated to v3.2 (improved early signal extraction).",
+    "Expanded event ontology for policy and macro drivers.",
+    "Confidence scoring adjusted for data sparsity in select regions."
+  ],
+  "entities": [
+    {
+      "id": "USA",
+      "name": "United States",
+      "entityType": "country",
+      "iso3": "USA",
+      "index": 42,
+      "band": "medium",
+      "confidence": 0.82,
+      "deltaMoM": 2,
+      "deltaYoY": 5,
+      "horizons": {
+        "1m": { "index": 43, "p10": 38, "p50": 43, "p90": 48 },
+        "3m": { "index": 45, "p10": 36, "p50": 45, "p90": 53 },
+        "6m": { "index": 47, "p10": 34, "p50": 47, "p90": 58 }
+      },
+      "drivers": [
+        { "category": "policy", "impact": 1.1, "note": "Regulatory uncertainty in technology policy." },
+        { "category": "macro", "impact": 0.7 },
+        { "category": "unrest", "impact": 0.2 }
+      ]
+    },
+    {
+      "id": "DEU",
+      "name": "Germany",
+      "entityType": "country",
+      "iso3": "DEU",
+      "index": 35,
+      "band": "medium",
+      "confidence": 0.78,
+      "deltaMoM": -1,
+      "deltaYoY": 2,
+      "horizons": {
+        "1m": { "index": 34, "p10": 29, "p50": 34, "p90": 39 },
+        "3m": { "index": 36, "p10": 28, "p50": 36, "p90": 44 },
+        "6m": { "index": 38, "p10": 27, "p50": 38, "p90": 48 }
+      },
+      "drivers": [
+        { "category": "macro", "impact": 0.6 },
+        { "category": "policy", "impact": 0.3 }
+      ]
+    },
+    {
+      "id": "CHN",
+      "name": "China",
+      "entityType": "country",
+      "iso3": "CHN",
+      "index": 50,
+      "band": "medium",
+      "confidence": 0.75,
+      "deltaMoM": 1,
+      "deltaYoY": 4,
+      "horizons": {
+        "1m": { "index": 51, "p10": 46, "p50": 51, "p90": 56 },
+        "3m": { "index": 53, "p10": 44, "p50": 53, "p90": 61 },
+        "6m": { "index": 55, "p10": 42, "p50": 55, "p90": 65 }
+      },
+      "drivers": [
+        { "category": "policy", "impact": 0.9 },
+        { "category": "macro", "impact": 0.5 },
+        { "category": "security", "impact": 0.3 }
+      ]
+    },
+    {
+      "id": "NGA",
+      "name": "Nigeria",
+      "entityType": "country",
+      "iso3": "NGA",
+      "index": 68,
+      "band": "high",
+      "confidence": 0.7,
+      "deltaMoM": 3,
+      "deltaYoY": 6,
+      "horizons": {
+        "1m": { "index": 69, "p10": 60, "p50": 69, "p90": 78 },
+        "3m": { "index": 71, "p10": 58, "p50": 71, "p90": 82 },
+        "6m": { "index": 73, "p10": 55, "p50": 73, "p90": 86 }
+      },
+      "drivers": [
+        { "category": "security", "impact": 1.6, "note": "Localized insurgency activity." },
+        { "category": "macro", "impact": 0.9 },
+        { "category": "policy", "impact": 0.4 }
+      ]
+    },
+    {
+      "id": "BRA",
+      "name": "Brazil",
+      "entityType": "country",
+      "iso3": "BRA",
+      "index": 39,
+      "band": "medium",
+      "confidence": 0.77,
+      "deltaMoM": 0,
+      "deltaYoY": 1,
+      "horizons": {
+        "1m": { "index": 39, "p10": 34, "p50": 39, "p90": 44 },
+        "3m": { "index": 40, "p10": 32, "p50": 40, "p90": 48 },
+        "6m": { "index": 41, "p10": 31, "p50": 41, "p90": 50 }
+      },
+      "drivers": [
+        { "category": "unrest", "impact": 0.4 },
+        { "category": "policy", "impact": 0.2 }
+      ]
+    },
+    {
+      "id": "UKR",
+      "name": "Ukraine",
+      "entityType": "country",
+      "iso3": "UKR",
+      "index": 84,
+      "band": "high",
+      "confidence": 0.68,
+      "deltaMoM": -2,
+      "deltaYoY": -5,
+      "horizons": {
+        "1m": { "index": 83, "p10": 74, "p50": 83, "p90": 92 },
+        "3m": { "index": 81, "p10": 70, "p50": 81, "p90": 92 },
+        "6m": { "index": 80, "p10": 66, "p50": 80, "p90": 92 }
+      },
+      "drivers": [
+        { "category": "security", "impact": -1.2 },
+        { "category": "policy", "impact": 0.3 }
+      ]
+    },
+    {
+      "id": "MENA",
+      "name": "Middle East & North Africa",
+      "entityType": "region",
+      "index": 62,
+      "band": "high",
+      "confidence": 0.72,
+      "deltaMoM": 4,
+      "deltaYoY": 7,
+      "horizons": {
+        "1m": { "index": 64, "p10": 56, "p50": 64, "p90": 73 },
+        "3m": { "index": 66, "p10": 54, "p50": 66, "p90": 78 },
+        "6m": { "index": 67, "p10": 52, "p50": 67, "p90": 81 }
+      },
+      "drivers": [
+        { "category": "security", "impact": 1.9 },
+        { "category": "policy", "impact": 0.8 },
+        { "category": "macro", "impact": 0.5 }
+      ]
+    }
+  ]
+}
+

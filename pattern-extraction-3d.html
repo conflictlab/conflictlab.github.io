@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Pattern Extraction - Temporal Scaling Analysis</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: 
+                radial-gradient(ellipse at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%),
+                #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="%23000"/><circle cx="150" cy="200" r="2" fill="%23ffeb3b" opacity="0.8"/><circle cx="180" cy="180" r="1.5" fill="%23ffeb3b" opacity="0.6"/><circle cx="200" cy="220" r="3" fill="%23ffc107" opacity="0.9"/><circle cx="350" cy="150" r="2.5" fill="%23ffeb3b" opacity="0.7"/><circle cx="400" cy="300" r="4" fill="%23ffc107" opacity="1"/><circle cx="420" cy="320" r="1" fill="%23ffeb3b" opacity="0.5"/><circle cx="600" cy="100" r="2" fill="%23ffeb3b" opacity="0.8"/><circle cx="650" cy="400" r="3" fill="%23ffc107" opacity="0.9"/><circle cx="300" cy="450" r="1.5" fill="%23ffeb3b" opacity="0.6"/><circle cx="100" cy="350" r="2" fill="%23ffeb3b" opacity="0.7"/><circle cx="750" cy="200" r="1" fill="%23ffeb3b" opacity="0.5"/><circle cx="500" cy="250" r="2.5" fill="%23ffc107" opacity="0.8"/></svg>') center/cover no-repeat;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .visualization-container {
+            perspective: 2500px;
+            perspective-origin: 50% 50%;
+            width: 1000px;
+            height: 700px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .scene-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(20deg) rotateY(-10deg);
+        }
+
+        /* Time series background grid */
+        .time-grid {
+            position: absolute;
+            width: 800px;
+            height: 400px;
+            left: 100px;
+            top: 150px;
+            transform: translateZ(-100px);
+            opacity: 0.3;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: rgba(100, 116, 139, 0.3);
+        }
+
+        .grid-line.horizontal {
+            width: 100%;
+            height: 1px;
+        }
+
+        .grid-line.vertical {
+            width: 1px;
+            height: 100%;
+        }
+
+        /* Time series data visualization */
+        .time-series {
+            position: absolute;
+            width: 800px;
+            height: 400px;
+            left: 100px;
+            top: 150px;
+            transform-style: preserve-3d;
+        }
+
+        .data-point {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.8);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+
+        .data-point.highlight {
+            background: rgba(239, 68, 68, 1);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+            transform: scale(2);
+        }
+
+        /* Pattern extraction windows */
+        .pattern-window {
+            position: absolute;
+            border: 2px solid rgba(34, 197, 94, 0.8);
+            background: rgba(34, 197, 94, 0.1);
+            transform-style: preserve-3d;
+            transition: all 1s ease-in-out;
+            pointer-events: none;
+        }
+
+        .pattern-window.extracting {
+            border-color: rgba(239, 68, 68, 1);
+            background: rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Extracted patterns */
+        .extracted-pattern {
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .extracted-pattern.visible {
+            opacity: 1;
+        }
+
+        .pattern-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(239, 68, 68, 0.8) 0%,
+                rgba(220, 38, 38, 1) 50%,
+                rgba(239, 68, 68, 0.8) 100%);
+            transform-origin: 0 50%;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+        }
+
+        .pattern-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 1), rgba(220, 38, 38, 0.8));
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+        }
+
+        /* Scaling transformation */
+        .scaling {
+            animation: scalePattern 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes scalePattern {
+            0% { transform: scaleX(1) scaleY(1); }
+            100% { transform: scaleX(2.5) scaleY(0.8); }
+        }
+
+        /* Merging animation */
+        .merging {
+            animation: mergePatterns 4s ease-in-out forwards;
+        }
+
+        @keyframes mergePatterns {
+            0% { 
+                opacity: 1;
+                transform: translateZ(0px);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateZ(50px) scale(1.2);
+                filter: blur(1px);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateZ(0px) scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        /* Info panel */
+        .info-panel {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            max-width: 320px;
+            z-index: 10;
+        }
+
+        .info-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .phase-indicator {
+            font-size: 0.8rem;
+            color: #22c55e;
+            font-weight: 500;
+            font-family: 'Monaco', monospace;
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            z-index: 10;
+        }
+
+        .control-button {
+            background: rgba(59, 130, 246, 0.8);
+            border: 1px solid rgba(59, 130, 246, 1);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin: 2px;
+            transition: all 0.2s;
+        }
+
+        .control-button:hover {
+            background: rgba(37, 99, 235, 0.9);
+        }
+
+        .control-button.active {
+            background: rgba(34, 197, 94, 0.8);
+            border-color: rgba(34, 197, 94, 1);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: absolute;
+            bottom: 20px;
+            left: 100px;
+            width: 800px;
+            height: 30px;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            z-index: 5;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(59, 130, 246, 0.6) 0%,
+                rgba(34, 197, 94, 0.6) 50%,
+                rgba(239, 68, 68, 0.6) 100%);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: -5px;
+            width: 2px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateX(-1px);
+            transition: left 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="visualization-container">
+        <div class="scene-3d" id="scene">
+            <!-- Time grid -->
+            <div class="time-grid" id="timeGrid">
+                <!-- Grid lines will be generated by JavaScript -->
+            </div>
+
+            <!-- Time series data -->
+            <div class="time-series" id="timeSeries">
+                <!-- Data points will be generated by JavaScript -->
+            </div>
+
+            <!-- Pattern extraction windows -->
+            <div class="pattern-window" id="window1"></div>
+            <div class="pattern-window" id="window2"></div>
+            <div class="pattern-window" id="window3"></div>
+
+            <!-- Extracted patterns -->
+            <div class="extracted-pattern" id="pattern1"></div>
+            <div class="extracted-pattern" id="pattern2"></div>
+            <div class="extracted-pattern" id="pattern3"></div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <div class="timeline-progress" id="timelineProgress"></div>
+            <div class="timeline-marker" id="timelineMarker"></div>
+        </div>
+    </div>
+
+    <div class="info-panel">
+        <div class="info-title">Temporal Pattern Analysis</div>
+        <div class="info-text">
+            Extracting similar conflict patterns across different time scales. 
+            Watch as patterns from different periods are identified, scaled, and merged 
+            to reveal underlying temporal structures.
+        </div>
+        <div class="phase-indicator" id="phaseIndicator">Phase: Initialization</div>
+    </div>
+
+    <div class="controls">
+        <button class="control-button" onclick="startExtraction()">Start Extraction</button>
+        <button class="control-button" onclick="pauseAnimation()">Pause</button>
+        <button class="control-button" onclick="resumeAnimation()">Resume</button>
+        <button class="control-button" onclick="resetVisualization()">Reset</button>
+    </div>
+
+    <script>
+        // Time series data with distinctive pattern shapes
+        const timeSeriesData = [];
+        const totalPoints = 200;
+        
+        // Define specific distinctive patterns that will be repeated
+        function spikePattern(t, amplitude = 1) {
+            // Sharp spike pattern
+            const phase = (t % 0.2) / 0.2; // Repeat every 0.2 units
+            if (phase < 0.3) return amplitude * (phase / 0.3);
+            if (phase < 0.7) return amplitude * (1 - (phase - 0.3) / 0.4);
+            return 0;
+        }
+        
+        function sawtoothPattern(t, amplitude = 1) {
+            // Sawtooth wave pattern
+            const phase = (t % 0.25) / 0.25;
+            return amplitude * phase;
+        }
+        
+        function stepPattern(t, amplitude = 1) {
+            // Step function pattern
+            const phase = (t % 0.3) / 0.3;
+            return amplitude * (phase < 0.5 ? 0.2 : 0.8);
+        }
+        
+        // Generate synthetic conflict data with distinctive repeating patterns
+        function generateTimeSeriesData() {
+            for (let i = 0; i < totalPoints; i++) {
+                const t = i / totalPoints;
+                let value = 0.3; // Base level
+                
+                // Add distinctive patterns at different locations
+                if (t >= 0.1 && t <= 0.3) {
+                    // Spike pattern in early period
+                    value += spikePattern((t - 0.1) * 5, 0.6);
+                } else if (t >= 0.4 && t <= 0.6) {
+                    // Sawtooth pattern in middle period (scaled differently)
+                    value += sawtoothPattern((t - 0.4) * 3, 0.5);
+                } else if (t >= 0.7 && t <= 0.9) {
+                    // Step pattern in late period
+                    value += stepPattern((t - 0.7) * 4, 0.4);
+                }
+                
+                // Small amount of noise
+                value += (Math.random() - 0.5) * 0.05;
+                
+                // Ensure positive values
+                value = Math.max(0.1, Math.min(1, value));
+                
+                timeSeriesData.push({
+                    x: i * 4, // 4px spacing
+                    y: 400 - (value * 300), // Invert Y for display
+                    value: value,
+                    time: t,
+                    highlighted: false
+                });
+            }
+        }
+        
+        // Pattern definitions matching the distinctive shapes
+        const patternDefinitions = [
+            {
+                id: 'pattern1',
+                startIndex: 20,   // Spike pattern region
+                length: 40,
+                color: 'rgba(239, 68, 68, 0.8)',
+                scale: 1,
+                extractedTo: { x: 200, y: 100, z: 100 },
+                type: 'spike'
+            },
+            {
+                id: 'pattern2', 
+                startIndex: 80,   // Sawtooth pattern region
+                length: 40,
+                color: 'rgba(34, 197, 94, 0.8)',
+                scale: 1,
+                extractedTo: { x: 400, y: 100, z: 150 },
+                type: 'sawtooth'
+            },
+            {
+                id: 'pattern3',
+                startIndex: 140,  // Step pattern region
+                length: 40,
+                color: 'rgba(59, 130, 246, 0.8)',
+                scale: 1,
+                extractedTo: { x: 600, y: 100, z: 200 },
+                type: 'step'
+            }
+        ];
+        
+        let currentPhase = 0;
+        let animationId = null;
+        let isPaused = false;
+        let currentTime = 0;
+        
+        // Animation phases
+        const phases = [
+            'Initialization',
+            'Data Scanning', 
+            'Pattern Detection',
+            'Pattern Extraction',
+            'Temporal Scaling',
+            'Pattern Alignment',
+            'Pattern Merging'
+        ];
+        
+        function initializeVisualization() {
+            generateTimeSeriesData();
+            createTimeGrid();
+            createDataPoints();
+            updatePhaseIndicator();
+        }
+        
+        function createTimeGrid() {
+            const grid = document.getElementById('timeGrid');
+            
+            // Horizontal lines
+            for (let i = 0; i <= 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'grid-line horizontal';
+                line.style.top = `${i * 40}px`;
+                grid.appendChild(line);
+            }
+            
+            // Vertical lines
+            for (let i = 0; i <= 20; i++) {
+                const line = document.createElement('div');
+                line.className = 'grid-line vertical';
+                line.style.left = `${i * 40}px`;
+                grid.appendChild(line);
+            }
+        }
+        
+        function createDataPoints() {
+            const container = document.getElementById('timeSeries');
+            
+            // Create connected line segments
+            for (let i = 0; i < timeSeriesData.length - 1; i++) {
+                const currentPoint = timeSeriesData[i];
+                const nextPoint = timeSeriesData[i + 1];
+                
+                // Create line segment
+                const line = document.createElement('div');
+                line.className = 'data-point';
+                line.id = `line-${i}`;
+                
+                const dx = nextPoint.x - currentPoint.x;
+                const dy = nextPoint.y - currentPoint.y;
+                const dz = (nextPoint.value - currentPoint.value) * 50;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                line.style.left = `${currentPoint.x}px`;
+                line.style.top = `${currentPoint.y}px`;
+                line.style.width = `${length}px`;
+                line.style.height = '2px';
+                line.style.borderRadius = '1px';
+                line.style.transform = `translateZ(${currentPoint.value * 50 + dz/2}px) rotate(${angle}deg)`;
+                line.style.transformOrigin = '0 50%';
+                line.style.background = 'rgba(59, 130, 246, 0.8)';
+                
+                container.appendChild(line);
+                
+                // Also create small points at vertices for clarity
+                if (i % 5 === 0) { // Every 5th point
+                    const point = document.createElement('div');
+                    point.className = 'data-point';
+                    point.id = `point-${i}`;
+                    point.style.left = `${currentPoint.x - 2}px`;
+                    point.style.top = `${currentPoint.y - 2}px`;
+                    point.style.width = '4px';
+                    point.style.height = '4px';
+                    point.style.transform = `translateZ(${currentPoint.value * 50}px)`;
+                    container.appendChild(point);
+                }
+            }
+        }
+        
+        function updatePhaseIndicator() {
+            document.getElementById('phaseIndicator').textContent = 
+                `Phase: ${phases[currentPhase]} (${currentPhase + 1}/${phases.length})`;
+        }
+        
+        function updateTimeline() {
+            const progress = (currentTime % 100) / 100;
+            document.getElementById('timelineProgress').style.width = `${progress * 100}%`;
+            document.getElementById('timelineMarker').style.left = `${progress * 100}%`;
+        }
+        
+        function startExtraction() {
+            if (animationId) return;
+            
+            currentPhase = 1;
+            currentTime = 0;
+            updatePhaseIndicator();
+            
+            animationId = setInterval(() => {
+                if (!isPaused) {
+                    runAnimationCycle();
+                    currentTime += 0.5;
+                    updateTimeline();
+                }
+            }, 100);
+        }
+        
+        function runAnimationCycle() {
+            const cycle = Math.floor(currentTime / 20);
+            const phaseTime = currentTime % 20;
+            
+            switch (cycle % phases.length) {
+                case 1:
+                    currentPhase = 1;
+                    scanDataPhase(phaseTime);
+                    break;
+                case 2:
+                    currentPhase = 2;
+                    detectPatternsPhase(phaseTime);
+                    break;
+                case 3:
+                    currentPhase = 3;
+                    extractPatternsPhase(phaseTime);
+                    break;
+                case 4:
+                    currentPhase = 4;
+                    scalePatternsPhase(phaseTime);
+                    break;
+                case 5:
+                    currentPhase = 5;
+                    alignPatternsPhase(phaseTime);
+                    break;
+                case 6:
+                    currentPhase = 6;
+                    mergePatternsPhase(phaseTime);
+                    break;
+            }
+            
+            updatePhaseIndicator();
+        }
+        
+        function scanDataPhase(phaseTime) {
+            const scanPosition = (phaseTime / 20) * (totalPoints - 1);
+            
+            // Highlight lines being scanned
+            for (let i = 0; i < totalPoints - 1; i++) {
+                const lineElement = document.getElementById(`line-${i}`);
+                if (lineElement) {
+                    if (Math.abs(i - scanPosition) < 8) {
+                        lineElement.classList.add('highlight');
+                        lineElement.style.background = 'rgba(239, 68, 68, 1)';
+                        lineElement.style.boxShadow = '0 0 8px rgba(239, 68, 68, 0.6)';
+                    } else {
+                        lineElement.classList.remove('highlight');
+                        lineElement.style.background = 'rgba(59, 130, 246, 0.8)';
+                        lineElement.style.boxShadow = 'none';
+                    }
+                }
+            }
+            
+            // Also highlight points
+            for (let i = 0; i < totalPoints; i += 5) {
+                const pointElement = document.getElementById(`point-${i}`);
+                if (pointElement) {
+                    if (Math.abs(i - scanPosition) < 8) {
+                        pointElement.classList.add('highlight');
+                    } else {
+                        pointElement.classList.remove('highlight');
+                    }
+                }
+            }
+        }
+        
+        function detectPatternsPhase(phaseTime) {
+            patternDefinitions.forEach((pattern, index) => {
+                const window = document.getElementById(`window${index + 1}`);
+                const progress = phaseTime / 20;
+                
+                if (progress > index * 0.3) {
+                    const data = timeSeriesData[pattern.startIndex];
+                    window.style.left = `${data.x - 10}px`;
+                    window.style.top = `${data.y - 20}px`;
+                    window.style.width = `${pattern.length * 4 + 20}px`;
+                    window.style.height = '120px';
+                    window.style.opacity = '1';
+                    window.classList.add('extracting');
+                }
+            });
+        }
+        
+        function extractPatternsPhase(phaseTime) {
+            patternDefinitions.forEach((pattern, index) => {
+                const patternElement = document.getElementById(pattern.id);
+                const progress = phaseTime / 20;
+                
+                if (progress > index * 0.25) {
+                    createExtractedPattern(pattern, patternElement);
+                    patternElement.classList.add('visible');
+                }
+            });
+        }
+        
+        function createExtractedPattern(patternDef, container) {
+            if (container.children.length > 0) return;
+            
+            const startIdx = patternDef.startIndex;
+            const endIdx = startIdx + patternDef.length;
+            
+            // Position the pattern
+            container.style.left = `${patternDef.extractedTo.x}px`;
+            container.style.top = `${patternDef.extractedTo.y}px`;
+            container.style.transform = `translateZ(${patternDef.extractedTo.z}px)`;
+            
+            // Scale factor for extracted patterns
+            const scale = 2;
+            const baselineY = 60; // Normalize all patterns to same baseline
+            
+            // Create connected line pattern that matches the source
+            for (let i = startIdx; i < endIdx - 1; i++) {
+                const currentPoint = timeSeriesData[i];
+                const nextPoint = timeSeriesData[i + 1];
+                
+                // Create line segment with enhanced visibility
+                const line = document.createElement('div');
+                line.className = 'pattern-line';
+                
+                const dx = scale * 3; // Fixed spacing
+                const dy = (nextPoint.value - currentPoint.value) * 100 * scale;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                const x = (i - startIdx) * scale * 3;
+                const y = baselineY + (currentPoint.value - 0.5) * 100 * scale;
+                
+                line.style.left = `${x}px`;
+                line.style.top = `${y}px`;
+                line.style.width = `${length}px`;
+                line.style.height = '3px';
+                line.style.transform = `rotate(${angle}deg)`;
+                line.style.background = patternDef.color;
+                line.style.boxShadow = `0 0 8px ${patternDef.color}`;
+                container.appendChild(line);
+                
+                // Add distinctive points at key vertices
+                if ((i - startIdx) % 3 === 0) {
+                    const point = document.createElement('div');
+                    point.className = 'pattern-point';
+                    point.style.left = `${x - 3}px`;
+                    point.style.top = `${y - 3}px`;
+                    point.style.width = '6px';
+                    point.style.height = '6px';
+                    point.style.background = patternDef.color;
+                    point.style.boxShadow = `0 0 12px ${patternDef.color}`;
+                    container.appendChild(point);
+                }
+            }
+        }
+        
+        function scalePatternsPhase(phaseTime) {
+            patternDefinitions.forEach((pattern, index) => {
+                const patternElement = document.getElementById(pattern.id);
+                if (phaseTime > index * 2) {
+                    patternElement.classList.add('scaling');
+                }
+            });
+        }
+        
+        function alignPatternsPhase(phaseTime) {
+            const centerX = 400;
+            const centerY = 200;
+            
+            patternDefinitions.forEach((pattern, index) => {
+                const patternElement = document.getElementById(pattern.id);
+                patternElement.classList.remove('scaling');
+                
+                const progress = Math.min(1, (phaseTime - index * 2) / 10);
+                if (progress > 0) {
+                    const currentX = parseInt(patternElement.style.left);
+                    const currentY = parseInt(patternElement.style.top);
+                    
+                    const targetX = centerX + (index - 1) * 50;
+                    const targetY = centerY;
+                    
+                    const newX = currentX + (targetX - currentX) * progress * 0.1;
+                    const newY = currentY + (targetY - currentY) * progress * 0.1;
+                    
+                    patternElement.style.left = `${newX}px`;
+                    patternElement.style.top = `${newY}px`;
+                }
+            });
+        }
+        
+        function mergePatternsPhase(phaseTime) {
+            patternDefinitions.forEach((pattern, index) => {
+                const patternElement = document.getElementById(pattern.id);
+                if (phaseTime > 5) {
+                    patternElement.classList.add('merging');
+                }
+            });
+        }
+        
+        function pauseAnimation() {
+            isPaused = true;
+        }
+        
+        function resumeAnimation() {
+            isPaused = false;
+        }
+        
+        function resetVisualization() {
+            if (animationId) {
+                clearInterval(animationId);
+                animationId = null;
+            }
+            
+            currentPhase = 0;
+            currentTime = 0;
+            isPaused = false;
+            
+            // Reset all elements
+            document.querySelectorAll('.data-point').forEach(el => {
+                el.classList.remove('highlight');
+            });
+            
+            document.querySelectorAll('.pattern-window').forEach(el => {
+                el.style.opacity = '0';
+                el.classList.remove('extracting');
+            });
+            
+            document.querySelectorAll('.extracted-pattern').forEach(el => {
+                el.classList.remove('visible', 'scaling', 'merging');
+                el.innerHTML = '';
+            });
+            
+            updatePhaseIndicator();
+            updateTimeline();
+        }
+        
+        // Initialize
+        initializeVisualization();
+    </script>
+</body>
+</html>

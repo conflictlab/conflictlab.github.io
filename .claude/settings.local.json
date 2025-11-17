@@ -12,7 +12,12 @@
       "WebFetch(domain:andresmpa.medium.com)",
       "WebFetch(domain:docs.maptiler.com)",
       "WebFetch(domain:medium.com)",
-      "WebFetch(domain:react-leaflet.js.org)"
+      "WebFetch(domain:react-leaflet.js.org)",
+      "WebFetch(domain:lucintis.github.io)",
+      "Bash(rm:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(ls:*)",
+      "WebFetch(domain:seerist.com)"
     ],
     "deny": []
   }

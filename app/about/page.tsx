@@ -5,7 +5,7 @@ export default function About() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-grid-pattern py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -19,7 +19,7 @@ export default function About() {
       </section>
 
       {/* Mission and Vision */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -32,8 +32,8 @@ export default function About() {
                   Why {companyData.name}?
                 </h3>
                 <p className="text-gray-700">
-                  The name <strong>Clarint</strong> is derived from <em>"clair"</em> (clear/clarity) and <em>"int"</em> (intelligence). 
-                  It captures our central promise: <strong>clarity through intelligence.</strong>
+                  <strong>Luscint</strong> comes from <em>lux</em> (light) and <em>intuitus</em> (insight). 
+                  It represents our mission: to illuminate hidden signals in a noisy world and provide clarity in risk and uncertainty.
                 </p>
               </div>
             </div>
@@ -81,7 +81,7 @@ export default function About() {
           <div className="text-center mb-16">
             <h2 className="section-heading">Strategic Positioning</h2>
             <p className="section-subheading mx-auto">
-              Clarint operates at the intersection of three fast-converging domains
+              Luscint operates at the intersection of three fast-converging domains
             </p>
           </div>
           
@@ -131,7 +131,7 @@ export default function About() {
               <h3 className="text-2xl font-bold mb-4">Our Differentiation</h3>
               <p className="text-blue-100">
                 <strong>Model-based foresight, client-specific exposure integration, and explainability</strong> — 
-                positioning Clarint as a core infrastructure layer for global risk anticipation.
+                positioning Luscint as a core infrastructure layer for global risk anticipation.
               </p>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function About() {
                 1
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold mb-2">Launch Clarint Core</h3>
+                <h3 className="text-xl font-semibold mb-2">Launch Luscint Core</h3>
                 <p className="text-gray-600">
                   Deploy our forecast dashboard and API MVP, providing foundational predictive intelligence capabilities.
                 </p>
@@ -208,7 +208,7 @@ export default function About() {
           </h2>
           <p className="text-xl text-blue-100 max-w-4xl mx-auto">
             As volatility, climate stress, and political risk reshape global operating conditions, 
-            institutions need not just data—but foresight. Clarint delivers that foresight, 
+            institutions need not just data—but foresight. Luscint delivers that foresight, 
             transforming uncertainty into strategic advantage.
           </p>
         </div>

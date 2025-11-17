@@ -6,26 +6,29 @@ import FinancialPerformanceChart from '@/components/FinancialPerformanceChart'
 export default function Home() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center hero-background-intel">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-8 leading-tight">
+      {/* Hero Section (Light, minimalist) */}
+      <section className="hero-background-network-image min-h-[70vh] md:min-h-[78vh] flex items-center relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-6 leading-tight">
             {companyData.tagline}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 font-light max-w-3xl mx-auto leading-relaxed">
-            <span className="word-highlight" data-text="Actionable geopolitical intelligence">
-              <span className="typing-text">Actionable geopolitical intelligence</span>
-            </span> for investors, insurers, and decision-makers navigating global risk.
+          <p className="text-xl md:text-2xl text-gray-600 mb-10 font-light max-w-3xl mx-auto leading-relaxed">
+            Actionable geopolitical intelligence for investors, insurers, and decision-makers.
           </p>
-          <Link href="/technology" className="inline-flex items-center text-lg text-clairient-blue hover:text-clairient-dark border-b border-clairient-blue hover:border-clairient-dark">
-            Learn more
-            <ArrowRight className="ml-2" size={18} />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <Link href="/contact" className="btn-primary inline-flex items-center">
+              Get Started
+              <ArrowRight className="ml-2" size={18} />
+            </Link>
+            <Link href="/dashboard" className="btn-secondary inline-flex items-center">
+              View Demo
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="py-24 bg-gray-50 data-background">
+      <section className="py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <p className="text-2xl md:text-3xl text-gray-700 font-light leading-relaxed">
@@ -38,7 +41,7 @@ export default function Home() {
       </section>
 
       {/* Financial Performance */}
-      <section className="py-24 bg-white">
+      <section className="py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">
@@ -53,22 +56,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Simple CTA */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-lg text-gray-600 mb-8 font-light">
-            Ready to see how predictive intelligence works?
-          </p>
-          <div className="space-x-8">
-            <Link href="/dashboard" className="text-link">
-              View Demo
-            </Link>
-            <Link href="/contact" className="text-link">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </section>
+      
     </>
   )
 }
