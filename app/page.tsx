@@ -45,26 +45,26 @@ export default async function Home() {
       {/* About Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center mb-8">
-            <img
-              src="/logo.png"
-              alt="PaCE Logo"
-              className="h-16 w-16 mr-4"
+          <h2 className="text-3xl font-light text-gray-900 mb-8 text-center">About PaCE</h2>
+
+          {/* Text block with logo background */}
+          <div className="relative bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+            {/* Logo as background */}
+            <div
+              className="absolute inset-0 bg-center bg-no-repeat opacity-5"
+              style={{
+                backgroundImage: 'url(/logo.png)',
+                backgroundSize: '300px 300px'
+              }}
             />
-            <h2 className="text-3xl font-light text-gray-900">About PaCE</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            {/* First text block */}
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+
+            {/* Content */}
+            <div className="relative z-10 space-y-6">
               <p className="text-lg leading-relaxed text-gray-700">
                 PaCE is a research project at Trinity College Dublin (2022-26)
                 using machine learning to forecast interstate and civil wars by identifying recurring patterns
                 in financial markets, news, diplomatic cables, and satellite imagery.
               </p>
-            </div>
-
-            {/* Second text block */}
-            <div className="bg-white p-8 rounded-lg shadow-sm">
               <p className="text-lg leading-relaxed text-gray-700">
                 Since 1900, over 200 wars have claimed 35 million battle deaths. By uncovering temporal
                 patterns in the lead-up to conflict—across financial, migration, protest, and climate data—we
