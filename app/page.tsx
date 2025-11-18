@@ -31,19 +31,19 @@ export default async function Home() {
           <div className="absolute inset-0 bg-black/20 pointer-events-none z-[400]" />
         </div>
 
-        {/* Title Overlay - logo-centric design */}
-        <div className="absolute inset-0 flex items-start justify-center pt-[16.67vh] z-[1000] pointer-events-none">
-          <div className="text-center px-8 py-6">
+        {/* Title Overlay - bottom-left logo design */}
+        <div className="absolute bottom-12 left-12 z-[1000] pointer-events-none">
+          <div className="flex flex-col items-start">
             <img
               src="/logo.png"
               alt="PaCE Logo"
-              className="h-24 w-24 md:h-32 md:w-32 mx-auto mb-4"
+              className="h-20 w-20 md:h-24 md:w-24 mb-3"
               style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.5))' }}
             />
-            <h1 className="text-5xl md:text-6xl font-light text-white mb-3 tracking-wide" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)' }}>
+            <h1 className="text-4xl md:text-5xl font-light text-white mb-2 tracking-wide" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)' }}>
               PaCE
             </h1>
-            <p className="text-lg md:text-xl text-white/90 font-light tracking-wide" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.5)' }}>
+            <p className="text-base md:text-lg text-white/90 font-light tracking-wide" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.5)' }}>
               Predicting War Through Pattern Recognition
             </p>
           </div>
