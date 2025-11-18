@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown } from 'lucide-react'
 
@@ -19,9 +19,24 @@ type MenuItem = {
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const pathname = usePathname()
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   if (pathname?.startsWith('/test-map')) return null
+
+  const handleMouseEnter = (href: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
+    setOpenDropdown(href)
+  }
+
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null)
+    }, 150)
+  }
 
   const isActive = (path: string) => {
     if (path === '/' && pathname === '/') return true
@@ -92,8 +107,8 @@ export default function Navigation() {
               <div
                 key={item.href}
                 className="relative"
-                onMouseEnter={() => item.sections && setOpenDropdown(item.href)}
-                onMouseLeave={() => setOpenDropdown(null)}
+                onMouseEnter={() => item.sections && handleMouseEnter(item.href)}
+                onMouseLeave={handleMouseLeave}
               >
                 {item.sections ? (
                   <>
@@ -109,16 +124,18 @@ export default function Navigation() {
                       <ChevronDown size={16} className="mt-0.5" />
                     </Link>
                     {openDropdown === item.href && (
-                      <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-[2001]">
-                        {item.sections.map((section) => (
-                          <Link
-                            key={section.href}
-                            href={section.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-clairient-blue transition-colors"
-                          >
-                            {section.label}
-                          </Link>
-                        ))}
+                      <div className="absolute top-full left-0 mt-1 pt-2 w-48">
+                        <div className="bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-[2001]">
+                          {item.sections.map((section) => (
+                            <Link
+                              key={section.href}
+                              href={section.href}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-clairient-blue transition-colors"
+                            >
+                              {section.label}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </>
