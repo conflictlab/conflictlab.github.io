@@ -149,7 +149,7 @@ export default async function ForecastsPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page heading and context moved below the map */}
           <div className="mt-6">
-            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2">Monthly Conflict Forecasts</h1>
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2">Forecast Dashboard</h1>
             <p className="text-gray-700 font-light mb-3">
               Forecasts for the period {snapshot.period} to {endPeriodFrom(snapshot.period) || snapshot.period}
               <span className="text-gray-400"> · </span>

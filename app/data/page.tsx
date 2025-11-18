@@ -131,6 +131,9 @@ export default async function DataPage() {
           <p className="text-gray-700 font-light mb-6">
             Latest update: {formatDMY(snapshot.generatedAt)}
           </p>
+          <div className="text-sm text-gray-600 mb-6">
+            <Link href="/forecasts" className="text-link">Visualize these forecasts on the dashboard</Link>
+          </div>
 
 
           {/* Country-level and Grid-level (equal width) */}

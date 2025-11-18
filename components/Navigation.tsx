@@ -48,7 +48,7 @@ export default function Navigation() {
                   : 'text-gray-600 hover:text-clairient-blue'
               }`}
             >
-              Forecasts
+              Dashboard
             </Link>
             <Link 
               href="/data" 
@@ -118,7 +118,7 @@ export default function Navigation() {
                   : 'text-gray-600 hover:text-clairient-blue'
               }`}
             >
-              Forecasts
+              Dashboard
             </Link>
             <Link 
               href="/data" 
