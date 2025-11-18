@@ -9,13 +9,13 @@ export default function LandingBanner() {
         </h1>
         <div className="text-lg md:text-xl text-white font-light tracking-wide" style={{ textShadow: '2px 2px 6px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)' }}>
           <p className="inline-block overflow-hidden whitespace-nowrap typewriter-text">
-            Forecasting Conflict
+            Forecasting Geopolitical Risk
           </p>
-          <p className="mt-1">Before It Happens</p>
+          <p className="mt-1">Before It Materializes</p>
         </div>
         <style jsx>{`
           .typewriter-text {
-            animation: typing 2s steps(19) 0.5s forwards;
+            animation: typing 2s steps(27) 0.5s forwards;
             width: 0;
           }
           @keyframes typing {
