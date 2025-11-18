@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BookOpen, FileText, Database, ArrowRight } from 'lucide-react'
+import { BookOpen, FileText, Database, Presentation, ArrowRight } from 'lucide-react'
 
 export default function Research() {
   return (
@@ -20,7 +20,7 @@ export default function Research() {
       {/* Navigation Cards */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {/* Methodology Card */}
             <Link
@@ -70,6 +70,23 @@ export default function Research() {
               <p className="text-gray-600 leading-relaxed">
                 Download our latest conflict risk forecasts, historical data, and methodological
                 documentation for your own research and analysis.
+              </p>
+            </Link>
+
+            {/* Dissemination Card */}
+            <Link
+              href="/dissemination"
+              id="dissemination"
+              className="bg-white border border-gray-200 rounded-lg p-8 hover:border-clairient-blue hover:shadow-lg transition-all duration-300 group"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <Presentation className="text-clairient-blue" size={32} />
+                <ArrowRight className="text-gray-400 group-hover:text-clairient-blue group-hover:translate-x-1 transition-all" size={20} />
+              </div>
+              <h2 className="text-2xl font-light text-gray-900 mb-4">Dissemination</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Workshops, presentations, and conferences where the PaCE research team
+                shares findings with the academic community and policymakers.
               </p>
             </Link>
 

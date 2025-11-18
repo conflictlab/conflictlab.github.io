@@ -55,17 +55,10 @@ export default function Navigation() {
       label: 'Research',
       href: '/research',
       sections: [
-        { label: 'Methodology', href: '/research#methodology' },
-        { label: 'Publications', href: '/research#publications' },
-        { label: 'Datasets', href: '/research#datasets' },
-      ],
-    },
-    {
-      label: 'Engagement',
-      href: '/engagement',
-      sections: [
-        { label: 'Workshops', href: '/engagement#workshops' },
-        { label: 'Presentations', href: '/engagement#presentations' },
+        { label: 'Methodology', href: '/methodology' },
+        { label: 'Publications', href: '/publications' },
+        { label: 'Datasets', href: '/downloads' },
+        { label: 'Dissemination', href: '/dissemination' },
       ],
     },
     {

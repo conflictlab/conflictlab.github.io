@@ -1,16 +1,16 @@
 import Link from 'next/link'
 
-export default function EngagementPage() {
+export default function DisseminationPage() {
   return (
     <>
       {/* Hero Section */}
       <section className="py-24 hero-background-network-image">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
-            Engagement
+            Dissemination
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Workshops, presentations, and events hosted by the <span className="word-emphasis">PaCE Research Lab</span>.
+            Workshops, presentations, and conferences where the <span className="word-emphasis">PaCE Research Lab</span> shares its findings.
           </p>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function EngagementPage() {
                   className="w-full h-48 object-cover rounded-lg"
                 />
                 <img
-                  src="/workshop2.png"
+                  src="/workshop2.jpg"
                   alt="Conflict Forecasting Workshop"
                   className="w-full h-48 object-cover rounded-lg"
                 />
@@ -148,7 +148,7 @@ export default function EngagementPage() {
                   </h3>
                   <div className="flex justify-center mb-4">
                     <img
-                      src="/Cornelius Fritz.png"
+                      src="/Cornelius Fritz.jpg"
                       alt="Dr Cornelius Fritz"
                       className="w-1/3 h-auto rounded-lg"
                     />
