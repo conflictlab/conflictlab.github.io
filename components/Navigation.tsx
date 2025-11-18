@@ -9,6 +9,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+  if (pathname?.startsWith('/test-map')) return null
   
   const isActive = (path: string) => {
     if (path === '/' && pathname === '/') return true
@@ -50,6 +51,16 @@ export default function Navigation() {
               Forecasts
             </Link>
             <Link 
+              href="/data" 
+              className={`transition-colors font-light ${
+                isActive('/data') 
+                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1' 
+                  : 'text-gray-600 hover:text-clairient-blue'
+              }`}
+            >
+              Data
+            </Link>
+            <Link 
               href="/use-cases" 
               className={`transition-colors font-light ${
                 isActive('/use-cases') 
@@ -59,6 +70,7 @@ export default function Navigation() {
             >
               Use Cases
             </Link>
+            {/* Test page link removed */}
             
             <Link 
               href="/contact" 
@@ -109,6 +121,16 @@ export default function Navigation() {
               Forecasts
             </Link>
             <Link 
+              href="/data" 
+              className={`block px-3 py-2 font-light ${
+                isActive('/data') 
+                  ? 'text-clairient-blue bg-blue-50' 
+                  : 'text-gray-600 hover:text-clairient-blue'
+              }`}
+            >
+              Data
+            </Link>
+            <Link 
               href="/use-cases" 
               className={`block px-3 py-2 font-light ${
                 isActive('/use-cases') 
@@ -118,6 +140,7 @@ export default function Navigation() {
             >
               Use Cases
             </Link>
+            {/* Test page link removed */}
             
             <Link 
               href="/contact" 

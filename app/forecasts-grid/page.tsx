@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import dynamic from 'next/dynamic'
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 import { readSnapshot, getAvailablePeriods } from '@/lib/forecasts'
@@ -67,20 +66,21 @@ export default async function ForecastsGridPage() {
   const combinedCsv = { path: `/data/grid/${gridPeriod}.csv`, label: `${gridPeriod}.csv (all months as columns)` }
   return (
     <div>
-      <section className="py-16 hero-background-network-image">
+      <section className="py-0 hero-background-network-image" />
+
+      <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+        <PrioGridMap period={snap.period} />
+      </div>
+
+      <section className="py-8 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">Monthly Forecasts</h1>
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2">Monthly Conflict Forecasts</h1>
           <p className="text-gray-700 font-light mb-4">
             Forecasts for the period {snap.period} to {end}
             <span className="text-gray-400"> · </span>
             Updated: {formatDMY(snap.generatedAt)}
           </p>
-          <div className="mb-5">
-            <div className="inline-flex rounded-lg border border-clairient-blue overflow-hidden shadow-sm">
-              <Link href="/forecasts" className="px-4 py-2 text-clairient-blue hover:bg-blue-50">Country-level forecasts</Link>
-              <span className="px-4 py-2 bg-clairient-blue text-white">Grid-level forecasts</span>
-            </div>
-          </div>
+          {/* Removed secondary view toggle below the map */}
           <p className="text-gray-600 text-sm mb-4">All values represent predicted fatalities over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg p-4">
@@ -104,8 +104,6 @@ export default async function ForecastsGridPage() {
       </section>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <PrioGridMap period={snap.period} />
-
         {/* Downloads: Grid assets (polygons + monthly points) */}
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="space-y-6">

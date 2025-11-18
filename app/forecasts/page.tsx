@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import fs from 'fs'
 import path from 'path'
 import { readSnapshot, getEntitySeries, getAvailablePeriods } from '@/lib/forecasts'
@@ -135,22 +134,29 @@ export default async function ForecastsPage() {
   return (
     <div>
       {/* Hero summary */}
-      <section className="py-16 hero-background-network-image">
+      <section className="py-0 hero-background-network-image" />
+
+      {/* Country Choropleth (full-bleed) */}
+      <section className="py-0 bg-white">
+        {/* Full-width (bleed) wrapper */}
+        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+          {/* Full-bleed map without side padding */}
+          <CountryChoropleth items={countryMapItems} />
+        </div>
+        {/* Summary cards below the map, constrained */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">Monthly Forecasts</h1>
-          <p className="text-gray-700 font-light mb-2">
-            Forecasts for the period {snapshot.period} to {endPeriodFrom(snapshot.period) || snapshot.period}
-            <span className="text-gray-400"> · </span>
-            Updated: {formatDMY(snapshot.generatedAt)}
-          </p>
-          <div className="mb-5">
-          <div className="inline-flex rounded-lg border border-clairient-blue overflow-hidden shadow-sm">
-            <span className="px-4 py-2 bg-clairient-blue text-white">Country-level forecasts</span>
-            <Link href="/forecasts-grid" className="px-4 py-2 text-clairient-blue hover:bg-blue-50">Grid-level forecasts</Link>
+          {/* Page heading and context moved below the map */}
+          <div className="mt-6">
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2">Monthly Conflict Forecasts</h1>
+            <p className="text-gray-700 font-light mb-3">
+              Forecasts for the period {snapshot.period} to {endPeriodFrom(snapshot.period) || snapshot.period}
+              <span className="text-gray-400"> · </span>
+              Updated: {formatDMY(snapshot.generatedAt)}
+            </p>
+            {/* Removed secondary view toggle below the map */}
+            <p className="text-gray-600 text-sm">All values represent predicted fatalities over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
           </div>
-          </div>
-          <p className="text-gray-600 text-sm mb-6">All values represent predicted fatalities over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg p-4">
               <div className="text-sm text-gray-500">Total predicted fatalities (1‑month)</div>
               <div className="text-3xl font-light text-gray-900">{Math.round(total1mCurrent)}</div>
@@ -168,13 +174,6 @@ export default async function ForecastsPage() {
               <div className="text-3xl font-light text-gray-900">{countriesCovered}</div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Country Choropleth (scenarios temporarily disabled) */}
-      <section className="py-8 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <CountryChoropleth items={countryMapItems} />
         </div>
       </section>
 

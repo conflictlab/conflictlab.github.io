@@ -4,12 +4,15 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface Props {
   period: string
 }
 
 export default function PrioGridMap({ period }: Props) {
+  const pathname = usePathname()
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   const [data, setData] = useState<any | null>(null) // GeoJSON polygons (optional)
   const [points, setPoints] = useState<Array<{ lat: number; lon: number; m?: number[]; v?: number }> | null>(null)
@@ -175,16 +178,11 @@ export default function PrioGridMap({ period }: Props) {
         if (Number.isFinite(v)) vals.push(v)
       }
     }
-    if (!vals.length) return { thresholds: [0,1], vmin: 0, vmax: 1 }
-    // Exclude zeros for binning if we have enough non-zero cells
-    const nz = vals.filter(v => v > 0)
-    const sorted = (nz.length >= 20 ? nz : vals).slice().sort((a,b) => a-b)
-    const q = (p: number) => sorted[Math.min(sorted.length - 1, Math.max(0, Math.floor(p * (sorted.length - 1))))]
-    const t = [q(0.2), q(0.4), q(0.6), q(0.8), q(0.95)]
+    const sorted = vals.length ? vals.slice().sort((a,b) => a-b) : [0,1]
     const mn = sorted[0]
     const mx = sorted[sorted.length - 1]
-    // ensure thresholds are strictly increasing
-    for (let i=1;i<t.length;i++) if (t[i] <= t[i-1]) t[i] = t[i-1] + (mx - mn) / 1000
+    // Fixed bins for grid view
+    const t = [10, 50, 100, 1000]
     return { thresholds: t, vmin: mn, vmax: mx }
   }, [data, points, month])
 
@@ -205,9 +203,7 @@ export default function PrioGridMap({ period }: Props) {
     if (v <= th[0]) return '#fee8c8'
     if (v <= th[1]) return '#fdbb84'
     if (v <= th[2]) return '#ef6548'
-    if (v <= th[3]) return '#d7301f'
-    if (v <= th[4]) return '#b30000'
-    return '#7f0000'
+    return '#d7301f' // includes 100–1000 and any higher values
   }
 
   function shrinkBounds(b: any, factor = 0.35) {
@@ -258,37 +254,45 @@ export default function PrioGridMap({ period }: Props) {
     return [[-60, -180], [80, 180]] as any
   }, [points, data, month])
 
+  // Derive a center from bounds and start at a fixed zoom to match country view feel
+  const center: [number, number] = useMemo(() => {
+    const b = bounds as any
+    if (Array.isArray(b) && Array.isArray(b[0]) && Array.isArray(b[1])) {
+      const lat = (b[0][0] + b[1][0]) / 2
+      const lon = (b[0][1] + b[1][1]) / 2
+      return [lat, lon]
+    }
+    return [20, 0]
+  }, [bounds])
+
+  // Bias the initial view slightly north
+  const centerAdjusted: [number, number] = useMemo(() => {
+    const northBiasDeg = 7
+    return [center[0] + northBiasDeg, center[1]]
+  }, [center])
+
   const loading = !error && !data && !points
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4 bg-white">
-      <div className="flex items-center justify-between mb-2">
-        <div className="text-sm text-gray-700">PRIO‑GRID map — Predicted fatalities</div>
-        <div className="flex items-center gap-3">
-          <div className="text-xs text-gray-500 hidden sm:block">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
-          <div className="flex items-center gap-3 text-sm text-gray-700">
-            <span className="whitespace-nowrap">Months ahead:</span>
-            <div className="w-56 md:w-72">
-              <input
-                type="range"
-                min={1}
-                max={6}
-                value={month}
-                onChange={(e) => setMonth(Number(e.target.value))}
-                className="range"
-                style={{ accentColor: '#1e40af' }}
-              />
-              <div className="flex justify-between text-[10px] text-gray-500 mt-1">
-                {[1,2,3,4,5,6].map(n => (
-                  <span key={n}>{n}m</span>
-                ))}
-              </div>
-            </div>
-            <span className="w-6 text-right font-medium">{month}</span>
+    <div className="border border-gray-200 rounded-lg p-0 bg-white">
+      <div className="h-[560px] md:h-[700px] rounded overflow-hidden relative">
+        {/* View toggle overlay (center-bottom, larger) */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
+          <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
+            <Link
+              href="/forecasts"
+              className={`px-6 py-3 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
+            >
+              Country view
+            </Link>
+            <Link
+              href="/forecasts-grid"
+              className={`px-6 py-3 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
+            >
+              Grid view
+            </Link>
           </div>
         </div>
-      </div>
-      <div className="h-[420px] md:h-[520px] rounded overflow-hidden">
         {error && (
           <div className="h-full flex items-center justify-center text-sm text-gray-600">
             <div>
@@ -308,8 +312,10 @@ export default function PrioGridMap({ period }: Props) {
         )}
         {!error && !loading && (
           <MapContainer
-            bounds={bounds}
-            boundsOptions={{ padding: [0, 0] }}
+            center={centerAdjusted as any}
+            zoom={2.7}
+            zoomSnap={0}
+            zoomDelta={0.1}
             scrollWheelZoom={true}
             worldCopyJump={true}
             minZoom={1}
@@ -359,6 +365,32 @@ export default function PrioGridMap({ period }: Props) {
             )}
           </MapContainer>
         )}
+      </div>
+      {/* Controls moved below map */}
+      <div className="px-4 py-2">
+        <div className="flex items-center justify-between">
+          <div className="text-xs text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
+          <div className="flex items-center gap-3 text-sm text-gray-700">
+            <span className="whitespace-nowrap">Months ahead:</span>
+            <div className="w-56 md:w-72">
+              <input
+                type="range"
+                min={1}
+                max={6}
+                value={month}
+                onChange={(e) => setMonth(Number(e.target.value))}
+                className="range"
+                style={{ accentColor: '#1e40af' }}
+              />
+              <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+                {[1,2,3,4,5,6].map(n => (
+                  <span key={n}>{n}m</span>
+                ))}
+              </div>
+            </div>
+            <span className="w-6 text-right font-medium">{month}</span>
+          </div>
+        </div>
       </div>
       <Legend thresholds={thresholds} vmin={vmin} vmax={vmax} data={data} points={points} month={month} />
       <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
@@ -462,21 +494,17 @@ function Legend({ thresholds, vmin, vmax, data, points, month }: any) {
   }
   const nz = total - zeros
   return (
-    <div className="mt-3 text-xs text-gray-600">
-      <div className="flex items-center gap-2">
-        <span>Color scale (predicted fatalities):</span>
-        <span className="text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</span>
-      </div>
-      <div className="mt-1 grid grid-cols-3 sm:grid-cols-6 gap-2">
-        {['#fee8c8','#fdbb84','#ef6548','#d7301f','#b30000','#7f0000'].map((c,i) => (
-          <div key={i} className="flex items-center gap-2">
-            <div className="w-4 h-3 rounded" style={{backgroundColor: c}} />
-            <span className="text-gray-700">{legendLabelForIndex(i, thresholds)}</span>
+    <div className="mt-4 text-sm text-gray-700">
+      <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {['#fee8c8','#fdbb84','#ef6548','#d7301f'].map((c,i) => (
+          <div key={i} className="flex items-center gap-3">
+            <div className="w-8 h-5 rounded" style={{backgroundColor: c}} />
+            <span className="text-gray-800">{['< 10','10–50','50–100','100–1000'][i]}</span>
           </div>
         ))}
       </div>
       {total > 0 && (
-        <div className="mt-1 text-gray-500">
+        <div className="mt-2 text-gray-600">
           Cells: {total} · Non‑zero: {nz} ({((nz/total)*100).toFixed(1)}%) · Zeros: {zeros}
         </div>
       )}

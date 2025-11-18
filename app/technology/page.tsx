@@ -3,13 +3,93 @@ import servicesData from '@/content/services.json'
 import PrioGridAnimation from '@/components/PrioGridAnimation'
 import dynamic from 'next/dynamic'
 import { readSnapshot } from '@/lib/forecasts'
-import { Activity, Users, TrendingUp, Vote, CloudSun, Map, Move, Shield, ShoppingBag } from 'lucide-react'
+import { Activity, Users, TrendingUp, Vote, CloudSun, Map, Move, Shield, ShoppingBag, FileText, ExternalLink, Download } from 'lucide-react'
+import fs from 'fs'
+import path from 'path'
 
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 const DTWTrajShowcase = dynamic(() => import('@/components/DTWTrajShowcase'), { ssr: false })
 
 export default async function Technology() {
   const snap = readSnapshot('latest')
+  // Discover academic papers placed under /public/academicPapers
+  const papersDir = path.join(process.cwd(), 'public', 'academicPapers')
+  let papers: Array<{ name: string; href: string; size: string; ext: string; title: string; year?: number; authors?: string[]; venue?: string }> = []
+  try {
+    const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+    const files = fs.readdirSync(papersDir)
+
+    // optional metadata JSON for precise citations
+    const metaPath = path.join(papersDir, 'metadata.json')
+    let metaIndex: Record<string, any> = {}
+    try {
+      if (fs.existsSync(metaPath)) {
+        const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8')) as Array<any>
+        for (const m of meta) {
+          if (!m?.file) continue
+          metaIndex[String(m.file)] = m
+        }
+      }
+    } catch {}
+
+    const lowerMinor = new Set(['and', 'or', 'of', 'in', 'on', 'for', 'to', 'a', 'an', 'the', 'with', 'by'])
+    const titleCase = (s: string) => {
+      const parts = s.split(/\s+/)
+      return parts.map((w, i) => {
+        const lw = w.toLowerCase()
+        if (i > 0 && lowerMinor.has(lw)) return lw
+        return lw.charAt(0).toUpperCase() + lw.slice(1)
+      }).join(' ')
+    }
+    const deriveFromFilename = (f: string) => {
+      const baseName = f.replace(/\.[^.]+$/, '')
+      const clean = baseName.replace(/[\-_]+/g, ' ').replace(/\s+/g, ' ').trim()
+      const ym = clean.match(/\b(19|20)\d{2}\b/)
+      const year = ym ? Number(ym[0]) : undefined
+      let pre = '', post = clean
+      if (ym) {
+        const idx = clean.indexOf(ym[0])
+        pre = clean.slice(0, idx).trim()
+        post = clean.slice(idx + ym[0].length).trim()
+      }
+      let authorsDisp: string | undefined
+      if (pre) {
+        // e.g., "schincariol et al"
+        const norm = pre.replace(/\bet\s*al\b/gi, 'et al.').trim()
+        const words = norm.split(/\s+/)
+        if (words.length) {
+          const cap = words.map(w => w.length <= 3 ? w.toUpperCase() : (w.charAt(0).toUpperCase() + w.slice(1))).join(' ')
+          authorsDisp = cap
+        }
+      }
+      const title = post ? titleCase(post) : titleCase(clean)
+      return { year, authorsDisp, title }
+    }
+
+    const fmtSize = (n: number) => n > 1024 * 1024
+      ? `${(n / (1024 * 1024)).toFixed(1)} MB`
+      : `${Math.max(1, Math.round(n / 1024))} KB`
+    for (const f of files) {
+      const ext = (f.split('.').pop() || '').toLowerCase()
+      if (!['pdf', 'html', 'htm'].includes(ext)) continue
+      const stat = fs.statSync(path.join(papersDir, f))
+      const meta = metaIndex[f] || metaIndex[f.replace(/\.[^.]+$/, '')]
+      let title = '', year: number | undefined, authors: string[] | undefined, venue: string | undefined
+      if (meta) {
+        title = String(meta.title || '')
+        authors = Array.isArray(meta.authors) ? meta.authors.map(String) : undefined
+        year = meta.year ? Number(meta.year) : undefined
+        venue = meta.venue ? String(meta.venue) : undefined
+      } else {
+        const d = deriveFromFilename(f)
+        title = d.title
+        year = d.year
+        authors = d.authorsDisp ? [d.authorsDisp] : undefined
+      }
+      papers.push({ name: f, href: `${base}/academicPapers/${f}`, size: fmtSize(stat.size), ext, title, year, authors, venue })
+    }
+    papers.sort((a, b) => a.title.localeCompare(b.title))
+  } catch {}
   return (
     <>
       {/* Hero Section */}
@@ -178,6 +258,51 @@ export default async function Technology() {
             <Link href="/forecasts" className="text-link">
               View our forecasts
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Academic References */}
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-light text-gray-900 mb-6">Academic References</h2>
+            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
+              Peer‑reviewed research and working papers underpinning our methodology and applications.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {papers.map((p, i) => (
+              <div key={i} className="border border-gray-200 rounded-lg p-4 bg-white flex flex-col justify-between">
+                <div className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-12 h-12 rounded bg-blue-50 text-clairient-blue flex-shrink-0">
+                    <FileText size={24} />
+                  </span>
+                  <div>
+                    <div className="text-gray-900 font-light mb-1">{p.title}</div>
+                    <div className="text-sm text-gray-600">
+                      {p.authors && p.authors.length > 0 ? (
+                        <span>{p.authors.length > 3 ? `${p.authors[0]} et al.` : p.authors.join(', ')}</span>
+                      ) : null}
+                      {p.year ? <span>{p.authors ? ' ' : ''}({p.year}).</span> : null}
+                      {p.venue ? <span> {p.venue}.</span> : null}
+                    </div>
+                    <div className="text-xs text-gray-500 uppercase tracking-wide mt-1">{p.ext.toUpperCase()} · {p.size}</div>
+                  </div>
+                </div>
+                <div className="mt-4 flex items-center gap-4">
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-clairient-blue hover:text-clairient-dark inline-flex items-center gap-1">
+                    <ExternalLink size={16} /> View
+                  </a>
+                  <a href={p.href} download className="text-gray-600 hover:text-gray-800 inline-flex items-center gap-1">
+                    <Download size={16} /> Download
+                  </a>
+                </div>
+              </div>
+            ))}
+            {papers.length === 0 && (
+              <div className="text-sm text-gray-600">Add PDFs or HTML files under <code>/public/academicPapers</code> to list them here.</div>
+            )}
           </div>
         </div>
       </section>
