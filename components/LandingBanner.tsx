@@ -28,8 +28,8 @@ export default function LandingBanner() {
           }}
         >
           <h1
-            className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-wide glow-pulse"
-            style={{ textShadow: '4px 4px 12px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6), 0 0 80px rgba(255,255,255,0.3)' }}
+            className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-wide"
+            style={{ textShadow: '4px 4px 12px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}
           >
             PaCE
           </h1>
@@ -66,10 +66,6 @@ export default function LandingBanner() {
           animation: fadeIn 1s ease-out;
         }
 
-        .glow-pulse {
-          animation: glowPulse 3s ease-in-out infinite;
-        }
-
         .typewriter-text {
           animation: typing 1.5s steps(27) 1.3s forwards;
           width: 0;
@@ -99,15 +95,6 @@ export default function LandingBanner() {
         @keyframes typing {
           from { width: 0; }
           to { width: 100%; }
-        }
-
-        @keyframes glowPulse {
-          0%, 100% {
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-          }
-          50% {
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
-          }
         }
       `}</style>
     </>
