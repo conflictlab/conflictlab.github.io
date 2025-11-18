@@ -71,22 +71,6 @@ export default async function DataPage() {
             Latest update: {formatDMY(snapshot.generatedAt)}
           </p>
 
-          {/* Data Rights & Use (CC BY-NC 4.0) */}
-          <div className="mb-8 border border-gray-200 rounded-lg p-4 bg-white">
-            <h2 className="text-lg font-light text-gray-900 mb-1">Data Rights &amp; Use</h2>
-            <p className="text-sm text-gray-700 mb-2">
-              Unless stated otherwise, datasets on this page are licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer" className="text-link">CC BY‑NC 4.0</a> (Attribution‑NonCommercial).
-              You may share and adapt for non‑commercial use with attribution. For commercial use, please <Link href="/contact" className="text-link">contact us</Link>.
-            </p>
-            <div className="text-xs text-gray-600 space-y-1">
-              <div>
-                <span className="font-medium">Attribution example:</span>
-                <code className="ml-2 px-1 py-0.5 bg-gray-50 border border-gray-200 rounded">Luscint (2025). Monthly Conflict Forecasts. https://luscint.com/data</code>
-              </div>
-              <div><span className="font-medium">Disclaimer:</span> Provided “as is”, without warranty; not for safety‑critical decisions.</div>
-              <div><span className="font-medium">Acceptable use:</span> Do not use to target, harass, or cause harm; comply with applicable laws.</div>
-            </div>
-          </div>
 
           {/* Country-level and Grid-level (equal width) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
@@ -100,6 +84,17 @@ export default async function DataPage() {
                     <RawCsvDownloader items={countryDownloads.filter(d => d.hasRaw).map(d => ({ period: d.period }))} />
                   </div>
                 )}
+                {/* Format description */}
+                <div className="mt-4 text-xs text-gray-600 space-y-1">
+                  <div className="font-medium text-gray-700">Format</div>
+                  <div>CSV with header comments and columns:</div>
+                  <div className="font-mono">
+                    # period=YYYY-MM; generatedAt=ISO; version=1.0
+                  </div>
+                  <div className="font-mono break-all">
+                    id,name,entityType,iso3,index,band,confidence,deltaMoM,deltaYoY,1m_index,1m_p10,1m_p50,1m_p90,3m_index,3m_p10,3m_p50,3m_p90,6m_index,6m_p10,6m_p50,6m_p90,drivers,notes
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -119,7 +114,37 @@ export default async function DataPage() {
                     ]}
                   />
                 </div>
+                {/* Format description */}
+                <div className="text-xs text-gray-600 space-y-1">
+                  <div className="font-medium text-gray-700">Format</div>
+                  <div>
+                    - Monthly points CSVs: <span className="font-mono">lat,lon,v</span>
+                  </div>
+                  <div>
+                    - Combined CSV: <span className="font-mono">lat,lon,m1,m2,m3,m4,m5,m6</span>
+                  </div>
+                  <div>
+                    - GeoJSON features with <span className="font-mono">properties.m1..m6</span>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
+
+          {/* Data Rights & Use (CC BY-NC 4.0) */}
+          <div className="mt-8 border border-gray-200 rounded-lg p-4 bg-white">
+            <h2 className="text-lg font-light text-gray-900 mb-1">Data Rights &amp; Use</h2>
+            <p className="text-sm text-gray-700 mb-2">
+              Unless stated otherwise, datasets on this page are licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer" className="text-link">CC BY‑NC 4.0</a> (Attribution‑NonCommercial).
+              You may share and adapt for non‑commercial use with attribution. For commercial use, please <Link href="/contact" className="text-link">contact us</Link>.
+            </p>
+            <div className="text-xs text-gray-600 space-y-1">
+              <div>
+                <span className="font-medium">Attribution example:</span>
+                <code className="ml-2 px-1 py-0.5 bg-gray-50 border border-gray-200 rounded">Luscint (2025). Monthly Conflict Forecasts. https://luscint.com/data</code>
+              </div>
+              <div><span className="font-medium">Disclaimer:</span> Provided “as is”, without warranty; not for safety‑critical decisions.</div>
+              <div><span className="font-medium">Acceptable use:</span> Do not use to target, harass, or cause harm; comply with applicable laws.</div>
             </div>
           </div>
 
