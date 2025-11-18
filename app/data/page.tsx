@@ -113,8 +113,11 @@ export default async function DataPage() {
       const text = fs.readFileSync(src, 'utf-8')
       const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
       const header = lines[0] || ''
-      const data = lines.slice(1, 1 + 5)
-      gridPreview = [header, ...data].join('\n')
+      const headerCols = splitCsvLine(header)
+      const limitedHeader = headerCols.slice(0, 5).join(',')
+      const rows = lines.slice(1, 1 + 5)
+      const limitedRows = rows.map(l => splitCsvLine(l).slice(0, 5).join(','))
+      gridPreview = [limitedHeader, ...limitedRows].join('\n')
     }
   } catch {}
 
@@ -144,7 +147,7 @@ export default async function DataPage() {
                 )}
                 {countryPreview && (
                   <div className="mt-3">
-                    <div className="text-sm text-gray-700 mb-1">Preview (first 5 rows)</div>
+                    <div className="text-sm text-gray-700 mb-1">Preview (first 5 rows and columns)</div>
                     <pre className="text-xs bg-gray-50 p-3 border border-gray-200 rounded overflow-auto max-h-48 whitespace-pre-wrap">{countryPreview}</pre>
                   </div>
                 )}
@@ -182,7 +185,7 @@ export default async function DataPage() {
                 </div>
                 {gridPreview && (
                   <div className="mt-3">
-                    <div className="text-sm text-gray-700 mb-1">Preview (first 5 rows)</div>
+                    <div className="text-sm text-gray-700 mb-1">Preview (first 5 rows and columns)</div>
                     <pre className="text-xs bg-gray-50 p-3 border border-gray-200 rounded overflow-auto max-h-48 whitespace-pre-wrap">{gridPreview}</pre>
                   </div>
                 )}
