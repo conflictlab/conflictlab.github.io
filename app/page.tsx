@@ -34,10 +34,10 @@ export default async function Home() {
         {/* Title Overlay - 1/6 from top of map */}
         <div className="absolute inset-0 flex items-start justify-center pt-[16.67vh] z-[1000] pointer-events-none">
           <div className="text-center px-8 py-6">
-            <h1 className="text-5xl md:text-6xl font-light text-white mb-4" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.3)' }}>
-              PaCE: Patterns of Conflict Emergence
+            <h1 className="text-7xl md:text-8xl font-bold text-white mb-3 tracking-wider" style={{ textShadow: '3px 3px 10px rgba(0,0,0,0.6), 0 0 30px rgba(0,0,0,0.4)' }}>
+              PaCE
             </h1>
-            <p className="text-2xl md:text-3xl text-white font-light" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.5), 0 0 15px rgba(0,0,0,0.3)' }}>
+            <p className="text-lg md:text-xl text-white/90 font-light tracking-wide" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.5)' }}>
               Predicting War Through Pattern Recognition
             </p>
           </div>
