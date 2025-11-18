@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap, CircleMarker } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 type CountryValue = { name: string; iso3?: string; value?: number; months?: number[] }
@@ -16,9 +16,10 @@ interface Props {
   initialZoom?: number
   hideControls?: boolean
   hideLegend?: boolean
+  showHotspots?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7, hideControls = false, hideLegend = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7, hideControls = false, hideLegend = false, showHotspots = false }: Props) {
   const pathname = usePathname()
   const [world, setWorld] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -159,6 +160,26 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     return [center[0] + northBiasDeg, center[1]]
   }, [center])
 
+  // Calculate hotspots for high-risk countries (for animated pulsing circles)
+  const hotspots = useMemo(() => {
+    if (!showHotspots || !world?.features?.length) return []
+    const spots: Array<{ name: string; lat: number; lon: number; value: number }> = []
+    const threshold = 100 // Only show hotspots for countries with risk > 100
+
+    for (const f of world.features) {
+      const name = normalizeName(f?.properties?.name || f?.properties?.NAME || '')
+      const val = Number(valueByName.get(name) || 0)
+
+      if (val > threshold) {
+        const centroid = calculateCentroid(f.geometry)
+        if (centroid) {
+          spots.push({ name: f?.properties?.name || f?.properties?.NAME || '', lat: centroid[1], lon: centroid[0], value: val })
+        }
+      }
+    }
+    return spots
+  }, [world, valueByName, showHotspots])
+
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
       <div className={`rounded overflow-hidden relative`} style={{ height: mapHeight }}>
@@ -249,6 +270,36 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                 }}
               />
             )}
+            {/* Animated pulsing hotspots for high-risk countries */}
+            {showHotspots && hotspots.map((spot, idx) => (
+              <React.Fragment key={`${spot.name}-${idx}`}>
+                {/* Outer pulse ring */}
+                <CircleMarker
+                  center={[spot.lat, spot.lon] as any}
+                  radius={12}
+                  pathOptions={{
+                    fillColor: '#dc2626',
+                    fillOpacity: 0.1,
+                    color: '#dc2626',
+                    weight: 2,
+                    opacity: 0.7,
+                  }}
+                  className="pulse-ring"
+                />
+                {/* Inner solid circle */}
+                <CircleMarker
+                  center={[spot.lat, spot.lon] as any}
+                  radius={5}
+                  pathOptions={{
+                    fillColor: '#dc2626',
+                    fillOpacity: 0.9,
+                    color: '#ffffff',
+                    weight: 2,
+                    opacity: 1,
+                  }}
+                />
+              </React.Fragment>
+            ))}
           </MapContainer>
         )}
         {showZoomHint && (
@@ -258,6 +309,29 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
             </div>
           </div>
+        )}
+        {/* CSS for pulsing animation */}
+        {showHotspots && (
+          <style jsx global>{`
+            @keyframes pulse {
+              0% {
+                transform: scale(1);
+                opacity: 0.6;
+              }
+              50% {
+                transform: scale(2);
+                opacity: 0.3;
+              }
+              100% {
+                transform: scale(3);
+                opacity: 0;
+              }
+            }
+            .pulse-ring {
+              animation: pulse 2.5s ease-out infinite;
+              transform-origin: center center;
+            }
+          `}</style>
         )}
       </div>
       {/* Controls moved below map */}
@@ -302,6 +376,32 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
 }
 
 function normalizeName(s: string) { return s.toLowerCase().normalize('NFKD').replace(/[^a-z\s\-']/g,'').trim() }
+
+// Calculate centroid of a geometry (approximate for visualization)
+function calculateCentroid(geometry: any): [number, number] | null {
+  if (!geometry) return null
+
+  const coords: number[][] = []
+
+  if (geometry.type === 'Polygon') {
+    coords.push(...geometry.coordinates[0])
+  } else if (geometry.type === 'MultiPolygon') {
+    for (const poly of geometry.coordinates) {
+      coords.push(...poly[0])
+    }
+  }
+
+  if (coords.length === 0) return null
+
+  let sumLon = 0, sumLat = 0
+  for (const [lon, lat] of coords) {
+    sumLon += lon
+    sumLat += lat
+  }
+
+  return [sumLon / coords.length, sumLat / coords.length]
+}
+
 function aliasFor(name: string): string | null {
   const n = normalizeName(name)
   const map: Record<string,string> = {
