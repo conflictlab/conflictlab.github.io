@@ -2,7 +2,9 @@
 const isGhActions = process.env.GITHUB_ACTIONS === 'true'
 const repoName = (process.env.GITHUB_REPOSITORY || '').split('/')[1] || ''
 const envBasePath = process.env.BASE_PATH || ''
-const basePath = envBasePath || (isGhActions && repoName ? `/${repoName}` : '')
+// For user/org pages (*.github.io), basePath should be empty
+const isUserOrgPage = repoName.endsWith('.github.io')
+const basePath = envBasePath || (isGhActions && repoName && !isUserOrgPage ? `/${repoName}` : '')
 
 const nextConfig = {
   output: 'export',
