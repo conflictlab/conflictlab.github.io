@@ -5,7 +5,6 @@ import { ChevronDown } from 'lucide-react'
 
 export default function LandingBanner() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [counters, setCounters] = useState({ wars: 0, casualties: 0 })
 
   // Track mouse position for parallax
   useEffect(() => {
@@ -16,34 +15,6 @@ export default function LandingBanner() {
     }
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  // Animate counters on mount
-  useEffect(() => {
-    const duration = 2000
-    const steps = 60
-    const increment = duration / steps
-
-    let currentWars = 0
-    let currentCasualties = 0
-    const targetWars = 200
-    const targetCasualties = 35
-
-    const interval = setInterval(() => {
-      currentWars = Math.min(currentWars + targetWars / steps, targetWars)
-      currentCasualties = Math.min(currentCasualties + targetCasualties / steps, targetCasualties)
-
-      setCounters({
-        wars: Math.round(currentWars),
-        casualties: Math.round(currentCasualties)
-      })
-
-      if (currentWars >= targetWars && currentCasualties >= targetCasualties) {
-        clearInterval(interval)
-      }
-    }, increment)
-
-    return () => clearInterval(interval)
   }, [])
 
   return (
@@ -68,14 +39,14 @@ export default function LandingBanner() {
             </p>
           </div>
 
-          {/* Animated Statistics */}
+          {/* Statistics */}
           <div className="flex justify-center gap-12 text-white counter-fade-in">
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-1">{counters.wars}+</div>
+              <div className="text-3xl md:text-4xl font-bold mb-1">200+</div>
               <div className="text-sm md:text-base font-light opacity-90">Wars Analyzed</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-1">{counters.casualties}M+</div>
+              <div className="text-3xl md:text-4xl font-bold mb-1">35M+</div>
               <div className="text-sm md:text-base font-light opacity-90">Battle Deaths</div>
             </div>
           </div>
