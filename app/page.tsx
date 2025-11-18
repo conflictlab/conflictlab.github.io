@@ -45,7 +45,14 @@ export default async function Home() {
       {/* About Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-light text-gray-900 mb-8">About PaCE</h2>
+          <div className="flex items-center justify-center mb-8">
+            <img
+              src="/logo.png"
+              alt="PaCE Logo"
+              className="h-16 w-16 mr-4"
+            />
+            <h2 className="text-3xl font-light text-gray-900">About PaCE</h2>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             {/* First text block */}
             <div className="bg-white p-8 rounded-lg shadow-sm">
