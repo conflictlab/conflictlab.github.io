@@ -15,8 +15,6 @@ function formatDMY(iso: string): string {
 
 export default async function DataPage() {
   const snapshot = readSnapshot('latest')
-  const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '' // e.g., your production site
 
   // Country-level: list recent raw CSVs (if present in content/forecasts/csv)
   const allPeriods = getAvailablePeriods()
@@ -129,7 +127,7 @@ export default async function DataPage() {
       <section className="py-24 hero-background-network-image">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
-            Data Downloads
+            Downloads
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             Access our <span className="word-emphasis">conflict forecasts</span> as raw data.
@@ -208,54 +206,6 @@ export default async function DataPage() {
             </div>
           </div>
 
-          
-          {/* API Documentation */}
-          <div className="mt-12 border border-gray-200 rounded-lg p-4 bg-white">
-            <h2 className="text-lg font-light text-gray-900 mb-2">API (Beta)</h2>
-            <p className="text-sm text-gray-700 mb-4">
-              Programmatic JSON access to forecasts. Base URL:
-              <code className="ml-1 font-mono">{siteUrl ? `${siteUrl}${base}` : `https://<your-domain>${base}`}</code>
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div>
-                <div className="font-medium text-gray-900 mb-1">Country time series</div>
-                <pre className="text-xs bg-gray-50 p-3 border border-gray-200 rounded overflow-auto whitespace-pre-wrap">{
-`GET ${siteUrl ? siteUrl : 'https://<your-domain>'}${base}/api/v1/forecasts/series?entity=USA
-
-Response 200
-{
-  "entity": "USA",
-  "series": [ { "period": "2025-06", "index": 23.1, "forecast": [/* ... */] }, ... ]
-}`}
-                </pre>
-                <div className="text-xs text-gray-600 mt-2">Query params: <code className="font-mono">entity</code> (ISO‑3 or name token)</div>
-              </div>
-              <div>
-                <div className="font-medium text-gray-900 mb-1">Grid points by month</div>
-                <pre className="text-xs bg-gray-50 p-3 border border-gray-200 rounded overflow-auto whitespace-pre-wrap">{
-`GET ${siteUrl ? siteUrl : 'https://<your-domain>'}${base}/api/v1/grid/${gridPeriod}/points?month=1
-
-Response 200
-{
-  "period": "${gridPeriod}",
-  "points": [ { "lat": 0.25, "lon": 32.75, "m": [10,8,5,2,1,0] }, ... ]
-}`}
-                </pre>
-                <div className="text-xs text-gray-600 mt-2">Query params: <code className="font-mono">month</code> (1–6, optional)</div>
-              </div>
-            </div>
-            <div className="mt-4 text-sm text-gray-700">
-              <a className="text-link" href={`${base}/docs/api/`} target="_blank" rel="noopener noreferrer">Full API docs (Swagger)</a>
-              <span className="mx-2">·</span>
-              <span className="text-gray-600">Serverful only: Next.js API routes run on a server (e.g., Vercel). On GitHub Pages (static), use these static endpoints instead:</span>
-              <div className="mt-2 text-xs text-gray-600">
-                <div>• Grid points (static API-style): <code className="font-mono">{siteUrl ? siteUrl : 'https://&lt;user&gt;.github.io'}{base}/api/v1/grid/{gridPeriod}/points-m1.json</code></div>
-                <div>• Grid points (raw monthly): <code className="font-mono">{siteUrl ? siteUrl : 'https://&lt;user&gt;.github.io'}{base}/data/grid/{gridPeriod}-m1.json</code></div>
-                <div>• Grid polygons (raw): <code className="font-mono">{siteUrl ? siteUrl : 'https://&lt;user&gt;.github.io'}{base}/data/grid/{gridPeriod}.geo.json</code></div>
-                <div>• Country CSVs: download from the Country-level section above.</div>
-              </div>
-            </div>
-          </div>
 
           {/* Data Rights & Use (CC BY-NC 4.0) */}
           <div className="mt-8 border border-gray-200 rounded-lg p-4 bg-white">

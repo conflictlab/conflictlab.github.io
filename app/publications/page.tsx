@@ -10,7 +10,7 @@ interface Publication {
 
 const publications: Publication[] = [
   {
-    year: 2025,
+    year: 2026,
     authors: "Lu C, & Chadefaux T.",
     title: "Structured Pixels: Satellite Imagery as the Cause in Causal Effect Estimation",
     venue: "Hawaii International Conference on System Sciences",
@@ -148,46 +148,72 @@ export default function PublicationsPage() {
       {/* Publications by year */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-12">
+          {/* Page Navigation */}
+          <div className="mb-12 pb-6 border-b border-gray-200">
+            <nav className="flex space-x-6 text-lg">
+              <a href="#publications" className="text-clairient-blue hover:text-clairient-dark">
+                Academic Publications
+              </a>
+              <span className="text-gray-400">/</span>
+              <a href="#reports-newsletters" className="text-clairient-blue hover:text-clairient-dark">
+                Reports and Newsletters
+              </a>
+            </nav>
+          </div>
+
+          <h2 id="publications" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
+            Academic Publications
+          </h2>
+
+          <div className="space-y-8">
             {years.map((year) => (
-              <div key={year} className="space-y-6">
-                <h2 className="text-3xl font-light text-gray-900 border-b border-gray-200 pb-2">
-                  {year}
-                </h2>
-                <div className="space-y-8">
-                  {publicationsByYear[year].map((pub, index) => (
-                    <article
-                      key={index}
-                      className="border border-gray-200 rounded-lg p-6 bg-white hover:border-clairient-blue transition-all duration-300"
-                    >
-                      {/* Authors */}
-                      <p className="text-sm text-gray-600 mb-2">{pub.authors}</p>
+              <div key={year}>
+                {publicationsByYear[year].map((pub, index) => (
+                  <div key={index} className="grid grid-cols-[100px_1fr] gap-6 mb-6">
+                    {/* Year column - only show for first publication of each year */}
+                    <div className="text-right">
+                      {index === 0 && (
+                        <span className="text-2xl font-light text-gray-900">{year}</span>
+                      )}
+                    </div>
 
-                      {/* Title */}
-                      <h3 className="text-xl font-light text-gray-900 mb-2">
-                        {pub.title}
-                      </h3>
-
-                      {/* Venue */}
-                      <p className="text-clairient-blue italic mb-4">{pub.venue}</p>
+                    {/* Publication content */}
+                    <div>
+                      <div className="mb-2">
+                        <span className="text-base font-light text-gray-900">{pub.title}</span>
+                        <span className="text-sm text-gray-600"> — {pub.authors}</span>
+                        <span className="text-sm text-clairient-blue italic"> — {pub.venue}</span>
+                      </div>
 
                       {/* Abstract */}
                       <details className="group">
-                        <summary className="cursor-pointer text-gray-600 hover:text-gray-900 transition-colors list-none">
+                        <summary className="cursor-pointer text-sm text-gray-600 hover:text-gray-900 transition-colors list-none">
                           <span className="inline-flex items-center">
                             <span className="mr-2 group-open:rotate-90 transition-transform">▶</span>
                             Abstract
                           </span>
                         </summary>
-                        <p className="mt-3 text-gray-600 leading-relaxed pl-6">
+                        <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-6">
                           {pub.abstract}
                         </p>
                       </details>
-                    </article>
-                  ))}
-                </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ))}
+          </div>
+
+          {/* Reports and Newsletters Section */}
+          <div className="mt-16">
+            <h2 id="reports-newsletters" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
+              Reports and Newsletters
+            </h2>
+            <div className="border border-gray-200 rounded-lg p-6 bg-white">
+              <p className="text-gray-600">
+                Coming soon: Research reports, newsletters, and policy briefs.
+              </p>
+            </div>
           </div>
 
           {/* Footer note */}

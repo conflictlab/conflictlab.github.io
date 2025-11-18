@@ -22,10 +22,6 @@ export default function Contact() {
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
             Contact
           </h1>
-          <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Ready to discuss how predictive intelligence can serve your organization? 
-            Get in touch to explore pilot programs and partnerships.
-          </p>
         </div>
       </section>
 
@@ -46,16 +42,6 @@ export default function Contact() {
                   </a>
                 </div>
               </div>
-            </div>
-            
-            <div>
-              <h2 className="text-2xl font-light mb-6">What We Discuss</h2>
-              <ul className="space-y-2 text-gray-600">
-                <li>Pilot program design</li>
-                <li>Technology demonstration</li>
-                <li>Integration planning</li>
-                <li>Custom solutions</li>
-              </ul>
             </div>
           </div>
         </div>

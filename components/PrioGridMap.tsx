@@ -454,7 +454,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
       </div>
       <Legend thresholds={thresholds} vmin={vmin} vmax={vmax} data={data} points={points} month={month} />
       <div className="px-4 mt-4 text-center">
-        <Link href="/data" className="btn-primary inline-flex items-center justify-center">
+        <Link href="/downloads" className="btn-primary inline-flex items-center justify-center">
           Data downloads
         </Link>
       </div>

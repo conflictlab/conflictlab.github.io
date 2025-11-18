@@ -15,65 +15,182 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* Main Event */}
+      {/* Main Content */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Page Navigation */}
+          <div className="mb-12 pb-6 border-b border-gray-200">
+            <nav className="flex space-x-6 text-lg">
+              <a href="#workshops" className="text-clairient-blue hover:text-clairient-dark">
+                Workshops
+              </a>
+              <span className="text-gray-400">/</span>
+              <a href="#presentations" className="text-clairient-blue hover:text-clairient-dark">
+                Presentations
+              </a>
+            </nav>
+          </div>
+
+          {/* Workshops Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-light text-gray-900 mb-8">
-              Conflict Forecasting Workshop
+            <h2 id="workshops" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
+              Workshops
             </h2>
 
-            <div className="border border-gray-200 rounded-lg p-8 bg-white">
-              <h3 className="text-2xl font-light text-gray-900 mb-4">
-                Conflict Forecasting Workshop: Methodological Innovations, Data Opportunities, and Policy Relevance
-              </h3>
+            <div className="space-y-12">
+              {/* Conflict Forecasting Workshop */}
+              <div>
+                <div className="border border-gray-200 rounded-lg p-8 bg-white">
+                  <p className="text-sm text-gray-600 mb-2">2024</p>
+                  <h3 className="text-2xl font-light text-gray-900 mb-6">
+                    Conflict Forecasting Workshop: Methodological Innovations, Data Opportunities, and Policy Relevance
+                  </h3>
 
-              <div className="mb-6">
-                <Link
-                  href="#"
-                  className="text-clairient-blue hover:text-clairient-dark underline"
-                >
-                  Workshop Programme
-                </Link>
+                  {/* Top Banner - 3 photos side by side */}
+                  <div className="grid grid-cols-3 gap-2 mb-6">
+                <img
+                  src="/workshop1.jpeg"
+                  alt="Conflict Forecasting Workshop"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <img
+                  src="/workshop2.png"
+                  alt="Conflict Forecasting Workshop"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <img
+                  src="/workshop3.jpeg"
+                  alt="Conflict Forecasting Workshop"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                  </div>
+
+                  <div className="mb-6">
+                    <Link
+                      href="#"
+                      className="text-clairient-blue hover:text-clairient-dark underline"
+                    >
+                      Workshop Programme
+                    </Link>
+                  </div>
+
+                  <div className="space-y-6 text-gray-600">
+                    <div>
+                      <h4 className="text-lg font-light text-gray-900 mb-3">Background on Conflict Forecasting</h4>
+                      <p className="leading-relaxed">
+                        Conflict forecasting has evolved significantly over recent years, spurred by advancements in statistical modeling, machine learning, and the growing availability of data. Traditionally, statistical and ML approaches have been central in predicting the likelihood, intensity, and duration of conflicts. These models often rely on historical data, socio-political indicators, and increasingly, real-time data streams, to anticipate conflict scenarios.
+                      </p>
+                      <p className="leading-relaxed mt-4">
+                        Parallel to these developments, theoretical frameworks such as game theory have offered insights into the strategic interactions among conflict actors, providing a understanding of conflict dynamics. Another very successful approach relies on the &ldquo;wisdom of crowds,&rdquo; where collective judgment and prediction markets are used to forecast conflicts, capitalizing on the diverse opinions of a large group of individuals.
+                      </p>
+                      <p className="leading-relaxed mt-4">
+                        The surge in data availability, including social media feeds, satellite imagery, and real-time reporting, presents both opportunities and challenges for conflict forecasting. This workshop explored these various approaches, and investigated how they can be integrated and leveraged to enhance the accuracy and usefulness of conflict forecasts.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="text-lg font-light text-gray-900 mb-3">Objectives of the Workshop</h4>
+                      <ul className="list-disc list-inside space-y-2 leading-relaxed">
+                        <li><span className="font-light text-gray-900">Showcase recent research:</span> highlight cutting-edge research in conflict forecasting, focusing on both methodological advancements and innovative data use. This includes exploring, among others, statistical models, ML algorithms, game theory applications, and crowd-sourced predictions.</li>
+                        <li><span className="font-light text-gray-900">Explore data-driven opportunities:</span> examine the impact of the increasing availability of diverse data sources on conflict forecasting, discuss how to effectively harness this data while addressing challenges like data reliability and ethical considerations.</li>
+                        <li><span className="font-light text-gray-900">Consider policy implications:</span> the workshop included a focus on how these academic advancements can be translated into practical tools and insights for policy-making. This includes discussions on how forecasting models can inform conflict prevention, response strategies, and policy formulation.</li>
+                        <li><span className="font-light text-gray-900">Foster collaboration:</span> create a place for researchers to collaborate, share ideas, and potentially form partnerships for future research endeavors.</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="text-lg font-light text-gray-900 mb-3">Format</h4>
+                      <p className="leading-relaxed">
+                        The workshop featured paper presentations organized in panels. Each session was followed by a Q&A segment, encouraging active participation and exchange of ideas.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bottom Banner - Photo maintaining aspect ratio */}
+                  <div className="mt-6 flex justify-center">
+                    <img
+                      src="/workshop4.jpeg"
+                      alt="Conflict Forecasting Workshop"
+                      className="max-w-full h-auto rounded-lg"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-6 text-gray-600">
-                <div>
-                  <h4 className="text-lg font-light text-gray-900 mb-3">Background on Conflict Forecasting</h4>
-                  <p className="leading-relaxed">
-                    Conflict forecasting has evolved significantly over recent years, spurred by advancements in statistical modeling, machine learning, and the growing availability of data. Traditionally, statistical and ML approaches have been central in predicting the likelihood, intensity, and duration of conflicts. These models often rely on historical data, socio-political indicators, and increasingly, real-time data streams, to anticipate conflict scenarios.
+              {/* Guest Workshops */}
+              <div className="space-y-8">
+                {/* November 2024 */}
+                <article className="border border-gray-200 rounded-lg p-6 bg-white">
+                  <p className="text-sm text-gray-600 mb-2">4 November 2024</p>
+                  <h3 className="text-xl font-light text-gray-900 mb-4">
+                    Guest Workshop: Sensitivity Analysis of Determinants of Conflict Onset
+                  </h3>
+                  <div className="flex justify-center mb-4">
+                    <img
+                      src="/PaCE Workshops November 2024_jfif.jpeg"
+                      alt="PaCE Workshop November 2024"
+                      className="w-1/3 h-auto rounded-lg"
+                    />
+                  </div>
+                  <p className="text-gray-600 mb-2">
+                    <span className="font-light">Speakers:</span> Sverke R. Saxegaard & Eric G. E. Nilsen, PhD Research Fellows, Department of Political Science, University of Oslo, Norway
                   </p>
-                  <p className="leading-relaxed mt-4">
-                    Parallel to these developments, theoretical frameworks such as game theory have offered insights into the strategic interactions among conflict actors, providing a understanding of conflict dynamics. Another very successful approach relies on the &ldquo;wisdom of crowds,&rdquo; where collective judgment and prediction markets are used to forecast conflicts, capitalizing on the diverse opinions of a large group of individuals.
+                  <p className="text-gray-600 leading-relaxed">
+                    What country-characteristics are robustly correlated with intrastate conflict onset? Numerous studies have over the last three decades sought to establish the determinants of intrastate conflict. In 2006, Hegre and Sambanis showed that a number of these findings were not robust. Since then, new studies have identified altogether new variables that ostensibly are determinants of intrastate conflict onset. Moreover, contemporary civil conflict has been described as fundamentally different than before, begging the question of whether their determinants are also different. This paper takes stock of the last twenty years of quantitative research on the determinants of intrastate conflict onset, by conducting a systematic sensitivity analysis of 144 individual variables. The results of the approximately 18 million regression models indicate that a vast majority of established patterns and relationships in the literature are not robust to model specifications.
                   </p>
-                  <p className="leading-relaxed mt-4">
-                    The surge in data availability, including social media feeds, satellite imagery, and real-time reporting, presents both opportunities and challenges for conflict forecasting. This workshop explored these various approaches, and investigated how they can be integrated and leveraged to enhance the accuracy and usefulness of conflict forecasts.
-                  </p>
-                </div>
+                </article>
 
-                <div>
-                  <h4 className="text-lg font-light text-gray-900 mb-3">Objectives of the Workshop</h4>
-                  <ul className="list-disc list-inside space-y-2 leading-relaxed">
-                    <li><span className="font-light text-gray-900">Showcase recent research:</span> highlight cutting-edge research in conflict forecasting, focusing on both methodological advancements and innovative data use. This includes exploring, among others, statistical models, ML algorithms, game theory applications, and crowd-sourced predictions.</li>
-                    <li><span className="font-light text-gray-900">Explore data-driven opportunities:</span> examine the impact of the increasing availability of diverse data sources on conflict forecasting, discuss how to effectively harness this data while addressing challenges like data reliability and ethical considerations.</li>
-                    <li><span className="font-light text-gray-900">Consider policy implications:</span> the workshop included a focus on how these academic advancements can be translated into practical tools and insights for policy-making. This includes discussions on how forecasting models can inform conflict prevention, response strategies, and policy formulation.</li>
-                    <li><span className="font-light text-gray-900">Foster collaboration:</span> create a place for researchers to collaborate, share ideas, and potentially form partnerships for future research endeavors.</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-lg font-light text-gray-900 mb-3">Format</h4>
-                  <p className="leading-relaxed">
-                    The workshop featured paper presentations organized in panels. Each session was followed by a Q&A segment, encouraging active participation and exchange of ideas.
+                {/* January 2024 */}
+                <article className="border border-gray-200 rounded-lg p-6 bg-white">
+                  <p className="text-sm text-gray-600 mb-2">31 January 2024</p>
+                  <h3 className="text-xl font-light text-gray-900 mb-4">
+                    Guest Seminar: Three-stage Hierarchical Hurdle Count Model for Conflict Forecasting
+                  </h3>
+                  <div className="flex justify-center mb-4">
+                    <img
+                      src="/Cornelius Fritz.png"
+                      alt="Dr Cornelius Fritz"
+                      className="w-1/3 h-auto rounded-lg"
+                    />
+                  </div>
+                  <p className="text-gray-600 mb-2">
+                    <span className="font-light">Speaker:</span> Dr Cornelius Fritz
                   </p>
-                </div>
+                  <p className="text-gray-600 leading-relaxed">
+                    In my research, I use statistics to learn from network data to answer questions posed within the social sciences in uncertain and changing environments. My research mainly originates from multidisciplinary collaborations with social scientists approaching me with data and questions revolving around networks. As a statistician, I operate in two worlds: the real world, which encompasses observed data with all its imperfections and substantive knowledge of the subject matter, and the model world, which is an artificial representation of the real world characterized by a stochastic model. I develop novel data analysis techniques by combining statistical and machine learning with substantive theory to bridge the gap between the real and model world.
+                  </p>
+                </article>
+
+                {/* March 2023 */}
+                <article className="border border-gray-200 rounded-lg p-6 bg-white">
+                  <p className="text-sm text-gray-600 mb-2">21 March 2023</p>
+                  <h3 className="text-xl font-light text-gray-900 mb-4">
+                    Advances in Social Science Forecasting
+                  </h3>
+                  <div className="flex justify-center mb-4">
+                    <img
+                      src="/Galit Shmueli NTHU 2020 Small.jpeg"
+                      alt="Professor Galit Shmueli"
+                      className="w-1/3 h-auto rounded-lg"
+                    />
+                  </div>
+                  <p className="text-gray-600 mb-2">
+                    <span className="font-light">Speaker:</span> Professor Galit Shmueli
+                  </p>
+                  <p className="text-gray-600 leading-relaxed">
+                    <span className="font-light">Topic:</span> &ldquo;Forks over knives: Predictive inconsistency in criminal justice algorithmic risk assessment tools.&rdquo;
+                  </p>
+                  <p className="text-gray-600 leading-relaxed mt-2">
+                    Big data and algorithmic risk prediction tools promise to improve criminal justice systems by reducing human biases and inconsistencies in decision-making. Yet different, equally justifiable choices when developing, testing and deploying these socio-technical tools can lead to disparate predicted risk scores for the same individual. In this talk Prof. Galit Shmueli explored the challenges of &lsquo;predictive inconsistency&rsquo;, arguing that in a diverse and pluralistic society we should not expect to completely eliminate predictive inconsistency, but identify and document reasonable &lsquo;forking paths&rsquo;.
+                  </p>
+                </article>
               </div>
             </div>
           </div>
 
           {/* Presentations */}
           <div className="mb-16">
-            <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
+            <h2 id="presentations" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
               Presentations
             </h2>
 
@@ -295,60 +412,6 @@ export default function EventsPage() {
                   <p className="text-gray-600 text-sm">Computational Conflict Research: Charting the Paths Ahead, Munich, Germany</p>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Past Events */}
-          <div>
-            <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
-              Past Events
-            </h2>
-
-            <div className="space-y-8">
-              {/* November 2024 */}
-              <article className="border border-gray-200 rounded-lg p-6 bg-white">
-                <p className="text-sm text-gray-600 mb-2">4 November 2024</p>
-                <h3 className="text-xl font-light text-gray-900 mb-3">
-                  Guest Workshop: Sensitivity Analysis of Determinants of Conflict Onset
-                </h3>
-                <p className="text-gray-600 mb-2">
-                  <span className="font-light">Speakers:</span> Sverke R. Saxegaard & Eric G. E. Nilsen, PhD Research Fellows, Department of Political Science, University of Oslo, Norway
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  What country-characteristics are robustly correlated with intrastate conflict onset? Numerous studies have over the last three decades sought to establish the determinants of intrastate conflict. In 2006, Hegre and Sambanis showed that a number of these findings were not robust. Since then, new studies have identified altogether new variables that ostensibly are determinants of intrastate conflict onset. Moreover, contemporary civil conflict has been described as fundamentally different than before, begging the question of whether their determinants are also different. This paper takes stock of the last twenty years of quantitative research on the determinants of intrastate conflict onset, by conducting a systematic sensitivity analysis of 144 individual variables. The results of the approximately 18 million regression models indicate that a vast majority of established patterns and relationships in the literature are not robust to model specifications.
-                </p>
-              </article>
-
-              {/* January 2024 */}
-              <article className="border border-gray-200 rounded-lg p-6 bg-white">
-                <p className="text-sm text-gray-600 mb-2">31 January 2024</p>
-                <h3 className="text-xl font-light text-gray-900 mb-3">
-                  Guest Seminar: Three-stage Hierarchical Hurdle Count Model for Conflict Forecasting
-                </h3>
-                <p className="text-gray-600 mb-2">
-                  <span className="font-light">Speaker:</span> Dr Cornelius Fritz
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  In my research, I use statistics to learn from network data to answer questions posed within the social sciences in uncertain and changing environments. My research mainly originates from multidisciplinary collaborations with social scientists approaching me with data and questions revolving around networks. As a statistician, I operate in two worlds: the real world, which encompasses observed data with all its imperfections and substantive knowledge of the subject matter, and the model world, which is an artificial representation of the real world characterized by a stochastic model. I develop novel data analysis techniques by combining statistical and machine learning with substantive theory to bridge the gap between the real and model world.
-                </p>
-              </article>
-
-              {/* March 2023 */}
-              <article className="border border-gray-200 rounded-lg p-6 bg-white">
-                <p className="text-sm text-gray-600 mb-2">21 March 2023</p>
-                <h3 className="text-xl font-light text-gray-900 mb-3">
-                  Advances in Social Science Forecasting
-                </h3>
-                <p className="text-gray-600 mb-2">
-                  <span className="font-light">Speaker:</span> Professor Galit Shmueli
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  <span className="font-light">Topic:</span> &ldquo;Forks over knives: Predictive inconsistency in criminal justice algorithmic risk assessment tools.&rdquo;
-                </p>
-                <p className="text-gray-600 leading-relaxed mt-2">
-                  Big data and algorithmic risk prediction tools promise to improve criminal justice systems by reducing human biases and inconsistencies in decision-making. Yet different, equally justifiable choices when developing, testing and deploying these socio-technical tools can lead to disparate predicted risk scores for the same individual. In this talk Prof. Galit Shmueli explored the challenges of &lsquo;predictive inconsistency&rsquo;, arguing that in a diverse and pluralistic society we should not expect to completely eliminate predictive inconsistency, but identify and document reasonable &lsquo;forking paths&rsquo;.
-                </p>
-              </article>
             </div>
           </div>
 

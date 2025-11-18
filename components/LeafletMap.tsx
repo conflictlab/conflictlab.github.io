@@ -331,7 +331,7 @@ export default function LeafletMap() {
         </div>
       )}
       <div className="mt-4 text-center">
-        <Link href="/data" className="btn-primary inline-flex items-center justify-center">
+        <Link href="/downloads" className="btn-primary inline-flex items-center justify-center">
           Data downloads
         </Link>
       </div>

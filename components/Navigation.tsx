@@ -57,14 +57,14 @@ export default function Navigation() {
               Methodology
             </Link>
             <Link
-              href="/data"
+              href="/downloads"
               className={`transition-colors font-light ${
-                isActive('/data')
+                isActive('/downloads')
                   ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
                   : 'text-gray-600 hover:text-clairient-blue'
               }`}
             >
-              Data
+              Downloads
             </Link>
             <Link
               href="/publications"
@@ -145,14 +145,14 @@ export default function Navigation() {
               Methodology
             </Link>
             <Link
-              href="/data"
+              href="/downloads"
               className={`block px-3 py-2 font-light ${
-                isActive('/data')
+                isActive('/downloads')
                   ? 'text-clairient-blue bg-blue-50'
                   : 'text-gray-600 hover:text-clairient-blue'
               }`}
             >
-              Data
+              Downloads
             </Link>
             <Link
               href="/publications"

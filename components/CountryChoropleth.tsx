@@ -28,8 +28,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     async function load() {
       setError(null)
       try {
-        // Lightweight world GeoJSON with name property
-        const res = await fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+        // Load local world GeoJSON
+        const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+        const res = await fetch(`${base}/data/world.geojson`)
         if (!res.ok) throw new Error('Failed to load world GeoJSON')
         const json = await res.json()
         if (!cancelled) setWorld(json)
@@ -283,7 +284,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         <CountryLegend thresholds={thresholds} />
         {!hideDownloadButton && (
           <div className="mt-4 text-center">
-            <Link href="/data" className="btn-primary inline-flex items-center justify-center">
+            <Link href="/downloads" className="btn-primary inline-flex items-center justify-center">
               Data downloads
             </Link>
           </div>
