@@ -3,10 +3,44 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { MapContainer, TileLayer, GeoJSON, useMap, CircleMarker } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
+import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 type CountryValue = { name: string; iso3?: string; value?: number; months?: number[] }
+
+// Component to add pulsing hotspot markers using HTML/CSS
+function HotspotMarkers({ hotspots }: { hotspots: Array<{ name: string; lat: number; lon: number; value: number }> }) {
+  const map = useMap()
+
+  useEffect(() => {
+    const markers: L.Marker[] = []
+
+    hotspots.forEach((spot) => {
+      const icon = L.divIcon({
+        className: 'hotspot-marker',
+        html: `
+          <div class="hotspot-container">
+            <div class="hotspot-pulse"></div>
+            <div class="hotspot-core"></div>
+          </div>
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      })
+
+      const marker = L.marker([spot.lat, spot.lon], { icon })
+      marker.addTo(map)
+      markers.push(marker)
+    })
+
+    return () => {
+      markers.forEach(m => map.removeLayer(m))
+    }
+  }, [map, hotspots])
+
+  return null
+}
 
 interface Props {
   items: CountryValue[]
@@ -271,35 +305,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               />
             )}
             {/* Animated pulsing hotspots for high-risk countries */}
-            {showHotspots && hotspots.map((spot, idx) => (
-              <React.Fragment key={`${spot.name}-${idx}`}>
-                {/* Outer pulse ring */}
-                <CircleMarker
-                  center={[spot.lat, spot.lon] as any}
-                  radius={12}
-                  pathOptions={{
-                    fillColor: '#dc2626',
-                    fillOpacity: 0.1,
-                    color: '#dc2626',
-                    weight: 2,
-                    opacity: 0.7,
-                  }}
-                  className="pulse-ring"
-                />
-                {/* Inner solid circle */}
-                <CircleMarker
-                  center={[spot.lat, spot.lon] as any}
-                  radius={5}
-                  pathOptions={{
-                    fillColor: '#dc2626',
-                    fillOpacity: 0.9,
-                    color: '#ffffff',
-                    weight: 2,
-                    opacity: 1,
-                  }}
-                />
-              </React.Fragment>
-            ))}
+            {showHotspots && <HotspotMarkers hotspots={hotspots} />}
           </MapContainer>
         )}
         {showZoomHint && (
@@ -315,8 +321,8 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           <style jsx global>{`
             @keyframes pulse {
               0% {
-                transform: scale(1);
-                opacity: 0.6;
+                transform: scale(0.5);
+                opacity: 0.8;
               }
               50% {
                 transform: scale(2);
@@ -327,10 +333,42 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                 opacity: 0;
               }
             }
-            .pulse-ring path {
+
+            .hotspot-marker {
+              background: transparent !important;
+              border: none !important;
+            }
+
+            .hotspot-container {
+              position: relative;
+              width: 40px;
+              height: 40px;
+            }
+
+            .hotspot-pulse {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 20px;
+              height: 20px;
+              margin: -10px 0 0 -10px;
+              border-radius: 50%;
+              background: rgba(220, 38, 38, 0.4);
+              border: 2px solid #dc2626;
               animation: pulse 2.5s ease-out infinite;
-              transform-origin: center center;
-              transform-box: fill-box;
+            }
+
+            .hotspot-core {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 10px;
+              height: 10px;
+              margin: -5px 0 0 -5px;
+              border-radius: 50%;
+              background: #dc2626;
+              border: 2px solid white;
+              box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
             }
           `}</style>
         )}
