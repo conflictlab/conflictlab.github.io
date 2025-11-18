@@ -136,7 +136,17 @@ export default async function ForecastsPage() {
   return (
     <div>
       {/* Hero summary */}
-      <section className="py-0 hero-background-network-image" />
+      <section className="py-16 hero-background-network-image">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
+            Forecast Dashboard
+          </h1>
+          <p className="text-xl text-gray-600 font-light leading-relaxed">
+            Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.
+            Predictions are updated monthly for countries worldwide.
+          </p>
+        </div>
+      </section>
 
       {/* Country Choropleth (full-bleed) */}
       <section className="py-0 bg-white">
@@ -149,14 +159,13 @@ export default async function ForecastsPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page heading and context moved below the map */}
           <div className="mt-6">
-            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2">Forecast Dashboard</h1>
             <p className="text-gray-700 font-light mb-3">
-              Forecasts for the period {snapshot.period} to {endPeriodFrom(snapshot.period) || snapshot.period}
+              Forecast period: {snapshot.period} to {endPeriodFrom(snapshot.period) || snapshot.period}
               <span className="text-gray-400"> · </span>
               Updated: {formatDMY(snapshot.generatedAt)}
             </p>
             {/* Removed secondary view toggle below the map */}
-            <p className="text-gray-600 text-sm">All values represent predicted fatalities over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
+            <p className="text-gray-600 text-sm">All values represent predicted <span className="font-medium">conflict fatalities</span> (deaths from state-based armed conflict) over the next 6 months. The table shows 1‑month ahead predictions and month-over-month changes.</p>
           </div>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg p-4">

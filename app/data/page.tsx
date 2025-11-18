@@ -124,16 +124,26 @@ export default async function DataPage() {
   } catch {}
 
   return (
-    <div>
-      <section className="py-0 hero-background-network-image" />
-
-      <section className="py-10 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2">Data Downloads</h1>
-          <p className="text-gray-700 font-light mb-6">
+    <>
+      {/* Hero Section */}
+      <section className="py-24 hero-background-network-image">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
+            Data Downloads
+          </h1>
+          <p className="text-xl text-gray-600 font-light leading-relaxed">
+            Access our <span className="word-emphasis">conflict forecasts</span> as raw data.
+            Country-level and grid-level predictions available in CSV and GeoJSON formats.
+          </p>
+          <p className="text-lg text-gray-600 font-light mt-4">
             Latest update: {formatDMY(snapshot.generatedAt)}
           </p>
-          <div className="text-sm text-gray-600 mb-6">
+        </div>
+      </section>
+
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-sm text-gray-600 mb-8">
             <Link href="/forecasts" className="text-link">Visualize these forecasts on the dashboard</Link>
           </div>
 
@@ -273,6 +283,6 @@ Response 200
           </div>
         </div>
       </section>
-    </div>
+    </>
   )
 }

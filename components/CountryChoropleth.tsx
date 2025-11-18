@@ -11,9 +11,12 @@ type CountryValue = { name: string; iso3?: string; value?: number; months?: numb
 interface Props {
   items: CountryValue[]
   onSelect?: (name: string) => void
+  hideDownloadButton?: boolean
+  mapHeight?: string
+  initialZoom?: number
 }
 
-export default function CountryChoropleth({ items, onSelect }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7 }: Props) {
   const pathname = usePathname()
   const [world, setWorld] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -155,7 +158,7 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
-      <div className="h-[560px] md:h-[700px] rounded overflow-hidden relative">
+      <div className={`rounded overflow-hidden relative`} style={{ height: mapHeight }}>
         {/* View toggle overlay (center-bottom, larger) */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
           <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
@@ -179,7 +182,7 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
         {!error && (
           <MapContainer
             center={centerAdjusted as any}
-            zoom={2.7}
+            zoom={initialZoom}
             zoomSnap={0.5}
             zoomDelta={0.5}
             scrollWheelZoom={false}
@@ -278,11 +281,13 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
           </div>
         </div>
         <CountryLegend thresholds={thresholds} />
-        <div className="mt-4 text-center">
-          <Link href="/data" className="btn-primary inline-flex items-center justify-center">
-            Data downloads
-          </Link>
-        </div>
+        {!hideDownloadButton && (
+          <div className="mt-4 text-center">
+            <Link href="/data" className="btn-primary inline-flex items-center justify-center">
+              Data downloads
+            </Link>
+          </div>
+        )}
         <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
       </div>
     </div>

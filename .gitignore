@@ -15,6 +15,7 @@ Scenarios.pkl
 .claude/
 .claude
 claude/
+CLAUDE.md
 
 # testing
 /coverage
