@@ -42,12 +42,12 @@ export default function LandingBanner() {
           {/* Statistics */}
           <div className="flex justify-center gap-12 text-white counter-fade-in">
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-1">200+</div>
-              <div className="text-sm md:text-base font-light opacity-90">Wars Analyzed</div>
+              <div className="text-3xl md:text-4xl font-bold mb-1">180+</div>
+              <div className="text-sm md:text-base font-light opacity-90">Countries Monitored</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-1">35M+</div>
-              <div className="text-sm md:text-base font-light opacity-90">Battle Deaths</div>
+              <div className="text-3xl md:text-4xl font-bold mb-1">6</div>
+              <div className="text-sm md:text-base font-light opacity-90">Months Ahead</div>
             </div>
           </div>
         </div>
