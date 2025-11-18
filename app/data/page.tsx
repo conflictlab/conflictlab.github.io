@@ -60,6 +60,64 @@ export default async function DataPage() {
     { path: `/data/grid/centroids.csv`, label: `centroids.csv (grid cell centers)` },
   ]
 
+  // Inline previews (first ~5 rows) for each dataset
+  // Simple CSV splitter handling quotes (for preview rendering)
+  function splitCsvLine(line: string): string[] {
+    const out: string[] = []
+    let cur = ''
+    let inQuotes = false
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i]
+      if (inQuotes) {
+        if (ch === '"') {
+          if (line[i + 1] === '"') { cur += '"'; i++ } else { inQuotes = false }
+        } else {
+          cur += ch
+        }
+      } else {
+        if (ch === ',') { out.push(cur); cur = '' }
+        else if (ch === '"') { inQuotes = true }
+        else { cur += ch }
+      }
+    }
+    out.push(cur)
+    return out
+  }
+
+  let countryPreview: string | null = null
+  try {
+    const latestWithRaw = countryDownloads.find(d => d.hasRaw)
+    if (latestWithRaw) {
+      const p = path.join(rawDir, `${latestWithRaw.period}.csv`)
+      if (fs.existsSync(p)) {
+        const text = fs.readFileSync(p, 'utf-8')
+        const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
+        const meta = lines[0]?.startsWith('#') ? [lines[0]] : []
+        const headerIdx = meta.length
+        const header = lines[headerIdx] || ''
+        const headerCols = splitCsvLine(header)
+        const limitedHeader = headerCols.slice(0, 5).join(',')
+        const dataLines = lines.slice(headerIdx + 1, headerIdx + 1 + 5)
+        const limitedRows = dataLines.map(l => splitCsvLine(l).slice(0, 5).join(','))
+        countryPreview = [...meta, limitedHeader, ...limitedRows].join('\n')
+      }
+    }
+  } catch {}
+
+  let gridPreview: string | null = null
+  try {
+    const monthlyCsv = path.join(process.cwd(), 'public', 'data', 'grid', `${gridPeriod}-m1.csv`)
+    const combinedCsv = path.join(process.cwd(), 'public', 'data', 'grid', `${gridPeriod}.csv`)
+    const src = fs.existsSync(monthlyCsv) ? monthlyCsv : (fs.existsSync(combinedCsv) ? combinedCsv : null)
+    if (src) {
+      const text = fs.readFileSync(src, 'utf-8')
+      const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
+      const header = lines[0] || ''
+      const data = lines.slice(1, 1 + 5)
+      gridPreview = [header, ...data].join('\n')
+    }
+  } catch {}
+
   return (
     <div>
       <section className="py-0 hero-background-network-image" />
@@ -84,17 +142,12 @@ export default async function DataPage() {
                     <RawCsvDownloader items={countryDownloads.filter(d => d.hasRaw).map(d => ({ period: d.period }))} />
                   </div>
                 )}
-                {/* Format description */}
-                <div className="mt-4 text-xs text-gray-600 space-y-1">
-                  <div className="font-medium text-gray-700">Format</div>
-                  <div>CSV with header comments and columns:</div>
-                  <div className="font-mono">
-                    # period=YYYY-MM; generatedAt=ISO; version=1.0
+                {countryPreview && (
+                  <div className="mt-3">
+                    <div className="text-sm text-gray-700 mb-1">Preview (first 5 rows)</div>
+                    <pre className="text-xs bg-gray-50 p-3 border border-gray-200 rounded overflow-auto max-h-48 whitespace-pre-wrap">{countryPreview}</pre>
                   </div>
-                  <div className="font-mono break-all">
-                    id,name,entityType,iso3,index,band,confidence,deltaMoM,deltaYoY,1m_index,1m_p10,1m_p50,1m_p90,3m_index,3m_p10,3m_p50,3m_p90,6m_index,6m_p10,6m_p50,6m_p90,drivers,notes
-                  </div>
-                </div>
+                )}
               </div>
             </div>
 
@@ -127,9 +180,17 @@ export default async function DataPage() {
                     - GeoJSON features with <span className="font-mono">properties.m1..m6</span>
                   </div>
                 </div>
+                {gridPreview && (
+                  <div className="mt-3">
+                    <div className="text-sm text-gray-700 mb-1">Preview (first 5 rows)</div>
+                    <pre className="text-xs bg-gray-50 p-3 border border-gray-200 rounded overflow-auto max-h-48 whitespace-pre-wrap">{gridPreview}</pre>
+                  </div>
+                )}
               </div>
             </div>
           </div>
+
+          
 
           {/* Data Rights & Use (CC BY-NC 4.0) */}
           <div className="mt-8 border border-gray-200 rounded-lg p-4 bg-white">

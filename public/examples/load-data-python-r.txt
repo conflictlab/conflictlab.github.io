@@ -1,0 +1,31 @@
+Python (pandas)
+----------------
+
+import pandas as pd
+
+# Country-level CSV (latest)
+csv_url = 'https://your-domain/data/csv/latest.csv'  # replace with your domain
+df = pd.read_csv(csv_url, comment='#')
+print(df.head())
+
+# Grid-level CSV (month 1 points)
+grid_url = 'https://your-domain/data/grid/{period}-m1.csv'  # replace {period}
+gdf = pd.read_csv(grid_url)
+print(gdf.head())
+
+
+R (readr)
+---------
+
+library(readr)
+
+# Country-level CSV (latest)
+csv_url <- 'https://your-domain/data/csv/latest.csv'  # replace with your domain
+df <- read_csv(csv_url, comment = '#')
+print(head(df))
+
+# Grid-level CSV (month 1 points)
+grid_url <- 'https://your-domain/data/grid/{period}-m1.csv'  # replace {period}
+gdf <- read_csv(grid_url)
+print(head(gdf))
+
