@@ -31,10 +31,16 @@ export default async function Home() {
           <div className="absolute inset-0 bg-black/20 pointer-events-none z-[400]" />
         </div>
 
-        {/* Title Overlay - 1/6 from top of map */}
+        {/* Title Overlay - logo-centric design */}
         <div className="absolute inset-0 flex items-start justify-center pt-[16.67vh] z-[1000] pointer-events-none">
           <div className="text-center px-8 py-6">
-            <h1 className="text-7xl md:text-8xl font-bold text-white mb-3 tracking-wider" style={{ textShadow: '3px 3px 10px rgba(0,0,0,0.6), 0 0 30px rgba(0,0,0,0.4)' }}>
+            <img
+              src="/logo.png"
+              alt="PaCE Logo"
+              className="h-24 w-24 md:h-32 md:w-32 mx-auto mb-4"
+              style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.5))' }}
+            />
+            <h1 className="text-5xl md:text-6xl font-light text-white mb-3 tracking-wide" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)' }}>
               PaCE
             </h1>
             <p className="text-lg md:text-xl text-white/90 font-light tracking-wide" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.5)' }}>
