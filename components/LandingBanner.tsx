@@ -1,49 +1,34 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 export default function LandingBanner() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-
-  // Track mouse position for parallax
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20
-      const y = (e.clientY / window.innerHeight - 0.5) * 20
-      setMousePos({ x, y })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   return (
     <>
       {/* PaCE + tagline centered */}
       <div className="absolute inset-0 flex items-center justify-center z-[1000] pointer-events-none">
-        <div
-          className="text-center px-8 fade-in"
-          style={{
-            transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`
-          }}
-        >
+        <div className="text-center px-8 fade-in">
           <h1
             className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-wide"
             style={{ textShadow: '4px 4px 12px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}
           >
             PaCE
           </h1>
-          <div className="text-2xl md:text-3xl lg:text-4xl text-white font-light tracking-wide mb-8" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5)' }}>
+          <div className="text-2xl md:text-3xl lg:text-4xl text-white font-bold tracking-wide mb-8" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5)' }}>
             <p className="inline-block overflow-hidden whitespace-nowrap typewriter-text">
               Forecasting Geopolitical Risk
             </p>
           </div>
 
           {/* Statistics */}
-          <div className="flex justify-center gap-12 text-white counter-fade-in">
+          <div className="flex justify-center gap-8 md:gap-12 text-white counter-fade-in">
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1">180+</div>
-              <div className="text-sm md:text-base font-light opacity-90">Countries Monitored</div>
+              <div className="text-sm md:text-base font-light opacity-90">Countries</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold mb-1">259K</div>
+              <div className="text-sm md:text-base font-light opacity-90">Grid Cells</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1">6</div>
