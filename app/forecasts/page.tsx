@@ -4,6 +4,7 @@ import { readSnapshot, getEntitySeries, getAvailablePeriods } from '@/lib/foreca
 import RiskIndexTable from '@/components/RiskIndexTable'
 import Collapsible from '@/components/Collapsible'
 import TopMovers from '@/components/TopMovers'
+import DescriptivePlots from '@/components/DescriptivePlots'
 import ForecastFanChart from '@/components/ForecastFanChart'
 import { getEntityHorizonMonths } from '@/lib/forecasts'
 import RawCsvDownloader from '@/components/RawCsvDownloader'
@@ -130,6 +131,12 @@ export default async function ForecastsPage() {
     period: p,
     hasRaw: fs.existsSync(path.join(rawDir, `${p}.csv`)),
   }))
+  
+  // Data for descriptive plots: 1-month p50 for countries only
+  const dist1m = snapshot.entities
+    .filter((e) => (e.entityType || 'country') === 'country')
+    .map((e) => Number(e.horizons['1m'].p50))
+    .filter((v) => Number.isFinite(v) && v >= 0)
 
   return (
     <div>
@@ -239,6 +246,16 @@ export default async function ForecastsPage() {
           <Collapsible title="table" initiallyCollapsed={false}>
             <RiskIndexTable rows={rows} />
           </Collapsible>
+        </div>
+      </section>
+
+      {/* Distributions */}
+      <section className="py-8 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="section-heading mb-0">Distributions</h2>
+          </div>
+          <DescriptivePlots data={dist1m} />
         </div>
       </section>
 
