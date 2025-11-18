@@ -4,12 +4,12 @@ export default function LandingBanner() {
   return (
     <>
       {/* Large logo at bottom left */}
-      <div className="absolute bottom-12 left-12 z-[1000] pointer-events-none">
+      <div className="absolute bottom-32 left-12 z-[1000] pointer-events-none">
         <img
           src="/logo.png"
           alt="PaCE Logo"
-          className="h-32 md:h-40 lg:h-48"
-          style={{ filter: 'drop-shadow(2px 2px 4px rgba(255,255,255,0.3)) drop-shadow(0 0 20px rgba(255,255,255,0.2))' }}
+          className="h-32 md:h-40 lg:h-48 opacity-40"
+          style={{ filter: 'drop-shadow(2px 2px 6px rgba(0,0,0,0.5)) drop-shadow(0 0 15px rgba(0,0,0,0.3))' }}
         />
       </div>
 
