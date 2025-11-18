@@ -44,7 +44,7 @@ export default function EventsPage() {
                     Conflict forecasting has evolved significantly over recent years, spurred by advancements in statistical modeling, machine learning, and the growing availability of data. Traditionally, statistical and ML approaches have been central in predicting the likelihood, intensity, and duration of conflicts. These models often rely on historical data, socio-political indicators, and increasingly, real-time data streams, to anticipate conflict scenarios.
                   </p>
                   <p className="leading-relaxed mt-4">
-                    Parallel to these developments, theoretical frameworks such as game theory have offered insights into the strategic interactions among conflict actors, providing a understanding of conflict dynamics. Another very successful approach relies on the "wisdom of crowds," where collective judgment and prediction markets are used to forecast conflicts, capitalizing on the diverse opinions of a large group of individuals.
+                    Parallel to these developments, theoretical frameworks such as game theory have offered insights into the strategic interactions among conflict actors, providing a understanding of conflict dynamics. Another very successful approach relies on the &ldquo;wisdom of crowds,&rdquo; where collective judgment and prediction markets are used to forecast conflicts, capitalizing on the diverse opinions of a large group of individuals.
                   </p>
                   <p className="leading-relaxed mt-4">
                     The surge in data availability, including social media feeds, satellite imagery, and real-time reporting, presents both opportunities and challenges for conflict forecasting. This workshop explored these various approaches, and investigated how they can be integrated and leveraged to enhance the accuracy and usefulness of conflict forecasts.
@@ -223,7 +223,7 @@ export default function EventsPage() {
                   <p className="text-sm text-gray-600 mb-1">October 2023</p>
                   <p className="text-gray-900 font-light mb-1">Hannah Frank</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">Why do rebel groups target civilians in some cases, and not in others?</span></p>
-                  <p className="text-gray-600 text-sm">CCEW SYMPOSIUM 2023 Crisis Early Warning: What's Next? Center for Crisis Early Warning (CCEW), University of the Bundeswehr Munich, Germany</p>
+                  <p className="text-gray-600 text-sm">CCEW SYMPOSIUM 2023 Crisis Early Warning: What&apos;s Next? Center for Crisis Early Warning (CCEW), University of the Bundeswehr Munich, Germany</p>
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
@@ -343,10 +343,10 @@ export default function EventsPage() {
                   <span className="font-light">Speaker:</span> Professor Galit Shmueli
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  <span className="font-light">Topic:</span> "Forks over knives: Predictive inconsistency in criminal justice algorithmic risk assessment tools."
+                  <span className="font-light">Topic:</span> &ldquo;Forks over knives: Predictive inconsistency in criminal justice algorithmic risk assessment tools.&rdquo;
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-2">
-                  Big data and algorithmic risk prediction tools promise to improve criminal justice systems by reducing human biases and inconsistencies in decision-making. Yet different, equally justifiable choices when developing, testing and deploying these socio-technical tools can lead to disparate predicted risk scores for the same individual. In this talk Prof. Galit Shmueli explored the challenges of 'predictive inconsistency', arguing that in a diverse and pluralistic society we should not expect to completely eliminate predictive inconsistency, but identify and document reasonable 'forking paths'.
+                  Big data and algorithmic risk prediction tools promise to improve criminal justice systems by reducing human biases and inconsistencies in decision-making. Yet different, equally justifiable choices when developing, testing and deploying these socio-technical tools can lead to disparate predicted risk scores for the same individual. In this talk Prof. Galit Shmueli explored the challenges of &lsquo;predictive inconsistency&rsquo;, arguing that in a diverse and pluralistic society we should not expect to completely eliminate predictive inconsistency, but identify and document reasonable &lsquo;forking paths&rsquo;.
                 </p>
               </article>
             </div>
