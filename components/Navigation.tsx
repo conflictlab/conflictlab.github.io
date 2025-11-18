@@ -47,6 +47,11 @@ export default function Navigation() {
     {
       label: 'Publications',
       href: '/publications',
+      sections: [
+        { label: 'Academic Publications', href: '/publications#academic' },
+        { label: 'Reports', href: '/publications#reports' },
+        { label: 'Newsletters', href: '/publications#newsletters' },
+      ],
     },
     {
       label: 'Events',
@@ -57,17 +62,17 @@ export default function Navigation() {
       ],
     },
     {
-      label: 'Team',
-      href: '/about/team',
-    },
-    {
-      label: 'Contact',
-      href: '/contact',
+      label: 'About',
+      href: '/about',
+      sections: [
+        { label: 'Team', href: '/about#team' },
+        { label: 'Contact', href: '/about#contact' },
+      ],
     },
   ]
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
+    <nav className="bg-white shadow-sm border-b border-gray-200 relative z-[2000]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
@@ -104,7 +109,7 @@ export default function Navigation() {
                       <ChevronDown size={16} className="mt-0.5" />
                     </Link>
                     {openDropdown === item.href && (
-                      <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50">
+                      <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-[2001]">
                         {item.sections.map((section) => (
                           <Link
                             key={section.href}
@@ -123,8 +128,6 @@ export default function Navigation() {
                     className={`transition-colors font-light ${
                       isActive(item.href)
                         ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                        : item.label === 'Contact'
-                        ? 'text-clairient-blue hover:text-clairient-dark'
                         : 'text-gray-600 hover:text-clairient-blue'
                     }`}
                   >
@@ -158,8 +161,6 @@ export default function Navigation() {
                   className={`block px-3 py-2 font-light ${
                     isActive(item.href)
                       ? 'text-clairient-blue bg-blue-50'
-                      : item.label === 'Contact'
-                      ? 'text-clairient-blue hover:text-clairient-dark'
                       : 'text-gray-600 hover:text-clairient-blue'
                   }`}
                 >
