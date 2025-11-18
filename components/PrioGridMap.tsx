@@ -393,6 +393,11 @@ export default function PrioGridMap({ period }: Props) {
         </div>
       </div>
       <Legend thresholds={thresholds} vmin={vmin} vmax={vmax} data={data} points={points} month={month} />
+      <div className="px-4 mt-4 text-center">
+        <Link href="/data" className="btn-primary inline-flex items-center justify-center">
+          Data downloads
+        </Link>
+      </div>
       <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
     </div>
   )

@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import TimeSeriesChart from './TimeSeriesChart'
 import FinancialPerformanceChart from './FinancialPerformanceChart'
+import Link from 'next/link'
 
 // Fix for default markers in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -273,6 +274,11 @@ export default function LeafletMap() {
             />
           )}
         </MapContainer>
+      </div>
+      <div className="mt-4 text-center">
+        <Link href="/data" className="btn-primary inline-flex items-center justify-center">
+          Data downloads
+        </Link>
       </div>
       
       {/* Legend */}

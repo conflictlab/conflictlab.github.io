@@ -1,15 +1,10 @@
-import fs from 'fs'
-import path from 'path'
-import { readSnapshot, getEntitySeries, getAvailablePeriods } from '@/lib/forecasts'
+import { readSnapshot, getAvailablePeriods } from '@/lib/forecasts'
 import RiskIndexTable from '@/components/RiskIndexTable'
 import Collapsible from '@/components/Collapsible'
 import TopMovers from '@/components/TopMovers'
-import DescriptivePlots from '@/components/DescriptivePlots'
 import ForecastFanChart from '@/components/ForecastFanChart'
 import { getEntityHorizonMonths } from '@/lib/forecasts'
-import RawCsvDownloader from '@/components/RawCsvDownloader'
-import ReleaseNotes from '@/components/ReleaseNotes'
-import ApiLink from '@/components/ApiLink'
+// Release notes and inline API links removed from this page
 import dynamic from 'next/dynamic'
 const CountryChoropleth = dynamic(() => import('@/components/CountryChoropleth'), { ssr: false })
 
@@ -102,7 +97,7 @@ export default async function ForecastsPage() {
 
   // Horizon matrix removed
 
-  // Pick top 3 movers by absolute MoM change for plots
+  // Pick top 5 movers by absolute MoM change for plots
   const highlights = [...snapshot.entities]
     .map((e) => {
       const prev = prevIndexMap.get(e.id) ?? prevIndexMap.get(e.iso3 || '') ?? prevIndexMap.get((e.name || '').toUpperCase())
@@ -110,7 +105,7 @@ export default async function ForecastsPage() {
       return { e, deltaMoM }
     })
     .sort((a, b) => b.deltaMoM - a.deltaMoM)
-    .slice(0, 3)
+    .slice(0, 6)
     .map(x => x.e)
 
   // Build top movers list (absolute MoM)
@@ -123,20 +118,20 @@ export default async function ForecastsPage() {
     .sort((a, b) => Math.abs(b.deltaMoM) - Math.abs(a.deltaMoM))
     .slice(0, 6)
   
-  // Build list of downloadable CSVs (latest + recent periods)
-  const allPeriods = getAvailablePeriods()
-  const recent = allPeriods.slice(-12).reverse()
-  const rawDir = path.join(process.cwd(), 'content', 'forecasts', 'csv')
-  const downloads = recent.map((p) => ({
-    period: p,
-    hasRaw: fs.existsSync(path.join(rawDir, `${p}.csv`)),
-  }))
+  // High‑risk share metrics (threshold based)
+  const HIGH_THRESHOLD = 100
+  const countryEntities = snapshot.entities.filter((e) => (e.entityType || 'country') === 'country')
+  const highByThresholdCount = countryEntities.filter((e) => Number(e.horizons['1m'].p50) > HIGH_THRESHOLD).length
+  const prevHighByThresholdCount = (() => {
+    if (!prevSnap) return undefined as number | undefined
+    const prevCountries = prevSnap.entities.filter((e) => (e.entityType || 'country') === 'country')
+    return prevCountries.filter((e) => Number(e.horizons['1m'].p50) > HIGH_THRESHOLD).length
+  })()
+  const deltaHigh = (prevHighByThresholdCount === undefined) ? undefined : (highByThresholdCount - prevHighByThresholdCount)
   
-  // Data for descriptive plots: 1-month p50 for countries only
-  const dist1m = snapshot.entities
-    .filter((e) => (e.entityType || 'country') === 'country')
-    .map((e) => Number(e.horizons['1m'].p50))
-    .filter((v) => Number.isFinite(v) && v >= 0)
+  // Removed raw CSV sidebar downloads in favor of centralized data page
+  
+  // Removed distribution plot data
 
   return (
     <div>
@@ -168,70 +163,52 @@ export default async function ForecastsPage() {
               <div className="text-sm text-gray-500">Total predicted fatalities (1‑month)</div>
               <div className="text-3xl font-light text-gray-900">{Math.round(total1mCurrent)}</div>
               <div className="text-xs text-gray-500 mt-1">Sum of next‑month predictions across all countries</div>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="text-sm text-gray-500">Δ total vs previous month</div>
-              <div className={`text-3xl font-light ${deltaTotal !== undefined ? (deltaTotal >= 0 ? 'text-emerald-700' : 'text-rose-700') : 'text-gray-900'}`}>
-                {deltaTotal !== undefined ? (deltaTotal >= 0 ? `+${Math.round(deltaTotal)}` : `${Math.round(deltaTotal)}`) : '—'}
+              <div className="mt-4 border-t border-gray-100 pt-3">
+                <div className="text-sm text-gray-500">Δ total vs previous month</div>
+                <div className={`text-3xl font-light ${deltaTotal !== undefined ? (deltaTotal >= 0 ? 'text-emerald-700' : 'text-rose-700') : 'text-gray-900'}`}>
+                  {deltaTotal !== undefined ? (deltaTotal >= 0 ? `+${Math.round(deltaTotal)}` : `${Math.round(deltaTotal)}`) : '—'}
+                </div>
+                <div className="text-xs text-gray-500 mt-1">Change in total 1‑month predicted fatalities</div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">Change in total 1‑month predicted fatalities</div>
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="text-sm text-gray-500">Countries covered</div>
-              <div className="text-3xl font-light text-gray-900">{countriesCovered}</div>
+              <div className="text-sm text-gray-500">High‑risk countries (&gt;{HIGH_THRESHOLD} next month)</div>
+              <div className="mt-1">
+                <div className="text-3xl font-light text-gray-900">
+                  {highByThresholdCount}
+                  <span className="ml-2 align-middle text-base text-gray-500">({countriesCovered > 0 ? Math.round((highByThresholdCount / countriesCovered) * 100) : 0}%)</span>
+                </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  Δ vs last month: {deltaHigh === undefined ? '—' : (deltaHigh >= 0 ? `+${deltaHigh}` : `${deltaHigh}`)}
+                </div>
+              </div>
             </div>
+            <TopMovers movers={movers} height={240} />
           </div>
         </div>
       </section>
 
-      {/* Movers + Highlights with left sidebar (CSV/API) */}
+      {/* Movers + Highlights (3-column layout) */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left sidebar */}
-            <div className="space-y-6">
-              <div className="border border-gray-200 rounded-lg p-4 bg-white">
-                <h3 className="text-lg font-light text-gray-900 mb-1">Download Raw CSVs</h3>
-                <p className="text-xs text-gray-500 mb-3">Six‑month‑ahead predictions made in the selected month (original files)</p>
-                <RawCsvDownloader items={downloads.filter(d => d.hasRaw).map(d => ({ period: d.period }))} />
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4 bg-white">
-                <h3 className="text-lg font-light text-gray-900 mb-2">Direct URLs</h3>
-                <p className="text-xs text-gray-500 mb-2">Use these links in curl, Excel, Google Sheets, or Power BI.</p>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  <li><ApiLink path="/data/csv/latest.csv" label="latest.csv" /></li>
-                  <li><ApiLink path={`/data/csv/${snapshot.period}.csv`} label={`${snapshot.period}.csv`} /></li>
-                </ul>
-                <p className="text-xs text-gray-500 mt-2">Example: <code>curl -L [URL] -o file.csv</code></p>
-              </div>
-              {snapshot.releaseNotes && snapshot.releaseNotes.length > 0 && (
-                <div className="border border-gray-200 rounded-lg p-4 bg-white">
-                  <ReleaseNotes notes={snapshot.releaseNotes} />
-                </div>
-              )}
-            </div>
-
-            {/* Right grid: Top movers + 3 plots (2x2) */}
-            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <TopMovers movers={movers} height={240} />
-              {highlights.map((e) => {
-                const months = getEntityHorizonMonths(snapshot.period, e.name)
-                return (
-                  <ForecastFanChart
-                    key={e.id}
-                    title={`${e.name} — Predicted fatalities`}
-                    months={months || [
-                      e.horizons['1m'].p50,
-                      Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
-                      e.horizons['3m'].p50,
-                      Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
-                      Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
-                      e.horizons['6m'].p50,
-                    ]}
-                  />
-                )
-              })}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {highlights.map((e) => {
+              const months = getEntityHorizonMonths(snapshot.period, e.name)
+              return (
+                <ForecastFanChart
+                  key={e.id}
+                  title={`${e.name} — Predicted fatalities`}
+                  months={months || [
+                    e.horizons['1m'].p50,
+                    Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
+                    e.horizons['3m'].p50,
+                    Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
+                    Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
+                    e.horizons['6m'].p50,
+                  ]}
+                />
+              )
+            })}
           </div>
         </div>
       </section>
@@ -249,15 +226,7 @@ export default async function ForecastsPage() {
         </div>
       </section>
 
-      {/* Distributions */}
-      <section className="py-8 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="section-heading mb-0">Distributions</h2>
-          </div>
-          <DescriptivePlots data={dist1m} />
-        </div>
-      </section>
+      {/* Distributions removed */}
 
       {/* Horizon Matrix removed */}
     </div>

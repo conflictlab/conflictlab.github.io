@@ -206,7 +206,7 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
             )}
           </MapContainer>
         )}
-      </div>
+  </div>
       {/* Controls moved below map */}
       <div className="px-4 py-2">
         <div className="flex items-center justify-between">
@@ -233,6 +233,11 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
           </div>
         </div>
         <CountryLegend thresholds={thresholds} />
+        <div className="mt-4 text-center">
+          <Link href="/data" className="btn-primary inline-flex items-center justify-center">
+            Data downloads
+          </Link>
+        </div>
         <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
       </div>
     </div>
