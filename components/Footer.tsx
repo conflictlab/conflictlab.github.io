@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
           <div className="col-span-1 md:col-span-2">
             <p className="max-w-md text-xs">
-              <span className="text-base font-light text-clairient-blue">Luscint.</span> Transforming uncertainty into strategic foresight
+              <span className="text-base font-light text-clairient-blue">PaCE.</span> Transforming uncertainty into strategic foresight
             </p>
           </div>
           <div className="justify-self-start md:justify-self-end">
@@ -27,7 +27,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-1 pt-1 text-center text-gray-400 text-[11px]">
-          <p>&copy; {new Date().getFullYear()} Luscint. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} PaCE. All rights reserved.</p>
         </div>
       </div>
     </footer>

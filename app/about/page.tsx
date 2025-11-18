@@ -32,7 +32,7 @@ export default function About() {
                   Why {companyData.name}?
                 </h3>
                 <p className="text-gray-700">
-                  <strong>Luscint</strong> comes from <em>lux</em> (light) and <em>intuitus</em> (insight). 
+                  <strong>PaCE</strong> comes from <em>lux</em> (light) and <em>intuitus</em> (insight). 
                   It represents our mission: to illuminate hidden signals in a noisy world and provide clarity in risk and uncertainty.
                 </p>
               </div>
@@ -81,7 +81,7 @@ export default function About() {
           <div className="text-center mb-16">
             <h2 className="section-heading">Strategic Positioning</h2>
             <p className="section-subheading mx-auto">
-              Luscint operates at the intersection of three fast-converging domains
+              PaCE operates at the intersection of three fast-converging domains
             </p>
           </div>
           
@@ -131,7 +131,7 @@ export default function About() {
               <h3 className="text-2xl font-bold mb-4">Our Differentiation</h3>
               <p className="text-blue-100">
                 <strong>Model-based foresight, client-specific exposure integration, and explainability</strong> — 
-                positioning Luscint as a core infrastructure layer for global risk anticipation.
+                positioning PaCE as a core infrastructure layer for global risk anticipation.
               </p>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function About() {
                 1
               </div>
               <div className="ml-6">
-                <h3 className="text-xl font-semibold mb-2">Launch Luscint Core</h3>
+                <h3 className="text-xl font-semibold mb-2">Launch PaCE Core</h3>
                 <p className="text-gray-600">
                   Deploy our forecast dashboard and API MVP, providing foundational predictive intelligence capabilities.
                 </p>
@@ -208,7 +208,7 @@ export default function About() {
           </h2>
           <p className="text-xl text-blue-100 max-w-4xl mx-auto">
             As volatility, climate stress, and political risk reshape global operating conditions, 
-            institutions need not just data—but foresight. Luscint delivers that foresight, 
+            institutions need not just data—but foresight. PaCE delivers that foresight, 
             transforming uncertainty into strategic advantage.
           </p>
         </div>

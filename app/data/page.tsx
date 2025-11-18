@@ -16,7 +16,7 @@ function formatDMY(iso: string): string {
 export default async function DataPage() {
   const snapshot = readSnapshot('latest')
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '' // e.g., https://luscint.com
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '' // e.g., your production site
 
   // Country-level: list recent raw CSVs (if present in content/forecasts/csv)
   const allPeriods = getAvailablePeriods()
@@ -167,7 +167,7 @@ export default async function DataPage() {
                 <div className="mb-4">
                   <div className="text-sm text-gray-700 mb-1">Bulk download (latest period assets)</div>
                   <MultiFileDownloader
-                    zipName={`Luscint-grid-${gridPeriod}`}
+                  zipName={`PaCE-grid-${gridPeriod}`}
                     items={[
                       ...gridCsvLinks.map(l => ({ path: l.path, label: l.label })),
                       gridCombinedCsv,
@@ -257,7 +257,7 @@ Response 200
             <div className="text-xs text-gray-600 space-y-1">
               <div>
                 <span className="font-medium">Attribution example:</span>
-                <code className="ml-2 px-1 py-0.5 bg-gray-50 border border-gray-200 rounded">Luscint (2025). Monthly Conflict Forecasts. https://luscint.com/data</code>
+                <code className="ml-2 px-1 py-0.5 bg-gray-50 border border-gray-200 rounded">PaCE (2025). Monthly Conflict Forecasts.</code>
               </div>
               <div><span className="font-medium">Disclaimer:</span> Provided “as is”, without warranty; not for safety‑critical decisions.</div>
               <div><span className="font-medium">Acceptable use:</span> Do not use to target, harass, or cause harm; comply with applicable laws.</div>

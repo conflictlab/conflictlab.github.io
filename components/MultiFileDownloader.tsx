@@ -165,7 +165,7 @@ export default function MultiFileDownloader({ items, zipName }: Props) {
       const dlUrl = URL.createObjectURL(blob)
       a.href = dlUrl
       const dateStr = new Date().toISOString().slice(0,10)
-      a.download = `${zipName || 'Luscint-data'}-${dateStr}-selected.zip`
+      a.download = `${zipName || 'PaCE-data'}-${dateStr}-selected.zip`
       document.body.appendChild(a)
       a.click()
       a.remove()
@@ -183,7 +183,7 @@ export default function MultiFileDownloader({ items, zipName }: Props) {
       const dlUrl = URL.createObjectURL(blob)
       a.href = dlUrl
       const dateStr = new Date().toISOString().slice(0,10)
-      a.download = `${zipName || 'Luscint-data'}-${dateStr}-all.zip`
+      a.download = `${zipName || 'PaCE-data'}-${dateStr}-all.zip`
       document.body.appendChild(a)
       a.click()
       a.remove()

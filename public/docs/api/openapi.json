@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Luscint Forecasts API",
+    "title": "PaCE Forecasts API",
     "version": "0.1.0",
     "description": "Simple JSON endpoints for forecast data. Note: API routes require a serverful deployment (not GitHub Pages)."
   },
   "servers": [
-    { "url": "https://luscint.com" },
+    { "url": "https://conflictlab.github.io" },
     { "url": "./" }
   ],
   "paths": {

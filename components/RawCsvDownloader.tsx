@@ -161,7 +161,7 @@ export default function RawCsvDownloader({ items }: Props) {
       const dlUrl = URL.createObjectURL(blob)
       a.href = dlUrl
       const dateStr = new Date().toISOString().slice(0,10)
-      a.download = `Luscint-forecasts-${dateStr}-selected.zip`
+      a.download = `PaCE-forecasts-${dateStr}-selected.zip`
       document.body.appendChild(a)
       a.click()
       a.remove()
@@ -178,7 +178,7 @@ export default function RawCsvDownloader({ items }: Props) {
       const dlUrl = URL.createObjectURL(blob)
       a.href = dlUrl
       const dateStr = new Date().toISOString().slice(0,10)
-      a.download = `Luscint-forecasts-${dateStr}-all.zip`
+      a.download = `PaCE-forecasts-${dateStr}-all.zip`
       document.body.appendChild(a)
       a.click()
       a.remove()

@@ -23,8 +23,8 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img src={`${base}/logo.png`} alt="Luscint" className="h-8 w-8 mr-3" />
-              <span className="text-2xl font-light text-clairient-blue">Luscint</span>
+              <img src={`${base}/logo.png`} alt="PaCE" className="h-8 w-8 mr-3" />
+              <span className="text-2xl font-light text-clairient-blue">PaCE</span>
             </Link>
           </div>
           
@@ -60,16 +60,7 @@ export default function Navigation() {
             >
               Data
             </Link>
-            <Link 
-              href="/use-cases" 
-              className={`transition-colors font-light ${
-                isActive('/use-cases') 
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1' 
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Use Cases
-            </Link>
+            
             {/* Test page link removed */}
             
             <Link 
@@ -130,16 +121,7 @@ export default function Navigation() {
             >
               Data
             </Link>
-            <Link 
-              href="/use-cases" 
-              className={`block px-3 py-2 font-light ${
-                isActive('/use-cases') 
-                  ? 'text-clairient-blue bg-blue-50' 
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Use Cases
-            </Link>
+            
             {/* Test page link removed */}
             
             <Link 

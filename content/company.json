@@ -1,8 +1,8 @@
 {
-  "name": "Luscint",
+  "name": "PaCE",
   "tagline": "Geopolitical Risk, Quantified",
   "mission": "To equip global decision-makers with clear intelligence on political instability and conflict—transforming uncertainty into strategic foresight.",
-  "description": "Luscint is an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling. Purpose-built for decision-makers in finance, insurance, defense, and global enterprise, Luscint delivers interpretable, forward-looking forecasts that translate real-world risk into actionable insight.",
+  "description": "PaCE is an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling. Purpose-built for decision-makers in finance, insurance, defense, and global enterprise, PaCE delivers interpretable, forward-looking forecasts that translate real-world risk into actionable insight.",
   "valueProposition": [
     {
       "title": "Forecasts, not just alerts",
@@ -22,7 +22,7 @@
     },
     {
       "title": "Geopolitical ESG intelligence",
-      "description": "Luscint supports ESG-aligned capital deployment via conflict-sensitive screening and geopolitical sustainability metrics."
+      "description": "PaCE supports ESG-aligned capital deployment via conflict-sensitive screening and geopolitical sustainability metrics."
     }
   ],
   "contact": {
