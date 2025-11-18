@@ -29,13 +29,13 @@ export default async function Home() {
           <CountryChoropleth items={countryMapItems} hideDownloadButton={true} mapHeight="calc(100vh - 80px)" initialZoom={3.0} />
         </div>
 
-        {/* Title Overlay - 1/4 from top of map */}
-        <div className="absolute inset-0 flex items-start justify-center pt-[25vh] z-[1000] pointer-events-none">
-          <div className="text-center bg-white/70 backdrop-blur-sm px-12 py-8 rounded-lg">
-            <h1 className="text-5xl md:text-6xl font-light text-gray-900 mb-4">
+        {/* Title Overlay - 1/6 from top of map */}
+        <div className="absolute inset-0 flex items-start justify-center pt-[16.67vh] z-[1000] pointer-events-none">
+          <div className="text-center bg-white/70 backdrop-blur-sm px-8 py-6 rounded-lg">
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-3">
               PaCE: Patterns of Conflict Emergence
             </h1>
-            <p className="text-2xl md:text-3xl text-clairient-blue font-medium">
+            <p className="text-xl md:text-2xl text-clairient-blue font-medium">
               Predicting War Through Pattern Recognition
             </p>
           </div>
