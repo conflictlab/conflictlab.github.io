@@ -26,7 +26,7 @@ export default async function Home() {
       {/* Country Choropleth Map (full-bleed) */}
       <section className="bg-white">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-          <CountryChoropleth items={countryMapItems} hideDownloadButton={true} mapHeight="calc(100vh - 80px)" initialZoom={3.7} />
+          <CountryChoropleth items={countryMapItems} hideDownloadButton={true} mapHeight="calc(100vh - 80px)" initialZoom={3.0} />
         </div>
       </section>
     </div>
