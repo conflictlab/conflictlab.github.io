@@ -28,8 +28,13 @@ export default async function Home() {
       <section className="bg-white relative">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
           <CountryChoropleth items={countryMapItems} hideDownloadButton={true} hideControls={true} hideLegend={true} mapHeight="calc(100vh - 80px)" initialZoom={3.0} />
-          {/* Dark overlay to dim the map - z-index must be above map but below title */}
-          <div className="absolute inset-0 bg-black/30 pointer-events-none z-[400]" />
+          {/* Gradient overlay to dim the map - darker at edges, lighter in center - z-index must be above map but below title */}
+          <div
+            className="absolute inset-0 pointer-events-none z-[400]"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%)'
+            }}
+          />
         </div>
 
         {/* Title Overlay - positioned at 25%/25% */}
