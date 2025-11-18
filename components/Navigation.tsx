@@ -48,32 +48,24 @@ export default function Navigation() {
 
   const menuItems: MenuItem[] = [
     {
-      label: 'Dashboard',
+      label: 'Forecasts',
       href: '/forecasts',
     },
     {
-      label: 'Methodology',
-      href: '/methodology',
-    },
-    {
-      label: 'Downloads',
-      href: '/downloads',
-    },
-    {
-      label: 'Publications',
-      href: '/publications',
+      label: 'Research',
+      href: '/research',
       sections: [
-        { label: 'Academic Publications', href: '/publications#academic' },
-        { label: 'Reports', href: '/publications#reports' },
-        { label: 'Newsletters', href: '/publications#newsletters' },
+        { label: 'Methodology', href: '/research#methodology' },
+        { label: 'Publications', href: '/research#publications' },
+        { label: 'Datasets', href: '/research#datasets' },
       ],
     },
     {
-      label: 'Events',
-      href: '/events',
+      label: 'Engagement',
+      href: '/engagement',
       sections: [
-        { label: 'Workshops', href: '/events#workshops' },
-        { label: 'Presentations', href: '/events#presentations' },
+        { label: 'Workshops', href: '/engagement#workshops' },
+        { label: 'Presentations', href: '/engagement#presentations' },
       ],
     },
     {

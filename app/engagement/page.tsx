@@ -1,16 +1,16 @@
 import Link from 'next/link'
 
-export default function EventsPage() {
+export default function EngagementPage() {
   return (
     <>
       {/* Hero Section */}
       <section className="py-24 hero-background-network-image">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
-            Events
+            Engagement
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Workshops, seminars, and conferences hosted by the <span className="word-emphasis">PaCE Research Lab</span>.
+            Workshops, presentations, and events hosted by the <span className="word-emphasis">PaCE Research Lab</span>.
           </p>
         </div>
       </section>
