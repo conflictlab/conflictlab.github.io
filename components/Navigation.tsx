@@ -3,14 +3,26 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ChevronDown } from 'lucide-react'
+
+type MenuSection = {
+  label: string
+  href: string
+}
+
+type MenuItem = {
+  label: string
+  href: string
+  sections?: MenuSection[]
+}
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const pathname = usePathname()
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   if (pathname?.startsWith('/test-map')) return null
-  
+
   const isActive = (path: string) => {
     if (path === '/' && pathname === '/') return true
     if (path !== '/' && pathname?.startsWith(path)) return true
@@ -18,6 +30,41 @@ export default function Navigation() {
   }
 
   const isHomePage = pathname === '/'
+
+  const menuItems: MenuItem[] = [
+    {
+      label: 'Dashboard',
+      href: '/forecasts',
+    },
+    {
+      label: 'Methodology',
+      href: '/methodology',
+    },
+    {
+      label: 'Downloads',
+      href: '/downloads',
+    },
+    {
+      label: 'Publications',
+      href: '/publications',
+    },
+    {
+      label: 'Events',
+      href: '/events',
+      sections: [
+        { label: 'Workshops', href: '/events#workshops' },
+        { label: 'Presentations', href: '/events#presentations' },
+      ],
+    },
+    {
+      label: 'Team',
+      href: '/about/team',
+    },
+    {
+      label: 'Contact',
+      href: '/contact',
+    },
+  ]
 
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200">
@@ -35,77 +82,57 @@ export default function Navigation() {
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-12">
-            <Link
-              href="/forecasts"
-              className={`transition-colors font-light ${
-                isActive('/forecasts')
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/methodology"
-              className={`transition-colors font-light ${
-                isActive('/methodology')
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Methodology
-            </Link>
-            <Link
-              href="/downloads"
-              className={`transition-colors font-light ${
-                isActive('/downloads')
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Downloads
-            </Link>
-            <Link
-              href="/publications"
-              className={`transition-colors font-light ${
-                isActive('/publications')
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Publications
-            </Link>
-            <Link
-              href="/events"
-              className={`transition-colors font-light ${
-                isActive('/events')
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Events
-            </Link>
-            <Link
-              href="/team"
-              className={`transition-colors font-light ${
-                isActive('/team')
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Team
-            </Link>
-            <Link
-              href="/contact"
-              className={`transition-colors font-light ${
-                isActive('/contact')
-                  ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                  : 'text-clairient-blue hover:text-clairient-dark'
-              }`}
-            >
-              Contact
-            </Link>
+          <div className="hidden md:flex items-center space-x-8">
+            {menuItems.map((item) => (
+              <div
+                key={item.href}
+                className="relative"
+                onMouseEnter={() => item.sections && setOpenDropdown(item.href)}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
+                {item.sections ? (
+                  <>
+                    <Link
+                      href={item.href}
+                      className={`flex items-center gap-1 transition-colors font-light ${
+                        isActive(item.href)
+                          ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
+                          : 'text-gray-600 hover:text-clairient-blue'
+                      }`}
+                    >
+                      {item.label}
+                      <ChevronDown size={16} className="mt-0.5" />
+                    </Link>
+                    {openDropdown === item.href && (
+                      <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50">
+                        {item.sections.map((section) => (
+                          <Link
+                            key={section.href}
+                            href={section.href}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-clairient-blue transition-colors"
+                          >
+                            {section.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className={`transition-colors font-light ${
+                      isActive(item.href)
+                        ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
+                        : item.label === 'Contact'
+                        ? 'text-clairient-blue hover:text-clairient-dark'
+                        : 'text-gray-600 hover:text-clairient-blue'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* Mobile menu button */}
@@ -124,76 +151,35 @@ export default function Navigation() {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-            <Link
-              href="/forecasts"
-              className={`block px-3 py-2 font-light ${
-                isActive('/forecasts')
-                  ? 'text-clairient-blue bg-blue-50'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/methodology"
-              className={`block px-3 py-2 font-light ${
-                isActive('/methodology')
-                  ? 'text-clairient-blue bg-blue-50'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Methodology
-            </Link>
-            <Link
-              href="/downloads"
-              className={`block px-3 py-2 font-light ${
-                isActive('/downloads')
-                  ? 'text-clairient-blue bg-blue-50'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Downloads
-            </Link>
-            <Link
-              href="/publications"
-              className={`block px-3 py-2 font-light ${
-                isActive('/publications')
-                  ? 'text-clairient-blue bg-blue-50'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Publications
-            </Link>
-            <Link
-              href="/events"
-              className={`block px-3 py-2 font-light ${
-                isActive('/events')
-                  ? 'text-clairient-blue bg-blue-50'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Events
-            </Link>
-            <Link
-              href="/team"
-              className={`block px-3 py-2 font-light ${
-                isActive('/team')
-                  ? 'text-clairient-blue bg-blue-50'
-                  : 'text-gray-600 hover:text-clairient-blue'
-              }`}
-            >
-              Team
-            </Link>
-            <Link
-              href="/contact"
-              className={`block px-3 py-2 font-light ${
-                isActive('/contact')
-                  ? 'text-clairient-blue bg-blue-50'
-                  : 'text-clairient-blue hover:text-clairient-dark'
-              }`}
-            >
-              Contact
-            </Link>
+            {menuItems.map((item) => (
+              <div key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`block px-3 py-2 font-light ${
+                    isActive(item.href)
+                      ? 'text-clairient-blue bg-blue-50'
+                      : item.label === 'Contact'
+                      ? 'text-clairient-blue hover:text-clairient-dark'
+                      : 'text-gray-600 hover:text-clairient-blue'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+                {item.sections && (
+                  <div className="pl-6 space-y-1 mt-1">
+                    {item.sections.map((section) => (
+                      <Link
+                        key={section.href}
+                        href={section.href}
+                        className="block px-3 py-1.5 text-sm text-gray-600 hover:text-clairient-blue"
+                      >
+                        {section.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       )}
