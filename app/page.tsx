@@ -28,7 +28,7 @@ export default async function Home() {
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
           <CountryChoropleth items={countryMapItems} hideDownloadButton={true} mapHeight="calc(100vh - 80px)" initialZoom={3.0} />
           {/* Dark overlay to dim the map - z-index must be above map but below title */}
-          <div className="absolute inset-0 bg-black/50 pointer-events-none z-[400]" />
+          <div className="absolute inset-0 bg-black/30 pointer-events-none z-[400]" />
         </div>
 
         {/* Title Overlay - 1/6 from top of map */}
