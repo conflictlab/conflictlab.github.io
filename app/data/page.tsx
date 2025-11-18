@@ -71,6 +71,23 @@ export default async function DataPage() {
             Latest update: {formatDMY(snapshot.generatedAt)}
           </p>
 
+          {/* Data Rights & Use (CC BY-NC 4.0) */}
+          <div className="mb-8 border border-gray-200 rounded-lg p-4 bg-white">
+            <h2 className="text-lg font-light text-gray-900 mb-1">Data Rights &amp; Use</h2>
+            <p className="text-sm text-gray-700 mb-2">
+              Unless stated otherwise, datasets on this page are licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer" className="text-link">CC BY‑NC 4.0</a> (Attribution‑NonCommercial).
+              You may share and adapt for non‑commercial use with attribution. For commercial use, please <Link href="/contact" className="text-link">contact us</Link>.
+            </p>
+            <div className="text-xs text-gray-600 space-y-1">
+              <div>
+                <span className="font-medium">Attribution example:</span>
+                <code className="ml-2 px-1 py-0.5 bg-gray-50 border border-gray-200 rounded">Luscint (2025). Monthly Conflict Forecasts. https://luscint.com/data</code>
+              </div>
+              <div><span className="font-medium">Disclaimer:</span> Provided “as is”, without warranty; not for safety‑critical decisions.</div>
+              <div><span className="font-medium">Acceptable use:</span> Do not use to target, harass, or cause harm; comply with applicable laws.</div>
+            </div>
+          </div>
+
           {/* Country-level and Grid-level (equal width) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             <div className="space-y-6">
