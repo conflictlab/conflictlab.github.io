@@ -14,9 +14,11 @@ interface Props {
   hideDownloadButton?: boolean
   mapHeight?: string
   initialZoom?: number
+  hideControls?: boolean
+  hideLegend?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7 }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7, hideControls = false, hideLegend = false }: Props) {
   const pathname = usePathname()
   const [world, setWorld] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -161,22 +163,24 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
       <div className={`rounded overflow-hidden relative`} style={{ height: mapHeight }}>
         {/* View toggle overlay (center-bottom, larger) */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
-          <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
-            <Link
-              href="/forecasts"
-              className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
-            >
-              Country view
-            </Link>
-            <Link
-              href="/forecasts-grid"
-              className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
-            >
-              Grid view
-            </Link>
+        {!hideControls && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
+            <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
+              <Link
+                href="/forecasts"
+                className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
+              >
+                Country view
+              </Link>
+              <Link
+                href="/forecasts-grid"
+                className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
+              >
+                Grid view
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
         {error && (
           <div className="h-full flex items-center justify-center text-sm text-gray-600">{error}</div>
         )}
@@ -257,40 +261,42 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
       </div>
       {/* Controls moved below map */}
-      <div className="px-4 py-2">
-        <div className="flex items-center justify-between">
-          <div className="text-xs text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
-          <div className="flex items-center gap-3 text-sm text-gray-700">
-            <span className="whitespace-nowrap">Months ahead:</span>
-            <div className="w-56 md:w-72">
-              <input
-                type="range"
-                min={1}
-                max={6}
-                value={month}
-                onChange={(e) => setMonth(Number(e.target.value))}
-                className="range"
-                style={{ accentColor: '#1e40af' }}
-              />
-              <div className="flex justify-between text-[10px] text-gray-500 mt-1">
-                {[1,2,3,4,5,6].map(n => (
-                  <span key={n}>{n}m</span>
-                ))}
+      {!hideLegend && (
+        <div className="px-4 py-2">
+          <div className="flex items-center justify-between">
+            <div className="text-xs text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
+            <div className="flex items-center gap-3 text-sm text-gray-700">
+              <span className="whitespace-nowrap">Months ahead:</span>
+              <div className="w-56 md:w-72">
+                <input
+                  type="range"
+                  min={1}
+                  max={6}
+                  value={month}
+                  onChange={(e) => setMonth(Number(e.target.value))}
+                  className="range"
+                  style={{ accentColor: '#1e40af' }}
+                />
+                <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+                  {[1,2,3,4,5,6].map(n => (
+                    <span key={n}>{n}m</span>
+                  ))}
+                </div>
               </div>
+              <span className="w-6 text-right font-medium">{month}</span>
             </div>
-            <span className="w-6 text-right font-medium">{month}</span>
           </div>
+          <CountryLegend thresholds={thresholds} />
+          {!hideDownloadButton && (
+            <div className="mt-4 text-center">
+              <Link href="/downloads" className="btn-primary inline-flex items-center justify-center">
+                Data downloads
+              </Link>
+            </div>
+          )}
+          <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
         </div>
-        <CountryLegend thresholds={thresholds} />
-        {!hideDownloadButton && (
-          <div className="mt-4 text-center">
-            <Link href="/downloads" className="btn-primary inline-flex items-center justify-center">
-              Data downloads
-            </Link>
-          </div>
-        )}
-        <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
-      </div>
+      )}
     </div>
   )
 }
