@@ -12,7 +12,7 @@ const nextConfig = {
   images: { unoptimized: true },
   env: {
     // Public site URL for absolute API examples in docs
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://luscint.com',
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://pace.com',
   },
 }
 

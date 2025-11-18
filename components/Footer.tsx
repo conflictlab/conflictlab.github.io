@@ -18,8 +18,8 @@ export default function Footer() {
             <h4 className="font-medium mb-0.5 text-gray-700 text-xs">Contact</h4>
             <ul className="space-y-0 text-gray-600 text-xs">
               <li>
-                <a href="mailto:contact@luscint.com" className="hover:text-clairient-blue transition-colors">
-                  contact@luscint.com
+                <a href="mailto:contact@pace.com" className="hover:text-clairient-blue transition-colors">
+                  contact@pace.com
                 </a>
               </li>
               <li><Link href="/contact" className="hover:text-clairient-blue transition-colors">Get in Touch</Link></li>

@@ -210,7 +210,7 @@ function normalizeRows(rows, opts, prevIndexMap) {
 }
 
 async function fetchJSON(url, token) {
-  const headers = { 'User-Agent': 'luscint-sync-script' }
+  const headers = { 'User-Agent': 'pace-sync-script' }
   if (token) headers['Authorization'] = `Bearer ${token}`
   const res = await fetch(url, { headers })
   if (!res.ok) throw new Error(`Fetch failed ${res.status} ${url}`)
@@ -218,7 +218,7 @@ async function fetchJSON(url, token) {
 }
 
 async function fetchText(url, token) {
-  const headers = { 'User-Agent': 'luscint-sync-script' }
+  const headers = { 'User-Agent': 'pace-sync-script' }
   if (token) headers['Authorization'] = `Bearer ${token}`
   const res = await fetch(url, { headers })
   if (!res.ok) throw new Error(`Fetch failed ${res.status} ${url}`)

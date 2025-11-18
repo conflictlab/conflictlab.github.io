@@ -1,6 +1,6 @@
-# Luscint Website
+# PaCE Website
 
-Website for Luscint - an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling.
+Website for PaCE - an intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling.
 
 ## 🚀 Quick Start
 
@@ -140,7 +140,7 @@ node scripts/csv-to-snapshot.js --csv content/forecasts/2025-12.csv --period 202
 ## 📁 Project Structure
 
 ```
-luscint-website/
+pace-website/
 ├── app/                    # Next.js App Router pages
 │   ├── about/             # About page
 │   ├── contact/           # Contact page
@@ -238,7 +238,7 @@ You can deploy to Vercel by connecting the repo in the Vercel dashboard or by ad
 Create a `.env.local` file for local development:
 ```
 # Add any environment variables here
-# NEXT_PUBLIC_API_URL=https://api.luscint.com
+# NEXT_PUBLIC_API_URL=https://api.pace.com
 ```
 
 ### Custom Domain
@@ -386,4 +386,4 @@ This project is proprietary to Luscint. All rights reserved.
 **Need help?** Contact the development team or refer to the documentation links above.
 
 **Last updated:** July 2025
-# luscint
+# pace
