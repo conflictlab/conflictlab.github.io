@@ -31,13 +31,13 @@ export default async function Home() {
           <div className="absolute inset-0 bg-black/20 pointer-events-none z-[400]" />
         </div>
 
-        {/* Title Overlay - top-left card */}
-        <div className="absolute top-32 left-12 z-[1000] pointer-events-none">
-          <div className="bg-white/85 backdrop-blur-sm px-6 py-4 rounded-lg shadow-lg">
-            <h1 className="text-3xl md:text-4xl font-light text-gray-900 mb-1 tracking-wide">
+        {/* Title Overlay - centered at 25%/50% */}
+        <div className="absolute top-[25%] left-[50%] -translate-x-1/2 z-[1000] pointer-events-none">
+          <div className="text-center">
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-2 tracking-wide" style={{ textShadow: '3px 3px 10px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5)' }}>
               PaCE
             </h1>
-            <p className="text-sm md:text-base text-gray-700 font-light">
+            <p className="text-lg md:text-xl text-white font-light tracking-wide" style={{ textShadow: '2px 2px 6px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)' }}>
               Predicting War Through Pattern Recognition
             </p>
           </div>
