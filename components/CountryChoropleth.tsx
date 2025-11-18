@@ -327,9 +327,10 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                 opacity: 0;
               }
             }
-            .pulse-ring {
+            .pulse-ring path {
               animation: pulse 2.5s ease-out infinite;
               transform-origin: center center;
+              transform-box: fill-box;
             }
           `}</style>
         )}
