@@ -28,16 +28,16 @@ export default async function Home() {
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
           <CountryChoropleth items={countryMapItems} hideDownloadButton={true} mapHeight="calc(100vh - 80px)" initialZoom={3.0} />
           {/* Dark overlay to dim the map - z-index must be above map but below title */}
-          <div className="absolute inset-0 bg-black/30 pointer-events-none z-[400]" />
+          <div className="absolute inset-0 bg-black/20 pointer-events-none z-[400]" />
         </div>
 
         {/* Title Overlay - 1/6 from top of map */}
         <div className="absolute inset-0 flex items-start justify-center pt-[16.67vh] z-[1000] pointer-events-none">
-          <div className="text-center bg-white/70 backdrop-blur-sm px-8 py-6 rounded-lg">
-            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-3">
+          <div className="text-center px-8 py-6">
+            <h1 className="text-5xl md:text-6xl font-light text-white mb-4" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.3)' }}>
               PaCE: Patterns of Conflict Emergence
             </h1>
-            <p className="text-xl md:text-2xl text-clairient-blue font-medium">
+            <p className="text-2xl md:text-3xl text-white font-light" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.5), 0 0 15px rgba(0,0,0,0.3)' }}>
               Predicting War Through Pattern Recognition
             </p>
           </div>
