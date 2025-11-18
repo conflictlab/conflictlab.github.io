@@ -1,0 +1,111 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Luscint Forecasts API",
+    "version": "0.1.0",
+    "description": "Simple JSON endpoints for forecast data. Note: API routes require a serverful deployment (not GitHub Pages)."
+  },
+  "servers": [
+    { "url": "https://luscint.com" },
+    { "url": "./" }
+  ],
+  "paths": {
+    "/api/v1/forecasts/series": {
+      "get": {
+        "summary": "Get time series for a country/entity",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "entity",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "ISO‑3 code or name token (e.g., 'USA', 'Ukraine')."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "entity": { "type": "string" },
+                    "series": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "period": { "type": "string", "example": "2025-06" },
+                          "index": { "type": "number", "example": 23.1 },
+                          "forecast": {
+                            "type": "array",
+                            "items": { "type": "number" },
+                            "example": [21.3, 20.1, 19.4, 18.0, 17.2, 16.7]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Missing required query param: entity" }
+        }
+      }
+    },
+    "/api/v1/grid/{period}/points": {
+      "get": {
+        "summary": "Get grid cell centroids with monthly values",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "period",
+            "required": true,
+            "schema": { "type": "string", "example": "2025-06" },
+            "description": "Forecast snapshot period (YYYY-MM)."
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "required": false,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 6 },
+            "description": "Filter to a specific horizon month (1–6)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "period": { "type": "string" },
+                    "points": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "lat": { "type": "number", "example": 0.25 },
+                          "lon": { "type": "number", "example": 32.75 },
+                          "m": {
+                            "type": "array",
+                            "items": { "type": "number" },
+                            "example": [10, 8, 5, 2, 1, 0]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Not found (no grid file for the period)" }
+        }
+      }
+    }
+  }
+}

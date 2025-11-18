@@ -15,7 +15,8 @@
     "grid:centroids": "node scripts/priogrid-shp-to-centroids.js",
     "grid:build": "node scripts/priogrid-shp-join-csv.js --csv https://raw.githubusercontent.com/ThomasSchinca/Live_3D_forecast/main/df_output.csv",
     "grid:csv": "node scripts/grid-geojson-to-csv.js",
-    "grid:csv:months": "node scripts/grid-month-points-to-csv.js"
+    "grid:csv:months": "node scripts/grid-month-points-to-csv.js",
+    "api:export": "node scripts/export-static-api.js"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.20",

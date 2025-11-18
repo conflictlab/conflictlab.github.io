@@ -251,7 +251,7 @@ export default async function Technology() {
           </div>
           
           <div className="mb-12">
-            <PrioGridMap period={snap.period} />
+            <PrioGridMap period={snap.period} activeView="grid" />
           </div>
           
           <div className="text-center">

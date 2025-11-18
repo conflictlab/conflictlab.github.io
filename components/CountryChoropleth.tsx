@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 type CountryValue = { name: string; iso3?: string; value?: number; months?: number[] }
@@ -18,6 +18,7 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
   const [world, setWorld] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [month, setMonth] = useState<number>(1)
+  const [showZoomHint, setShowZoomHint] = useState(true)
 
   useEffect(() => {
     let cancelled = false
@@ -35,6 +36,11 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
     }
     load()
     return () => { cancelled = true }
+  }, [])
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowZoomHint(false), 7000)
+    return () => clearTimeout(t)
   }, [])
 
   const valueByName = useMemo(() => {
@@ -155,13 +161,13 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
           <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
             <Link
               href="/forecasts"
-              className={`px-6 py-3 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
+              className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
             >
               Country view
             </Link>
             <Link
               href="/forecasts-grid"
-              className={`px-6 py-3 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
+              className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
             >
               Grid view
             </Link>
@@ -174,17 +180,48 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
           <MapContainer
             center={centerAdjusted as any}
             zoom={2.7}
-            zoomSnap={0}
-            zoomDelta={0.1}
-            scrollWheelZoom={true}
+            zoomSnap={0.5}
+            zoomDelta={0.5}
+            scrollWheelZoom={false}
             worldCopyJump={true}
             minZoom={1}
+            wheelPxPerZoomLevel={40}
+            doubleClickZoom={true}
+            zoomAnimation={true}
             maxBounds={[[-85, -180], [85, 180]] as any}
             maxBoundsViscosity={1.0}
             preferCanvas={true}
             attributionControl={false}
             style={{ height: '100%', width: '100%' }}
           >
+            {/* Require Cmd/Ctrl + scroll to zoom */}
+            {(() => {
+              function CtrlScrollZoom() {
+                const map = useMap()
+                useEffect(() => {
+                  map.scrollWheelZoom.disable()
+                  let timeoutId: any = null
+                  const onWheel = (e: WheelEvent) => {
+                    if (e.ctrlKey || e.metaKey) {
+                      map.scrollWheelZoom.enable()
+                      if (timeoutId) clearTimeout(timeoutId)
+                      timeoutId = setTimeout(() => {
+                        map.scrollWheelZoom.disable()
+                        timeoutId = null
+                      }, 1500)
+                      }
+                  }
+                  const container = map.getContainer()
+                  container.addEventListener('wheel', onWheel, { passive: true })
+                  return () => {
+                    container.removeEventListener('wheel', onWheel as any)
+                    if (timeoutId) clearTimeout(timeoutId)
+                  }
+                }, [map])
+                return null
+              }
+              return <CtrlScrollZoom />
+            })()}
             <TileLayer
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
@@ -206,7 +243,15 @@ export default function CountryChoropleth({ items, onSelect }: Props) {
             )}
           </MapContainer>
         )}
-  </div>
+        {showZoomHint && (
+          <div className="absolute bottom-4 right-4 z-[1000]">
+            <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-700 shadow-sm flex items-center gap-2">
+              <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
+              <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
+            </div>
+          </div>
+        )}
+      </div>
       {/* Controls moved below map */}
       <div className="px-4 py-2">
         <div className="flex items-center justify-between">

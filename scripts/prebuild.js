@@ -25,7 +25,9 @@ async function main() {
 
   console.log('Prebuild: generating monthly point JSONs…')
   run('node scripts/geojson-to-month-points.js')
+
+  console.log('Prebuild: exporting static API endpoints…')
+  run('node scripts/export-static-api.js')
 }
 
 main().catch(err => { console.error(err?.message || err); process.exit(1) })
-

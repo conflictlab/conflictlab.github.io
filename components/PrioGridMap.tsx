@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import Link from 'next/link'
@@ -9,9 +9,10 @@ import { usePathname } from 'next/navigation'
 
 interface Props {
   period: string
+  activeView?: 'grid' | 'country'
 }
 
-export default function PrioGridMap({ period }: Props) {
+export default function PrioGridMap({ period, activeView }: Props) {
   const pathname = usePathname()
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   const [data, setData] = useState<any | null>(null) // GeoJSON polygons (optional)
@@ -272,6 +273,12 @@ export default function PrioGridMap({ period }: Props) {
   }, [center])
 
   const loading = !error && !data && !points
+  const [showZoomHint, setShowZoomHint] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowZoomHint(false), 7000)
+    return () => clearTimeout(t)
+  }, [])
 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
@@ -279,18 +286,32 @@ export default function PrioGridMap({ period }: Props) {
         {/* View toggle overlay (center-bottom, larger) */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
           <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
-            <Link
-              href="/forecasts"
-              className={`px-6 py-3 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
-            >
-              Country view
-            </Link>
-            <Link
-              href="/forecasts-grid"
-              className={`px-6 py-3 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
-            >
-              Grid view
-            </Link>
+            {(() => {
+              // Determine which toggle appears active.
+              // 1) Allow explicit override via prop.
+              // 2) If on technology page (with or without basePath), show Grid active.
+              // 3) Fall back to URL prefix for forecasts pages.
+              const endsWith = (p?: string, suffix?: string) => !!p && !!suffix && p.endsWith(suffix)
+              const gridActive = activeView === 'grid'
+                || endsWith(pathname, '/technology')
+                || (pathname?.startsWith('/forecasts-grid') ?? false)
+              return (
+                <>
+                  <Link
+                    href="/forecasts"
+                    className={`px-6 py-2 text-lg ${gridActive ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
+                  >
+                    Country view
+                  </Link>
+                  <Link
+                    href="/forecasts-grid"
+                    className={`px-6 py-2 text-lg ${gridActive ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
+                  >
+                    Grid view
+                  </Link>
+                </>
+              )
+            })()}
           </div>
         </div>
         {error && (
@@ -314,17 +335,48 @@ export default function PrioGridMap({ period }: Props) {
           <MapContainer
             center={centerAdjusted as any}
             zoom={2.7}
-            zoomSnap={0}
-            zoomDelta={0.1}
-            scrollWheelZoom={true}
+            zoomSnap={0.5}
+            zoomDelta={0.5}
+            scrollWheelZoom={false}
             worldCopyJump={true}
             minZoom={1}
+            wheelPxPerZoomLevel={40}
+            doubleClickZoom={true}
+            zoomAnimation={true}
             maxBounds={[[-85, -180], [85, 180]] as any}
             maxBoundsViscosity={1.0}
             preferCanvas={true}
             attributionControl={false}
             style={{ height: '100%', width: '100%' }}
           >
+            {/* Require Cmd/Ctrl + scroll to zoom */}
+            {(() => {
+              function CtrlScrollZoom() {
+                const map = useMap()
+                useEffect(() => {
+                  map.scrollWheelZoom.disable()
+                  let timeoutId: any = null
+                  const onWheel = (e: WheelEvent) => {
+                    if (e.ctrlKey || e.metaKey) {
+                      map.scrollWheelZoom.enable()
+                      if (timeoutId) clearTimeout(timeoutId)
+                      timeoutId = setTimeout(() => {
+                        map.scrollWheelZoom.disable()
+                        timeoutId = null
+                      }, 1500)
+                      }
+                  }
+                  const container = map.getContainer()
+                  container.addEventListener('wheel', onWheel, { passive: true })
+                  return () => {
+                    container.removeEventListener('wheel', onWheel as any)
+                    if (timeoutId) clearTimeout(timeoutId)
+                  }
+                }, [map])
+                return null
+              }
+              return <CtrlScrollZoom />
+            })()}
             <TileLayer
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
@@ -364,6 +416,14 @@ export default function PrioGridMap({ period }: Props) {
               />
             )}
           </MapContainer>
+        )}
+        {showZoomHint && (
+          <div className="absolute bottom-4 right-4 z-[1000]">
+            <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-700 shadow-sm flex items-center gap-2">
+              <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
+              <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
+            </div>
+          </div>
         )}
       </div>
       {/* Controls moved below map */}

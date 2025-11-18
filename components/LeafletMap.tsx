@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import TimeSeriesChart from './TimeSeriesChart'
@@ -105,28 +105,41 @@ export default function LeafletMap() {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [showZoomHint, setShowZoomHint] = useState(true)
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
+  // Hide the zoom hint after a short delay — this hook must
+  // be declared before any early returns to satisfy rules-of-hooks
+  useEffect(() => {
+    const t = setTimeout(() => setShowZoomHint(false), 7000)
+    return () => clearTimeout(t)
+  }, [])
 
   useEffect(() => {
     const loadGeoJsonData = async () => {
+      // Try local file first (works offline if present), then fallback to remote
+      const localUrl = `${base}/data/world.geojson`
+      const remoteUrl = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'
       try {
         console.log('Loading GeoJSON data...')
-        const response = await fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+        let response = await fetch(localUrl)
         if (!response.ok) {
-          throw new Error('Failed to fetch country boundaries')
+          response = await fetch(remoteUrl)
         }
+        if (!response.ok) throw new Error('Failed to fetch country boundaries')
         const data = await response.json()
         console.log('GeoJSON data loaded, features count:', data.features?.length)
         setGeoJsonData(data)
-        setIsLoading(false)
       } catch (err) {
         console.error('Error loading GeoJSON:', err)
-        setError(err instanceof Error ? err.message : 'Failed to load country data')
+        setError('Map data failed to load. If offline, add data/world.geojson to public/.')
+      } finally {
         setIsLoading(false)
       }
     }
 
     loadGeoJsonData()
-  }, [])
+  }, [base])
 
   const getCountryCode = (feature: any) => {
     const countryName = feature.properties.name || feature.properties.NAME || ''
@@ -249,6 +262,34 @@ export default function LeafletMap() {
     )
   }
 
+  function CtrlScrollZoom() {
+    const map = useMap()
+    useEffect(() => {
+      // Disable wheel zoom by default, enable only when Ctrl/Cmd is held
+      map.scrollWheelZoom.disable()
+      let timeoutId: any = null
+      const onWheel = (e: WheelEvent) => {
+        if (e.ctrlKey || e.metaKey) {
+          map.scrollWheelZoom.enable()
+          if (timeoutId) clearTimeout(timeoutId)
+          timeoutId = setTimeout(() => {
+            map.scrollWheelZoom.disable()
+            timeoutId = null
+          }, 1500)
+        }
+      }
+      const container = map.getContainer()
+      container.addEventListener('wheel', onWheel, { passive: true })
+      return () => {
+        container.removeEventListener('wheel', onWheel as any)
+        if (timeoutId) clearTimeout(timeoutId)
+      }
+    }, [map])
+    return null
+  }
+
+  
+
   return (
     <div className="relative w-full">
       <div className="w-full h-[600px] rounded-lg border border-gray-200 overflow-hidden shadow-sm">
@@ -257,14 +298,20 @@ export default function LeafletMap() {
           zoom={2}
           minZoom={1}
           maxZoom={10}
+          zoomSnap={0.5}
+          zoomDelta={0.5}
+          wheelPxPerZoomLevel={40}
+          doubleClickZoom={true}
+          zoomAnimation={true}
           style={{ height: '100%', width: '100%' }}
-          scrollWheelZoom={true}
+          scrollWheelZoom={false}
         >
           <TileLayer
             attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
             url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
             subdomains='abcd'
           />
+          <CtrlScrollZoom />
           
           {geoJsonData && (
             <GeoJSON
@@ -275,6 +322,14 @@ export default function LeafletMap() {
           )}
         </MapContainer>
       </div>
+      {showZoomHint && (
+        <div className="absolute bottom-4 right-4 z-[1000]">
+          <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-700 shadow-sm flex items-center gap-2">
+            <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
+            <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
+          </div>
+        </div>
+      )}
       <div className="mt-4 text-center">
         <Link href="/data" className="btn-primary inline-flex items-center justify-center">
           Data downloads
