@@ -31,8 +31,8 @@ export default async function Home() {
           <div className="absolute inset-0 bg-black/20 pointer-events-none z-[400]" />
         </div>
 
-        {/* Title Overlay - centered at 25%/50% */}
-        <div className="absolute top-[25%] left-[50%] -translate-x-1/2 z-[1000] pointer-events-none">
+        {/* Title Overlay - positioned at 25%/25% */}
+        <div className="absolute top-[25%] left-[25%] z-[1000] pointer-events-none">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-2 tracking-wide" style={{ textShadow: '3px 3px 10px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5)' }}>
               PaCE
