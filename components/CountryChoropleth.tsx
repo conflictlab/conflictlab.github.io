@@ -356,8 +356,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             preferCanvas={true}
             attributionControl={false}
             style={{ height: '100%', width: '100%' }}
-            aria-label="World choropleth of predicted fatalities"
-            role="region"
           >
             {/* Map reference setter */}
             {(() => {
