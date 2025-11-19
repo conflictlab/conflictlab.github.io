@@ -114,11 +114,11 @@ export default function About() {
 
           {/* Page Navigation */}
           <nav className="flex space-x-6 text-lg">
-            <a href="#team" className="text-pace-red hover:text-pace-red-dark transition-colors">
+            <a href="#team" className="text-gray-700 hover:text-pace-red transition-colors">
               Team
             </a>
             <span className="text-gray-400">/</span>
-            <a href="#contact" className="text-pace-red hover:text-pace-red-dark transition-colors">
+            <a href="#contact" className="text-gray-700 hover:text-pace-red transition-colors">
               Contact
             </a>
           </nav>

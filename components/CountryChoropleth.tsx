@@ -52,9 +52,10 @@ interface Props {
   hideLegend?: boolean
   showHotspots?: boolean
   hideSearch?: boolean
+  dimZoomControls?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
@@ -276,7 +277,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
       <div
-        className={`rounded overflow-hidden relative`}
+        className={`rounded overflow-hidden relative ${dimZoomControls ? 'map-dim-controls' : ''}`}
         style={{ height: mapHeight }}
         role="region"
         aria-label="World choropleth of predicted fatalities"
@@ -499,6 +500,22 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             }
           `}</style>
         )}
+        {/* Dim Leaflet zoom controls when requested */}
+        <style jsx global>{`
+          .map-dim-controls .leaflet-control-zoom {
+            box-shadow: none;
+            border: none;
+            opacity: 0.8;
+          }
+          .map-dim-controls .leaflet-control-zoom a {
+            background: rgba(255, 255, 255, 0.6);
+            color: #111827;
+            border: 1px solid rgba(0,0,0,0.08);
+          }
+          .map-dim-controls .leaflet-control-zoom a:hover {
+            background: rgba(255, 255, 255, 0.75);
+          }
+        `}</style>
       </div>
       {/* Controls moved below map */}
       {!hideLegend && (
