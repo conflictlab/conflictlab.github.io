@@ -21,7 +21,7 @@ export default async function Home() {
         Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
         e.horizons['6m'].p50,
       ]
-      return { name: e.name, iso3: e.iso3, months }
+      return { id: e.id, name: e.name, iso3: e.iso3, months }
     })
 
   return (
