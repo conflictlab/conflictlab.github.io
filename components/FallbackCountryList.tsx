@@ -11,6 +11,8 @@ export default function FallbackCountryList({ movers, rows }: { movers: Mover[];
   const highest = useMemo(() => {
     return [...rows].sort((a, b) => b.pred1m - a.pred1m).slice(0, 10)
   }, [rows])
+  // Ensure both lists show the same count (match available movers)
+  const COUNT = Math.min(10, movers?.length || 0, highest.length)
   const filtered = useMemo(() => {
     const n = q.trim().toLowerCase()
     if (!n) return [] as Row[]
@@ -50,7 +52,7 @@ export default function FallbackCountryList({ movers, rows }: { movers: Mover[];
             <div>
               <h4 className="text-sm font-medium text-gray-700 mb-2">Top risers (MoM)</h4>
               <ul className="space-y-1">
-                {movers.slice(0, 10).map((m) => (
+                {movers.slice(0, COUNT).map((m) => (
                   <li key={m.id} className="flex items-center gap-2 text-sm hover:bg-gray-50 rounded px-2 py-1 -mx-2">
                     <Link href={`/forecasts/${m.id}`} className="text-gray-800 hover:text-pace-charcoal hover:underline flex-1 min-w-0 truncate">{m.name}</Link>
                     <span className={`font-medium ${m.deltaMoM >= 0 ? 'text-emerald-600' : 'text-rose-600'} font-mono tabular-nums w-20 text-left`}>{m.deltaMoM >= 0 ? '+' : ''}{m.deltaMoM.toFixed(1)}</span>
@@ -62,7 +64,7 @@ export default function FallbackCountryList({ movers, rows }: { movers: Mover[];
             <div>
               <h4 className="text-sm font-medium text-gray-700 mb-2">Highest risk (next month)</h4>
               <ul className="space-y-1">
-                {highest.map((r) => (
+                {highest.slice(0, COUNT).map((r) => (
                   <li key={r.id} className="flex items-center gap-2 text-sm hover:bg-gray-50 rounded px-2 py-1 -mx-2">
                     <Link href={`/forecasts/${r.id}`} className="text-gray-800 hover:text-pace-charcoal hover:underline flex-1 min-w-0 truncate">{r.name}</Link>
                     <span className="text-gray-700 font-mono tabular-nums w-20 text-left">{r.pred1m.toFixed(1)}</span>
