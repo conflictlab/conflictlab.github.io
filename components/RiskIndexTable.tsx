@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from 'react'
 import Sparkline from '@/components/Sparkline'
+import Link from 'next/link'
 
 interface Row {
   id: string
@@ -48,12 +49,12 @@ export default function RiskIndexTable({ rows }: Props) {
   }
 
   const headerClass = (key: SortKey) =>
-    `cursor-pointer select-none ${sortKey === key ? 'text-clairient-blue' : 'text-gray-700'}`
+    `cursor-pointer select-none ${sortKey === key ? 'text-clairient-light' : 'text-gray-400'}`
 
   return (
-    <div className="overflow-x-auto border border-gray-200 rounded-lg">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+    <div className="overflow-x-auto border border-pace-charcoal-light rounded-lg">
+      <table className="min-w-full divide-y divide-pace-charcoal-light">
+        <thead className="bg-pace-charcoal">
           <tr>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">
               <span className={headerClass('name')} onClick={() => onSort('name')}>Name</span>
@@ -73,18 +74,20 @@ export default function RiskIndexTable({ rows }: Props) {
             <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider">1–6m Pred.</th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-100">
+        <tbody className="bg-gray-900 divide-y divide-pace-charcoal">
           {sorted.map((r) => (
-            <tr key={r.id} className="hover:bg-gray-50">
-              <td className="px-4 py-2 text-sm text-gray-900">{r.name}</td>
-              <td className="px-4 py-2 text-sm text-right font-medium">{r.pred1m}</td>
-              <td className={`px-4 py-2 text-sm text-right ${r.deltaMoM >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>{r.deltaMoM >= 0 ? '+' : ''}{r.deltaMoM}</td>
-              <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred3m}</td>
-              <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred6m}</td>
-              <td className="px-4 py-2 text-sm">
-                {r.trend && r.trend.length > 1 ? <Sparkline values={r.trend} /> : <span className="text-gray-400">—</span>}
-              </td>
-            </tr>
+            <Link key={r.id} href={`/forecasts/${r.id}`} legacyBehavior>
+              <tr className="hover:bg-pace-charcoal cursor-pointer">
+                <td className="px-4 py-2 text-sm text-gray-100">{r.name}</td>
+                <td className="px-4 py-2 text-sm text-right font-medium">{r.pred1m}</td>
+                <td className={`px-4 py-2 text-sm text-right ${r.deltaMoM >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{r.deltaMoM >= 0 ? '+' : ''}{r.deltaMoM}</td>
+                <td className="px-4 py-2 text-sm text-right text-gray-300">{r.pred3m}</td>
+                <td className="px-4 py-2 text-sm text-right text-gray-300">{r.pred6m}</td>
+                <td className="px-4 py-2 text-sm">
+                  {r.trend && r.trend.length > 1 ? <Sparkline values={r.trend} /> : <span className="text-gray-500">—</span>}
+                </td>
+              </tr>
+            </Link>
           ))}
         </tbody>
       </table>

@@ -176,6 +176,130 @@ function splitCSVLine(line: string): string[] {
   return out.map(s => s.trim())
 }
 
+// ADDED_CODE_START
+export async function getForecastsPageData() {
+  const snapshot = readSnapshot('latest')
+  const periods = getAvailablePeriods()
+  const currentIdx = periods.indexOf(snapshot.period)
+  const prevPeriod = currentIdx > 0 ? periods[currentIdx - 1] : undefined
+  const prevSnap = prevPeriod ? readSnapshot(prevPeriod) : undefined
+
+  const prevIndexMap = new Map<string, number>()
+  if (prevSnap) {
+    for (const e of prevSnap.entities) {
+      prevIndexMap.set(e.id, e.horizons?.['1m']?.index ?? e.index)
+      if (e.iso3) prevIndexMap.set(e.iso3, e.horizons?.['1m']?.index ?? e.index)
+      prevIndexMap.set((e.name || '').toUpperCase(), e.horizons?.['1m']?.index ?? e.index)
+    }
+  }
+
+  const total1mCurrent = snapshot.entities.reduce((s, e) => s + (e.horizons?.['1m']?.index ?? e.index), 0)
+  const total1mPrev = prevSnap ? prevSnap.entities.reduce((s, e) => s + (e.horizons?.['1m']?.index ?? e.index), 0) : undefined
+  const deltaTotal = total1mPrev !== undefined ? Number((total1mCurrent - total1mPrev).toFixed(1)) : undefined
+
+  const countriesCovered = snapshot.entities.filter((e) => (e.entityType || 'country') === 'country').length
+
+  const rows = snapshot.entities.map((e) => {
+    const prev = prevIndexMap.get(e.id) ?? prevIndexMap.get(e.iso3 || '') ?? prevIndexMap.get((e.name || '').toUpperCase())
+    const deltaMoM = prev !== undefined ? Number((e.horizons['1m'].index - prev).toFixed(1)) : 0
+    const months = getEntityHorizonMonths(snapshot.period, e.name) || [
+      e.horizons['1m'].p50,
+      Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
+      e.horizons['3m'].p50,
+      Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
+      Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
+      e.horizons['6m'].p50,
+    ]
+    return {
+      id: e.id,
+      name: e.name,
+      entityType: e.entityType,
+      pred1m: Number(e.horizons['1m'].p50.toFixed(1)),
+      pred3m: Number(e.horizons['3m'].p50.toFixed(1)),
+      pred6m: Number(e.horizons['6m'].p50.toFixed(1)),
+      deltaMoM,
+      trend: months,
+    }
+  })
+
+  const countryMapItems = snapshot.entities
+    .filter((e) => (e.entityType || 'country') === 'country')
+    .map((e) => {
+      const months = getEntityHorizonMonths(snapshot.period, e.name) || [
+        e.horizons['1m'].p50,
+        Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
+        e.horizons['3m'].p50,
+        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
+        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
+        e.horizons['6m'].p50,
+      ]
+      return { name: e.name, iso3: e.iso3, months }
+    })
+
+  const highlights = [...snapshot.entities]
+    .map((e) => {
+      const prev = prevIndexMap.get(e.id) ?? prevIndexMap.get(e.iso3 || '') ?? prevIndexMap.get((e.name || '').toUpperCase())
+      const deltaMoM = prev !== undefined ? Math.abs(Number((e.horizons['1m'].index - prev).toFixed(1))) : 0
+      return { e, deltaMoM }
+    })
+    .sort((a, b) => b.deltaMoM - a.deltaMoM)
+    .slice(0, 6)
+    .map(x => x.e)
+
+  const movers = [...snapshot.entities]
+    .map((e) => {
+      const prev = prevIndexMap.get(e.id) ?? prevIndexMap.get(e.iso3 || '') ?? prevIndexMap.get((e.name || '').toUpperCase())
+      const deltaMoM = prev !== undefined ? Number((e.horizons['1m'].index - prev).toFixed(1)) : 0
+      return { id: e.id, name: e.name, entityType: e.entityType, deltaMoM, band: e.band }
+    })
+    .sort((a, b) => Math.abs(b.deltaMoM) - Math.abs(a.deltaMoM))
+    .slice(0, 6)
+
+  const HIGH_THRESHOLD = 100
+  const countryEntities = snapshot.entities.filter((e) => (e.entityType || 'country') === 'country')
+  const highByThresholdCount = countryEntities.filter((e) => Number(e.horizons['1m'].p50) > HIGH_THRESHOLD).length
+  const prevHighByThresholdCount = (() => {
+    if (!prevSnap) return undefined as number | undefined
+    const prevCountries = prevSnap.entities.filter((e) => (e.entityType || 'country') === 'country')
+    return prevCountries.filter((e) => Number(e.horizons['1m'].p50) > HIGH_THRESHOLD).length
+  })()
+  const deltaHigh = (prevHighByThresholdCount === undefined) ? undefined : (highByThresholdCount - prevHighByThresholdCount)
+
+  const topMover = movers.length > 0 ? movers[0] : null
+  const keyTakeaways: string[] = []
+
+  // First takeaway (global risk trend)
+  keyTakeaways.push(
+    `Global conflict risk ${deltaTotal && deltaTotal > 0 ? 'shows a slight increase' : 'remains stable or has decreased'} since last month.`
+  )
+
+  // Second takeaway (top mover, shortened)
+  if (topMover) {
+    keyTakeaways.push(
+      `Top mover: ${topMover.name} (${topMover.deltaMoM >= 0 ? '+' : ''}${topMover.deltaMoM.toFixed(1)} pts).`
+    )
+  }
+
+
+  return {
+    snapshot,
+    summaryStats: {
+      total1mCurrent,
+      deltaTotal,
+      countriesCovered,
+      highByThresholdCount,
+      deltaHigh,
+      HIGH_THRESHOLD,
+    },
+    rows,
+    countryMapItems,
+    highlights,
+    movers,
+    keyTakeaways,
+  }
+}
+// ADDED_CODE_END
+
 export function buildCSV(snapshot: ForecastSnapshot): string {
   const header = [
     'id','name','entityType','iso3','index','band','confidence','deltaMoM','deltaYoY',
