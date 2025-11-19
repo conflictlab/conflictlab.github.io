@@ -76,18 +76,16 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="bg-pace-charcoal border-b border-pace-charcoal-light relative z-[2000] shadow-md">
+    <nav className="bg-slate-600 border-b border-slate-500 relative z-[2000] shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <div className={`rounded-full bg-white p-1.5 mr-3 ${isHomePage ? '' : ''}`}>
-                <img
-                  src={`${base}/logo.png`}
-                  alt="PaCE"
-                  className={`${isHomePage ? 'h-11 w-11' : 'h-5 w-5'}`}
-                />
-              </div>
+              <img
+                src={`${base}/logo.png`}
+                alt="PaCE"
+                className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
+              />
               <span className={`font-light text-white ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
             </Link>
           </div>
@@ -116,7 +114,7 @@ export default function Navigation() {
                     </Link>
                     {openDropdown === item.href && (
                       <div className="absolute top-full left-0 mt-1 pt-2 w-48">
-                        <div className="bg-pace-charcoal-light border border-gray-600 rounded-lg shadow-lg py-2 z-[2001]">
+                        <div className="bg-slate-700 border border-slate-600 rounded-lg shadow-lg py-2 z-[2001]">
                           {item.sections.map((section) => (
                             <Link
                               key={section.href}
@@ -161,7 +159,7 @@ export default function Navigation() {
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-pace-charcoal border-t border-pace-charcoal-light">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-600 border-t border-slate-500">
             {menuItems.map((item) => (
               <div key={item.href}>
                 <Link
