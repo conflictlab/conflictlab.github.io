@@ -101,10 +101,10 @@ export default function About() {
   return (
     <>
       {/* Hero Section with Navigation */}
-      <section className="py-12 md:py-16 hero-background-network-image border-b border-gray-200">
+      <section className="pt-10 pb-6 md:pt-12 md:pb-8 hero-background-network-image border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
+          <div className="mb-4">
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight">
               About PaCE
             </h1>
             <p className="text-xl text-gray-600 font-light leading-relaxed">
@@ -126,7 +126,7 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section id="team" className="py-16 bg-white">
+      <section id="team" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
             Team
