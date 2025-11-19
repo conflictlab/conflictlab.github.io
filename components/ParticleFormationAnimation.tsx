@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 
 interface Particle {
   x: number
@@ -30,7 +30,7 @@ const ParticleFormationAnimation: React.FC = () => {
   const CANVAS_HEIGHT = 600
 
   // Define target shapes
-  const shapes: Shape[] = [
+  const shapes: Shape[] = useMemo(() => [
     // Network/Neural nodes
     {
       name: 'network',
@@ -81,7 +81,7 @@ const ParticleFormationAnimation: React.FC = () => {
         { x: 360, y: 280 }, { x: 380, y: 285 }, { x: 400, y: 290 }, { x: 420, y: 285 }, { x: 440, y: 280 }
       ]
     }
-  ]
+  ], [])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -249,7 +249,7 @@ const ParticleFormationAnimation: React.FC = () => {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [])
+  }, [shapes])
 
   return (
     <div className="w-full flex justify-center items-center bg-slate-50 p-8 rounded-lg">

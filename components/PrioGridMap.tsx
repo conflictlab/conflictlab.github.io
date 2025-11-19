@@ -136,7 +136,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
     }
     load()
     return () => { cancelled = true }
-  }, [period])
+  }, [period, base, month])
 
   // If we are using the API or static-month points source, refetch when month changes for a smaller payload
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
     }
     refetchForMonth()
     return () => { cancelled = true }
-  }, [month, period, pointsFromApi, pointsFromStatic])
+  }, [month, period, base, pointsFromApi, pointsFromStatic])
 
   // Compute dynamic color scale for current month
   const { thresholds, vmin, vmax } = useMemo(() => {

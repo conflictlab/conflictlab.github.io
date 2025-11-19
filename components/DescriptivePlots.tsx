@@ -87,7 +87,7 @@ export function HistogramWithDensity({ data, width = 640, height = 200 }: PlotPr
     let d = `M ${xScale(xs[0])} ${yDensity(kde[0])}`
     for (let i = 1; i < xs.length; i++) d += ` L ${xScale(xs[i])} ${yDensity(kde[i])}`
     return d
-  }, [xs, kde])
+  }, [xs, kde, xScale, yDensity])
 
   return (
     <svg width={width} height={height} className="w-full h-auto">
@@ -138,7 +138,7 @@ export function ECDFPlot({ data, width = 640, height = 200 }: PlotProps) {
       d += ` L ${xScale(sorted[i])} ${yScale(p)}`
     }
     return d
-  }, [sorted])
+  }, [sorted, xScale, yScale])
   return (
     <svg width={width} height={height} className="w-full h-auto">
       {xTicks.map((t) => (
@@ -188,7 +188,7 @@ export function LorenzCurve({ data, width = 640, height = 200 }: PlotProps) {
     let d = `M ${xScale(cum[0].x)} ${yScale(cum[0].y)}`
     for (let i=1;i<cum.length;i++) d += ` L ${xScale(cum[i].x)} ${yScale(cum[i].y)}`
     return d
-  }, [cum])
+  }, [cum, xScale, yScale])
   const ticks = [0, 0.25, 0.5, 0.75, 1]
   return (
     <svg width={width} height={height} className="w-full h-auto">
@@ -231,4 +231,3 @@ export default function DescriptivePlots({ data }: { data: number[] }) {
     </div>
   )
 }
-

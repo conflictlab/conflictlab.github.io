@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown } from 'lucide-react'
@@ -81,12 +82,20 @@ export default function Navigation() {
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img
-                src={`${base}/logo.png`}
-                alt="PaCE"
-                className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
-                style={{ filter: 'brightness(1.1) contrast(1.1)' }}
-              />
+              {(() => {
+                const size = isHomePage ? 56 : 32
+                return (
+                  <Image
+                    src={`/logo.png`}
+                    alt="PaCE"
+                    width={size}
+                    height={size}
+                    className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
+                    style={{ filter: 'brightness(1.1) contrast(1.1)' }}
+                    priority={isHomePage}
+                  />
+                )
+              })()}
               <span className={`font-light text-white ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
             </Link>
           </div>

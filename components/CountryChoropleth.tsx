@@ -274,7 +274,12 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
-      <div className={`rounded overflow-hidden relative`} style={{ height: mapHeight }}>
+      <div
+        className={`rounded overflow-hidden relative`}
+        style={{ height: mapHeight }}
+        role="region"
+        aria-label="World choropleth of predicted fatalities"
+      >
         {/* Search overlay */}
         <div className="absolute top-4 left-4 z-[1100]">
           <div className="relative">
