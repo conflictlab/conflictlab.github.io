@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { BookOpen, FileText, Database, Beaker, Presentation, ChevronRight } from 'lucide-react'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Research — PaCE',
@@ -29,6 +30,7 @@ export default function ResearchPage() {
           <p className="text-xl text-gray-600 font-light leading-relaxed max-w-3xl">
             We build transparent, data‑driven methods to forecast conflict risk. Explore our publications, methods, and datasets.
           </p>
+          <Breadcrumbs />
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/publications" className="btn-secondary inline-flex items-center gap-1"><FileText size={16}/> Publications</Link>
             <Link href="/methodology" className="btn-secondary inline-flex items-center gap-1"><Beaker size={16}/> Methodology</Link>
@@ -143,4 +145,3 @@ export default function ResearchPage() {
     </>
   )
 }
-

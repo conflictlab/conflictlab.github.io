@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import fs from 'fs'
 import path from 'path'
 import { readSnapshot, getAvailablePeriods } from '@/lib/forecasts'
@@ -57,7 +58,7 @@ export default async function DataPage() {
     { path: `/data/grid/${gridPeriod}-m4.json`, label: `${gridPeriod}-m4.json (month 4 points)` },
     { path: `/data/grid/${gridPeriod}-m5.json`, label: `${gridPeriod}-m5.json (month 5 points)` },
     { path: `/data/grid/${gridPeriod}-m6.json`, label: `${gridPeriod}-m6.json (month 6 points)` },
-    { path: `/data/grid/centroids.csv`, label: `centroids.csv (grid cell centers)` },
+    { path: `/data/grid/centroids.csv`, label: `centroids.csv (Sub‑national Area centers)` },
   ]
 
   // Inline previews (first ~5 rows) for each dataset
@@ -136,6 +137,7 @@ export default async function DataPage() {
           <p className="text-lg text-gray-600 font-light mt-4">
             Latest update: {formatDMY(snapshot.generatedAt)}
           </p>
+          <Breadcrumbs />
         </div>
       </section>
 

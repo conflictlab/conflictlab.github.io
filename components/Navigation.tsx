@@ -114,7 +114,7 @@ export default function Navigation() {
                   <>
                     <Link
                       href={item.href}
-                      className={`flex items-center gap-1 transition-colors font-light ${
+                      className={`flex items-center gap-1 transition-colors font-light focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red ${
                         isActive(item.href)
                           ? 'text-clairient-light border-b-2 border-clairient-light pb-1'
                           : 'text-gray-300 hover:text-pace-red-light'
@@ -130,7 +130,7 @@ export default function Navigation() {
                             <Link
                               key={section.href}
                               href={section.href}
-                              className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors"
+                              className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
                             >
                               {section.label}
                             </Link>
@@ -142,7 +142,7 @@ export default function Navigation() {
                 ) : (
                   <Link
                     href={item.href}
-                    className={`transition-colors font-light ${
+                    className={`transition-colors font-light focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red ${
                       isActive(item.href)
                         ? 'text-clairient-light border-b-2 border-clairient-light pb-1'
                         : 'text-gray-300 hover:text-pace-red-light'

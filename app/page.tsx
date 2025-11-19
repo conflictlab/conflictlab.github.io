@@ -44,9 +44,15 @@ export default async function Home() {
       </section>
 
       {/* About Section */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-spacing-md bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">About PaCE</h2>
+          <p className="max-w-3xl mx-auto text-center text-gray-700 font-light mb-10">
+            PaCE (Patterns of Conflict Escalation) is a research lab at Trinity College Dublin using
+            machine learning to forecast conflict fatalities at the country and sub‑national level.
+            We combine transparent methods, rich data, and clear communication to support early warning
+            and decision‑making.
+          </p>
 
           {/* Main Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">

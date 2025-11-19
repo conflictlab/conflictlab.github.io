@@ -4,6 +4,7 @@ import PrioGridAnimation from '@/components/PrioGridAnimation'
 import dynamic from 'next/dynamic'
 import { readSnapshot } from '@/lib/forecasts'
 import { Activity, Users, TrendingUp, Vote, CloudSun, Map, Move, Shield, ShoppingBag } from 'lucide-react'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 const DTWTrajShowcase = dynamic(() => import('@/components/DTWTrajShowcase'), { ssr: false })
@@ -22,6 +23,7 @@ export default async function Methodology() {
             <span className="word-emphasis">Machine learning models</span> that forecast geopolitical conflict and civil unrest.
             Built for precision, transparency, and integration with existing systems.
           </p>
+          <Breadcrumbs />
         </div>
       </section>
 

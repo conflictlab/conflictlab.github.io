@@ -57,7 +57,7 @@
     },
     "/api/v1/grid/{period}/points": {
       "get": {
-        "summary": "Get grid cell centroids with monthly values",
+        "summary": "Get Sub‑national Area centroids with monthly values",
         "parameters": [
           {
             "in": "path",

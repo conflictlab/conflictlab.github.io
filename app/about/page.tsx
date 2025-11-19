@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import { useState } from 'react'
 import { Send, CheckCircle } from 'lucide-react'
 import companyData from '@/content/company.json'
@@ -122,6 +123,7 @@ export default function About() {
               Contact
             </a>
           </nav>
+          <Breadcrumbs />
         </div>
       </section>
 

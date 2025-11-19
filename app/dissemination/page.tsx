@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export default function DisseminationPage() {
   return (
@@ -12,6 +14,7 @@ export default function DisseminationPage() {
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             Workshops, presentations, and conferences where the <span className="word-emphasis">PaCE Research Lab</span> shares its findings.
           </p>
+          <Breadcrumbs />
         </div>
       </section>
 
@@ -48,21 +51,9 @@ export default function DisseminationPage() {
 
                   {/* Top Banner - 3 photos side by side */}
                   <div className="grid grid-cols-3 gap-2 mb-6">
-                <img
-                  src="/workshop1.jpeg"
-                  alt="Conflict Forecasting Workshop"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-                <img
-                  src="/workshop2.jpg"
-                  alt="Conflict Forecasting Workshop"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-                <img
-                  src="/workshop3.jpeg"
-                  alt="Conflict Forecasting Workshop"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
+                    <Image src="/workshop1.jpeg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
+                    <Image src="/workshop2.jpg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
+                    <Image src="/workshop3.jpeg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
                   </div>
 
                   <div className="mb-6">

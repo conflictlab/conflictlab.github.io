@@ -1,9 +1,16 @@
 import dynamic from 'next/dynamic'
+import type { Metadata } from 'next'
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 import { getForecastsPageData } from '@/lib/forecasts'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { AlertTriangle } from 'lucide-react'
 // Inline download cards removed; use /data page via map button
+
+export const metadata: Metadata = {
+  title: 'Forecast Dashboard — Sub‑national Areas',
+  description: 'Six‑month, sub‑national forecasts of conflict fatalities with month‑over‑month changes and hotspots.',
+  alternates: { canonical: '/forecasts-grid' },
+}
 
 function endPeriodFrom(start: string): string | null {
   const parts = start.split('-')

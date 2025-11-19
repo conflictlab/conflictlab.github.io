@@ -13,6 +13,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Forecast Dashboard — PaCE',
   description: 'Six-month, country-level forecasts of conflict fatalities with month-over-month changes and hotspots.',
+  alternates: { canonical: '/forecasts' },
 }
 
 const CountryChoropleth = dynamic(() => import('@/components/CountryChoropleth'), { ssr: false })
