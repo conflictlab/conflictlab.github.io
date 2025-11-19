@@ -5,6 +5,7 @@ import Collapsible from '@/components/Collapsible'
 import ThresholdHighlights from '@/components/ThresholdHighlights'
 import dynamic from 'next/dynamic'
 import FallbackCountryList from '@/components/FallbackCountryList'
+import Link from 'next/link'
 const ForecastFanChart = dynamic(() => import('@/components/ForecastFanChart'), { ssr: false })
 import { AlertTriangle, Info } from 'lucide-react'
 import type { Metadata } from 'next'
