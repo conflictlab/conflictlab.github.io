@@ -21,7 +21,7 @@ export default function DTWShowcase({
     top: { x: 60, y: 24, w: width - 100, h: 110 },
     mid: { x: 60, y: 154, w: width - 100, h: 240 },
     bot: { x: 60, y: 410, w: width - 100, h: 110 },
-  }), [width, height])
+  }), [width])
 
   // Generate two time series: A (reference) and B (warped/noisy variant)
   const { a, b } = useMemo(() => {

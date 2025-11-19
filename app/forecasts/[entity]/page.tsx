@@ -4,7 +4,8 @@ import {
   readSnapshot,
   getEntitySeries,
   generateEntityNarrative,
-  getEntityComparativeStats
+  getEntityComparativeStats,
+  getAvailablePeriods,
 } from '@/lib/forecasts'
 import dynamic from 'next/dynamic'
 const ForecastFanChart = dynamic(() => import('@/components/ForecastFanChart'), { ssr: false })
@@ -12,6 +13,7 @@ const TimeSeriesChart = dynamic(() => import('@/components/TimeSeriesChart'), { 
 import LazyVisible from '@/components/LazyVisible'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: 'Entity Forecast — PaCE',
@@ -43,7 +45,25 @@ async function getEntityData(entityId: string) {
   const narrative = generateEntityNarrative(entity, historicalSeries, snapshot)
   const comparativeStats = getEntityComparativeStats(entity, snapshot)
 
-  return { entity, months, historicalSeries, narrative, snapshot, comparativeStats }
+  // Compute MoM change exactly as the dashboard table does: current 1m index minus previous snapshot's 1m index
+  let computedDeltaMoM = entity.deltaMoM
+  try {
+    const periods = getAvailablePeriods()
+    const currentIdx = periods.indexOf(snapshot.period)
+    const prevPeriod = currentIdx > 0 ? periods[currentIdx - 1] : undefined
+    if (prevPeriod) {
+      const prevSnap = readSnapshot(prevPeriod)
+      const prevMatch = prevSnap.entities.find(
+        (e) => e.id === entity.id || (entity.iso3 && e.iso3 === entity.iso3) || (e.name || '').toUpperCase() === (entity.name || '').toUpperCase()
+      )
+      const prevVal = prevMatch ? (prevMatch.horizons?.['1m']?.index ?? prevMatch.index) : undefined
+      if (prevVal !== undefined) {
+        computedDeltaMoM = Number((entity.horizons['1m'].index - prevVal).toFixed(1))
+      }
+    }
+  } catch {}
+
+  return { entity, months, historicalSeries, narrative, snapshot, comparativeStats, computedDeltaMoM }
 }
 
 export default async function EntityForecastPage({ params }: { params: { entity: string } }) {
@@ -53,7 +73,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
     notFound()
   }
 
-  const { entity, months, historicalSeries, narrative, comparativeStats } = data
+  const { entity, months, historicalSeries, narrative, comparativeStats, computedDeltaMoM } = data
 
   const getBandColor = (band: string) => {
     if (band === 'high') return 'bg-red-100 text-red-800 border-red-300'
@@ -86,7 +106,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       {/* Summary Stats Cards */}
       <section className="py-8 -mt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {/* Risk Index */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
               <div className="text-sm text-gray-500 mb-1">Risk Index</div>
@@ -101,11 +121,11 @@ export default async function EntityForecastPage({ params }: { params: { entity:
               </div>
             </div>
 
-            {/* Month-over-Month */}
+            {/* Month-over-Month (matches dashboard table calculation) */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
               <div className="text-sm text-gray-500 mb-1">MoM Change</div>
-              <div className={`text-2xl font-semibold ${entity.deltaMoM > 0 ? 'text-red-600' : entity.deltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                {entity.deltaMoM > 0 ? '+' : ''}{Math.round(entity.deltaMoM)} {getTrendIcon(entity.deltaMoM)}
+              <div className={`text-2xl font-semibold ${computedDeltaMoM > 0 ? 'text-red-600' : computedDeltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
+                {computedDeltaMoM > 0 ? '+' : ''}{computedDeltaMoM.toFixed(1)} {getTrendIcon(computedDeltaMoM)}
               </div>
             </div>
 
@@ -126,52 +146,10 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         </div>
       </section>
 
-      {/* Narrative Section */}
+      {/* Charts Section (moved before Situation Overview) */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Situation Overview</h2>
-            <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed whitespace-pre-line">{narrative}</div>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparative Context */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Comparative Context</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <div className="text-sm text-gray-500 mb-2">Percentile Ranking</div>
-                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.percentile}th</div>
-                <p className="text-sm text-gray-600">
-                  Higher risk than {comparativeStats.percentile}% of monitored {entity.entityType}s
-                </p>
-              </div>
-              <div>
-                <div className="text-sm text-gray-500 mb-2">{entity.entityType.charAt(0).toUpperCase() + entity.entityType.slice(1)} Average</div>
-                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.typeAvg}</div>
-                <p className="text-sm text-gray-600">
-                  {comparativeStats.aboveTypeAvg ? 'Above' : 'Below'} the average for this type
-                </p>
-              </div>
-              <div>
-                <div className="text-sm text-gray-500 mb-2">Global Average</div>
-                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.globalAvg}</div>
-                <p className="text-sm text-gray-600">
-                  Average across all monitored entities
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Charts Section */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Historical Time Series */}
             {historicalSeries.length > 0 && (
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
@@ -202,12 +180,56 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         </div>
       </section>
 
+      {/* Narrative Section */}
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Situation Overview</h2>
+            <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed">
+              {renderNarrative(narrative)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparative Context */}
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Comparative Context</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <div className="text-sm text-gray-500 mb-2">Percentile Ranking</div>
+                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.percentile}th</div>
+                <p className="text-sm text-gray-600">
+                  Higher risk than {comparativeStats.percentile}% of monitored {entity.entityType}s
+                </p>
+              </div>
+              <div>
+                <div className="text-sm text-gray-500 mb-2">{entity.entityType.charAt(0).toUpperCase() + entity.entityType.slice(1)} Average</div>
+                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.typeAvg}</div>
+                <p className="text-sm text-gray-600">
+                  {comparativeStats.aboveTypeAvg ? 'Above' : 'Below'} the average for this type
+                </p>
+              </div>
+              <div>
+                <div className="text-sm text-gray-500 mb-2">Global Average</div>
+                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.globalAvg}</div>
+                <p className="text-sm text-gray-600">
+                  Average across all monitored entities
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Horizon Comparison */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-2xl font-light text-gray-900 mb-6">Forecast Horizons</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {(['1m', '3m', '6m'] as const).map((horizon) => (
                 <div key={horizon} className="border border-gray-200 rounded-lg p-5">
                   <div className="text-sm text-gray-500 mb-2">{horizon === '1m' ? '1 Month' : horizon === '3m' ? '3 Months' : '6 Months'}</div>
@@ -238,7 +260,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       {/* Drivers and Notes */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
               <h2 className="text-2xl font-light text-gray-900 mb-4">Risk Drivers</h2>
               <div className="space-y-4">
@@ -278,4 +300,16 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       </section>
     </div>
   )
+}
+
+function renderNarrative(text: string) {
+  // Simple parser to convert **bold** segments to <strong> while keeping other text as-is
+  const parts = text.split(/\*\*/g)
+  const nodes: React.ReactNode[] = []
+  for (let i = 0; i < parts.length; i++) {
+    const seg = parts[i]
+    if (i % 2 === 1) nodes.push(<strong key={`b-${i}`}>{seg}</strong>)
+    else nodes.push(<span key={`t-${i}`}>{seg}</span>)
+  }
+  return nodes
 }

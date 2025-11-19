@@ -136,7 +136,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
     }
     load()
     return () => { cancelled = true }
-  }, [period])
+  }, [period, base, month])
 
   // If we are using the API or static-month points source, refetch when month changes for a smaller payload
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
     }
     refetchForMonth()
     return () => { cancelled = true }
-  }, [month, period, pointsFromApi, pointsFromStatic])
+  }, [month, period, base, pointsFromApi, pointsFromStatic])
 
   // Compute dynamic color scale for current month
   const { thresholds, vmin, vmax } = useMemo(() => {
@@ -282,7 +282,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
-      <div className="h-[560px] md:h-[700px] rounded overflow-hidden relative">
+      <div className="h-[560px] md:h-[560px] rounded overflow-hidden relative">
         {/* View toggle overlay (center-bottom, larger) */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
           <div className="inline-flex rounded-xl border-2 border-pace-charcoal overflow-hidden bg-white/95 backdrop-blur shadow-lg">
@@ -296,7 +296,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
               href="/forecasts-grid"
               className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-pace-charcoal text-white' : 'text-pace-charcoal hover:bg-gray-50'}`}
             >
-              Grid view
+              <span title="0.5° map squares (~55 km)">Sub‑national Areas</span>
             </Link>
           </div>
         </div>
@@ -320,7 +320,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
         {!error && !loading && (
           <MapContainer
             center={centerAdjusted as any}
-            zoom={2.7}
+            zoom={3.0}
             zoomSnap={0.5}
             zoomDelta={0.5}
             scrollWheelZoom={false}
@@ -367,6 +367,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
               noWrap={true}
+              detectRetina={true}
             />
             {data && (
               <GeoJSON
@@ -440,7 +441,10 @@ export default function PrioGridMap({ period, activeView }: Props) {
       </div>
       <Legend thresholds={thresholds} vmin={vmin} vmax={vmax} data={data} points={points} month={month} />
       <div className="px-4 mt-4 text-center">
-        <Link href="/downloads" className="btn-primary inline-flex items-center justify-center">
+        <Link
+          href="/downloads"
+          className="bg-pace-charcoal text-white px-8 py-3 hover:bg-pace-charcoal-light transition-all duration-200 font-normal rounded-lg inline-flex items-center justify-center shadow-sm hover:shadow-md"
+        >
           Data downloads
         </Link>
       </div>

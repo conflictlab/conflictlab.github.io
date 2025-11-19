@@ -51,9 +51,10 @@ interface Props {
   hideControls?: boolean
   hideLegend?: boolean
   showHotspots?: boolean
+  hideSearch?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7, hideControls = false, hideLegend = false, showHotspots = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
@@ -274,49 +275,56 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
-      <div className={`rounded overflow-hidden relative`} style={{ height: mapHeight }}>
+      <div
+        className={`rounded overflow-hidden relative`}
+        style={{ height: mapHeight }}
+        role="region"
+        aria-label="World choropleth of predicted fatalities"
+      >
         {/* Search overlay */}
-        <div className="absolute top-4 left-4 z-[1100]">
-          <div className="relative">
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => { setQuery(e.target.value); setShowSearch(true); setFocusedIndex(-1) }}
-              onFocus={() => setShowSearch(true)}
-              onKeyDown={(e) => {
-                if (!showSearch) return
-                if (e.key === 'ArrowDown') { e.preventDefault(); setFocusedIndex(i => Math.min(i + 1, searchMatches.length - 1)) }
-                else if (e.key === 'ArrowUp') { e.preventDefault(); setFocusedIndex(i => Math.max(i - 1, 0)) }
-                else if (e.key === 'Enter') {
-                  e.preventDefault()
-                  const choice = focusedIndex >= 0 ? searchMatches[focusedIndex] : searchMatches[0]
-                  if (choice) { goToEntity(choice.name); setShowSearch(false) }
-                } else if (e.key === 'Escape') {
-                  setShowSearch(false)
-                }
-              }}
-              placeholder="Search country…"
-              className="w-64 px-3 py-2 rounded-md border border-gray-300 bg-white/95 backdrop-blur text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-pace-red"
-              aria-label="Search country"
-            />
-            {showSearch && query && searchMatches.length > 0 && (
-              <ul className="absolute mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto" role="listbox">
-                {searchMatches.map((m, idx) => (
-                  <li
-                    key={m.name}
-                    className={`px-3 py-2 text-sm cursor-pointer ${idx === focusedIndex ? 'bg-red-50 text-pace-red' : 'hover:bg-gray-50'}`}
-                    onMouseDown={(e) => { e.preventDefault(); goToEntity(m.name); setShowSearch(false) }}
-                    role="option"
-                    aria-selected={idx === focusedIndex}
-                  >
-                    {m.name}
-                  </li>
-                ))}
-              </ul>
-            )}
+        {!hideSearch && (
+          <div className="absolute top-4 left-4 z-[1100]">
+            <div className="relative">
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => { setQuery(e.target.value); setShowSearch(true); setFocusedIndex(-1) }}
+                onFocus={() => setShowSearch(true)}
+                onKeyDown={(e) => {
+                  if (!showSearch) return
+                  if (e.key === 'ArrowDown') { e.preventDefault(); setFocusedIndex(i => Math.min(i + 1, searchMatches.length - 1)) }
+                  else if (e.key === 'ArrowUp') { e.preventDefault(); setFocusedIndex(i => Math.max(i - 1, 0)) }
+                  else if (e.key === 'Enter') {
+                    e.preventDefault()
+                    const choice = focusedIndex >= 0 ? searchMatches[focusedIndex] : searchMatches[0]
+                    if (choice) { goToEntity(choice.name); setShowSearch(false) }
+                  } else if (e.key === 'Escape') {
+                    setShowSearch(false)
+                  }
+                }}
+                placeholder="Search country…"
+                className="w-64 px-3 py-2 rounded-md border border-gray-300 bg-white/95 backdrop-blur text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-pace-red"
+                aria-label="Search country"
+              />
+              {showSearch && query && searchMatches.length > 0 && (
+                <ul className="absolute mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto" role="listbox">
+                  {searchMatches.map((m, idx) => (
+                    <li
+                      key={m.name}
+                      className={`px-3 py-2 text-sm cursor-pointer ${idx === focusedIndex ? 'bg-red-50 text-pace-red' : 'hover:bg-gray-50'}`}
+                      onMouseDown={(e) => { e.preventDefault(); goToEntity(m.name); setShowSearch(false) }}
+                      role="option"
+                      aria-selected={idx === focusedIndex}
+                    >
+                      {m.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-        </div>
+        )}
         {/* View toggle overlay (center-bottom, larger) */}
         {!hideControls && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
@@ -331,7 +339,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                 href="/forecasts-grid"
                 className={`px-6 py-2 text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-charcoal ${pathname?.startsWith('/forecasts-grid') ? 'bg-pace-charcoal text-white' : 'text-pace-charcoal hover:bg-gray-50'}`}
               >
-                Grid view
+                <span title="0.5° map squares (~55 km)">Sub‑national Areas</span>
               </Link>
             </div>
           </div>
@@ -400,6 +408,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
               noWrap={true}
+              detectRetina={true}
             />
             {(filtered || world) && (
               <GeoJSON

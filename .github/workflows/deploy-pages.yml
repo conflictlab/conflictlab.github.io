@@ -17,6 +17,22 @@ on:
       - 'postcss.config.js'
       - 'tsconfig.json'
       - '.github/workflows/deploy-pages.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'content/**'
+      - 'public/**'
+      - 'lib/**'
+      - 'scripts/**'
+      - 'next.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+      - 'tsconfig.json'
+      - '.github/workflows/deploy-pages.yml'
   workflow_run:
     workflows: ["Sync Forecast CSVs"]
     types: [completed]
@@ -102,6 +118,7 @@ jobs:
           path: ./out
 
   deploy:
+    if: github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     environment:

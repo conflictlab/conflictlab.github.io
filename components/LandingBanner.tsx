@@ -30,7 +30,7 @@ export default function LandingBanner() {
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1">259K</div>
-              <div className="text-sm md:text-base font-light opacity-90">Sub-national Areas</div>
+              <div className="text-sm md:text-base font-light opacity-90" title="0.5° map squares (~55 km)">Sub‑national Areas</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1">6</div>

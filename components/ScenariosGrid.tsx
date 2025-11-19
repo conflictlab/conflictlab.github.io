@@ -44,7 +44,7 @@ export default function ScenariosGrid({ items }: Props) {
       return out.filter(x => x.name.toLowerCase().includes(q) || (x.iso3 || '').toLowerCase().includes(q))
     }
     return out
-  }, [data, items, query])
+  }, [data, minmax, items, query])
 
   return (
     <div className="border border-gray-200 rounded-lg p-4 bg-white">

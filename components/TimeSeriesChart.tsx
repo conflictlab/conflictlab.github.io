@@ -36,7 +36,7 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
     }, 100)
     
     return () => clearInterval(interval)
-  }, [data])
+  }, [allData])
   
   // Convert data points to SVG coordinates
   const getY = (value: number) => {

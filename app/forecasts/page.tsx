@@ -76,7 +76,7 @@ export default async function ForecastsPage() {
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed mb-6">
             Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.
-            Predictions are updated monthly for countries worldwide.
+            Predictions are updated monthly for countries and <span title="0.5° map squares (~55 km)">Sub‑national Areas</span> worldwide.
           </p>
           <script
             type="application/ld+json"
