@@ -320,7 +320,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
         {!error && !loading && (
           <MapContainer
             center={centerAdjusted as any}
-            zoom={2.7}
+            zoom={3.0}
             zoomSnap={0.5}
             zoomDelta={0.5}
             scrollWheelZoom={false}

@@ -53,7 +53,7 @@ interface Props {
   showHotspots?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7, hideControls = false, hideLegend = false, showHotspots = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
