@@ -356,10 +356,20 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             preferCanvas={true}
             attributionControl={false}
             style={{ height: '100%', width: '100%' }}
-            whenCreated={(map) => setMapRef(map)}
             aria-label="World choropleth of predicted fatalities"
             role="region"
           >
+            {/* Map reference setter */}
+            {(() => {
+              function MapRefSetter() {
+                const map = useMap()
+                useEffect(() => {
+                  setMapRef(map)
+                }, [map])
+                return null
+              }
+              return <MapRefSetter />
+            })()}
             {/* Require Cmd/Ctrl + scroll to zoom */}
             {(() => {
               function CtrlScrollZoom() {
