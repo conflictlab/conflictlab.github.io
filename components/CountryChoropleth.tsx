@@ -444,77 +444,30 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             </div>
           </div>
         )}
-        {/* CSS for pulsing animation */}
-        {showHotspots && (
-          <style jsx global>{`
-            @keyframes pulse {
-              0% {
-                transform: scale(0.5);
-                opacity: 0.8;
-              }
-              50% {
-                transform: scale(2);
-                opacity: 0.3;
-              }
-              100% {
-                transform: scale(3);
-                opacity: 0;
-              }
-            }
-
-            .hotspot-marker {
-              background: transparent !important;
-              border: none !important;
-            }
-
-            .hotspot-container {
-              position: relative;
-              width: 40px;
-              height: 40px;
-            }
-
-            .hotspot-pulse {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              width: 20px;
-              height: 20px;
-              margin: -10px 0 0 -10px;
-              border-radius: 50%;
-              background: rgba(220, 38, 38, 0.4);
-              border: 2px solid #dc2626;
-              animation: pulse 2.5s ease-out infinite;
-            }
-
-            .hotspot-core {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              width: 10px;
-              height: 10px;
-              margin: -5px 0 0 -5px;
-              border-radius: 50%;
-              background: #dc2626;
-              border: 2px solid white;
-              box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-            }
-          `}</style>
-        )}
-        {/* Dim Leaflet zoom controls when requested */}
+        {/* Map-specific styles (hotspots + optional dimmed controls) */}
         <style jsx global>{`
-          .map-dim-controls .leaflet-control-zoom {
-            box-shadow: none;
-            border: none;
-            opacity: 0.8;
+          @keyframes pulse {
+            0% { transform: scale(0.5); opacity: 0.8; }
+            50% { transform: scale(2); opacity: 0.3; }
+            100% { transform: scale(3); opacity: 0; }
           }
-          .map-dim-controls .leaflet-control-zoom a {
-            background: rgba(255, 255, 255, 0.6);
-            color: #111827;
-            border: 1px solid rgba(0,0,0,0.08);
+          .hotspot-marker { background: transparent !important; border: none !important; }
+          .hotspot-container { position: relative; width: 40px; height: 40px; }
+          .hotspot-pulse {
+            position: absolute; top: 50%; left: 50%; width: 20px; height: 20px;
+            margin: -10px 0 0 -10px; border-radius: 50%; background: rgba(220, 38, 38, 0.4);
+            border: 2px solid #dc2626; animation: pulse 2.5s ease-out infinite;
           }
-          .map-dim-controls .leaflet-control-zoom a:hover {
-            background: rgba(255, 255, 255, 0.75);
+          .hotspot-core {
+            position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
+            margin: -5px 0 0 -5px; border-radius: 50%; background: #dc2626; border: 2px solid white;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
           }
+
+          /* Dim Leaflet zoom controls when requested */
+          .map-dim-controls .leaflet-control-zoom { box-shadow: none; border: none; opacity: 0.8; }
+          .map-dim-controls .leaflet-control-zoom a { background: rgba(255, 255, 255, 0.6); color: #111827; border: 1px solid rgba(0,0,0,0.08); }
+          .map-dim-controls .leaflet-control-zoom a:hover { background: rgba(255, 255, 255, 0.75); }
         `}</style>
       </div>
       {/* Controls moved below map */}
