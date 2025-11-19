@@ -40,9 +40,10 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      {/* Featured study */}
+      {/* Featured studies */}
       <section className="py-8 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          {/* Featured 1 */}
           <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8">
             <div className="flex items-start justify-between gap-6 flex-col md:flex-row">
               <div className="flex-1">
@@ -66,6 +67,34 @@ export default function ResearchPage() {
                     <li className="flex items-start gap-2"><ChevronRight size={16} className="text-pace-red mt-0.5"/> Pattern‑based forecasting</li>
                     <li className="flex items-start gap-2"><ChevronRight size={16} className="text-pace-red mt-0.5"/> Captures conflict variability</li>
                     <li className="flex items-start gap-2"><ChevronRight size={16} className="text-pace-red mt-0.5"/> Purely autoregressive approach</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Featured 2 */}
+          <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8">
+            <div className="flex items-start justify-between gap-6 flex-col md:flex-row">
+              <div className="flex-1">
+                <div className="text-xs uppercase tracking-wider text-pace-red mb-2">Featured</div>
+                <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-2">The 2023/24 VIEWS Prediction Challenge: Predicting Conflict Fatalities with Uncertainty</h2>
+                <div className="text-sm text-gray-500 mb-3">Hegre H, Schincariol T, Frank H, Chadefaux T et al. — Journal of Peace Research, 2025</div>
+                <p className="text-gray-700 leading-relaxed mb-4 max-w-3xl">
+                  A field‑wide benchmark on forecasting conflict fatalities as distributions, emphasizing uncertainty communication and evaluation against baselines.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <FeaturedBadge href="https://journals.sagepub.com/doi/full/10.1177/00223433241300862" label="Paper" />
+                  <FeaturedBadge href="/downloads" label="Dataset" />
+                </div>
+              </div>
+              <div className="w-full md:w-80">
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                  <div className="text-xs text-gray-600 mb-2">Highlights</div>
+                  <ul className="text-sm text-gray-700 space-y-2">
+                    <li className="flex items-start gap-2"><ChevronRight size={16} className="text-pace-red mt-0.5"/> Distributional predictions (p10–p90)</li>
+                    <li className="flex items-start gap-2"><ChevronRight size={16} className="text-pace-red mt-0.5"/> Transparent metrics & baselines</li>
+                    <li className="flex items-start gap-2"><ChevronRight size={16} className="text-pace-red mt-0.5"/> Open reproducibility</li>
                   </ul>
                 </div>
               </div>
