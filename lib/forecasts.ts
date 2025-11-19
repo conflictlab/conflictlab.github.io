@@ -204,16 +204,7 @@ export function generateEntityNarrative(
     }
   }
 
-  // 4. Year-over-Year if available
-  if (Math.abs(entity.deltaYoY) > 0.5) {
-    if (entity.deltaYoY > 0) {
-      paragraphs.push(`Compared to one year ago, risk is **${entity.deltaYoY.toFixed(1)} points higher**.`)
-    } else {
-      paragraphs.push(`Compared to one year ago, risk is **${Math.abs(entity.deltaYoY).toFixed(1)} points lower**.`)
-    }
-  }
-
-  // 5. Drivers
+  // 4. Drivers
   if (entity.drivers && entity.drivers.length > 0) {
     const sortedDrivers = [...entity.drivers].sort((a, b) => b.impact - a.impact)
     const topDriver = sortedDrivers[0]
@@ -228,7 +219,7 @@ export function generateEntityNarrative(
     }
   }
 
-  // 6. Outlook
+  // 5. Outlook
   const outlook1m = entity.horizons['1m'].p50
   const outlook6m = entity.horizons['6m'].p50
   const outlookChange = outlook6m - outlook1m
@@ -253,7 +244,7 @@ export function generateEntityNarrative(
     paragraphs.push(`Risk levels are forecast to **remain relatively stable** over the next six months.`)
   }
 
-  // 7. Confidence note
+  // 6. Confidence note
   if (entity.confidence < 0.5) {
     paragraphs.push(`⚠️ Note: Forecast confidence is relatively low (${(entity.confidence * 100).toFixed(0)}%), suggesting higher uncertainty.`)
   } else if (entity.confidence > 0.8) {

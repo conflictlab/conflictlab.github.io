@@ -22,9 +22,16 @@ type SortKey = 'name' | 'pred1m' | 'pred3m' | 'pred6m' | 'deltaMoM'
 export default function RiskIndexTable({ rows }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>('pred1m')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
+  const [query, setQuery] = useState('')
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return rows
+    return rows.filter(r => r.name.toLowerCase().includes(q))
+  }, [rows, query])
 
   const sorted = useMemo(() => {
-    const out = [...rows]
+    const out = [...filtered]
     out.sort((a, b) => {
       const av = a[sortKey]
       const bv = b[sortKey]
@@ -38,7 +45,7 @@ export default function RiskIndexTable({ rows }: Props) {
       return (anNum || 0) < (bnNum || 0) ? -1 : 1
     })
     return sortDir === 'asc' ? out : out.reverse()
-  }, [rows, sortKey, sortDir])
+  }, [filtered, sortKey, sortDir])
 
   const onSort = (key: SortKey) => {
     if (key === sortKey) setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
@@ -49,12 +56,22 @@ export default function RiskIndexTable({ rows }: Props) {
   }
 
   const headerClass = (key: SortKey) =>
-    `cursor-pointer select-none ${sortKey === key ? 'text-clairient-light' : 'text-gray-400'}`
+    `cursor-pointer select-none ${sortKey === key ? 'text-gray-900' : 'text-gray-600'}`
 
   return (
-    <div className="overflow-x-auto border border-pace-charcoal-light rounded-lg">
-      <table className="min-w-full divide-y divide-pace-charcoal-light">
-        <thead className="bg-pace-charcoal">
+    <div className="overflow-x-auto border border-gray-200 rounded-lg">
+      <div className="bg-white px-4 py-2 border-b border-gray-200 flex items-center justify-between">
+        <div className="text-sm text-gray-700">Search</div>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search country…"
+          className="w-64 px-3 py-2 rounded-md border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-pace-red"
+          aria-label="Search country"
+        />
+      </div>
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           <tr>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">
               <span className={headerClass('name')} onClick={() => onSort('name')}>Name</span>
@@ -71,20 +88,20 @@ export default function RiskIndexTable({ rows }: Props) {
             <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider">
               <span className={headerClass('pred6m')} onClick={() => onSort('pred6m')}>6m Pred.</span>
             </th>
-            <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider">1–6m Pred.</th>
+            <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-600">1–6m Pred.</th>
           </tr>
         </thead>
-        <tbody className="bg-gray-900 divide-y divide-pace-charcoal">
+        <tbody className="bg-white divide-y divide-gray-200">
           {sorted.map((r) => (
             <Link key={r.id} href={`/forecasts/${r.id}`} legacyBehavior>
-              <tr className="hover:bg-pace-charcoal cursor-pointer">
-                <td className="px-4 py-2 text-sm text-gray-100">{r.name}</td>
-                <td className="px-4 py-2 text-sm text-right font-medium">{r.pred1m}</td>
-                <td className={`px-4 py-2 text-sm text-right ${r.deltaMoM >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{r.deltaMoM >= 0 ? '+' : ''}{r.deltaMoM}</td>
-                <td className="px-4 py-2 text-sm text-right text-gray-300">{r.pred3m}</td>
-                <td className="px-4 py-2 text-sm text-right text-gray-300">{r.pred6m}</td>
+              <tr className="hover:bg-gray-50 cursor-pointer">
+                <td className="px-4 py-2 text-sm text-gray-900">{r.name}</td>
+                <td className="px-4 py-2 text-sm text-right font-medium text-gray-900">{r.pred1m}</td>
+                <td className={`px-4 py-2 text-sm text-right font-medium ${r.deltaMoM >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>{r.deltaMoM >= 0 ? '+' : ''}{r.deltaMoM}</td>
+                <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred3m}</td>
+                <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred6m}</td>
                 <td className="px-4 py-2 text-sm">
-                  {r.trend && r.trend.length > 1 ? <Sparkline values={r.trend} /> : <span className="text-gray-500">—</span>}
+                  {r.trend && r.trend.length > 1 ? <Sparkline values={r.trend} /> : <span className="text-gray-400">—</span>}
                 </td>
               </tr>
             </Link>

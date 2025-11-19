@@ -6,8 +6,10 @@ import {
   generateEntityNarrative,
   getEntityComparativeStats
 } from '@/lib/forecasts'
-import ForecastFanChart from '@/components/ForecastFanChart'
-import TimeSeriesChart from '@/components/TimeSeriesChart'
+import dynamic from 'next/dynamic'
+const ForecastFanChart = dynamic(() => import('@/components/ForecastFanChart'), { ssr: false })
+const TimeSeriesChart = dynamic(() => import('@/components/TimeSeriesChart'), { ssr: false })
+import LazyVisible from '@/components/LazyVisible'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
@@ -76,7 +78,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             {entity.name}
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Detailed conflict risk forecast and analysis
+            Predicted fatalities from state‑based armed conflict — forecast and analysis
           </p>
         </div>
       </section>
@@ -84,7 +86,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       {/* Summary Stats Cards */}
       <section className="py-8 -mt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {/* Risk Index */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
               <div className="text-sm text-gray-500 mb-1">Risk Index</div>
@@ -103,15 +105,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
               <div className="text-sm text-gray-500 mb-1">MoM Change</div>
               <div className={`text-2xl font-semibold ${entity.deltaMoM > 0 ? 'text-red-600' : entity.deltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                {entity.deltaMoM > 0 ? '+' : ''}{entity.deltaMoM.toFixed(1)} {getTrendIcon(entity.deltaMoM)}
-              </div>
-            </div>
-
-            {/* Year-over-Year */}
-            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-              <div className="text-sm text-gray-500 mb-1">YoY Change</div>
-              <div className={`text-2xl font-semibold ${entity.deltaYoY > 0 ? 'text-red-600' : entity.deltaYoY < 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                {entity.deltaYoY > 0 ? '+' : ''}{entity.deltaYoY.toFixed(1)}
+                {entity.deltaMoM > 0 ? '+' : ''}{Math.round(entity.deltaMoM)} {getTrendIcon(entity.deltaMoM)}
               </div>
             </div>
 
@@ -137,11 +131,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-2xl font-light text-gray-900 mb-4">Situation Overview</h2>
-            <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed">
-              {narrative.split('. ').map((sentence, i) => (
-                <p key={i} className="mb-2" dangerouslySetInnerHTML={{ __html: sentence.trim() + (sentence.trim() ? '.' : '') }} />
-              ))}
-            </div>
+            <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed whitespace-pre-line">{narrative}</div>
           </div>
         </div>
       </section>
@@ -186,13 +176,15 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             {historicalSeries.length > 0 && (
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h2 className="text-2xl font-light text-gray-900 mb-4">Historical Trend</h2>
-                <TimeSeriesChart
-                  data={{
-                    historical: historicalSeries.map(s => s.index),
-                    forecast: [entity.horizons['1m'].p50, entity.horizons['3m'].p50, entity.horizons['6m'].p50],
-                    country: entity.name
-                  }}
-                />
+                <LazyVisible minHeight="240px">
+                  <TimeSeriesChart
+                    data={{
+                      historical: historicalSeries.map(s => s.index),
+                      forecast: [entity.horizons['1m'].p50, entity.horizons['3m'].p50, entity.horizons['6m'].p50],
+                      country: entity.name
+                    }}
+                  />
+                </LazyVisible>
                 <div className="mt-4 text-sm text-gray-500">
                   Historical risk index showing {historicalSeries.length} months of data
                 </div>
@@ -202,10 +194,9 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             {/* Forecast Fan Chart */}
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h2 className="text-2xl font-light text-gray-900 mb-4">6-Month Forecast</h2>
-              <ForecastFanChart
-                title=""
-                months={months}
-              />
+              <LazyVisible minHeight="240px">
+                <ForecastFanChart title="" months={months} />
+              </LazyVisible>
             </div>
           </div>
         </div>
