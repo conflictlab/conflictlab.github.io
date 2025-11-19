@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, useRef } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-type CountryValue = { name: string; iso3?: string; value?: number; months?: number[] }
+type CountryValue = { id?: string; name: string; iso3?: string; value?: number; months?: number[] }
 
 // Component to add pulsing hotspot markers using HTML/CSS
 function HotspotMarkers({ hotspots }: { hotspots: Array<{ name: string; lat: number; lon: number; value: number }> }) {
@@ -55,10 +55,16 @@ interface Props {
 
 export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 2.7, hideControls = false, hideLegend = false, showHotspots = false }: Props) {
   const pathname = usePathname()
+  const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [month, setMonth] = useState<number>(1)
   const [showZoomHint, setShowZoomHint] = useState(true)
+  const [mapRef, setMapRef] = useState<L.Map | null>(null)
+  const [query, setQuery] = useState('')
+  const [focusedIndex, setFocusedIndex] = useState(-1)
+  const [showSearch, setShowSearch] = useState(false)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -97,6 +103,15 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     return m
   }, [items, month])
 
+  const nameToEntity = useMemo(() => {
+    const m = new Map<string, { id?: string; original: string }>()
+    for (const it of items) {
+      const key = normalizeName(it.name)
+      m.set(key, { id: it.id, original: it.name })
+    }
+    return m
+  }, [items])
+
   const values = useMemo(() => items
     .map(i => Number((i.months ? i.months[month - 1] : i.value) ?? 0))
     .filter(v => Number.isFinite(v)), [items, month])
@@ -124,6 +139,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
       color: val === 0 ? '#dddddd' : '#ffffff',
       fillColor: colorFor(val),
       fillOpacity: val === 0 ? 0.35 : 0.8,
+      cursor: 'pointer',
     }
   }
 
@@ -214,22 +230,106 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     return spots
   }, [world, valueByName, showHotspots])
 
+  const searchMatches = useMemo(() => {
+    const q = normalizeName(query)
+    if (!q) return [] as Array<{ name: string; id?: string }>
+    const all = items.map(i => ({ name: i.name, id: i.id }))
+    return all.filter(x => normalizeName(x.name).includes(q)).slice(0, 8)
+  }, [items, query])
+
+  function featureByName(n: string): any | null {
+    if (!world?.features?.length) return null
+    const key = normalizeName(n)
+    return world.features.find((f: any) => normalizeName(f?.properties?.name || f?.properties?.NAME || '') === key) || null
+  }
+
+  function fitToFeature(n: string) {
+    const feat = featureByName(n)
+    if (!feat || !mapRef) return
+    const geom = feat.geometry
+    const polys = geom.type === 'Polygon' ? [geom.coordinates] : (geom.type === 'MultiPolygon' ? geom.coordinates : [])
+    let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180
+    for (const poly of polys) {
+      for (const ring of poly) {
+        for (const [x, y] of ring) {
+          if (y < minLat) minLat = y
+          if (y > maxLat) maxLat = y
+          if (x < minLon) minLon = x
+          if (x > maxLon) maxLon = x
+        }
+      }
+    }
+    if (minLat <= maxLat && minLon <= maxLon) {
+      const pad = 0.5
+      const b: any = [[minLat - pad, minLon - pad], [maxLat + pad, maxLon + pad]]
+      mapRef.fitBounds(b, { padding: [20, 20] as any })
+    }
+  }
+
+  function goToEntity(n: string) {
+    const info = nameToEntity.get(normalizeName(n))
+    if (info?.id) router.push(`/forecasts/${info.id}`)
+    else fitToFeature(n)
+  }
+
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
       <div className={`rounded overflow-hidden relative`} style={{ height: mapHeight }}>
+        {/* Search overlay */}
+        <div className="absolute top-4 left-4 z-[1100]">
+          <div className="relative">
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => { setQuery(e.target.value); setShowSearch(true); setFocusedIndex(-1) }}
+              onFocus={() => setShowSearch(true)}
+              onKeyDown={(e) => {
+                if (!showSearch) return
+                if (e.key === 'ArrowDown') { e.preventDefault(); setFocusedIndex(i => Math.min(i + 1, searchMatches.length - 1)) }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); setFocusedIndex(i => Math.max(i - 1, 0)) }
+                else if (e.key === 'Enter') {
+                  e.preventDefault()
+                  const choice = focusedIndex >= 0 ? searchMatches[focusedIndex] : searchMatches[0]
+                  if (choice) { goToEntity(choice.name); setShowSearch(false) }
+                } else if (e.key === 'Escape') {
+                  setShowSearch(false)
+                }
+              }}
+              placeholder="Search country…"
+              className="w-64 px-3 py-2 rounded-md border border-gray-300 bg-white/95 backdrop-blur text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-pace-red"
+              aria-label="Search country"
+            />
+            {showSearch && query && searchMatches.length > 0 && (
+              <ul className="absolute mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto" role="listbox">
+                {searchMatches.map((m, idx) => (
+                  <li
+                    key={m.name}
+                    className={`px-3 py-2 text-sm cursor-pointer ${idx === focusedIndex ? 'bg-red-50 text-pace-red' : 'hover:bg-gray-50'}`}
+                    onMouseDown={(e) => { e.preventDefault(); goToEntity(m.name); setShowSearch(false) }}
+                    role="option"
+                    aria-selected={idx === focusedIndex}
+                  >
+                    {m.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
         {/* View toggle overlay (center-bottom, larger) */}
         {!hideControls && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
-            <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
+            <div className="inline-flex rounded-xl border-2 border-pace-charcoal overflow-hidden bg-white/95 backdrop-blur shadow-lg">
               <Link
                 href="/forecasts"
-                className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
+                className={`px-6 py-2 text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-charcoal ${pathname?.startsWith('/forecasts-grid') ? 'text-pace-charcoal hover:bg-gray-50' : 'bg-pace-charcoal text-white'}`}
               >
                 Country view
               </Link>
               <Link
                 href="/forecasts-grid"
-                className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
+                className={`px-6 py-2 text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-charcoal ${pathname?.startsWith('/forecasts-grid') ? 'bg-pace-charcoal text-white' : 'text-pace-charcoal hover:bg-gray-50'}`}
               >
                 Grid view
               </Link>
@@ -256,6 +356,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             preferCanvas={true}
             attributionControl={false}
             style={{ height: '100%', width: '100%' }}
+            whenCreated={(map) => setMapRef(map)}
+            aria-label="World choropleth of predicted fatalities"
+            role="region"
           >
             {/* Require Cmd/Ctrl + scroll to zoom */}
             {(() => {
@@ -297,9 +400,16 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                 onEachFeature={(feature, layer) => {
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
-                  layer.bindTooltip(`${name}: ${Number(val.toFixed(1))}`, { sticky: true })
+                  const periodText = month === 1 ? 'next month' : `in ${month} months`
+                  const label = `${name} — predicted fatalities ${periodText}: ${val.toFixed(1)}`
+                  layer.bindTooltip(label, { sticky: true })
                   layer.on('click', () => {
-                    if (name) onSelect?.(String(name))
+                    const entity = items.find(it => normalizeName(it.name) === normalizeName(name))
+                    if (entity && entity.id) {
+                      router.push(`/forecasts/${entity.id}`)
+                    } else if (onSelect) {
+                      onSelect(String(name))
+                    }
                   })
                 }}
               />
@@ -379,7 +489,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
             <div className="flex items-center gap-3 text-sm text-gray-700">
-              <span className="whitespace-nowrap">Months ahead:</span>
+              <span className="whitespace-nowrap font-semibold text-base text-gray-900">Months ahead:</span>
               <div className="w-56 md:w-72">
                 <input
                   type="range"
@@ -389,6 +499,10 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                   onChange={(e) => setMonth(Number(e.target.value))}
                   className="range"
                   style={{ accentColor: '#1e40af' }}
+                  aria-label="Months ahead"
+                  aria-valuemin={1}
+                  aria-valuemax={6}
+                  aria-valuenow={month}
                 />
                 <div className="flex justify-between text-[10px] text-gray-500 mt-1">
                   {[1,2,3,4,5,6].map(n => (
@@ -402,7 +516,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           <CountryLegend thresholds={thresholds} />
           {!hideDownloadButton && (
             <div className="mt-4 text-center">
-              <Link href="/downloads" className="btn-primary inline-flex items-center justify-center">
+              <Link href="/downloads" className="bg-pace-charcoal text-white px-8 py-3 hover:bg-pace-charcoal-light transition-all duration-200 font-normal rounded-lg inline-flex items-center justify-center shadow-sm hover:shadow-md">
                 Data downloads
               </Link>
             </div>
@@ -478,7 +592,7 @@ function CountryLegend({ thresholds }: any) {
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         {colors.map((c, i) => (
           <div key={i} className="flex items-center gap-3">
-            <div className="w-8 h-5 rounded" style={{ backgroundColor: c }} />
+            <div className="w-12 h-8 rounded border border-gray-300" style={{ backgroundColor: c }} />
             <span className="text-gray-800">{labels[i]}</span>
           </div>
         ))}

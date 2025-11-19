@@ -285,27 +285,20 @@ export default function PrioGridMap({ period, activeView }: Props) {
       <div className="h-[560px] md:h-[700px] rounded overflow-hidden relative">
         {/* View toggle overlay (center-bottom, larger) */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
-          <div className="inline-flex rounded-xl border-2 border-clairient-blue overflow-hidden bg-white/95 backdrop-blur shadow-lg">
+          <div className="inline-flex rounded-xl border-2 border-pace-charcoal overflow-hidden bg-white/95 backdrop-blur shadow-lg">
             {(() => {
-              // Determine which toggle appears active.
-              // 1) Allow explicit override via prop.
-              // 2) If on technology page (with or without basePath), show Grid active.
-              // 3) Fall back to URL prefix for forecasts pages.
-              const endsWith = (p?: string, suffix?: string) => !!p && !!suffix && p.endsWith(suffix)
-              const gridActive = activeView === 'grid'
-                || endsWith(pathname, '/technology')
-                || (pathname?.startsWith('/forecasts-grid') ?? false)
+              // ...
               return (
                 <>
                   <Link
                     href="/forecasts"
-                    className={`px-6 py-2 text-lg ${gridActive ? 'text-clairient-blue hover:bg-blue-50' : 'bg-clairient-blue text-white'}`}
+                    className={`px-6 py-2 text-lg ${gridActive ? 'text-pace-charcoal hover:bg-gray-50' : 'bg-pace-charcoal text-white'}`}
                   >
                     Country view
                   </Link>
                   <Link
                     href="/forecasts-grid"
-                    className={`px-6 py-2 text-lg ${gridActive ? 'bg-clairient-blue text-white' : 'text-clairient-blue hover:bg-blue-50'}`}
+                    className={`px-6 py-2 text-lg ${gridActive ? 'bg-pace-charcoal text-white' : 'text-pace-charcoal hover:bg-gray-50'}`}
                   >
                     Grid view
                   </Link>
@@ -431,7 +424,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
         <div className="flex items-center justify-between">
           <div className="text-xs text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
           <div className="flex items-center gap-3 text-sm text-gray-700">
-            <span className="whitespace-nowrap">Months ahead:</span>
+            <span className="whitespace-nowrap font-semibold text-base text-gray-900">Months ahead:</span>
             <div className="w-56 md:w-72">
               <input
                 type="range"
@@ -563,7 +556,7 @@ function Legend({ thresholds, vmin, vmax, data, points, month }: any) {
       <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-3">
         {['#fee8c8','#fdbb84','#ef6548','#d7301f'].map((c,i) => (
           <div key={i} className="flex items-center gap-3">
-            <div className="w-8 h-5 rounded" style={{backgroundColor: c}} />
+            <div className="w-12 h-8 rounded border border-gray-300" style={{backgroundColor: c}} />
             <span className="text-gray-800">{['< 10','10–50','50–100','100–1000'][i]}</span>
           </div>
         ))}
