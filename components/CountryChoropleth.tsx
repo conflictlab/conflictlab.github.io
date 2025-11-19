@@ -438,7 +438,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
         {showZoomHint && (
           <div className="absolute bottom-4 right-4 z-[1000]">
-            <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-700 shadow-sm flex items-center gap-2">
+            <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
             </div>
