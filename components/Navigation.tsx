@@ -81,11 +81,13 @@ export default function Navigation() {
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img
-                src={`${base}/logo.png`}
-                alt="PaCE"
-                className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
-              />
+              <div className={`rounded-full bg-white p-1.5 mr-3 ${isHomePage ? '' : ''}`}>
+                <img
+                  src={`${base}/logo.png`}
+                  alt="PaCE"
+                  className={`${isHomePage ? 'h-11 w-11' : 'h-5 w-5'}`}
+                />
+              </div>
               <span className={`font-light text-white ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
             </Link>
           </div>
