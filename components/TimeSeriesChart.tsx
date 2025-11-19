@@ -112,35 +112,35 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
         <path
           d={historicalPath}
           fill="none"
-          stroke="#1e40af"
+          stroke="#2d2d2d"
           strokeWidth="2"
           className="transition-all duration-300"
         />
-        
+
         {/* Forecast data line */}
         <path
           d={forecastPath}
           fill="none"
-          stroke="#1e40af"
+          stroke="#2d2d2d"
           strokeWidth="2"
           strokeDasharray="5,5"
           opacity="0.8"
           className="transition-all duration-300"
         />
-        
+
         {/* Data points */}
         {animatedData.map((value, index) => {
           const x = getX(index)
           const y = getY(value)
           const isForecast = index >= historical.length
-          
+
           return (
             <circle
               key={index}
               cx={x}
               cy={y}
               r={isForecast ? 3 : 4}
-              fill={isForecast ? '#1e40af' : '#1e40af'}
+              fill="#4b5563"
               stroke="white"
               strokeWidth="2"
               className="cursor-pointer hover:r-6 transition-all duration-200"
@@ -153,9 +153,9 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
         {/* Legend */}
         <g transform="translate(300, 30)">
           <rect x="0" y="0" width="140" height="50" fill="white" stroke="#e5e7eb" rx="4"/>
-          <line x1="10" y1="15" x2="30" y2="15" stroke="#1e40af" strokeWidth="2"/>
+          <line x1="10" y1="15" x2="30" y2="15" stroke="#2d2d2d" strokeWidth="2"/>
           <text x="35" y="19" className="text-xs fill-gray-700">Historical</text>
-          <line x1="10" y1="35" x2="30" y2="35" stroke="#1e40af" strokeWidth="2" strokeDasharray="3,3"/>
+          <line x1="10" y1="35" x2="30" y2="35" stroke="#2d2d2d" strokeWidth="2" strokeDasharray="3,3"/>
           <text x="35" y="39" className="text-xs fill-gray-700">Forecast</text>
         </g>
         

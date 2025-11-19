@@ -91,14 +91,14 @@ export default function ForecastFanChart({ title, horizons, months, width = 360,
         </g>
         {/* Plot */}
         <g clipPath="url(#fan-clip)">
-          {areaPath && <path d={areaPath} fill="#3b82f622" stroke="#3b82f633" />}
-          {areaUnderPath && <path d={areaUnderPath} fill="#1e40af11" stroke="none" />}
-          {linePath && <path d={linePath} fill="none" stroke="#1e40af" strokeWidth={2} />}
+          {areaPath && <path d={areaPath} fill="#9ca3af33" stroke="#9ca3af44" />}
+          {areaUnderPath && <path d={areaUnderPath} fill="#d1d5db22" stroke="none" />}
+          {linePath && <path d={linePath} fill="none" stroke="#2d2d2d" strokeWidth={2} />}
           {monthPoints.length > 0 && monthPoints.map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r={4} fill="#1e40af" stroke="#ffffff" strokeWidth={1} />
+            <circle key={i} cx={p.x} cy={p.y} r={4} fill="#4b5563" stroke="#ffffff" strokeWidth={1} />
           ))}
           {p50Points.length > 0 && p50Points.map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r={4} fill="#1e40af" stroke="#ffffff" strokeWidth={1} />
+            <circle key={i} cx={p.x} cy={p.y} r={4} fill="#4b5563" stroke="#ffffff" strokeWidth={1} />
           ))}
         </g>
         {/* Y Axis */}
