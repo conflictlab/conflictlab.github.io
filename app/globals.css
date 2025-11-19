@@ -10,13 +10,13 @@
   
   body {
     @apply text-gray-900 font-light;
-    /* Subtle site-wide background to match hero's light gray tone */
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    /* Clean light background with subtle warmth */
+    background: #fafafa;
     line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-light;
+    @apply font-light text-gray-900;
     line-height: 1.2;
   }
 
@@ -27,13 +27,18 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-clairient-blue text-white px-8 py-3 hover:bg-clairient-dark transition-colors duration-200 font-normal;
+    @apply bg-pace-red text-white px-8 py-3 hover:bg-pace-red-dark transition-all duration-200 font-normal rounded-lg;
     border: none;
-    box-shadow: none;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
   }
-  
+
+  .btn-primary:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
   .btn-secondary {
-    @apply bg-transparent text-clairient-blue px-8 py-3 hover:bg-gray-50 transition-colors duration-200 font-normal border border-clairient-blue;
+    @apply bg-transparent text-pace-red px-8 py-3 hover:bg-gray-50 transition-all duration-200 font-normal border border-pace-red rounded-lg;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
   
   .section-heading {
@@ -46,7 +51,7 @@
   }
 
   .text-link {
-    @apply text-clairient-blue hover:text-clairient-dark border-b border-clairient-blue hover:border-clairient-dark transition-colors duration-200;
+    @apply text-pace-red hover:text-pace-red-dark border-b border-pace-red hover:border-pace-red-dark transition-colors duration-200;
   }
 
   /* Prominent range slider styling (used on maps) */
@@ -673,7 +678,7 @@
 
   /* Word Animation Effects - Palantir Style Reserved Space */
   .word-highlight {
-    @apply text-clairient-blue font-medium;
+    @apply text-pace-red font-medium;
     position: relative;
     display: inline-block;
     white-space: nowrap;
@@ -705,7 +710,7 @@
 
   .word-highlight .typing-text::after {
     content: '|';
-    color: rgba(30, 64, 175, 0.7);
+    color: rgba(185, 28, 28, 0.7);
     animation: blink 1s infinite, hideCursor 0.1s 3s forwards;
   }
 
@@ -734,7 +739,7 @@
   }
 
   .word-emphasis {
-    @apply text-clairient-blue font-semibold;
+    @apply text-pace-red font-semibold;
     animation: pulse-subtle 4s ease-in-out infinite;
     animation-delay: 1.5s;
     display: inline-block;
@@ -753,8 +758,8 @@
   }
 
   .word-typewriter {
-    @apply text-clairient-blue font-medium;
-    border-right: 2px solid rgba(30, 64, 175, 0.7);
+    @apply text-pace-red font-medium;
+    border-right: 2px solid rgba(185, 28, 28, 0.7);
     animation: typing 3s steps(20) forwards, blink 0.8s infinite;
     animation-delay: 0.5s;
     overflow: hidden;
@@ -773,7 +778,7 @@
 
   @keyframes blink {
     0%, 50% {
-      border-color: rgba(30, 64, 175, 0.7);
+      border-color: rgba(185, 28, 28, 0.7);
     }
     51%, 100% {
       border-color: transparent;

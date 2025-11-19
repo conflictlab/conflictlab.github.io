@@ -76,7 +76,7 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="bg-pace-charcoal shadow-sm border-b border-pace-charcoal-light relative z-[2000]">
+    <nav className="bg-pace-charcoal border-b border-pace-charcoal-light relative z-[2000] shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
@@ -105,7 +105,7 @@ export default function Navigation() {
                       href={item.href}
                       className={`flex items-center gap-1 transition-colors font-light ${
                         isActive(item.href)
-                          ? 'text-pace-red border-b-2 border-pace-red pb-1'
+                          ? 'text-clairient-light border-b-2 border-clairient-light pb-1'
                           : 'text-gray-300 hover:text-pace-red-light'
                       }`}
                     >
@@ -133,7 +133,7 @@ export default function Navigation() {
                     href={item.href}
                     className={`transition-colors font-light ${
                       isActive(item.href)
-                        ? 'text-pace-red border-b-2 border-pace-red pb-1'
+                        ? 'text-clairient-light border-b-2 border-clairient-light pb-1'
                         : 'text-gray-300 hover:text-pace-red-light'
                     }`}
                   >
@@ -166,7 +166,7 @@ export default function Navigation() {
                   href={item.href}
                   className={`block px-3 py-2 font-light ${
                     isActive(item.href)
-                      ? 'text-pace-red bg-gray-800'
+                      ? 'text-clairient-light bg-gray-800'
                       : 'text-gray-300 hover:text-pace-red-light'
                   }`}
                 >
