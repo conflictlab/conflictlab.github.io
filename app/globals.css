@@ -26,6 +26,15 @@
 }
 
 @layer components {
+  /* Leaflet tile seam mitigation: request retina tiles and avoid subpixel gaps */
+  .leaflet-container .leaflet-tile {
+    transform: translateZ(0);
+    outline: 1px solid transparent;
+  }
+  .leaflet-container .leaflet-pane > canvas,
+  .leaflet-container .leaflet-pane > svg {
+    transform: translateZ(0);
+  }
   .btn-primary {
     @apply bg-pace-red text-white px-8 py-3 hover:bg-pace-red-dark transition-all duration-200 font-normal rounded-lg;
     border: none;
