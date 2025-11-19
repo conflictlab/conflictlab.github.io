@@ -282,7 +282,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
-      <div className="h-[560px] md:h-[700px] rounded overflow-hidden relative">
+      <div className="h-[560px] md:h-[560px] rounded overflow-hidden relative">
         {/* View toggle overlay (center-bottom, larger) */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
           <div className="inline-flex rounded-xl border-2 border-pace-charcoal overflow-hidden bg-white/95 backdrop-blur shadow-lg">
