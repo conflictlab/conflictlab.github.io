@@ -15,9 +15,11 @@ export default function LandingBanner() {
             PaCE
           </h1>
           <div className="text-2xl md:text-3xl lg:text-4xl text-white font-bold tracking-wide mb-8" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5)' }}>
-            <p className="inline-block overflow-hidden whitespace-nowrap typewriter-text">
-              Forecasting Geopolitical Risk
-            </p>
+            <div className="overflow-hidden">
+              <p className="inline-block whitespace-nowrap typewriter-text pr-1">
+                Forecasting Geopolitical Risk
+              </p>
+            </div>
           </div>
 
           {/* Statistics */}
@@ -52,7 +54,7 @@ export default function LandingBanner() {
         }
 
         .typewriter-text {
-          animation: typing 1.5s steps(27) 1.3s forwards;
+          animation: typing 1.5s steps(29) 1.3s forwards;
           width: 0;
         }
 
@@ -80,6 +82,14 @@ export default function LandingBanner() {
         @keyframes typing {
           from { width: 0; }
           to { width: 100%; }
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation: none !important;
+            transition: none !important;
+          }
         }
       `}</style>
     </>
