@@ -44,6 +44,33 @@ export default async function ForecastsGridPage() {
             Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.
             Predictions are updated monthly for countries and subnational regions worldwide.
           </p>
+          {/* Key Takeaways (same placement and style as country dashboard) */}
+          {(() => {
+            const [year, month] = snap.period.split('-').map(Number)
+            const forecastDate = new Date(year, month)
+            const forecastMonth = forecastDate.toLocaleString('default', { month: 'long' })
+            const forecastYear = forecastDate.getFullYear()
+            const takeawaysDate = `${forecastMonth} ${forecastYear}`
+            return (
+              <div className="bg-white rounded-lg p-4 mt-4 border border-gray-200">
+                <div className="flex items-start">
+                  <div className="w-1/3 pr-4 border-r border-gray-300">
+                    <h3 className="text-lg font-semibold text-gray-800">Key Takeaways for {takeawaysDate}</h3>
+                  </div>
+                  <div className="w-2/3 pl-4">
+                    <ul className="space-y-1">
+                      {keyTakeaways.map((item, i) => (
+                        <li key={i} className="flex items-start text-sm text-gray-600">
+                          <AlertTriangle className="w-4 h-4 text-pace-red mr-2 mt-1 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
         </div>
       </section>
 
@@ -59,33 +86,6 @@ export default async function ForecastsGridPage() {
             <span className="text-gray-400"> · </span>
             Updated: {formatDMY(snap.generatedAt)}
           </p>
-          {/* Key Takeaways (same style as country dashboard) */}
-          {(() => {
-            const [year, month] = snap.period.split('-').map(Number)
-            const forecastDate = new Date(year, month)
-            const forecastMonth = forecastDate.toLocaleString('default', { month: 'long' })
-            const forecastYear = forecastDate.getFullYear()
-            const takeawaysDate = `${forecastMonth} ${forecastYear}`
-            return (
-              <div className="bg-white rounded-lg p-4 mt-2 mb-4 border border-gray-200">
-                <div className="flex items-start">
-                  <div className="w-full md:w-1/3 pr-4 md:border-r md:border-gray-300">
-                    <h3 className="text-lg font-semibold text-gray-800">Key Takeaways for {takeawaysDate}</h3>
-                  </div>
-                  <div className="w-full md:w-2/3 md:pl-4 mt-2 md:mt-0">
-                    <ul className="space-y-1">
-                      {keyTakeaways.map((item, i) => (
-                        <li key={i} className="flex items-start text-sm text-gray-600">
-                          <AlertTriangle className="w-4 h-4 text-pace-red mr-2 mt-1 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            )
-          })()}
           {/* Removed secondary view toggle below the map */}
           <p className="text-gray-600 text-sm mb-4">All values represent predicted fatalities over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
