@@ -296,7 +296,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
               href="/forecasts-grid"
               className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-pace-charcoal text-white' : 'text-pace-charcoal hover:bg-gray-50'}`}
             >
-              Grid view
+              <span title="0.5° map squares (~55 km)">Sub‑national Areas</span>
             </Link>
           </div>
         </div>

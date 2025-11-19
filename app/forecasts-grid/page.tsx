@@ -42,7 +42,7 @@ export default async function ForecastsGridPage() {
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed mb-6">
             Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.
-            Predictions are updated monthly for countries and subnational regions worldwide.
+            Predictions are updated monthly for countries and <span title="0.5° map squares (~55 km)">Sub‑national Areas</span> worldwide.
           </p>
           {/* Key Takeaways (same placement and style as country dashboard) */}
           {(() => {
@@ -102,7 +102,7 @@ export default async function ForecastsGridPage() {
               <div className="text-xs text-gray-500 mt-1">Change in total 1‑month predicted fatalities</div>
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="text-sm text-gray-500">Grid covered</div>
+              <div className="text-sm text-gray-500"><span title="0.5° map squares (~55 km)">Sub‑national Areas</span> covered</div>
               <div className="text-3xl font-light text-gray-900">{GRID_TOTAL_CELLS.toLocaleString()}</div>
             </div>
           </div>
