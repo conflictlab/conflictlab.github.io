@@ -107,7 +107,13 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.base }}
           BASE_PATH: ${{ steps.base.outputs.base }}
           SKIP_PREBUILD: '1'
-        run: npm run build
+        run: |
+          set -e
+          npm run build
+          # Some Next versions may not emit ./out automatically; ensure export
+          if [ ! -d "out" ]; then
+            npx next export -o out
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
