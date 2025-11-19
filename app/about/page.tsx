@@ -100,27 +100,25 @@ export default function About() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="py-24 hero-background-network-image">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
-            About PaCE
-          </h1>
-          <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Meet our team and get in touch with the <span className="word-emphasis">PaCE Research Lab</span>.
-          </p>
-        </div>
-      </section>
-
-      {/* Page Navigation */}
-      <section className="py-8 bg-white border-b border-gray-200">
+      {/* Hero Section with Navigation */}
+      <section className="py-12 md:py-16 hero-background-network-image border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
+              About PaCE
+            </h1>
+            <p className="text-xl text-gray-600 font-light leading-relaxed">
+              Meet our team and get in touch with the <span className="word-emphasis">PaCE Research Lab</span>.
+            </p>
+          </div>
+
+          {/* Page Navigation */}
           <nav className="flex space-x-6 text-lg">
-            <a href="#team" className="text-clairient-blue hover:text-clairient-dark">
+            <a href="#team" className="text-clairient-blue hover:text-clairient-dark transition-colors">
               Team
             </a>
             <span className="text-gray-400">/</span>
-            <a href="#contact" className="text-clairient-blue hover:text-clairient-dark">
+            <a href="#contact" className="text-clairient-blue hover:text-clairient-dark transition-colors">
               Contact
             </a>
           </nav>
