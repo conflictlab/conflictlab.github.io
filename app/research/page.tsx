@@ -1,15 +1,14 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
-import { BookOpen, FileText, Database, Beaker, ChevronRight, ArrowRight, ExternalLink } from 'lucide-react'
+import { BookOpen, FileText, Database, Beaker, Presentation, ChevronRight, ArrowRight, ExternalLink } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Research — PaCE',
   description: 'Methods, publications, datasets, and impact from the PaCE project.',
 }
 
-const DTWShowcase = dynamic(() => import('@/components/DTWShowcase'), { ssr: false })
-const DescriptivePlots = dynamic(() => import('@/components/DescriptivePlots'), { ssr: false })
+// Methods showcase removed per request
 
 function FeaturedBadge({ href, label }: { href: string; label: string }) {
   return (
@@ -20,7 +19,6 @@ function FeaturedBadge({ href, label }: { href: string; label: string }) {
 }
 
 export default function ResearchPage() {
-  const demoData = Array.from({ length: 500 }, () => Math.max(0, Math.round((Math.random() ** 2) * 120)))
   return (
     <>
       {/* Hero */}
@@ -31,9 +29,10 @@ export default function ResearchPage() {
             We build transparent, data‑driven methods to forecast conflict risk. Explore our publications, methods, and datasets.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/publications" className="btn-primary">Publications</Link>
+            <Link href="/publications" className="btn-secondary inline-flex items-center gap-1"><FileText size={16}/> Publications</Link>
             <Link href="/methodology" className="btn-secondary inline-flex items-center gap-1"><Beaker size={16}/> Methodology</Link>
             <Link href="/downloads" className="btn-secondary inline-flex items-center gap-1"><Database size={16}/> Data & Code</Link>
+            <Link href="/dissemination" className="btn-secondary inline-flex items-center gap-1"><Presentation size={16}/> Dissemination</Link>
           </div>
         </div>
       </section>
@@ -87,24 +86,7 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      {/* Methods showcase */}
-      <section className="py-12 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-light text-gray-900 mb-6">Methods in action</h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="text-sm text-gray-600 mb-2">Dynamic Time Warping</div>
-              <DTWShowcase height={360} />
-              <p className="text-sm text-gray-600 mt-3">DTW aligns sequences with different speeds to compare conflict trajectories and detect pattern similarity.</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="text-sm text-gray-600 mb-2">Distribution & inequality</div>
-              <DescriptivePlots data={demoData} />
-              <p className="text-sm text-gray-600 mt-3">We summarize the shape of risk across entities: the histogram + KDE, ECDF, and Lorenz curve show spread, tails, and inequality.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Methods showcase removed */}
 
       {/* Data & Code hub */}
       <section className="py-12">
