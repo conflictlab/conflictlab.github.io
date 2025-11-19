@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
-import { readSnapshot, getAvailablePeriods } from '@/lib/forecasts'
+import { getForecastsPageData } from '@/lib/forecasts'
+import { AlertTriangle } from 'lucide-react'
 // Inline download cards removed; use /data page via map button
 
 function endPeriodFrom(start: string): string | null {
@@ -25,17 +26,9 @@ function formatDMY(iso: string): string {
 }
 
 export default async function ForecastsGridPage() {
-  const snap = readSnapshot('latest')
+  const { snapshot: snap, summaryStats, keyTakeaways } = await getForecastsPageData()
   const end = endPeriodFrom(snap.period) || snap.period
-  // Compute totals like the country page
-  const periods = getAvailablePeriods()
-  const currentIdx = periods.indexOf(snap.period)
-  const prevPeriod = currentIdx > 0 ? periods[currentIdx - 1] : undefined
-  const prevSnap = prevPeriod ? readSnapshot(prevPeriod) : undefined
-  const total1mCurrent = snap.entities.reduce((s, e) => s + (e.horizons?.['1m']?.index ?? e.index), 0)
-  const total1mPrev = prevSnap ? prevSnap.entities.reduce((s, e) => s + (e.horizons?.['1m']?.index ?? e.index), 0) : undefined
-  const deltaTotal = total1mPrev !== undefined ? Number((total1mCurrent - total1mPrev).toFixed(1)) : undefined
-  const countriesCovered = snap.entities.filter((e) => (e.entityType || 'country') === 'country').length
+  const { total1mCurrent, deltaTotal } = summaryStats
   // Total number of PRIO‑GRID 0.5° cells (pre‑computed): 720 x 360 = 259,200
   const GRID_TOTAL_CELLS = 259200
   // Removed inline grid download list in favor of centralized data page
@@ -66,6 +59,33 @@ export default async function ForecastsGridPage() {
             <span className="text-gray-400"> · </span>
             Updated: {formatDMY(snap.generatedAt)}
           </p>
+          {/* Key Takeaways (same style as country dashboard) */}
+          {(() => {
+            const [year, month] = snap.period.split('-').map(Number)
+            const forecastDate = new Date(year, month)
+            const forecastMonth = forecastDate.toLocaleString('default', { month: 'long' })
+            const forecastYear = forecastDate.getFullYear()
+            const takeawaysDate = `${forecastMonth} ${forecastYear}`
+            return (
+              <div className="bg-white rounded-lg p-4 mt-2 mb-4 border border-gray-200">
+                <div className="flex items-start">
+                  <div className="w-full md:w-1/3 pr-4 md:border-r md:border-gray-300">
+                    <h3 className="text-lg font-semibold text-gray-800">Key Takeaways for {takeawaysDate}</h3>
+                  </div>
+                  <div className="w-full md:w-2/3 md:pl-4 mt-2 md:mt-0">
+                    <ul className="space-y-1">
+                      {keyTakeaways.map((item, i) => (
+                        <li key={i} className="flex items-start text-sm text-gray-600">
+                          <AlertTriangle className="w-4 h-4 text-pace-red mr-2 mt-1 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
           {/* Removed secondary view toggle below the map */}
           <p className="text-gray-600 text-sm mb-4">All values represent predicted fatalities over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
