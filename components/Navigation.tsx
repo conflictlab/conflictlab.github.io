@@ -76,7 +76,7 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="bg-slate-600 border-b border-slate-500 relative z-[2000] shadow-md">
+    <nav className="bg-teal-700 border-b border-teal-600 relative z-[2000] shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
@@ -114,7 +114,7 @@ export default function Navigation() {
                     </Link>
                     {openDropdown === item.href && (
                       <div className="absolute top-full left-0 mt-1 pt-2 w-48">
-                        <div className="bg-slate-700 border border-slate-600 rounded-lg shadow-lg py-2 z-[2001]">
+                        <div className="bg-teal-800 border border-teal-700 rounded-lg shadow-lg py-2 z-[2001]">
                           {item.sections.map((section) => (
                             <Link
                               key={section.href}
@@ -159,7 +159,7 @@ export default function Navigation() {
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-600 border-t border-slate-500">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-teal-700 border-t border-teal-600">
             {menuItems.map((item) => (
               <div key={item.href}>
                 <Link

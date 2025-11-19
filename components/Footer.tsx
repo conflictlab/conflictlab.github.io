@@ -6,7 +6,7 @@ export default function Footer() {
   const pathname = usePathname()
   if (pathname?.startsWith('/test-map')) return null
   return (
-    <footer className="bg-slate-600 text-gray-200 border-t border-slate-500 shadow-[0_-4px_6px_-1px_rgb(0_0_0_/_0.1)]">
+    <footer className="bg-teal-700 text-gray-200 border-t border-teal-600 shadow-[0_-4px_6px_-1px_rgb(0_0_0_/_0.1)]">
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-3">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
           <div className="col-span-1 md:col-span-2">
