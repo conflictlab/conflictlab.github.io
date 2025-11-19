@@ -56,7 +56,13 @@ jobs:
 
       - name: Compute base path
         id: base
-        run: echo "base=/${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
+        run: |
+          repo="${GITHUB_REPOSITORY#*/}"
+          if [[ "$repo" == *.github.io ]]; then
+            echo "base=" >> $GITHUB_OUTPUT
+          else
+            echo "base=/$repo" >> $GITHUB_OUTPUT
+          fi
 
       - name: Generate grid CSV assets
         run: |
