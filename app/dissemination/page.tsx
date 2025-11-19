@@ -7,11 +7,7 @@ export default function DisseminationPage() {
     <>
       {/* Hero Section */}
       <section className="py-16 hero-background-network-image">
-        <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]">
-          <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded px-2 py-1">
-            <Breadcrumbs />
-          </div>
-        </div>
+        <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]"><Breadcrumbs /></div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 leading-tight">
             Dissemination

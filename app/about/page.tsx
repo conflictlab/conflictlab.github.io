@@ -103,11 +103,7 @@ export default function About() {
     <>
       {/* Hero Section with Navigation */}
       <section className="pt-10 pb-6 md:pt-12 md:pb-8 hero-background-network-image border-b border-gray-200">
-        <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]">
-          <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded px-2 py-1">
-            <Breadcrumbs />
-          </div>
-        </div>
+        <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]"><Breadcrumbs /></div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-4">
             <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight">
