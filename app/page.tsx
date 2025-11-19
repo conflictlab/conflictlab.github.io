@@ -162,7 +162,7 @@ export default async function Home() {
               <img
                 src="/erc-logo.png"
                 alt="European Research Council"
-                className="h-28 md:h-32 object-contain"
+                className="h-32 md:h-36 object-contain"
               />
             </div>
           </div>
