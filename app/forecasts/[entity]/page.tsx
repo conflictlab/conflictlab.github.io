@@ -4,7 +4,8 @@ import {
   readSnapshot,
   getEntitySeries,
   generateEntityNarrative,
-  getEntityComparativeStats
+  getEntityComparativeStats,
+  getAvailablePeriods,
 } from '@/lib/forecasts'
 import dynamic from 'next/dynamic'
 const ForecastFanChart = dynamic(() => import('@/components/ForecastFanChart'), { ssr: false })
@@ -43,7 +44,25 @@ async function getEntityData(entityId: string) {
   const narrative = generateEntityNarrative(entity, historicalSeries, snapshot)
   const comparativeStats = getEntityComparativeStats(entity, snapshot)
 
-  return { entity, months, historicalSeries, narrative, snapshot, comparativeStats }
+  // Compute MoM change exactly as the dashboard table does: current 1m index minus previous snapshot's 1m index
+  let computedDeltaMoM = entity.deltaMoM
+  try {
+    const periods = getAvailablePeriods()
+    const currentIdx = periods.indexOf(snapshot.period)
+    const prevPeriod = currentIdx > 0 ? periods[currentIdx - 1] : undefined
+    if (prevPeriod) {
+      const prevSnap = readSnapshot(prevPeriod)
+      const prevMatch = prevSnap.entities.find(
+        (e) => e.id === entity.id || (entity.iso3 && e.iso3 === entity.iso3) || (e.name || '').toUpperCase() === (entity.name || '').toUpperCase()
+      )
+      const prevVal = prevMatch ? (prevMatch.horizons?.['1m']?.index ?? prevMatch.index) : undefined
+      if (prevVal !== undefined) {
+        computedDeltaMoM = Number((entity.horizons['1m'].index - prevVal).toFixed(1))
+      }
+    }
+  } catch {}
+
+  return { entity, months, historicalSeries, narrative, snapshot, comparativeStats, computedDeltaMoM }
 }
 
 export default async function EntityForecastPage({ params }: { params: { entity: string } }) {
@@ -53,7 +72,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
     notFound()
   }
 
-  const { entity, months, historicalSeries, narrative, comparativeStats } = data
+  const { entity, months, historicalSeries, narrative, comparativeStats, computedDeltaMoM } = data
 
   const getBandColor = (band: string) => {
     if (band === 'high') return 'bg-red-100 text-red-800 border-red-300'
@@ -101,11 +120,11 @@ export default async function EntityForecastPage({ params }: { params: { entity:
               </div>
             </div>
 
-            {/* Month-over-Month */}
+            {/* Month-over-Month (matches dashboard table calculation) */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
               <div className="text-sm text-gray-500 mb-1">MoM Change</div>
-              <div className={`text-2xl font-semibold ${entity.deltaMoM > 0 ? 'text-red-600' : entity.deltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                {entity.deltaMoM > 0 ? '+' : ''}{Math.round(entity.deltaMoM)} {getTrendIcon(entity.deltaMoM)}
+              <div className={`text-2xl font-semibold ${computedDeltaMoM > 0 ? 'text-red-600' : computedDeltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
+                {computedDeltaMoM > 0 ? '+' : ''}{computedDeltaMoM.toFixed(1)} {getTrendIcon(computedDeltaMoM)}
               </div>
             </div>
 
