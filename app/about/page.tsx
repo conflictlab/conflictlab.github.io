@@ -114,11 +114,11 @@ export default function About() {
 
           {/* Page Navigation */}
           <nav className="flex space-x-6 text-lg">
-            <a href="#team" className="text-clairient-blue hover:text-clairient-dark transition-colors">
+            <a href="#team" className="text-pace-red hover:text-pace-red-dark transition-colors">
               Team
             </a>
             <span className="text-gray-400">/</span>
-            <a href="#contact" className="text-clairient-blue hover:text-clairient-dark transition-colors">
+            <a href="#contact" className="text-pace-red hover:text-pace-red-dark transition-colors">
               Contact
             </a>
           </nav>
@@ -135,7 +135,7 @@ export default function About() {
             {currentTeam.map((member, index) => (
               <article
                 key={index}
-                className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:border-clairient-blue transition-all duration-300"
+                className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:border-pace-red transition-all duration-300"
               >
                 <div className="aspect-square relative bg-gray-100">
                   <Image
@@ -146,7 +146,7 @@ export default function About() {
                   />
                 </div>
                 <div className="p-6">
-                  <p className="text-sm text-clairient-blue mb-1">{member.role}</p>
+                  <p className="text-sm text-pace-red mb-1">{member.role}</p>
                   <h3 className="text-xl font-light text-gray-900 mb-3">
                     {member.name}
                   </h3>
@@ -156,7 +156,7 @@ export default function About() {
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-clairient-blue hover:text-clairient-dark text-sm"
+                      className="text-pace-red hover:text-pace-red-dark text-sm"
                     >
                       {member.email}
                     </a>
@@ -182,7 +182,7 @@ export default function About() {
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-clairient-blue hover:text-clairient-dark text-sm"
+                      className="text-pace-red hover:text-pace-red-dark text-sm"
                     >
                       {member.email}
                     </a>
@@ -208,7 +208,7 @@ export default function About() {
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-clairient-blue hover:text-clairient-dark text-sm"
+                      className="text-pace-red hover:text-pace-red-dark text-sm"
                     >
                       {member.email}
                     </a>
@@ -242,7 +242,7 @@ export default function About() {
                   <div className="font-medium mb-1">Email</div>
                   <a
                     href={`mailto:${companyData.contact.email}`}
-                    className="text-clairient-blue hover:text-clairient-dark"
+                    className="text-pace-red hover:text-pace-red-dark"
                   >
                     {companyData.contact.email}
                   </a>
@@ -276,7 +276,7 @@ export default function About() {
                       type="text"
                       id="firstName"
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-clairient-blue focus:border-clairient-blue"
+                      className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-pace-red focus:border-pace-red"
                       placeholder="John"
                     />
                   </div>
@@ -288,7 +288,7 @@ export default function About() {
                       type="text"
                       id="lastName"
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-clairient-blue focus:border-clairient-blue"
+                      className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-pace-red focus:border-pace-red"
                       placeholder="Smith"
                     />
                   </div>
@@ -302,7 +302,7 @@ export default function About() {
                     type="email"
                     id="email"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-clairient-blue focus:border-clairient-blue"
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-pace-red focus:border-pace-red"
                     placeholder="john.smith@company.com"
                   />
                 </div>
@@ -315,7 +315,7 @@ export default function About() {
                     type="text"
                     id="company"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-clairient-blue focus:border-clairient-blue"
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-pace-red focus:border-pace-red"
                     placeholder="Acme Corporation"
                   />
                 </div>
@@ -327,7 +327,7 @@ export default function About() {
                   <select
                     id="interest"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-clairient-blue focus:border-clairient-blue"
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-pace-red focus:border-pace-red"
                   >
                     <option value="">Please select...</option>
                     <option value="portfolio-risk">Portfolio Risk Intelligence</option>
@@ -346,7 +346,7 @@ export default function About() {
                   <textarea
                     id="message"
                     rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-clairient-blue focus:border-clairient-blue"
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-pace-red focus:border-pace-red"
                     placeholder="Tell us about your needs and timeline..."
                   ></textarea>
                 </div>

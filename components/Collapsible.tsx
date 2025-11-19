@@ -15,7 +15,7 @@ export default function Collapsible({ title, initiallyCollapsed = true, children
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="text-sm text-clairient-blue hover:text-clairient-dark border border-clairient-blue hover:border-clairient-dark px-3 py-1 rounded transition-colors"
+        className="text-sm text-pace-red hover:text-pace-red-dark border border-pace-red hover:border-pace-red-dark px-3 py-1 rounded transition-colors"
         aria-expanded={open}
       >
         {open ? 'Hide' : (title ? `Show ${title}` : 'Show')}
@@ -28,4 +28,3 @@ export default function Collapsible({ title, initiallyCollapsed = true, children
     </div>
   )
 }
-

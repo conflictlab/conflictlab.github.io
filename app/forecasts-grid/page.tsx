@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 import { getForecastsPageData } from '@/lib/forecasts'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import { AlertTriangle } from 'lucide-react'
 // Inline download cards removed; use /data page via map button
 
@@ -71,6 +72,8 @@ export default async function ForecastsGridPage() {
               </div>
             )
           })()}
+
+          <Breadcrumbs />
         </div>
       </section>
 

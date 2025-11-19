@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 const CountryChoropleth = dynamic(() => import('@/components/CountryChoropleth'), { ssr: false })
 import LazyVisible from '@/components/LazyVisible'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 function endPeriodFrom(start: string): string | null {
   const parts = start.split('-')
@@ -89,6 +90,8 @@ export default async function ForecastsPage() {
               ],
             }) }}
           />
+
+          <Breadcrumbs />
 
           <div className="bg-white rounded-lg p-4 mt-4 border border-gray-200">
             <div className="flex items-start">

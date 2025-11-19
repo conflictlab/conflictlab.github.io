@@ -14,6 +14,7 @@ import LazyVisible from '@/components/LazyVisible'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import React from 'react'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Entity Forecast — PaCE',
@@ -100,6 +101,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             Predicted fatalities from state‑based armed conflict — forecast and analysis
           </p>
+          <Breadcrumbs />
         </div>
       </section>
 

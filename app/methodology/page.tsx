@@ -143,8 +143,8 @@ export default async function Methodology() {
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-500">
-                See: <a href="https://doi.org/10.1177/00223433241234567" target="_blank" rel="noopener noreferrer" className="text-clairient-blue hover:underline">Schincariol, Frank & Chadefaux (2025)</a> |
-                <a href="/academicPapers/Chadefaux_2024_JCS.pdf" target="_blank" className="text-clairient-blue hover:underline ml-2">Chadefaux (2024)</a>
+                See: <a href="https://doi.org/10.1177/00223433241234567" target="_blank" rel="noopener noreferrer" className="text-pace-red hover:underline">Schincariol, Frank & Chadefaux (2025)</a> |
+                <a href="/academicPapers/Chadefaux_2024_JCS.pdf" target="_blank" className="text-pace-red hover:underline ml-2">Chadefaux (2024)</a>
               </p>
             </div>
           </div>
@@ -199,7 +199,7 @@ export default async function Methodology() {
                     <li>• Updated monthly</li>
                   </ul>
                   <p className="text-sm mt-4">
-                    <a href="https://ucdp.uu.se/" target="_blank" rel="noopener noreferrer" className="text-clairient-blue hover:underline">Learn more about UCDP →</a>
+                <a href="https://ucdp.uu.se/" target="_blank" rel="noopener noreferrer" className="text-pace-red hover:underline">Learn more about UCDP →</a>
                   </p>
                 </div>
               </div>

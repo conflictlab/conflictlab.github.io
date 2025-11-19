@@ -21,11 +21,11 @@ export default function DisseminationPage() {
           {/* Page Navigation */}
           <div className="mb-12 pb-6 border-b border-gray-200">
             <nav className="flex space-x-6 text-lg">
-              <a href="#workshops" className="text-clairient-blue hover:text-clairient-dark">
+              <a href="#workshops" className="text-pace-red hover:text-pace-red-dark">
                 Workshops
               </a>
               <span className="text-gray-400">/</span>
-              <a href="#presentations" className="text-clairient-blue hover:text-clairient-dark">
+              <a href="#presentations" className="text-pace-red hover:text-pace-red-dark">
                 Presentations
               </a>
             </nav>
@@ -66,10 +66,7 @@ export default function DisseminationPage() {
                   </div>
 
                   <div className="mb-6">
-                    <Link
-                      href="#"
-                      className="text-clairient-blue hover:text-clairient-dark underline"
-                    >
+                    <Link href="#" className="text-pace-red hover:text-pace-red-dark underline">
                       Workshop Programme
                     </Link>
                   </div>
