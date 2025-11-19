@@ -50,6 +50,10 @@ export default function Navigation() {
     {
       label: 'Forecasts',
       href: '/forecasts',
+      sections: [
+        { label: 'Dashboard', href: '/forecasts' },
+        { label: 'Downloads', href: '/downloads' },
+      ],
     },
     {
       label: 'Research',
@@ -57,7 +61,7 @@ export default function Navigation() {
       sections: [
         { label: 'Methodology', href: '/methodology' },
         { label: 'Publications', href: '/publications' },
-        { label: 'Datasets', href: '/downloads' },
+        { label: 'Downloads', href: '/downloads' },
         { label: 'Dissemination', href: '/dissemination' },
       ],
     },
@@ -72,7 +76,7 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200 relative z-[2000]">
+    <nav className="bg-pace-charcoal shadow-sm border-b border-pace-charcoal-light relative z-[2000]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
@@ -82,7 +86,7 @@ export default function Navigation() {
                 alt="PaCE"
                 className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
               />
-              <span className={`font-light text-clairient-blue ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
+              <span className={`font-light text-white ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
             </Link>
           </div>
           
@@ -101,8 +105,8 @@ export default function Navigation() {
                       href={item.href}
                       className={`flex items-center gap-1 transition-colors font-light ${
                         isActive(item.href)
-                          ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                          : 'text-gray-600 hover:text-clairient-blue'
+                          ? 'text-pace-red border-b-2 border-pace-red pb-1'
+                          : 'text-gray-300 hover:text-pace-red-light'
                       }`}
                     >
                       {item.label}
@@ -110,12 +114,12 @@ export default function Navigation() {
                     </Link>
                     {openDropdown === item.href && (
                       <div className="absolute top-full left-0 mt-1 pt-2 w-48">
-                        <div className="bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-[2001]">
+                        <div className="bg-pace-charcoal-light border border-gray-600 rounded-lg shadow-lg py-2 z-[2001]">
                           {item.sections.map((section) => (
                             <Link
                               key={section.href}
                               href={section.href}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-clairient-blue transition-colors"
+                              className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors"
                             >
                               {section.label}
                             </Link>
@@ -129,8 +133,8 @@ export default function Navigation() {
                     href={item.href}
                     className={`transition-colors font-light ${
                       isActive(item.href)
-                        ? 'text-clairient-blue border-b-2 border-clairient-blue pb-1'
-                        : 'text-gray-600 hover:text-clairient-blue'
+                        ? 'text-pace-red border-b-2 border-pace-red pb-1'
+                        : 'text-gray-300 hover:text-pace-red-light'
                     }`}
                   >
                     {item.label}
@@ -144,7 +148,7 @@ export default function Navigation() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-clairient-blue"
+              className="text-gray-300 hover:text-pace-red-light"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -155,15 +159,15 @@ export default function Navigation() {
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-pace-charcoal border-t border-pace-charcoal-light">
             {menuItems.map((item) => (
               <div key={item.href}>
                 <Link
                   href={item.href}
                   className={`block px-3 py-2 font-light ${
                     isActive(item.href)
-                      ? 'text-clairient-blue bg-blue-50'
-                      : 'text-gray-600 hover:text-clairient-blue'
+                      ? 'text-pace-red bg-gray-800'
+                      : 'text-gray-300 hover:text-pace-red-light'
                   }`}
                 >
                   {item.label}
@@ -174,7 +178,7 @@ export default function Navigation() {
                       <Link
                         key={section.href}
                         href={section.href}
-                        className="block px-3 py-1.5 text-sm text-gray-600 hover:text-clairient-blue"
+                        className="block px-3 py-1.5 text-sm text-gray-400 hover:text-pace-red-light"
                       >
                         {section.label}
                       </Link>

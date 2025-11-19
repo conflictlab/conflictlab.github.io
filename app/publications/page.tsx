@@ -1,4 +1,7 @@
-import Link from 'next/link'
+'use client'
+
+import { useState, useMemo } from 'react'
+import { Search, X } from 'lucide-react'
 
 interface Publication {
   year: number
@@ -117,8 +120,52 @@ const publications: Publication[] = [
 ]
 
 export default function PublicationsPage() {
-  // Group publications by year
-  const publicationsByYear = publications.reduce((acc, pub) => {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedYears, setSelectedYears] = useState<number[]>([])
+  const [selectedAuthor, setSelectedAuthor] = useState('')
+
+  // Get unique years and authors
+  const allYears = [...new Set(publications.map(p => p.year))].sort((a, b) => b - a)
+  const allAuthors = useMemo(() => {
+    const authorSet = new Set<string>()
+    publications.forEach(pub => {
+      // Extract individual authors (splitting by '&' and ',')
+      const authors = pub.authors.split(/[&,]/).map(a => a.trim().replace(/\(.*?\)/g, '').trim())
+      authors.forEach(author => {
+        if (author && !author.startsWith('et al')) {
+          authorSet.add(author)
+        }
+      })
+    })
+    return Array.from(authorSet).sort()
+  }, [])
+
+  // Filter publications
+  const filteredPublications = useMemo(() => {
+    return publications.filter(pub => {
+      // Search query filter (search in title, authors, venue, abstract)
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase()
+        const searchableText = `${pub.title} ${pub.authors} ${pub.venue} ${pub.abstract}`.toLowerCase()
+        if (!searchableText.includes(query)) return false
+      }
+
+      // Year filter
+      if (selectedYears.length > 0 && !selectedYears.includes(pub.year)) {
+        return false
+      }
+
+      // Author filter
+      if (selectedAuthor && !pub.authors.includes(selectedAuthor)) {
+        return false
+      }
+
+      return true
+    })
+  }, [searchQuery, selectedYears, selectedAuthor])
+
+  // Group filtered publications by year
+  const publicationsByYear = filteredPublications.reduce((acc, pub) => {
     if (!acc[pub.year]) {
       acc[pub.year] = []
     }
@@ -129,6 +176,20 @@ export default function PublicationsPage() {
   const years = Object.keys(publicationsByYear)
     .map(Number)
     .sort((a, b) => b - a)
+
+  const toggleYear = (year: number) => {
+    setSelectedYears(prev =>
+      prev.includes(year) ? prev.filter(y => y !== year) : [...prev, year]
+    )
+  }
+
+  const clearFilters = () => {
+    setSearchQuery('')
+    setSelectedYears([])
+    setSelectedAuthor('')
+  }
+
+  const hasActiveFilters = searchQuery || selectedYears.length > 0 || selectedAuthor
 
   return (
     <>
@@ -151,22 +212,110 @@ export default function PublicationsPage() {
           {/* Page Navigation */}
           <div className="mb-12 pb-6 border-b border-gray-200">
             <nav className="flex space-x-6 text-lg">
-              <a href="#publications" className="text-clairient-blue hover:text-clairient-dark">
+              <a href="#publications" className="text-pace-red hover:text-pace-red-dark">
                 Academic Publications
               </a>
               <span className="text-gray-400">/</span>
-              <a href="#reports-newsletters" className="text-clairient-blue hover:text-clairient-dark">
+              <a href="#reports-newsletters" className="text-pace-red hover:text-pace-red-dark">
                 Reports and Newsletters
               </a>
             </nav>
+          </div>
+
+          {/* Search and Filter Section */}
+          <div className="mb-8 space-y-4">
+            {/* Search Bar */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Search publications by keyword, author, or topic..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  <X size={20} />
+                </button>
+              )}
+            </div>
+
+            {/* Filters */}
+            <div className="flex flex-wrap gap-4 items-center">
+              {/* Year Filter */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 font-medium">Year:</span>
+                <div className="flex flex-wrap gap-2">
+                  {allYears.map(year => (
+                    <button
+                      key={year}
+                      onClick={() => toggleYear(year)}
+                      className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                        selectedYears.includes(year)
+                          ? 'bg-pace-red text-white'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {year}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Author Filter */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 font-medium">Author:</span>
+                <select
+                  value={selectedAuthor}
+                  onChange={(e) => setSelectedAuthor(e.target.value)}
+                  className="px-3 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent"
+                >
+                  <option value="">All authors</option>
+                  {allAuthors.map(author => (
+                    <option key={author} value={author}>{author}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Clear Filters */}
+              {hasActiveFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="ml-auto px-4 py-1 text-sm text-pace-red hover:text-pace-red-dark transition-colors flex items-center gap-1"
+                >
+                  <X size={16} />
+                  Clear filters
+                </button>
+              )}
+            </div>
+
+            {/* Results count */}
+            <div className="text-sm text-gray-600">
+              Showing {filteredPublications.length} of {publications.length} publications
+            </div>
           </div>
 
           <h2 id="publications" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
             Academic Publications
           </h2>
 
-          <div className="space-y-8">
-            {years.map((year) => (
+          {filteredPublications.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">No publications found matching your criteria.</p>
+              <button
+                onClick={clearFilters}
+                className="mt-4 px-6 py-2 bg-pace-red text-white rounded-lg hover:bg-pace-red-dark transition-colors"
+              >
+                Clear filters
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-8">
+              {years.map((year) => (
               <div key={year}>
                 {publicationsByYear[year].map((pub, index) => (
                   <div key={index} className="grid grid-cols-[100px_1fr] gap-6 mb-6">
@@ -182,7 +331,7 @@ export default function PublicationsPage() {
                       <div className="mb-2">
                         <span className="text-base font-light text-gray-900">{pub.title}</span>
                         <span className="text-sm text-gray-600"> — {pub.authors}</span>
-                        <span className="text-sm text-clairient-blue italic"> — {pub.venue}</span>
+                        <span className="text-sm text-pace-red italic"> — {pub.venue}</span>
                       </div>
 
                       {/* Abstract */}
@@ -202,7 +351,8 @@ export default function PublicationsPage() {
                 ))}
               </div>
             ))}
-          </div>
+            </div>
+          )}
 
           {/* Reports and Newsletters Section */}
           <div className="mt-16">

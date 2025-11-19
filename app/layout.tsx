@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   authors: [{ name: 'PaCE' }],
   viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   openGraph: {
     title: 'PaCE - Forecasting the Future of Conflict and Risk',
     description: 'Intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability.',
