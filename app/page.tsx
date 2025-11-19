@@ -62,7 +62,7 @@ export default async function Home() {
                     <ArrowRight className="text-pace-red opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
                   </div>
                   <p className="text-base leading-relaxed text-gray-700">
-                    View interactive dashboards with conflict risk forecasts for 180+ countries and 259K grid cells,
+                    View interactive dashboards with conflict risk forecasts for 180+ countries and 259K sub-national areas,
                     updated monthly with predictions up to 6 months ahead.
                   </p>
                 </div>

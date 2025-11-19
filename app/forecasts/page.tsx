@@ -128,7 +128,7 @@ export default async function ForecastsPage() {
             </p>
             <p className="text-gray-700 text-sm">All values represent predicted <span className="font-medium text-gray-900">conflict fatalities</span> (deaths from state-based armed conflict) over the next 6 months. The table shows 1‑month ahead predictions and month-over-month changes.</p>
           </div>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <SummaryCard
               title="Total predicted fatalities (1‑month)"
               value={Math.round(total1mCurrent)}
@@ -142,7 +142,6 @@ export default async function ForecastsPage() {
               delta={deltaHigh}
               deltaLabel="Δ vs last month"
             />
-            <ThresholdHighlights rows={rows as any} threshold={HIGH_THRESHOLD} />
           </div>
         </div>
       </section>
