@@ -86,12 +86,12 @@ export default function Navigation() {
                 const size = isHomePage ? 56 : 32
                 return (
                   <Image
-                    src={`/logo.png`}
+                    src={`/logo-white.svg`}
                     alt="PaCE"
                     width={size}
                     height={size}
                     className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
-                    style={{ filter: 'brightness(1.1) contrast(1.1)' }}
+                    style={{ filter: 'brightness(1.0) contrast(1.0)' }}
                     priority={isHomePage}
                   />
                 )
