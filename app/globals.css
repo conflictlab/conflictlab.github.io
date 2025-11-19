@@ -334,7 +334,7 @@
     position: absolute;
     inset: 0;
     background: url('/hero-bg-network.svg') center/cover no-repeat;
-    opacity: 0.12;
+    opacity: 0.16; /* slightly more visible */
   }
 
   /* Network photo provided by user (fallback-safe) */
@@ -354,7 +354,7 @@
     background-repeat: no-repeat;
     background-size: 70vmin auto; /* scale relative to viewport */
     background-position: right bottom; /* push to viewport edge */
-    opacity: 0.12;
+    opacity: 0.18; /* make background image a bit more visible */
     mix-blend-mode: multiply;
     pointer-events: none;
   }
@@ -368,7 +368,7 @@
     background-size: 70vmin auto;
     /* Use same anchor as ::before, rotation will mirror to top-left visually */
     background-position: right bottom;
-    opacity: 0.12;
+    opacity: 0.14; /* subtle mirrored accent */
     mix-blend-mode: multiply;
     transform: rotate(180deg);
     transform-origin: center center;
