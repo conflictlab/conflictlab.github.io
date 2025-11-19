@@ -41,7 +41,18 @@ export default async function ForecastsGridPage() {
   // Removed inline grid download list in favor of centralized data page
   return (
     <div>
-      <section className="py-0 hero-background-network-image" />
+      {/* Shared hero banner with Forecasts page */}
+      <section className="pt-6 pb-6 hero-background-network-image">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight flex items-center gap-2">
+            Forecast Dashboard
+          </h1>
+          <p className="text-xl text-gray-600 font-light leading-relaxed mb-6">
+            Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.
+            Predictions are updated monthly for countries and subnational regions worldwide.
+          </p>
+        </div>
+      </section>
 
       <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
         <PrioGridMap period={snap.period} />
