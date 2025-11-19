@@ -173,7 +173,7 @@ export default function CountryScenarioPanel({ items }: Props) {
       if (Object.keys(out).length) break
     }
     return Object.keys(out).length ? out : null
-  }, [scenarios, selected, items])
+  }, [scenarios, selected, items, minmax])
 
   return (
     <div>
