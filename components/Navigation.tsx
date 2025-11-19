@@ -83,17 +83,18 @@ export default function Navigation() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               {(() => {
-                const size = isHomePage ? 56 : 32
+                const containerSize = isHomePage ? 'h-14 w-14' : 'h-8 w-8'
+                const imgSize = isHomePage ? 44 : 24
                 return (
-                  <Image
-                    src={`/logo-white.svg`}
-                    alt="PaCE"
-                    width={size}
-                    height={size}
-                    className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
-                    style={{ filter: 'brightness(1.0) contrast(1.0)' }}
-                    priority={isHomePage}
-                  />
+                  <div className={`mr-3 ${containerSize} rounded-full bg-white flex items-center justify-center shadow-sm`}>
+                    <Image
+                      src={`/logo.png`}
+                      alt="PaCE"
+                      width={imgSize}
+                      height={imgSize}
+                      priority={isHomePage}
+                    />
+                  </div>
                 )
               })()}
               <span className={`font-light text-white ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
