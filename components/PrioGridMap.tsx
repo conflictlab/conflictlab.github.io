@@ -286,25 +286,18 @@ export default function PrioGridMap({ period, activeView }: Props) {
         {/* View toggle overlay (center-bottom, larger) */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
           <div className="inline-flex rounded-xl border-2 border-pace-charcoal overflow-hidden bg-white/95 backdrop-blur shadow-lg">
-            {(() => {
-              // ...
-              return (
-                <>
-                  <Link
-                    href="/forecasts"
-                    className={`px-6 py-2 text-lg ${gridActive ? 'text-pace-charcoal hover:bg-gray-50' : 'bg-pace-charcoal text-white'}`}
-                  >
-                    Country view
-                  </Link>
-                  <Link
-                    href="/forecasts-grid"
-                    className={`px-6 py-2 text-lg ${gridActive ? 'bg-pace-charcoal text-white' : 'text-pace-charcoal hover:bg-gray-50'}`}
-                  >
-                    Grid view
-                  </Link>
-                </>
-              )
-            })()}
+            <Link
+              href="/forecasts"
+              className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'text-pace-charcoal hover:bg-gray-50' : 'bg-pace-charcoal text-white'}`}
+            >
+              Country view
+            </Link>
+            <Link
+              href="/forecasts-grid"
+              className={`px-6 py-2 text-lg ${pathname?.startsWith('/forecasts-grid') ? 'bg-pace-charcoal text-white' : 'text-pace-charcoal hover:bg-gray-50'}`}
+            >
+              Grid view
+            </Link>
           </div>
         </div>
         {error && (
