@@ -76,7 +76,7 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="bg-teal-700 border-b border-teal-600 relative z-[2000] shadow-md">
+    <nav className="bg-railings border-b border-railings-light relative z-[2000] shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-16'}`}>
           <div className="flex items-center">
@@ -85,6 +85,7 @@ export default function Navigation() {
                 src={`${base}/logo.png`}
                 alt="PaCE"
                 className={`mr-3 ${isHomePage ? 'h-14 w-14' : 'h-8 w-8'}`}
+                style={{ filter: 'brightness(1.1) contrast(1.1)' }}
               />
               <span className={`font-light text-white ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
             </Link>
@@ -114,7 +115,7 @@ export default function Navigation() {
                     </Link>
                     {openDropdown === item.href && (
                       <div className="absolute top-full left-0 mt-1 pt-2 w-48">
-                        <div className="bg-teal-800 border border-teal-700 rounded-lg shadow-lg py-2 z-[2001]">
+                        <div className="bg-railings border border-railings-light rounded-lg shadow-lg py-2 z-[2001]">
                           {item.sections.map((section) => (
                             <Link
                               key={section.href}
@@ -159,7 +160,7 @@ export default function Navigation() {
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-teal-700 border-t border-teal-600">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-railings border-t border-railings-light">
             {menuItems.map((item) => (
               <div key={item.href}>
                 <Link

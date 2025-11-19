@@ -16,6 +16,8 @@ module.exports = {
         'pace-red-dark': '#991B1B',
         'pace-charcoal': '#2d2d2d',
         'pace-charcoal-light': '#3d3d3d',
+        'railings': '#31363B',
+        'railings-light': '#3f4449',
       },
     },
   },
