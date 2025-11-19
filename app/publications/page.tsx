@@ -125,7 +125,7 @@ export default function PublicationsPage() {
   const [selectedAuthor, setSelectedAuthor] = useState('')
 
   // Get unique years and authors
-  const allYears = [...new Set(publications.map(p => p.year))].sort((a, b) => b - a)
+  const allYears = Array.from(new Set(publications.map(p => p.year))).sort((a, b) => b - a)
   const allAuthors = useMemo(() => {
     const authorSet = new Set<string>()
     publications.forEach(pub => {
