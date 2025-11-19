@@ -1,71 +1,86 @@
-import { notFound } from 'next/navigation'
-import { readSnapshot, getEntitySeries } from '@/lib/forecasts'
+import { getForecastsPageData, getEntityHorizonMonths } from '@/lib/forecasts'
 import ForecastFanChart from '@/components/ForecastFanChart'
-import Sparkline from '@/components/Sparkline'
-import DriverBadges from '@/components/DriverBadges'
+import { notFound } from 'next/navigation'
 
-interface Params { params: { entity: string } }
+async function getEntityData(entityId: string) {
+  const { snapshot } = await getForecastsPageData()
+  const entity = snapshot.entities.find(e => e.id === entityId)
+  if (!entity) return null
 
-// Pre-generate all entity pages for static export
-export async function generateStaticParams() {
-  const snap = readSnapshot('latest')
-  const seen = new Set<string>()
-  const out: Array<{ entity: string }> = []
-  for (const e of snap.entities) {
-    const ids = [e.id, e.iso3].filter(Boolean).map((s) => String(s).toLowerCase())
-    for (const id of ids) {
-      if (!seen.has(id)) { seen.add(id); out.push({ entity: id }) }
-    }
-  }
-  return out
+  const months = getEntityHorizonMonths(snapshot.period, entity.name) || [
+    entity.horizons['1m'].p50,
+    Number(((entity.horizons['1m'].p50 + entity.horizons['3m'].p50) / 2).toFixed(1)),
+    entity.horizons['3m'].p50,
+    Number((entity.horizons['3m'].p50 + (entity.horizons['6m'].p50 - entity.horizons['3m'].p50) / 3).toFixed(1)),
+    Number((entity.horizons['3m'].p50 + (entity.horizons['6m'].p50 - entity.horizons['3m'].p50) * 2 / 3).toFixed(1)),
+    entity.horizons['6m'].p50,
+  ]
+
+  return { entity, months }
 }
 
-export default async function ForecastEntityPage({ params }: Params) {
-  const { entity } = params
-  const snap = readSnapshot('latest')
-  const e = snap.entities.find((x) => x.id.toLowerCase() === entity.toLowerCase() || x.iso3?.toLowerCase() === entity.toLowerCase())
-  if (!e) return notFound()
-  const series = getEntitySeries(e.id).slice(-12)
+export default async function EntityForecastPage({ params }: { params: { entity: string } }) {
+  const data = await getEntityData(params.entity)
+
+  if (!data) {
+    notFound()
+  }
+
+  const { entity, months } = data
 
   return (
-    <div className="py-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl md:text-4xl font-light text-gray-900 mb-2">{e.name}</h1>
-        <p className="text-gray-600 mb-6">Period: {snap.period} · Confidence: {(e.confidence * 100).toFixed(0)}%</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="border border-gray-200 rounded-lg p-4 bg-white">
-            <div className="text-sm text-gray-500 mb-2">Recent Trend</div>
-            <Sparkline values={series.map((s) => s.index)} width={300} height={60} />
-          </div>
-          <ForecastFanChart title={e.name} horizons={{
-            '1m': { p10: e.horizons['1m'].p10, p50: e.horizons['1m'].p50, p90: e.horizons['1m'].p90 },
-            '3m': { p10: e.horizons['3m'].p10, p50: e.horizons['3m'].p50, p90: e.horizons['3m'].p90 },
-            '6m': { p10: e.horizons['6m'].p10, p50: e.horizons['6m'].p50, p90: e.horizons['6m'].p90 },
-          }} />
+    <div className="bg-gray-50 min-h-screen">
+      <section className="py-12 hero-background-network-image">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
+            {entity.name}
+          </h1>
+          <p className="text-xl text-gray-600 font-light leading-relaxed">
+            Detailed 6-month forecast for predicted conflict fatalities.
+          </p>
         </div>
+      </section>
 
-        <div className="border border-gray-200 rounded-lg p-4 bg-white">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div>
-              <div className="text-gray-500">Index</div>
-              <div className="text-xl text-gray-900">{e.index}</div>
+      <section className="py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="md:col-span-2">
+              <ForecastFanChart
+                title="Predicted Fatalities (6-Month Horizon)"
+                months={months}
+              />
             </div>
+
             <div>
-              <div className="text-gray-500">Δ MoM</div>
-              <div className={`text-xl ${e.deltaMoM >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>{e.deltaMoM >= 0 ? '+' : ''}{e.deltaMoM}</div>
+              <h2 className="text-2xl font-light text-gray-900 mb-4">Risk Drivers</h2>
+              <div className="space-y-4">
+                {entity.drivers.length > 0 ? (
+                  entity.drivers.map((driver, i) => (
+                    <div key={i} className="bg-white p-4 rounded-lg border border-gray-200">
+                      <p className="font-semibold text-gray-800">{driver.category}</p>
+                      <p className="text-sm text-gray-600">{driver.note}</p>
+                      <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                        <div className="bg-pace-red h-2.5 rounded-full" style={{ width: `${driver.impact}%` }}></div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No specific drivers identified for this period.</p>
+                )}
+              </div>
             </div>
+
             <div>
-              <div className="text-gray-500">Δ YoY</div>
-              <div className={`text-xl ${e.deltaYoY >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>{e.deltaYoY >= 0 ? '+' : ''}{e.deltaYoY}</div>
-            </div>
-            <div>
-              <div className="text-gray-500">Drivers</div>
-              <DriverBadges categories={e.drivers.map((d) => d.category)} />
+              <h2 className="text-2xl font-light text-gray-900 mb-4">Analyst Notes</h2>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <p className="text-gray-600 italic">
+                  {entity.notes || 'No analyst notes available for this period.'}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }
