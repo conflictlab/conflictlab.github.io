@@ -71,9 +71,10 @@ interface Props {
   dimZoomControls?: boolean
   hideMonthSlider?: boolean
   hideZoomHint?: boolean
+  lazyHotspots?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '590px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false, hideZoomHint = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '590px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false, hideZoomHint = false, lazyHotspots = true }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
@@ -85,6 +86,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const [showSearch, setShowSearch] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const [hotspotsReady, setHotspotsReady] = useState(!lazyHotspots)
 
   useEffect(() => {
     let cancelled = false
@@ -110,6 +112,12 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     const t = setTimeout(() => setShowZoomHint(false), 7000)
     return () => clearTimeout(t)
   }, [hideZoomHint])
+
+  useEffect(() => {
+    if (!lazyHotspots) return
+    const t = setTimeout(() => setHotspotsReady(true), 300)
+    return () => clearTimeout(t)
+  }, [lazyHotspots])
 
   const valueByName = useMemo(() => {
     const m = new Map<string, number>()
@@ -451,8 +459,8 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                 }}
               />
             )}
-            {/* Animated pulsing hotspots for high-risk countries */}
-            {showHotspots && <HotspotMarkers hotspots={hotspots} />}
+            {/* Animated pulsing hotspots for high-risk countries (optionally deferred) */}
+            {showHotspots && hotspotsReady && <HotspotMarkers hotspots={hotspots} />}
           </MapContainer>
         )}
         {/* Compact legend overlay (bottom-right) */}
