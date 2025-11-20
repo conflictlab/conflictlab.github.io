@@ -132,7 +132,7 @@ export default function Navigation() {
                       href={item.href}
                       className={`flex items-center gap-1 transition-colors font-light focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red ${
                         isActive(item.href)
-                          ? 'text-clairient-light border-b-2 border-clairient-light pb-1'
+                          ? 'text-pace-red border-b-2 border-pace-red pb-1'
                           : 'text-gray-300 hover:text-pace-red-light'
                       }`}
                     >
@@ -160,7 +160,7 @@ export default function Navigation() {
                     href={item.href}
                     className={`transition-colors font-light focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red ${
                       isActive(item.href)
-                        ? 'text-clairient-light border-b-2 border-clairient-light pb-1'
+                        ? 'text-pace-red border-b-2 border-pace-red pb-1'
                         : 'text-gray-300 hover:text-pace-red-light'
                     }`}
                   >
@@ -193,7 +193,7 @@ export default function Navigation() {
                   href={item.href}
                   className={`block px-3 py-2 font-light ${
                     isActive(item.href)
-                      ? 'text-clairient-light bg-gray-800'
+                      ? 'text-pace-red bg-gray-800'
                       : 'text-gray-300 hover:text-pace-red-light'
                   }`}
                 >
