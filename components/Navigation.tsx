@@ -86,13 +86,29 @@ export default function Navigation() {
                 const containerSize = isHomePage ? 'h-14 w-14' : 'h-8 w-8'
                 const imgSize = isHomePage ? 44 : 24
                 return (
-                  <div className={`mr-3 ${containerSize} rounded-full bg-white flex items-center justify-center shadow-sm`}>
+                  <div
+                    className={`mr-3 ${containerSize} rounded-full relative overflow-hidden flex items-center justify-center ring-1 ring-black/10 shadow-lg`} 
+                    style={{
+                      background: 'linear-gradient(145deg, rgba(255,255,255,0.98), rgba(245,245,245,0.98))',
+                      boxShadow: '0 8px 18px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.15)'
+                    }}
+                  >
+                    {/* subtle inner highlights for depth */}
+                    <div
+                      className="absolute inset-0 rounded-full pointer-events-none"
+                      style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.06), inset 0 -2px 4px rgba(0,0,0,0.04)' }}
+                    />
+                    <div
+                      className="absolute inset-x-1 top-1 h-1/3 rounded-full opacity-60 pointer-events-none"
+                      style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0))' }}
+                    />
                     <Image
                       src={`/logo.png`}
                       alt="PaCE"
                       width={imgSize}
                       height={imgSize}
                       priority={isHomePage}
+                      className="relative drop-shadow-sm"
                     />
                   </div>
                 )
