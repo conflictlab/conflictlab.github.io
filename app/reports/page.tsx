@@ -118,7 +118,7 @@ export default function ReportsPage() {
 
           {/* Email Signup Section */}
           <div className="mb-16">
-            <div className="bg-gradient-to-r from-pace-red/5 to-clairient-blue/5 border border-gray-200 rounded-lg p-8">
+            <div className="border border-gray-200 rounded-lg p-8 bg-white">
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-2xl font-light text-gray-900 mb-4">
                   Monthly Global Risk Prediction Map Report
