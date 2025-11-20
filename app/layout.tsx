@@ -40,6 +40,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Preload world geometry and warm up tile servers for faster map paint */}
+        <link rel="preload" href={`${base}/data/world.topo.json`} as="fetch" crossOrigin="anonymous" />
         <link rel="preload" href={`${base}/data/world.geojson`} as="fetch" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://a.basemaps.cartocdn.com" />
         <link rel="dns-prefetch" href="https://b.basemaps.cartocdn.com" />

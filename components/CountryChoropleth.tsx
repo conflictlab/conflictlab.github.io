@@ -6,6 +6,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+// TopoJSON client for converting topology to GeoJSON (loaded only if used)
+import { feature as topoFeature } from 'topojson-client'
 
 type CountryValue = { id?: string; name: string; iso3?: string; value?: number; months?: number[] }
 
@@ -93,14 +95,31 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     async function load() {
       setError(null)
       try {
-        // Load local world GeoJSON
+        // Prefer simplified TopoJSON if available, fallback to GeoJSON
         const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        const res = await fetch(`${base}/data/world.geojson`)
-        if (!res.ok) throw new Error('Failed to load world GeoJSON')
-        const json = await res.json()
+        // Try TopoJSON first
+        let json: any | null = null
+        try {
+          const topoRes = await fetch(`${base}/data/world.topo.json`)
+          if (topoRes.ok) {
+            const topology = await topoRes.json()
+            const objName = Object.keys(topology.objects || {})[0]
+            if (objName) {
+              const geo = topoFeature(topology, topology.objects[objName] as any)
+              json = geo
+            }
+          }
+        } catch (_) {
+          // ignore and fallback below
+        }
+        if (!json) {
+          const res = await fetch(`${base}/data/world.geojson`)
+          if (!res.ok) throw new Error('Failed to load world geometry')
+          json = await res.json()
+        }
         if (!cancelled) setWorld(json)
       } catch (e: any) {
-        if (!cancelled) setError(e?.message || 'Failed to load world GeoJSON')
+        if (!cancelled) setError(e?.message || 'Failed to load world geometry')
       }
     }
     load()
