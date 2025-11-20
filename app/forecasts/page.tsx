@@ -75,7 +75,7 @@ export default async function ForecastsPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight flex items-center gap-2">
             Forecast Dashboard
-            <span title="Predicted fatalities from state-based armed conflict; includes 1-, 3-, and 6‑month horizons with uncertainty."><Info className="text-gray-400" size={20} /></span>
+            <span title="Predicted fatalities from state-based armed conflict; includes 1-, 3-, and 6‑month horizons with uncertainty." className="cursor-help"><Info className="text-gray-400 hover:text-gray-600 transition-colors" size={20} /></span>
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed mb-6">
             Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.

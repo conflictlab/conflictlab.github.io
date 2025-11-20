@@ -183,7 +183,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
     const mn = sorted[0]
     const mx = sorted[sorted.length - 1]
     // Fixed bins for grid view
-    const t = [10, 50, 100, 500]
+    const t = [5, 10, 50, 100]
     return { thresholds: t, vmin: mn, vmax: mx }
   }, [data, points, month])
 
@@ -283,7 +283,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
 
   return (
     <div className="border border-gray-200 rounded-lg p-0 bg-white">
-      <div className="h-[560px] md:h-[560px] rounded overflow-hidden relative">
+      <div className="h-[590px] md:h-[590px] rounded overflow-hidden relative">
         {/* View toggle overlay (center-bottom, larger) */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
           <div className="inline-flex rounded-xl border-2 border-pace-charcoal overflow-hidden bg-white/95 backdrop-blur shadow-lg">
@@ -452,23 +452,23 @@ export default function PrioGridMap({ period, activeView }: Props) {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
-                  <span>{'< 10'}</span>
+                  <span>{'< 5'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
-                  <span>{'10–50'}</span>
+                  <span>{'5–10'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
-                  <span>{'50–100'}</span>
+                  <span>{'10–50'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
-                  <span>{'100–500'}</span>
+                  <span>{'50–100'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
-                  <span>{'> 500'}</span>
+                  <span>{'> 100'}</span>
                 </div>
               </div>
             </div>

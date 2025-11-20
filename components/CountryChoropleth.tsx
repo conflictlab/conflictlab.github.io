@@ -72,7 +72,7 @@ interface Props {
   hideMonthSlider?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '590px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)

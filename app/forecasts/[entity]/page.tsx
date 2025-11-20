@@ -95,12 +95,12 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       {/* Hero Section */}
       <section className="py-12 hero-background-network-image">
         <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]">
-          <nav aria-label="Breadcrumb" className="text-sm text-white/90">
-            <Link href="/" className="hover:underline">Home</Link>
+          <nav aria-label="Breadcrumb" className="text-sm text-gray-700">
+            <Link href="/" className="text-pace-red hover:text-pace-red-dark">Home</Link>
             <span className="mx-1">/</span>
-            <Link href="/forecasts" className="hover:underline">forecasts</Link>
+            <Link href="/forecasts" className="text-pace-red hover:text-pace-red-dark">forecasts</Link>
             <span className="mx-1">/</span>
-            <span>{entity.name}</span>
+            <span className="text-gray-700">{entity.name}</span>
           </nav>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
