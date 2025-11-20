@@ -6,9 +6,15 @@ import { useState, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown } from 'lucide-react'
 
+type MenuSubSection = {
+  label: string
+  href: string
+}
+
 type MenuSection = {
   label: string
   href: string
+  subsections?: MenuSubSection[]
 }
 
 type MenuItem = {
@@ -20,7 +26,9 @@ type MenuItem = {
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const submenuTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const pathname = usePathname()
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   if (pathname?.startsWith('/test-map')) return null
@@ -36,6 +44,21 @@ export default function Navigation() {
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setOpenDropdown(null)
+      setOpenSubmenu(null)
+    }, 150)
+  }
+
+  const handleSubmenuEnter = (href: string) => {
+    if (submenuTimeoutRef.current) {
+      clearTimeout(submenuTimeoutRef.current)
+      submenuTimeoutRef.current = null
+    }
+    setOpenSubmenu(href)
+  }
+
+  const handleSubmenuLeave = () => {
+    submenuTimeoutRef.current = setTimeout(() => {
+      setOpenSubmenu(null)
     }, 150)
   }
 
@@ -61,16 +84,16 @@ export default function Navigation() {
       href: '/research',
       sections: [
         { label: 'Methodology', href: '/methodology' },
+        {
+          label: 'Publications',
+          href: '/publications',
+          subsections: [
+            { label: 'Academic Publications', href: '/publications#publications' },
+            { label: 'Reports & Newsletters', href: '/publications#reports-newsletters' },
+          ],
+        },
         { label: 'Downloads', href: '/downloads' },
         { label: 'Dissemination', href: '/dissemination' },
-      ],
-    },
-    {
-      label: 'Publications',
-      href: '/publications',
-      sections: [
-        { label: 'Academic Publications', href: '/publications#publications' },
-        { label: 'Reports & Newsletters', href: '/publications#reports-newsletters' },
       ],
     },
     {
@@ -150,13 +173,35 @@ export default function Navigation() {
                       <div className="absolute top-full left-0 mt-1 pt-2 w-48">
                         <div className="bg-railings border border-railings-light rounded-lg shadow-lg py-2 z-[2001]">
                           {item.sections.map((section) => (
-                            <Link
+                            <div
                               key={section.href}
-                              href={section.href}
-                              className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
+                              className="relative"
+                              onMouseEnter={() => section.subsections && handleSubmenuEnter(section.href)}
+                              onMouseLeave={() => section.subsections && handleSubmenuLeave()}
                             >
-                              {section.label}
-                            </Link>
+                              <Link
+                                href={section.href}
+                                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
+                              >
+                                {section.label}
+                                {section.subsections && <span className="float-right">›</span>}
+                              </Link>
+                              {section.subsections && openSubmenu === section.href && (
+                                <div className="absolute left-full top-0 ml-1 w-56">
+                                  <div className="bg-railings border border-railings-light rounded-lg shadow-lg py-2 z-[2002]">
+                                    {section.subsections.map((subsection) => (
+                                      <Link
+                                        key={subsection.href}
+                                        href={subsection.href}
+                                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
+                                      >
+                                        {subsection.label}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -209,13 +254,27 @@ export default function Navigation() {
                 {item.sections && (
                   <div className="pl-6 space-y-1 mt-1">
                     {item.sections.map((section) => (
-                      <Link
-                        key={section.href}
-                        href={section.href}
-                        className="block px-3 py-1.5 text-sm text-gray-400 hover:text-pace-red-light"
-                      >
-                        {section.label}
-                      </Link>
+                      <div key={section.href}>
+                        <Link
+                          href={section.href}
+                          className="block px-3 py-1.5 text-sm text-gray-400 hover:text-pace-red-light"
+                        >
+                          {section.label}
+                        </Link>
+                        {section.subsections && (
+                          <div className="pl-6 space-y-1 mt-1">
+                            {section.subsections.map((subsection) => (
+                              <Link
+                                key={subsection.href}
+                                href={subsection.href}
+                                className="block px-3 py-1.5 text-xs text-gray-500 hover:text-pace-red-light"
+                              >
+                                {subsection.label}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
