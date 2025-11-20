@@ -452,6 +452,42 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             {showHotspots && <HotspotMarkers hotspots={hotspots} />}
           </MapContainer>
         )}
+        {/* Compact legend overlay (bottom-left) */}
+        {!hideLegend && !error && (
+          <div className="absolute bottom-4 left-4 z-[1000]">
+            <div className="bg-white/85 backdrop-blur-sm border border-gray-200 rounded-md px-2 py-1 shadow-sm">
+              <div className="text-[10px] text-gray-600 mb-1">Legend · min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
+              <div className="space-y-1 text-[11px] text-gray-800">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
+                  <span>{'< 10'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
+                  <span>{'10–50'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
+                  <span>{'50–100'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
+                  <span>{'100–1000'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
+                  <span>{'> 1000'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Map attribution (bottom-right) */}
+        {!error && (
+          <div className="absolute bottom-1 right-2 z-[900] text-[10px] text-gray-600">
+            Map data © OpenStreetMap contributors, © CARTO
+          </div>
+        )}
         {showZoomHint && (
           <div className="absolute bottom-4 right-4 z-[1000]">
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
@@ -491,7 +527,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
       {!hideLegend && (
         <div className="px-4 py-2">
           <div className="flex items-center justify-between">
-            <div className="text-xs text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
+            {/* min/max moved to legend overlay */}
             <div className="flex items-center gap-3 text-sm text-gray-700">
               <span className="whitespace-nowrap font-semibold text-base text-gray-900">Months ahead:</span>
               <div className="w-56 md:w-72">
@@ -517,7 +553,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               <span className="w-6 text-right font-medium">{month}</span>
             </div>
           </div>
-          <CountryLegend thresholds={thresholds} />
+          {/* Legend moved onto the map (bottom-left overlay) */}
           {!hideDownloadButton && (
             <div className="mt-4 text-center">
               <Link href="/downloads" className="bg-pace-charcoal text-white px-8 py-3 hover:bg-pace-charcoal-light transition-all duration-200 font-normal rounded-lg inline-flex items-center justify-center shadow-sm hover:shadow-md">
