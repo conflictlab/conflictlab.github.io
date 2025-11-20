@@ -455,27 +455,27 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         {/* Compact legend overlay (bottom-left) */}
         {!hideLegend && !error && (
           <div className="absolute bottom-4 left-4 z-[1000]">
-            <div className="bg-white/85 backdrop-blur-sm border border-gray-200 rounded-md px-2 py-1 shadow-sm">
-              <div className="text-[10px] text-gray-600 mb-1">Legend · min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
+            <div className="bg-white/85 backdrop-blur-sm border border-gray-200 rounded-md px-2 py-1.5 shadow-sm">
+              <div className="text-[10px] text-gray-600 mb-1">min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
               <div className="space-y-1 text-[11px] text-gray-800">
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
+                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
                   <span>{'< 10'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
+                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
                   <span>{'10–50'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
+                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
                   <span>{'50–100'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
+                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
                   <span>{'100–1000'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
+                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
                   <span>{'> 1000'}</span>
                 </div>
               </div>
