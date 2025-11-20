@@ -78,7 +78,7 @@ export default async function ForecastsPage() {
             Six‑month forecasts of conflict fatalities at the country and sub‑national level.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
-            <Link href="/forecasts" className="btn-secondary inline-flex items-center gap-1">Dashboard</Link>
+            <Link href="/forecasts#dashboard" className="btn-secondary inline-flex items-center gap-1">Dashboard</Link>
             <Link href="/reports" className="btn-secondary inline-flex items-center gap-1">Reports</Link>
             <Link href="/downloads" className="btn-secondary inline-flex items-center gap-1">Downloads</Link>
           </div>
@@ -97,7 +97,7 @@ export default async function ForecastsPage() {
       </section>
 
       {/* Forecast Map */}
-      <section className="py-0">
+      <section className="py-0" id="dashboard">
         {/* Full-width (bleed) wrapper */}
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
           <LazyVisible minHeight="300px">
