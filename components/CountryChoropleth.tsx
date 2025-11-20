@@ -70,15 +70,16 @@ interface Props {
   hideSearch?: boolean
   dimZoomControls?: boolean
   hideMonthSlider?: boolean
+  hideZoomHint?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '590px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '590px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false, hideZoomHint = false }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [month, setMonth] = useState<number>(1)
-  const [showZoomHint, setShowZoomHint] = useState(true)
+  const [showZoomHint, setShowZoomHint] = useState(!hideZoomHint)
   const [mapRef, setMapRef] = useState<L.Map | null>(null)
   const [query, setQuery] = useState('')
   const [focusedIndex, setFocusedIndex] = useState(-1)
@@ -105,9 +106,10 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   }, [])
 
   useEffect(() => {
+    if (hideZoomHint) return
     const t = setTimeout(() => setShowZoomHint(false), 7000)
     return () => clearTimeout(t)
-  }, [])
+  }, [hideZoomHint])
 
   const valueByName = useMemo(() => {
     const m = new Map<string, number>()
@@ -519,7 +521,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             Map data © OpenStreetMap contributors, © CARTO
           </div>
         )}
-        {showZoomHint && (
+        {!hideZoomHint && showZoomHint && (
           <div className="absolute top-4 right-4 z-[1000]">
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>

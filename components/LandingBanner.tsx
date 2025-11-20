@@ -24,11 +24,11 @@ export default function LandingBanner() {
           <div className="flex justify-center gap-8 md:gap-12 text-white counter-fade-in">
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1">180+</div>
-              <div className="text-sm md:text-base font-light opacity-90">Countries</div>
+              <div className="text-sm md:text-base font-light opacity-90"><span className="word-pulse">Countries</span></div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1">259K</div>
-              <div className="text-sm md:text-base font-light opacity-90" title="0.5° map squares (~55 km)">Sub‑national Areas</div>
+              <div className="text-sm md:text-base font-light opacity-90" title="0.5° map squares (~55 km)"><span className="word-pulse">Sub‑national Areas</span></div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1">6</div>

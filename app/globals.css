@@ -765,6 +765,14 @@
     position: relative;
   }
 
+  /* Pulse-only variant for use on colored backgrounds without forcing red text */
+  .word-pulse {
+    animation: pulse-subtle 4s ease-in-out infinite;
+    animation-delay: 1.5s;
+    display: inline-block;
+    position: relative;
+  }
+
   @keyframes pulse-subtle {
     0%, 100% {
       opacity: 1;

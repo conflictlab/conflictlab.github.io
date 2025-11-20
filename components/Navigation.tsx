@@ -86,7 +86,6 @@ export default function Navigation() {
       sections: [
         { label: 'Methodology', href: '/methodology' },
         { label: 'Publications', href: '/publications' },
-        { label: 'Downloads', href: '/downloads' },
         {
           label: 'Dissemination',
           href: '/dissemination',
@@ -104,7 +103,6 @@ export default function Navigation() {
         { label: 'PaCE', href: '/about' },
         { label: 'Team', href: '/about/team' },
         { label: 'Contact', href: '/contact' },
-        { label: 'Media Kit', href: '/media-kit' },
       ],
     },
   ]

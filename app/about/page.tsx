@@ -29,14 +29,12 @@ export default function About() {
             </p>
           </div>
 
-          {/* Page Navigation */}
-          <nav className="flex space-x-6 text-lg">
-            <a href="#pace" className="text-gray-700 hover:text-pace-red transition-colors">PaCE</a>
-            <span className="text-gray-400">/</span>
-            <a href="/about/team" className="text-gray-700 hover:text-pace-red transition-colors">Team</a>
-            <span className="text-gray-400">/</span>
-            <a href="/contact" className="text-gray-700 hover:text-pace-red transition-colors">Contact</a>
-          </nav>
+          {/* Quick links (buttons) */}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link href="/about#pace" className="btn-secondary inline-flex items-center justify-center">About Pace</Link>
+            <Link href="/about/team" className="btn-secondary inline-flex items-center justify-center">Team</Link>
+            <Link href="/contact" className="btn-secondary inline-flex items-center justify-center">Contact</Link>
+          </div>
         </div>
       </section>
 
@@ -99,6 +97,13 @@ export default function About() {
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <Link href="/about/team" className="btn-secondary inline-flex items-center justify-center">Meet the Team</Link>
             <Link href="/contact" className="btn-secondary inline-flex items-center justify-center">Contact Us</Link>
+          </div>
+
+          {/* Resources subsection */}
+          <div className="mt-12 border-t border-gray-200 pt-8">
+            <h3 className="text-2xl font-light text-gray-900 mb-3">Resources</h3>
+            <p className="text-gray-700 mb-4">Press info and brand assets for PaCE.</p>
+            <Link href="/media-kit" className="btn-secondary inline-flex items-center justify-center">Media Kit</Link>
           </div>
         </div>
       </section>

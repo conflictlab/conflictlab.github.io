@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react'
 import Sparkline from '@/components/Sparkline'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface Row {
   id: string
@@ -20,6 +20,7 @@ interface Props { rows: Row[] }
 type SortKey = 'name' | 'pred1m' | 'pred3m' | 'pred6m' | 'deltaMoM'
 
 export default function RiskIndexTable({ rows }: Props) {
+  const router = useRouter()
   const [sortKey, setSortKey] = useState<SortKey>('pred1m')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [query, setQuery] = useState('')
@@ -93,18 +94,23 @@ export default function RiskIndexTable({ rows }: Props) {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {sorted.map((r) => (
-            <Link key={r.id} href={`/forecasts/${r.id}`} legacyBehavior>
-              <tr className="hover:bg-gray-50 cursor-pointer">
-                <td className="px-4 py-2 text-sm text-gray-900">{r.name}</td>
-                <td className="px-4 py-2 text-sm text-right font-medium text-gray-900">{r.pred1m}</td>
-                <td className={`px-4 py-2 text-sm text-right font-medium ${r.deltaMoM >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>{r.deltaMoM >= 0 ? '+' : ''}{r.deltaMoM}</td>
-                <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred3m}</td>
-                <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred6m}</td>
-                <td className="px-4 py-2 text-sm">
-                  {r.trend && r.trend.length > 1 ? <Sparkline values={r.trend} /> : <span className="text-gray-400">—</span>}
-                </td>
-              </tr>
-            </Link>
+            <tr
+              key={r.id}
+              className="hover:bg-gray-50 cursor-pointer"
+              onClick={() => router.push(`/forecasts/${r.id}`)}
+              role="link"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); router.push(`/forecasts/${r.id}`) } }}
+            >
+              <td className="px-4 py-2 text-sm text-gray-900">{r.name}</td>
+              <td className="px-4 py-2 text-sm text-right font-medium text-gray-900">{r.pred1m}</td>
+              <td className={`px-4 py-2 text-sm text-right font-medium ${r.deltaMoM >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>{r.deltaMoM >= 0 ? '+' : ''}{r.deltaMoM}</td>
+              <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred3m}</td>
+              <td className="px-4 py-2 text-sm text-right text-gray-700">{r.pred6m}</td>
+              <td className="px-4 py-2 text-sm">
+                {r.trend && r.trend.length > 1 ? <Sparkline values={r.trend} /> : <span className="text-gray-400">—</span>}
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>

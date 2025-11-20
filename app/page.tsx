@@ -29,7 +29,7 @@ export default async function Home() {
       {/* Country Choropleth Map (full-bleed) with title overlay */}
       <section className="bg-white relative">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-          <CountryChoropleth items={countryMapItems} hideDownloadButton={true} hideControls={true} hideLegend={true} hideSearch={true} dimZoomControls={true} hideMonthSlider={true} showHotspots={true} mapHeight="calc(100vh - 80px)" initialZoom={3.0} />
+          <CountryChoropleth items={countryMapItems} hideDownloadButton={true} hideControls={true} hideLegend={true} hideSearch={true} dimZoomControls={true} hideMonthSlider={true} showHotspots={true} mapHeight="calc(100vh - 80px)" initialZoom={3.0} hideZoomHint={true} />
           {/* Gradient overlay to dim the map - darker at edges, lighter in center - z-index must be above map but below title */}
           <div
             className="absolute inset-0 pointer-events-none z-[400]"

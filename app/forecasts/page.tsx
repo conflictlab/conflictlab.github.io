@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 import FallbackCountryList from '@/components/FallbackCountryList'
 import Link from 'next/link'
 const ForecastFanChart = dynamic(() => import('@/components/ForecastFanChart'), { ssr: false })
-import { AlertTriangle, Info } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -69,18 +69,19 @@ export default async function ForecastsPage() {
 
   return (
     <div className="bg-gray-50">
-      {/* Hero summary */}
+      {/* Hero */}
       <section className="pt-6 pb-6 hero-background-network-image">
         <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]"><Breadcrumbs /></div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight flex items-center gap-2">
-            Forecast Dashboard
-            <span title="Predicted fatalities from state-based armed conflict; includes 1-, 3-, and 6‑month horizons with uncertainty." className="cursor-help"><Info className="text-gray-400 hover:text-gray-600 transition-colors" size={20} /></span>
-          </h1>
-          <p className="text-xl text-gray-600 font-light leading-relaxed mb-6">
-            Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.
-            Predictions are updated monthly for countries and <span title="0.5° map squares (~55 km)">Sub‑national Areas</span> worldwide.
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight">Forecasts</h1>
+          <p className="text-xl text-gray-600 font-light leading-relaxed mb-4 max-w-3xl">
+            Six‑month forecasts of conflict fatalities at the country and sub‑national level.
           </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link href="/forecasts" className="btn-secondary inline-flex items-center gap-1">Dashboard</Link>
+            <Link href="/reports" className="btn-secondary inline-flex items-center gap-1">Reports</Link>
+            <Link href="/downloads" className="btn-secondary inline-flex items-center gap-1">Downloads</Link>
+          </div>
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -92,13 +93,25 @@ export default async function ForecastsPage() {
               ],
             }) }}
           />
+        </div>
+      </section>
 
-          <div className="bg-white rounded-lg p-4 mt-4 border border-gray-200">
+      {/* Forecast Map */}
+      <section className="py-0">
+        {/* Full-width (bleed) wrapper */}
+        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+          <LazyVisible minHeight="300px">
+            <CountryChoropleth items={countryMapItems} showHotspots={true} />
+          </LazyVisible>
+        </div>
+        {/* Key takeaways moved below the map */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-lg p-4 mt-6 border border-gray-200">
             <div className="flex items-start">
-              <div className="w-1/3 pr-4 border-r border-gray-300">
+              <div className="w-full md:w-1/3 md:pr-4 md:border-r md:border-gray-300">
                 <h3 className="text-lg font-semibold text-gray-800">Key Takeaways for {takeawaysDate}</h3>
               </div>
-              <div className="w-2/3 pl-4">
+              <div className="w-full md:w-2/3 md:pl-4 mt-3 md:mt-0">
                 <ul className="space-y-1">
                   {keyTakeaways.map((item, i) => (
                     <li key={i} className="flex items-start text-sm text-gray-600">
@@ -111,17 +124,7 @@ export default async function ForecastsPage() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Country Choropleth (full-bleed) */}
-      <section className="py-0">
-        {/* Full-width (bleed) wrapper */}
-        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-          <LazyVisible minHeight="300px">
-            <CountryChoropleth items={countryMapItems} showHotspots={true} />
-          </LazyVisible>
-        </div>
-        {/* Summary cards below the map, constrained */}
+        {/* Summary cards below key takeaways, constrained */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mt-6">
             <p className="text-gray-700 font-normal mb-3">

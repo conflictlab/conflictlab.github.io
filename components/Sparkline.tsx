@@ -9,7 +9,7 @@ interface SparklineProps {
   stroke?: string
 }
 
-export default function Sparkline({ values, width = 100, height = 28, stroke = '#1e40af' }: SparklineProps) {
+export default function Sparkline({ values, width = 100, height = 28, stroke = '#6b7280' }: SparklineProps) {
   if (!values || values.length === 0) return null
   const min = Math.min(...values)
   const max = Math.max(...values)
@@ -33,4 +33,3 @@ export default function Sparkline({ values, width = 100, height = 28, stroke = '
     </svg>
   )
 }
-

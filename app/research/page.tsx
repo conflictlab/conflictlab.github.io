@@ -34,9 +34,9 @@ export default function ResearchPage() {
           </p>
           <Breadcrumbs />
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/publications" className="btn-secondary inline-flex items-center gap-1"><FileText size={16}/> Publications</Link>
+            {/* Order matches menu: Methodology, Publications, Dissemination */}
             <Link href="/methodology" className="btn-secondary inline-flex items-center gap-1"><Beaker size={16}/> Methodology</Link>
-            <Link href="/downloads" className="btn-secondary inline-flex items-center gap-1"><Database size={16}/> Data & Code</Link>
+            <Link href="/publications" className="btn-secondary inline-flex items-center gap-1"><FileText size={16}/> Publications</Link>
             <Link href="/dissemination" className="btn-secondary inline-flex items-center gap-1"><Presentation size={16}/> Dissemination</Link>
           </div>
         </div>
