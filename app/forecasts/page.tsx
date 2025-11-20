@@ -106,15 +106,15 @@ export default async function ForecastsPage() {
         </div>
         {/* Key takeaways below the map */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-lg p-4 mt-6 border border-gray-200">
+          <div className="bg-railings rounded-lg p-4 mt-6 border border-railings-light">
             <div className="flex items-start">
-              <div className="w-full md:w-1/3 md:pr-4 md:border-r md:border-gray-300">
-                <h3 className="text-lg font-semibold text-gray-800">Key Takeaways for {takeawaysDate}</h3>
+              <div className="w-full md:w-1/3 md:pr-4 md:border-r md:border-railings-light">
+                <h3 className="text-lg font-semibold text-white">Key Takeaways for {takeawaysDate}</h3>
               </div>
               <div className="w-full md:w-2/3 md:pl-4 mt-3 md:mt-0">
                 <ul className="space-y-1">
                   {keyTakeaways.map((item, i) => (
-                    <li key={i} className="flex items-start text-sm text-gray-600">
+                    <li key={i} className="flex items-start text-sm text-gray-200">
                       <AlertTriangle className="w-4 h-4 text-pace-red mr-2 mt-1 flex-shrink-0" />
                       {item}
                     </li>
