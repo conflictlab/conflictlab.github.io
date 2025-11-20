@@ -7,6 +7,7 @@
     "build": "next build",
     "build:fast": "next build",
     "prebuild": "node scripts/prebuild.js",
+    "covers": "node scripts/generate-covers.js",
     "scenarios:convert": "node scripts/convert-scenarios-pkl.js --src sce_dictionary.pkl --out public/data/scenarios.json",
     "start": "next start",
     "lint": "next lint",

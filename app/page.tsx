@@ -75,20 +75,19 @@ export default async function Home() {
               </div>
             </Link>
 
-            {/* Second card - Link to Methodology */}
-            <Link href="/methodology" className="bg-white p-8 rounded-lg shadow-md border-l-4 border-railings hover:shadow-xl hover:border-railings-light transition-all duration-300 group cursor-pointer">
+            {/* Second card - About (swapped into large card) */}
+            <Link href="/about" className="bg-white p-8 rounded-lg shadow-md border-l-4 border-railings hover:shadow-xl hover:border-railings-light transition-all duration-300 group cursor-pointer">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Brain className="text-railings" size={24} />
+                  <Users className="text-railings" size={24} />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xl font-semibold text-gray-900">Our Methodology</h3>
+                    <h3 className="text-xl font-semibold text-gray-900">About</h3>
                     <ArrowRight className="text-railings opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
                   </div>
                   <p className="text-base leading-relaxed text-gray-700">
-                    Learn how we use machine learning to forecast conflicts by identifying recurring patterns
-                    in financial markets, news, diplomatic cables, and satellite imagery.
+                    Discover PaCE’s mission and research focus, and how our ERC‑funded work at Trinity College Dublin advances conflict forecasting.
                   </p>
                 </div>
               </div>
@@ -131,19 +130,17 @@ export default async function Home() {
                 </div>
               </Link>
 
-              {/* About/Team */}
-              <Link href="/about" className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:border-pace-red hover:shadow-lg transition-all duration-300 group cursor-pointer">
+              {/* Methodology (moved down into small card) */}
+              <Link href="/methodology" className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:border-pace-red hover:shadow-lg transition-all duration-300 group cursor-pointer">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
-                    <Users className="text-pace-red" size={28} />
+                    <Brain className="text-pace-red" size={28} />
                   </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                    About Our Team
+                    Our Methodology
                     <ArrowRight className="opacity-0 group-hover:opacity-100 transition-opacity" size={16} />
                   </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Meet the researchers behind the PaCE project at Trinity College Dublin
-                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed">How we identify patterns to forecast conflict from diverse data</p>
                 </div>
               </Link>
             </div>

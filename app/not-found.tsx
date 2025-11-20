@@ -9,10 +9,9 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href="/" className="btn-primary">Home</Link>
           <Link href="/forecasts" className="btn-secondary">Forecasts</Link>
-          <Link href="/about#contact" className="btn-secondary">Contact</Link>
+          <Link href="/contact" className="btn-secondary">Contact</Link>
         </div>
       </div>
     </main>
   )
 }
-

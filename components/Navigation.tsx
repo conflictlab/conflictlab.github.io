@@ -101,8 +101,10 @@ export default function Navigation() {
       label: 'About',
       href: '/about',
       sections: [
-        { label: 'Team', href: '/about#team' },
-        { label: 'Contact', href: '/about#contact' },
+        { label: 'PaCE', href: '/about' },
+        { label: 'Team', href: '/about/team' },
+        { label: 'Contact', href: '/contact' },
+        { label: 'Media Kit', href: '/media-kit' },
       ],
     },
   ]

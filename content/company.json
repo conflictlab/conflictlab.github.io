@@ -26,6 +26,8 @@
     }
   ],
   "contact": {
-    "email": "contact@pace.com"
+    "email": "info@forecastlab.org",
+    "formEndpoint": "",
+    "newsletterUrl": ""
   }
 }

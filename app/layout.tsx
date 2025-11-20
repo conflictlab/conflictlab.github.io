@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   description: 'Intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability using machine learning and dynamic exposure modeling.',
   keywords: 'geopolitical risk, conflict forecasting, political instability, machine learning, ESG, portfolio risk',
   authors: [{ name: 'PaCE' }],
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
   icons: {
     icon: '/logo.png',
@@ -23,6 +22,12 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
   },
+}
+
+// Move viewport to the dedicated export to avoid Next.js warnings
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({

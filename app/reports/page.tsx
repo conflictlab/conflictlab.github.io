@@ -24,6 +24,8 @@ export default function ReportsPage() {
     { title: 'March 2024', file: '/newslettersAndReports/March 2024 Newsletter (1).pdf' },
   ]
 
+  // Use generic symbol covers rather than generated previews
+
   return (
     <>
       {/* Hero Section */}
@@ -54,12 +56,11 @@ export default function ReportsPage() {
               className="group"
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
-                {/* Thumbnail placeholder - Replace with actual image */}
+                {/* Generic symbol cover */}
                 <div className="bg-gray-100 flex items-center justify-center h-80 md:h-auto">
                   <div className="text-center p-8">
-                    <FileText size={80} className="mx-auto text-gray-400 mb-4" />
-                    <p className="text-sm text-gray-500">Report Cover</p>
-                    <p className="text-xs text-gray-400 mt-2">(Add thumbnail image here)</p>
+                    <FileText size={80} className="mx-auto text-gray-400 mb-3" />
+                    <p className="text-sm text-gray-500">Report</p>
                   </div>
                 </div>
                 <div className="md:col-span-2 p-6">
@@ -91,12 +92,11 @@ export default function ReportsPage() {
               className="group"
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
-                {/* Thumbnail placeholder - Replace with actual image */}
+                {/* Generic symbol cover */}
                 <div className="bg-gray-100 flex items-center justify-center h-80 md:h-auto">
                   <div className="text-center p-8">
-                    <FileText size={80} className="mx-auto text-gray-400 mb-4" />
-                    <p className="text-sm text-gray-500">Newsletter Cover</p>
-                    <p className="text-xs text-gray-400 mt-2">(Add thumbnail image here)</p>
+                    <FileText size={80} className="mx-auto text-gray-400 mb-3" />
+                    <p className="text-sm text-gray-500">Newsletter</p>
                   </div>
                 </div>
                 <div className="md:col-span-2 p-6">
@@ -121,24 +121,21 @@ export default function ReportsPage() {
             <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
               Newsletter Archive
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Switch from cards to a clean, chronological list */}
+            <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
               {newsletters.slice(1).map((newsletter, index) => (
-                <Link
-                  key={index}
-                  href={newsletter.file}
-                  target="_blank"
-                  className="group flex items-center gap-3 p-4 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 hover:shadow-md transition-all"
-                >
-                  <FileText size={24} className="text-gray-400 group-hover:text-pace-red transition-colors flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-gray-900 font-light group-hover:text-pace-red transition-colors truncate">
-                      {newsletter.title}
-                    </p>
-                    <p className="text-xs text-gray-500">Newsletter</p>
-                  </div>
-                </Link>
+                <li key={index} className="p-0">
+                  <Link
+                    href={newsletter.file}
+                    target="_blank"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                  >
+                    <FileText size={20} className="text-gray-400 flex-shrink-0" />
+                    <span className="text-gray-900 font-light">{newsletter.title}</span>
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
           {/* Footer note */}

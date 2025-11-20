@@ -15,11 +15,9 @@ export default function LandingBanner() {
             PaCE
           </h1>
           <div className="text-2xl md:text-3xl lg:text-4xl text-white font-bold tracking-wide mb-8" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5)' }}>
-            <div className="overflow-hidden">
-              <p className="inline-block whitespace-nowrap typewriter-text pr-8">
-                Forecasting Geopolitical Risk
-              </p>
-            </div>
+            <p className="headline-fade-in">
+              Forecasting Geopolitical Risk
+            </p>
           </div>
 
           {/* Statistics */}
@@ -53,18 +51,21 @@ export default function LandingBanner() {
           animation: fadeIn 1s ease-out;
         }
 
-        .typewriter-text {
-          animation: typing 1.15s steps(30, end) 1.0s forwards;
-          width: 0;
+        .headline-fade-in {
+          /* Simple fade-in after 1.5s */
+          animation: fadeIn 1s ease-out 1.5s forwards;
+          opacity: 0;
         }
 
         .counter-fade-in {
-          animation: fadeIn 1s ease-out 2s forwards;
+          /* Keep ~1s after headline start (1.5s) */
+          animation: fadeIn 1s ease-out 2.5s forwards;
           opacity: 0;
         }
 
         .scroll-indicator {
-          animation: fadeIn 1s ease-out 3s forwards;
+          /* Keep ~2s after headline start (1.5s) */
+          animation: fadeIn 1s ease-out 3.5s forwards;
           opacity: 0;
         }
 
@@ -79,10 +80,7 @@ export default function LandingBanner() {
           }
         }
 
-        @keyframes typing {
-          from { width: 0; }
-          to { width: 100%; }
-        }
+        /* typing effect removed in favor of fade-in */
 
         /* Respect reduced motion preferences */
         @media (prefers-reduced-motion: reduce) {
