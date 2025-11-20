@@ -462,7 +462,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               <GeoJSON
                 data={filtered || world}
                 style={(f: any) => ({ ...style(f), smoothFactor: 1.2 }) as any}
-                renderer={L.canvas() as any}
                 onEachFeature={(feature, layer) => {
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
