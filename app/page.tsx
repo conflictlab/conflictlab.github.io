@@ -48,7 +48,7 @@ export default async function Home() {
       <section className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto mb-16">
-            <div className="bg-railings rounded-xl shadow-xl border border-railings-light overflow-hidden">
+            <div className="rounded-xl shadow-xl border overflow-hidden" style={{ backgroundColor: 'rgb(145, 148, 149)', borderColor: 'rgba(255, 255, 255, 0.1)' }}>
               <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-10 md:p-12">
                 <div className="flex-shrink-0">
                   <Image
