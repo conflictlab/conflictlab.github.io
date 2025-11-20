@@ -61,9 +61,16 @@ export default function Navigation() {
       href: '/research',
       sections: [
         { label: 'Methodology', href: '/methodology' },
-        { label: 'Publications', href: '/publications' },
         { label: 'Downloads', href: '/downloads' },
         { label: 'Dissemination', href: '/dissemination' },
+      ],
+    },
+    {
+      label: 'Publications',
+      href: '/publications',
+      sections: [
+        { label: 'Academic Publications', href: '/publications#publications' },
+        { label: 'Reports & Newsletters', href: '/publications#reports-newsletters' },
       ],
     },
     {
