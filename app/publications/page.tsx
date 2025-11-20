@@ -17,18 +17,32 @@ export default function PublicationsPage() {
   const allAuthors = useMemo(() => {
     const authorSet = new Set<string>()
     publications.forEach(pub => {
-      // Extract individual authors (splitting by '&' and ',')
-      const authors = pub.authors.split(/[&,]/).map(a => {
-        // Remove content in parentheses, trim, and normalize punctuation
-        let cleaned = a.replace(/\(.*?\)/g, '').trim()
-        // Remove trailing punctuation like . or )
-        cleaned = cleaned.replace(/[.)]+$/, '').trim()
-        return cleaned
-      })
+      // Extract individual authors (splitting by '&', ',', and ' and ')
+      const authors = pub.authors
+        .split(/\s+and\s+|&|,/)
+        .map(a => {
+          // Remove content in parentheses, trim, and normalize punctuation
+          let cleaned = a.replace(/\(.*?\)/g, '').trim()
+          // Remove trailing punctuation like . or )
+          cleaned = cleaned.replace(/[.)]+$/, '').trim()
+          return cleaned
+        })
+        .filter(author => {
+          // Filter out empty strings, "et al", and fragments that are too short (likely incomplete)
+          if (!author || author.startsWith('et al') || author.startsWith('including')) {
+            return false
+          }
+          // Filter out single letters or initials without a last name (likely fragments)
+          // Valid format should have at least a space (e.g., "Chadefaux T" or "T. Chadefaux")
+          // or be a full last name with at least 3 characters
+          if (author.length < 3 || !author.includes(' ')) {
+            return false
+          }
+          return true
+        })
+
       authors.forEach(author => {
-        if (author && !author.startsWith('et al')) {
-          authorSet.add(author)
-        }
+        authorSet.add(author)
       })
     })
     return Array.from(authorSet).sort()
@@ -51,11 +65,15 @@ export default function PublicationsPage() {
 
       // Author filter - normalize author names for comparison
       if (selectedAuthor) {
-        const normalizedAuthors = pub.authors.split(/[&,]/).map(a => {
-          let cleaned = a.replace(/\(.*?\)/g, '').trim()
-          cleaned = cleaned.replace(/[.)]+$/, '').trim()
-          return cleaned
-        })
+        const normalizedAuthors = pub.authors
+          .split(/\s+and\s+|&|,/)
+          .map(a => {
+            let cleaned = a.replace(/\(.*?\)/g, '').trim()
+            cleaned = cleaned.replace(/[.)]+$/, '').trim()
+            return cleaned
+          })
+          .filter(author => author && author.length >= 3 && author.includes(' '))
+
         if (!normalizedAuthors.some(author => author === selectedAuthor)) {
           return false
         }
