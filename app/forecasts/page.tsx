@@ -118,7 +118,7 @@ export default async function ForecastsPage() {
         {/* Full-width (bleed) wrapper */}
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
           <LazyVisible minHeight="300px">
-            <CountryChoropleth items={countryMapItems} />
+            <CountryChoropleth items={countryMapItems} showHotspots={true} />
           </LazyVisible>
         </div>
         {/* Summary cards below the map, constrained */}

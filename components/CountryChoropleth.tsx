@@ -69,9 +69,10 @@ interface Props {
   showHotspots?: boolean
   hideSearch?: boolean
   dimZoomControls?: boolean
+  hideMonthSlider?: boolean
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '560px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
@@ -133,7 +134,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   const values = useMemo(() => items
     .map(i => Number((i.months ? i.months[month - 1] : i.value) ?? 0))
     .filter(v => Number.isFinite(v)), [items, month])
-  const thresholds = useMemo(() => [10, 50, 100, 1000], [])
+  const thresholds = useMemo(() => [10, 50, 100, 500], [])
   const { vmin, vmax } = useMemo(() => {
     if (!values.length) return { vmin: 0, vmax: 1 }
     const sorted = values.slice().sort((a,b)=>a-b)
@@ -452,12 +453,16 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             {showHotspots && <HotspotMarkers hotspots={hotspots} />}
           </MapContainer>
         )}
-        {/* Compact legend overlay (bottom-right, transparent) */}
+        {/* Compact legend overlay (bottom-right) */}
         {!hideLegend && !error && (
-          <div className="absolute bottom-6 right-2 z-[1000]">
-            <div className="text-[12px] text-gray-800">
-              <div className="mb-1 text-[11px] text-gray-700">min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
+          <div className={`absolute bottom-6 right-2 z-[1000] ${dimZoomControls ? 'opacity-40' : ''}`}>
+            <div className={`rounded-md px-2.5 py-2 text-[12px] ${dimZoomControls ? 'bg-transparent border-transparent text-gray-500' : 'backdrop-blur-sm bg-white/80 border border-gray-200 shadow-sm text-gray-800'}`}>
+              <div className={`mb-1 text-[11px] ${dimZoomControls ? 'text-gray-500' : 'text-gray-700'}`}>min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
               <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#f5f5f5' }} />
+                  <span>{'0'}</span>
+                </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
                   <span>{'< 10'}</span>
@@ -472,24 +477,50 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
-                  <span>{'100–1000'}</span>
+                  <span>{'100–500'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
-                  <span>{'> 1000'}</span>
+                  <span>{'> 500'}</span>
                 </div>
               </div>
+              {showHotspots && (
+                <div className={`mt-2 pt-2 ${dimZoomControls ? 'border-t border-gray-300/50' : 'border-t border-gray-300'}`}>
+                  <div className={`text-[11px] mb-1.5 ${dimZoomControls ? 'text-gray-600' : 'text-gray-700'}`}>Hotspots (>100 fatalities):</div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <div className="relative w-5 h-5">
+                        <div className="legend-hotspot-pulse-primary" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-2 h-2 rounded-full bg-red-600 border border-white shadow-sm" />
+                        </div>
+                      </div>
+                      <span className="text-[11px]">Top 6 countries</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="relative w-5 h-5">
+                        <div className="legend-hotspot-pulse-secondary" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-2 h-2 rounded-full bg-gray-700 border border-white shadow-sm" />
+                        </div>
+                      </div>
+                      <span className="text-[11px]">Next 10 countries</span>
+                    </div>
+                    <div className={`text-[10px] italic mt-1 ${dimZoomControls ? 'text-gray-500' : 'text-gray-600'}`}>Size proportional to risk</div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
         {/* Map attribution (bottom-right) */}
         {!error && (
-          <div className="absolute bottom-1 right-2 z-[900] text-[10px] text-gray-600">
+          <div className={`absolute bottom-1 right-2 z-[900] text-[10px] ${dimZoomControls ? 'text-gray-500 opacity-40' : 'text-gray-600'}`}>
             Map data © OpenStreetMap contributors, © CARTO
           </div>
         )}
         {showZoomHint && (
-          <div className="absolute bottom-4 right-4 z-[1000]">
+          <div className="absolute top-4 right-4 z-[1000]">
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
@@ -497,7 +528,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           </div>
         )}
         {/* Months ahead slider overlay (bottom-left) */}
-        {!error && (
+        {!error && !hideMonthSlider && (
           <div className="absolute bottom-4 left-4 z-[1000]">
             <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm flex items-center gap-3 text-sm text-gray-700">
               <span className="whitespace-nowrap font-medium text-gray-900">Months ahead:</span>
@@ -532,6 +563,11 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             50% { transform: scale(2); opacity: 0.3; }
             100% { transform: scale(3); opacity: 0; }
           }
+          @keyframes legendPulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(2.2); opacity: 0.2; }
+            100% { transform: scale(3); opacity: 0; }
+          }
           .hotspot-marker { background: transparent !important; border: none !important; }
           .hotspot-container { position: relative; width: 40px; height: 40px; transform: scale(var(--sz,1)); }
           .hotspot-pulse {
@@ -545,6 +581,20 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
           }
           .hotspot-container[data-tier="secondary"] .hotspot-core { display: none; }
+
+          /* Legend hotspot pulse animations */
+          .legend-hotspot-pulse-primary {
+            position: absolute; top: 50%; left: 50%; width: 8px; height: 8px;
+            margin: -4px 0 0 -4px; border-radius: 50%;
+            background: rgba(220,38,38,0.4); border: 1px solid #dc2626;
+            animation: legendPulse 2.2s ease-out infinite;
+          }
+          .legend-hotspot-pulse-secondary {
+            position: absolute; top: 50%; left: 50%; width: 8px; height: 8px;
+            margin: -4px 0 0 -4px; border-radius: 50%;
+            background: rgba(55,65,81,0.35); border: 1px solid #374151;
+            animation: legendPulse 2.6s ease-out infinite;
+          }
 
           /* Dim Leaflet zoom controls when requested */
           .map-dim-controls .leaflet-control-zoom { box-shadow: none; border: none; opacity: 0.8; }
@@ -563,7 +613,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               </Link>
             </div>
           )}
-          <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
         </div>
       )}
     </div>

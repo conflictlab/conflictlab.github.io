@@ -183,7 +183,7 @@ export default function PrioGridMap({ period, activeView }: Props) {
     const mn = sorted[0]
     const mx = sorted[sorted.length - 1]
     // Fixed bins for grid view
-    const t = [10, 50, 100, 1000]
+    const t = [10, 50, 100, 500]
     return { thresholds: t, vmin: mn, vmax: mx }
   }, [data, points, month])
 
@@ -204,7 +204,8 @@ export default function PrioGridMap({ period, activeView }: Props) {
     if (v <= th[0]) return '#fee8c8'
     if (v <= th[1]) return '#fdbb84'
     if (v <= th[2]) return '#ef6548'
-    return '#d7301f' // includes 100–1000 and any higher values
+    if (v <= th[3]) return '#d7301f'
+    return '#b30000'
   }
 
   function shrinkBounds(b: any, factor = 0.35) {
@@ -300,6 +301,35 @@ export default function PrioGridMap({ period, activeView }: Props) {
             </Link>
           </div>
         </div>
+        {/* Months ahead slider overlay (bottom-left) */}
+        {!error && !loading && (
+          <div className="absolute bottom-4 left-4 z-[1000]">
+            <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm flex items-center gap-3 text-sm text-gray-700">
+              <span className="whitespace-nowrap font-medium text-gray-900">Months ahead:</span>
+              <div className="w-48">
+                <input
+                  type="range"
+                  min={1}
+                  max={6}
+                  value={month}
+                  onChange={(e) => setMonth(Number(e.target.value))}
+                  className="range"
+                  style={{ accentColor: '#1e40af' }}
+                  aria-label="Months ahead"
+                  aria-valuemin={1}
+                  aria-valuemax={6}
+                  aria-valuenow={month}
+                />
+                <div className="flex justify-between text-[10px] text-gray-600 mt-1">
+                  {[1,2,3,4,5,6].map(n => (
+                    <span key={n}>{n}m</span>
+                  ))}
+                </div>
+              </div>
+              <span className="w-6 text-right font-medium">{month}</span>
+            </div>
+          </div>
+        )}
         {error && (
           <div className="h-full flex items-center justify-center text-sm text-gray-600">
             <div>
@@ -404,8 +434,48 @@ export default function PrioGridMap({ period, activeView }: Props) {
             )}
           </MapContainer>
         )}
+        {/* Map attribution (bottom-right) */}
+        {!error && (
+          <div className="absolute bottom-1 right-2 z-[900] text-[10px] text-gray-600">
+            Map data © OpenStreetMap contributors, © CARTO
+          </div>
+        )}
+        {/* Compact legend overlay (bottom-right) */}
+        {!error && !loading && (
+          <div className="absolute bottom-6 right-2 z-[1000]">
+            <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-2 shadow-sm text-[12px] text-gray-800">
+              <div className="mb-1 text-[11px] text-gray-700">min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#f5f5f5' }} />
+                  <span>{'0'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
+                  <span>{'< 10'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
+                  <span>{'10–50'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
+                  <span>{'50–100'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
+                  <span>{'100–500'}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
+                  <span>{'> 500'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {showZoomHint && (
-          <div className="absolute bottom-4 right-4 z-[1000]">
+          <div className="absolute top-4 right-4 z-[1000]">
             <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-700 shadow-sm flex items-center gap-2">
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
@@ -415,40 +485,13 @@ export default function PrioGridMap({ period, activeView }: Props) {
       </div>
       {/* Controls moved below map */}
       <div className="px-4 py-2">
-        <div className="flex items-center justify-between">
-          <div className="text-xs text-gray-500">min {isFinite(vmin) ? vmin.toFixed(1) : '—'} → max {isFinite(vmax) ? vmax.toFixed(1) : '—'}</div>
-          <div className="flex items-center gap-3 text-sm text-gray-700">
-            <span className="whitespace-nowrap font-semibold text-base text-gray-900">Months ahead:</span>
-            <div className="w-56 md:w-72">
-              <input
-                type="range"
-                min={1}
-                max={6}
-                value={month}
-                onChange={(e) => setMonth(Number(e.target.value))}
-                className="range"
-                style={{ accentColor: '#1e40af' }}
-              />
-              <div className="flex justify-between text-[10px] text-gray-500 mt-1">
-                {[1,2,3,4,5,6].map(n => (
-                  <span key={n}>{n}m</span>
-                ))}
-              </div>
-            </div>
-            <span className="w-6 text-right font-medium">{month}</span>
-          </div>
+        {/* Legend moved onto the map (bottom-right overlay), slider moved onto map (bottom-left) */}
+        <div className="mt-4 text-center">
+          <Link href="/downloads" className="bg-pace-charcoal text-white px-8 py-3 hover:bg-pace-charcoal-light transition-all duration-200 font-normal rounded-lg inline-flex items-center justify-center shadow-sm hover:shadow-md">
+            Data downloads
+          </Link>
         </div>
       </div>
-      <Legend thresholds={thresholds} vmin={vmin} vmax={vmax} data={data} points={points} month={month} />
-      <div className="px-4 mt-4 text-center">
-        <Link
-          href="/downloads"
-          className="bg-pace-charcoal text-white px-8 py-3 hover:bg-pace-charcoal-light transition-all duration-200 font-normal rounded-lg inline-flex items-center justify-center shadow-sm hover:shadow-md"
-        >
-          Data downloads
-        </Link>
-      </div>
-      <div className="mt-1 text-[10px] text-gray-400">Map data © OpenStreetMap contributors, © CARTO</div>
     </div>
   )
 }
@@ -531,42 +574,6 @@ function parseCentroidsCsv(text: string): Record<string, { lat: number; lon: num
   return out
 }
 
-// -------- Legend component (stats + color scale) --------
-function Legend({ thresholds, vmin, vmax, data, points, month }: any) {
-  let total = 0, zeros = 0
-  if (data?.features?.length) {
-    total = data.features.length
-    for (const f of data.features) {
-      const v = Number(f?.properties?.[`m${month}`] ?? 0)
-      if (!v) zeros++
-    }
-  } else if (points?.length) {
-    total = points.length
-    for (const p of points) {
-      const v = Number(((p as any).m ? (p as any).m[month - 1] : (p as any).v) ?? 0)
-      if (!v) zeros++
-    }
-  }
-  const nz = total - zeros
-  return (
-    <div className="mt-4 text-sm text-gray-700">
-      <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {['#fee8c8','#fdbb84','#ef6548','#d7301f'].map((c,i) => (
-          <div key={i} className="flex items-center gap-3">
-            <div className="w-12 h-8 rounded border border-gray-300" style={{backgroundColor: c}} />
-            <span className="text-gray-800">{['< 10','10–50','50–100','100–1000'][i]}</span>
-          </div>
-        ))}
-      </div>
-      {total > 0 && (
-        <div className="mt-2 text-gray-600">
-          Cells: {total} · Non‑zero: {nz} ({((nz/total)*100).toFixed(1)}%) · Zeros: {zeros}
-        </div>
-      )}
-    </div>
-  )
-}
-
 function splitCsv(line: string): string[] {
   const out: string[] = []
   let cur = ''
@@ -605,17 +612,6 @@ function filterGeojsonByMonth(data: any, month: number) {
   if (!data?.features?.length) return data
   const feats = data.features.filter((f: any) => Number(f?.properties?.[`m${month}`] ?? 0) > 0)
   return { type: 'FeatureCollection', features: feats }
-}
-
-function legendLabelForIndex(i: number, t: number[]) {
-  const fmt = (v: number) => Number.isFinite(v) ? (v >= 100 ? v.toFixed(0) : v.toFixed(1)) : '—'
-  if (!Array.isArray(t) || t.length < 5) return ''
-  if (i === 0) return `≤ ${fmt(t[0])}`
-  if (i === 1) return `${fmt(t[0])}–${fmt(t[1])}`
-  if (i === 2) return `${fmt(t[1])}–${fmt(t[2])}`
-  if (i === 3) return `${fmt(t[2])}–${fmt(t[3])}`
-  if (i === 4) return `${fmt(t[3])}–${fmt(t[4])}`
-  return `> ${fmt(t[4])}`
 }
 
 // Build a square polygon centered on (lon, lat) with given half-size in degrees
