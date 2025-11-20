@@ -410,8 +410,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             maxBounds={[[-85, -180], [85, 180]] as any}
             maxBoundsViscosity={1.0}
             preferCanvas={true}
-            updateWhenIdle={true}
-            keepBuffer={1}
             attributionControl={false}
             style={{ height: '100%', width: '100%' }}
           >
