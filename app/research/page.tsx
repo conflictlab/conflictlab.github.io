@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { BookOpen, FileText, Database, Beaker, Presentation, ChevronRight } from 'lucide-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import Collapsible from '@/components/Collapsible'
 import { publications } from '@/content/publications'
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function ResearchPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">Research at PaCE</h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed max-w-3xl">
-            We build transparent, data‑driven methods to forecast conflict risk. Explore our publications, methods, and datasets.
+            We build transparent, data‑driven methods to forecast conflict risk. Explore our publications and methods.
           </p>
           <Breadcrumbs />
           <div className="mt-6 flex flex-wrap gap-3">
@@ -38,6 +39,15 @@ export default function ResearchPage() {
             <Link href="/methodology" className="btn-secondary inline-flex items-center gap-1"><Beaker size={16}/> Methodology</Link>
             <Link href="/publications" className="btn-secondary inline-flex items-center gap-1"><FileText size={16}/> Publications</Link>
             <Link href="/dissemination" className="btn-secondary inline-flex items-center gap-1"><Presentation size={16}/> Dissemination</Link>
+          </div>
+          {/* Brief methods intro */}
+          <div className="mt-6 bg-white/70 border border-gray-200 rounded-lg p-4 max-w-3xl">
+            <h3 className="text-lg font-light text-gray-900 mb-1">Methods at a glance</h3>
+            <p className="text-sm text-gray-700">
+              We combine transparent statistical models with event, financial, and geospatial data to forecast conflict fatalities
+              over 1–6 month horizons.
+              <Link href="/methodology" className="text-link ml-2">Read more</Link>
+            </p>
           </div>
         </div>
       </section>
@@ -53,10 +63,12 @@ export default function ResearchPage() {
               <div key={idx} className="bg-white border border-gray-200 rounded-lg p-6 md:p-8">
                 <div className="flex items-start justify-between gap-6 flex-col md:flex-row">
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-wider text-pace-red mb-2">Featured</div>
+                    <div className="text-xs uppercase tracking-wider text-pace-red mb-2">Featured publication</div>
                     <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-2">{p.title}</h2>
                     <div className="text-sm text-gray-500 mb-3">{p.authors} — {p.venue}, {p.year}</div>
-                    <p className="text-gray-700 leading-relaxed mb-4 max-w-3xl">{p.abstract}</p>
+                    <Collapsible title="Abstract" initiallyCollapsed={true}>
+                      <p className="text-gray-700 leading-relaxed max-w-3xl">{p.abstract}</p>
+                    </Collapsible>
                     <div className="flex flex-wrap gap-2">
                       <FeaturedBadge href={p.url || '/publications'} label="Paper" />
                       <FeaturedBadge href="/downloads" label="Dataset" />
@@ -78,18 +90,10 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      {/* Browse & topics */}
-      <section className="py-8">
+      {/* See all publications */}
+      <section className="py-6">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-light text-gray-900">Browse by topic</h3>
-            <Link href="/publications" className="text-pace-red hover:text-pace-red-dark text-sm">See all publications</Link>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {['Forecasting', 'Conflict', 'Causal inference', 'Evaluation', 'GeoAI'].map(t => (
-              <Link key={t} href="/publications" className="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200">{t}</Link>
-            ))}
-          </div>
+          <Link href="/publications" className="btn-secondary inline-flex items-center">See all publications</Link>
         </div>
       </section>
 
