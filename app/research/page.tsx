@@ -40,13 +40,18 @@ export default function ResearchPage() {
             <Link href="/publications" className="btn-secondary inline-flex items-center gap-1"><FileText size={16}/> Publications</Link>
             <Link href="/dissemination" className="btn-secondary inline-flex items-center gap-1"><Presentation size={16}/> Dissemination</Link>
           </div>
-          {/* Brief methods intro */}
-          <div className="mt-6 bg-white/70 border border-gray-200 rounded-lg p-4 max-w-3xl">
-            <h3 className="text-lg font-light text-gray-900 mb-1">Methods at a glance</h3>
-            <p className="text-sm text-gray-700">
+        </div>
+      </section>
+
+      {/* Methods at a glance */}
+      <section className="py-8 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="border border-gray-200 rounded-lg p-6 max-w-3xl">
+            <h3 className="text-xl font-light text-gray-900 mb-2">Methods at a glance</h3>
+            <p className="text-gray-700 leading-relaxed">
               We combine transparent statistical models with event, financial, and geospatial data to forecast conflict fatalities
               over 1–6 month horizons.
-              <Link href="/methodology" className="text-link ml-2">Read more</Link>
+              <Link href="/methodology" className="text-pace-red hover:text-pace-red-dark ml-2">Read more</Link>
             </p>
           </div>
         </div>
