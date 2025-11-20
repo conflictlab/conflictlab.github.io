@@ -45,6 +45,37 @@ export default function ReportsPage() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
+          {/* Email Signup Section */}
+          <div className="mb-16">
+            <div className="bg-gradient-to-r from-pace-red/5 to-clairient-blue/5 border border-gray-200 rounded-lg p-8">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-2xl font-light text-gray-900 mb-4">
+                  Monthly Global Risk Prediction Map Report
+                </h2>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Every month the PaCE Project publishes a Global Risk Prediction Map report. Sign up here to receive it in your inbox!
+                </p>
+                <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <input
+                    type="email"
+                    placeholder="Enter your email here"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="px-6 py-3 bg-pace-red text-white rounded-lg hover:bg-pace-red-dark transition-colors font-medium whitespace-nowrap"
+                  >
+                    Subscribe
+                  </button>
+                </form>
+                <p className="text-xs text-gray-500 mt-3">
+                  We respect your privacy. Unsubscribe at any time.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Latest Report */}
           <div className="mb-16">
             <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
