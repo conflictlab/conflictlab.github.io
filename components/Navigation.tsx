@@ -110,41 +110,27 @@ export default function Navigation() {
   return (
     <nav className="bg-railings border-b border-railings-light relative z-[2000] shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`flex justify-between ${isHomePage ? 'h-16' : 'h-10'}`}>
+        <div className="flex justify-between" style={{ height: '53px' }}>
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               {(() => {
-                const containerSize = isHomePage ? 'h-12 w-12' : 'h-8 w-8'
-                const imgSize = isHomePage ? 38 : 24
+                const imgSize = 48
                 return (
                   <div
-                    className={`mr-3 ${containerSize} rounded-full relative overflow-hidden flex items-center justify-center ring-1 ring-black/10 shadow-lg`}
-                    style={{
-                      background: '#f9fafb',
-                      boxShadow: '0 8px 18px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.15)'
-                    }}
+                    className="mr-3 relative flex items-center justify-center"
+                    style={{ width: '60px', height: '60px', marginTop: '5px' }}
                   >
-                    {/* subtle inner highlights for depth */}
-                    <div
-                      className="absolute inset-0 rounded-full pointer-events-none"
-                      style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.06), inset 0 -2px 4px rgba(0,0,0,0.04)' }}
-                    />
-                    <div
-                      className="absolute inset-x-1 top-1 h-1/3 rounded-full opacity-60 pointer-events-none"
-                      style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0))' }}
-                    />
-                    <Image
-                      src={`/logo.png`}
+                    <img
+                      src="/paceWhite.svg"
                       alt="PaCE"
                       width={imgSize}
                       height={imgSize}
-                      priority={isHomePage}
                       className="relative drop-shadow-sm"
                     />
                   </div>
                 )
               })()}
-              <span className={`font-light ${isHomePage ? 'text-3xl' : 'text-2xl'}`} style={{ color: '#f9fafb' }}>PaCE</span>
+              <span className="font-light text-3xl" style={{ color: '#f9fafb' }}>PaCE</span>
             </Link>
           </div>
           

@@ -2,6 +2,7 @@ import { readSnapshot } from '@/lib/forecasts'
 import { getEntityHorizonMonths } from '@/lib/forecasts'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import Image from 'next/image'
 import LandingBanner from '@/components/LandingBanner'
 import { Brain, Globe, TrendingUp, Database, Network, Target, ArrowRight, FileText, Users } from 'lucide-react'
 
@@ -29,12 +30,12 @@ export default async function Home() {
       {/* Country Choropleth Map (full-bleed) with title overlay */}
       <section className="bg-white relative">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-          <CountryChoropleth items={countryMapItems} hideDownloadButton={true} hideControls={true} hideLegend={true} hideSearch={true} dimZoomControls={true} hideMonthSlider={true} showHotspots={true} mapHeight="calc(100dvh - 64px)" initialZoom={3.0} hideZoomHint={true} />
+          <CountryChoropleth items={countryMapItems} hideDownloadButton={true} hideControls={true} hideLegend={true} hideSearch={true} dimZoomControls={true} hideMonthSlider={true} showHotspots={true} mapHeight="calc(100dvh - 48px)" initialZoom={3.0} hideZoomHint={true} />
           {/* Gradient overlay to dim the map - darker at edges, lighter in center - z-index must be above map but below title */}
           <div
             className="absolute inset-0 pointer-events-none z-[400]"
             style={{
-              background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%)'
+              background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.55) 100%)'
             }}
           />
         </div>
@@ -44,15 +45,37 @@ export default async function Home() {
       </section>
 
       {/* About Section */}
-      <section className="section-spacing-md bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-light text-gray-900 mb-12 text-center">About PaCE</h2>
-          <p className="max-w-3xl mx-auto text-center text-gray-700 font-light mb-10">
-            PaCE (Patterns of Conflict Escalation) is a research lab at Trinity College Dublin using
-            machine learning to forecast conflict fatalities at the country and sub‑national level.
-            We combine transparent methods, rich data, and clear communication to support early warning
-            and decision‑making.
-          </p>
+          <div className="max-w-5xl mx-auto mb-16">
+            <div className="bg-railings rounded-xl shadow-xl border border-railings-light overflow-hidden">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-10 md:p-12">
+                <div className="flex-shrink-0">
+                  <Image
+                    src="/logo.png"
+                    alt="PaCE"
+                    width={140}
+                    height={140}
+                    className="w-32 h-32 md:w-35 md:h-35"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl md:text-3xl font-semibold text-white mb-4">
+                    PaCE
+                    <span className="text-lg md:text-xl font-light text-gray-300 ml-2">Patterns of Conflict Escalation</span>
+                  </h3>
+                  <div className="space-y-4">
+                    <p className="text-gray-100 text-lg leading-relaxed">
+                      A research lab at Trinity College Dublin using machine learning to forecast conflict fatalities at the country and sub‑national level.
+                    </p>
+                    <p className="text-gray-300 text-base leading-relaxed">
+                      We combine transparent methods, rich data, and clear communication to support early warning and decision‑making.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* Main Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">

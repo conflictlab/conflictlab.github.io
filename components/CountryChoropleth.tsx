@@ -330,7 +330,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
       >
         {/* Search overlay */}
         {!hideSearch && (
-          <div className="absolute top-4 left-4 z-[1100]">
+          <div className="absolute top-4 right-4 z-[1100]">
             <div className="relative">
               <input
                 ref={inputRef}
@@ -469,8 +469,92 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
                   const periodText = month === 1 ? 'next month' : `in ${month} months`
-                  const label = `${name} — predicted fatalities ${periodText}: ${val.toFixed(1)}`
-                  layer.bindTooltip(label, { sticky: true })
+
+                  // Determine risk level and color
+                  const getRiskLevel = (v: number) => {
+                    if (v === 0) return { label: 'No Risk', color: '#6b7280', bgColor: '#f3f4f6' }
+                    if (v < 10) return { label: 'Very Low', color: '#92400e', bgColor: '#fef3c7' }
+                    if (v < 50) return { label: 'Low', color: '#c2410c', bgColor: '#fed7aa' }
+                    if (v < 100) return { label: 'Medium', color: '#dc2626', bgColor: '#fecaca' }
+                    if (v < 500) return { label: 'High', color: '#b91c1c', bgColor: '#fca5a5' }
+                    return { label: 'Extreme', color: '#7f1d1d', bgColor: '#f87171' }
+                  }
+
+                  const risk = getRiskLevel(val)
+
+                  // Get trend if months data available
+                  const entity = items.find(it => normalizeName(it.name) === normalizeName(name))
+                  let trendHTML = ''
+                  if (entity?.months && entity.months.length >= month && month < 6) {
+                    const currentVal = entity.months[month - 1]
+                    const nextVal = entity.months[month]
+                    if (nextVal > currentVal * 1.1) {
+                      trendHTML = '<span style="color: #dc2626; font-size: 11px;">↗ Rising</span>'
+                    } else if (nextVal < currentVal * 0.9) {
+                      trendHTML = '<span style="color: #059669; font-size: 11px;">↘ Declining</span>'
+                    } else {
+                      trendHTML = '<span style="color: #6b7280; font-size: 11px;">→ Stable</span>'
+                    }
+                  }
+
+                  // Generate sparkline SVG if we have months data
+                  let sparklineHTML = ''
+                  if (entity?.months && entity.months.length >= 6) {
+                    const values = entity.months.slice(0, 6)
+                    const min = Math.min(...values)
+                    const max = Math.max(...values)
+                    const range = max - min || 1
+                    const width = 80
+                    const height = 20
+                    const stepX = width / (values.length - 1 || 1)
+                    const points = values.map((v, i) => {
+                      const x = i * stepX
+                      const y = height - ((v - min) / range) * height
+                      return `${x},${y}`
+                    }).join(' ')
+
+                    sparklineHTML = `
+                      <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #e5e7eb;">
+                        <div style="font-size: 10px; color: #6b7280; margin-bottom: 3px;">6-month trend</div>
+                        <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display: block;">
+                          <polyline
+                            fill="none"
+                            stroke="${risk.color}"
+                            stroke-width="1.5"
+                            stroke-linejoin="round"
+                            stroke-linecap="round"
+                            points="${points}"
+                          />
+                        </svg>
+                      </div>
+                    `
+                  }
+
+                  const tooltipHTML = `
+                    <div style="min-width: 180px;">
+                      <div style="font-weight: 600; font-size: 14px; color: #111827; margin-bottom: 6px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px;">
+                        ${name}
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <span style="font-size: 11px; color: #6b7280;">Predicted ${periodText}:</span>
+                        <span style="font-weight: 700; font-size: 15px; color: ${risk.color};">${val.toFixed(1)}</span>
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;">
+                        <span style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; background: ${risk.bgColor}; color: ${risk.color};">
+                          ${risk.label}
+                        </span>
+                        ${trendHTML}
+                      </div>
+                      ${sparklineHTML}
+                    </div>
+                  `
+
+                  layer.bindTooltip(tooltipHTML, {
+                    sticky: true,
+                    className: 'custom-country-tooltip',
+                    direction: 'top',
+                    offset: [0, -10]
+                  })
                   layer.on('click', () => {
                     const entity = items.find(it => normalizeName(it.name) === normalizeName(name))
                     if (entity && entity.id) {
@@ -627,6 +711,33 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             margin: -4px 0 0 -4px; border-radius: 50%;
             background: rgba(55,65,81,0.35); border: 1px solid #374151;
             animation: legendPulse 2.6s ease-out infinite;
+          }
+
+          /* Custom tooltip styling */
+          .custom-country-tooltip {
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(8px);
+            border: 1px solid #e5e7eb !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            padding: 10px 12px !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.4;
+          }
+          .custom-country-tooltip::before {
+            border-top-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-top.custom-country-tooltip::before {
+            border-top-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-bottom.custom-country-tooltip::before {
+            border-bottom-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-left.custom-country-tooltip::before {
+            border-left-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-right.custom-country-tooltip::before {
+            border-right-color: #e5e7eb !important;
           }
 
           /* Dim Leaflet zoom controls when requested */
