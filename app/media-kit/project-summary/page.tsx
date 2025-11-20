@@ -26,7 +26,7 @@ export default function ProjectSummaryPage() {
             <div>
               <h2 className="text-xl font-light text-gray-900 mb-2">Fast Facts</h2>
               <ul className="list-disc ml-5 text-gray-700 space-y-1">
-                <li>Coverage: 180+ countries and 259K sub‑national areas</li>
+                <li>Coverage: 180+ countries and 259,000 sub‑national areas</li>
                 <li>Horizon: up to 6 months ahead</li>
                 <li>Cadence: monthly updates</li>
                 <li>Affiliation: Trinity College Dublin (Political Science)</li>
