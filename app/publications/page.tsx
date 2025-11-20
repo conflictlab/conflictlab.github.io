@@ -8,45 +8,7 @@ import { publications, Publication } from '@/content/publications'
 
 export default function PublicationsPage() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedYears, setSelectedYears] = useState<number[]>([])
-  const [selectedAuthor, setSelectedAuthor] = useState('')
   const [showCitation, setShowCitation] = useState<number | null>(null)
-
-  // Get unique years and authors
-  const allYears = Array.from(new Set(publications.map(p => p.year))).sort((a, b) => b - a)
-  const allAuthors = useMemo(() => {
-    const authorSet = new Set<string>()
-    publications.forEach(pub => {
-      // Extract individual authors (splitting by '&', ',', and ' and ')
-      const authors = pub.authors
-        .split(/\s+and\s+|&|,/)
-        .map(a => {
-          // Remove content in parentheses, trim, and normalize punctuation
-          let cleaned = a.replace(/\(.*?\)/g, '').trim()
-          // Remove trailing punctuation like . or )
-          cleaned = cleaned.replace(/[.)]+$/, '').trim()
-          return cleaned
-        })
-        .filter(author => {
-          // Filter out empty strings, "et al", and fragments that are too short (likely incomplete)
-          if (!author || author.startsWith('et al') || author.startsWith('including')) {
-            return false
-          }
-          // Filter out single letters or initials without a last name (likely fragments)
-          // Valid format should have at least a space (e.g., "Chadefaux T" or "T. Chadefaux")
-          // or be a full last name with at least 3 characters
-          if (author.length < 3 || !author.includes(' ')) {
-            return false
-          }
-          return true
-        })
-
-      authors.forEach(author => {
-        authorSet.add(author)
-      })
-    })
-    return Array.from(authorSet).sort()
-  }, [])
 
   // Filter publications
   const filteredPublications = useMemo(() => {
@@ -58,30 +20,9 @@ export default function PublicationsPage() {
         if (!searchableText.includes(query)) return false
       }
 
-      // Year filter
-      if (selectedYears.length > 0 && !selectedYears.includes(pub.year)) {
-        return false
-      }
-
-      // Author filter - normalize author names for comparison
-      if (selectedAuthor) {
-        const normalizedAuthors = pub.authors
-          .split(/\s+and\s+|&|,/)
-          .map(a => {
-            let cleaned = a.replace(/\(.*?\)/g, '').trim()
-            cleaned = cleaned.replace(/[.)]+$/, '').trim()
-            return cleaned
-          })
-          .filter(author => author && author.length >= 3 && author.includes(' '))
-
-        if (!normalizedAuthors.some(author => author === selectedAuthor)) {
-          return false
-        }
-      }
-
       return true
     })
-  }, [searchQuery, selectedYears, selectedAuthor])
+  }, [searchQuery])
 
   // Group filtered publications by year
   const publicationsByYear = filteredPublications.reduce((acc, pub) => {
@@ -96,16 +37,8 @@ export default function PublicationsPage() {
     .map(Number)
     .sort((a, b) => b - a)
 
-  const toggleYear = (year: number) => {
-    setSelectedYears(prev =>
-      prev.includes(year) ? prev.filter(y => y !== year) : [...prev, year]
-    )
-  }
-
   const clearFilters = () => {
     setSearchQuery('')
-    setSelectedYears([])
-    setSelectedAuthor('')
   }
 
   const generateBibTeX = (pub: Publication, index: number) => {
@@ -131,7 +64,7 @@ export default function PublicationsPage() {
     }
   }
 
-  const hasActiveFilters = searchQuery || selectedYears.length > 0 || selectedAuthor
+  const hasActiveFilters = searchQuery.length > 0
 
   return (
     <>
@@ -187,54 +120,18 @@ export default function PublicationsPage() {
               )}
             </div>
 
-            {/* Filters */}
-            <div className="flex flex-wrap gap-4 items-center">
-              {/* Year Filter */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 font-medium">Year:</span>
-                <div className="flex flex-wrap gap-2">
-                  {allYears.map(year => (
-                    <button
-                      key={year}
-                      onClick={() => toggleYear(year)}
-                      className={`px-3 py-1 text-sm rounded-full transition-colors ${
-                        selectedYears.includes(year)
-                          ? 'bg-pace-red text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      {year}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Author Filter */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 font-medium">Author:</span>
-                <select
-                  value={selectedAuthor}
-                  onChange={(e) => setSelectedAuthor(e.target.value)}
-                  className="px-3 py-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent"
-                >
-                  <option value="">All authors</option>
-                  {allAuthors.map(author => (
-                    <option key={author} value={author}>{author}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Clear Filters */}
-              {hasActiveFilters && (
+            {/* Clear search and Results count */}
+            {hasActiveFilters && (
+              <div className="flex items-center justify-between">
                 <button
                   onClick={clearFilters}
-                  className="ml-auto px-4 py-1 text-sm text-pace-red hover:text-pace-red-dark transition-colors flex items-center gap-1"
+                  className="px-4 py-1 text-sm text-pace-red hover:text-pace-red-dark transition-colors flex items-center gap-1"
                 >
                   <X size={16} />
-                  Clear filters
+                  Clear search
                 </button>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Results count */}
             <div className="text-sm text-gray-600">
