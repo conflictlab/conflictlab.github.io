@@ -98,9 +98,15 @@ export default async function ForecastsPage() {
 
       {/* Forecast Map */}
       <section className="py-0">
-        {/* Key takeaways moved above the map */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
+        {/* Full-width (bleed) wrapper */}
+        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+          <LazyVisible minHeight="300px">
+            <CountryChoropleth items={countryMapItems} showHotspots={true} hideDownloadButton={true} />
+          </LazyVisible>
+        </div>
+        {/* Key takeaways below the map */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-lg p-4 mt-6 border border-gray-200">
             <div className="flex items-start">
               <div className="w-full md:w-1/3 md:pr-4 md:border-r md:border-gray-300">
                 <h3 className="text-lg font-semibold text-gray-800">Key Takeaways for {takeawaysDate}</h3>
@@ -117,12 +123,6 @@ export default async function ForecastsPage() {
               </div>
             </div>
           </div>
-        </div>
-        {/* Full-width (bleed) wrapper */}
-        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-          <LazyVisible minHeight="300px">
-            <CountryChoropleth items={countryMapItems} showHotspots={true} hideDownloadButton={true} />
-          </LazyVisible>
         </div>
         {/* Summary cards below key takeaways, constrained */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
