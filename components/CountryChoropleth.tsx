@@ -486,7 +486,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               </div>
               {showHotspots && (
                 <div className={`mt-2 pt-2 ${dimZoomControls ? 'border-t border-gray-300/50' : 'border-t border-gray-300'}`}>
-                  <div className={`text-[11px] mb-1.5 ${dimZoomControls ? 'text-gray-600' : 'text-gray-700'}`}>Hotspots (>100 fatalities):</div>
+                  <div className={`text-[11px] mb-1.5 ${dimZoomControls ? 'text-gray-600' : 'text-gray-700'}`}>Hotspots (&gt;100 fatalities):</div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <div className="relative w-5 h-5">
