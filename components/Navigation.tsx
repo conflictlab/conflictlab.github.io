@@ -110,17 +110,17 @@ export default function Navigation() {
   return (
     <nav className="bg-railings border-b border-railings-light relative z-[2000] shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`flex justify-between ${isHomePage ? 'h-20' : 'h-12'}`}>
+        <div className={`flex justify-between ${isHomePage ? 'h-16' : 'h-10'}`}>
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               {(() => {
-                const containerSize = isHomePage ? 'h-14 w-14' : 'h-8 w-8'
-                const imgSize = isHomePage ? 44 : 24
+                const containerSize = isHomePage ? 'h-12 w-12' : 'h-8 w-8'
+                const imgSize = isHomePage ? 38 : 24
                 return (
                   <div
-                    className={`mr-3 ${containerSize} rounded-full relative overflow-hidden flex items-center justify-center ring-1 ring-black/10 shadow-lg`} 
+                    className={`mr-3 ${containerSize} rounded-full relative overflow-hidden flex items-center justify-center ring-1 ring-black/10 shadow-lg`}
                     style={{
-                      background: 'linear-gradient(145deg, rgba(255,255,255,0.98), rgba(245,245,245,0.98))',
+                      background: '#f9fafb',
                       boxShadow: '0 8px 18px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.15)'
                     }}
                   >
@@ -144,7 +144,7 @@ export default function Navigation() {
                   </div>
                 )
               })()}
-              <span className={`font-light text-white ${isHomePage ? 'text-3xl' : 'text-2xl'}`}>PaCE</span>
+              <span className={`font-light ${isHomePage ? 'text-3xl' : 'text-2xl'}`} style={{ color: '#f9fafb' }}>PaCE</span>
             </Link>
           </div>
           
@@ -164,8 +164,9 @@ export default function Navigation() {
                       className={`flex items-center gap-1 transition-colors font-light focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red ${
                         isActive(item.href)
                           ? 'text-pace-red border-b-2 border-pace-red pb-1'
-                          : 'text-gray-300 hover:text-pace-red-light'
+                          : 'hover:text-pace-red-light'
                       }`}
+                      style={!isActive(item.href) ? { color: '#f9fafb' } : {}}
                     >
                       {item.label}
                       <ChevronDown size={16} className="mt-0.5" />
@@ -182,7 +183,8 @@ export default function Navigation() {
                             >
                               <Link
                                 href={section.href}
-                                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
+                                className="block px-4 py-2 text-sm hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
+                                style={{ color: '#f9fafb' }}
                               >
                                 {section.label}
                                 {section.subsections && <span className="float-right">›</span>}
@@ -194,7 +196,8 @@ export default function Navigation() {
                                       <Link
                                         key={subsection.href}
                                         href={subsection.href}
-                                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
+                                        className="block px-4 py-2 text-sm hover:bg-gray-700 hover:text-pace-red-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red"
+                                        style={{ color: '#f9fafb' }}
                                       >
                                         {subsection.label}
                                       </Link>
@@ -214,8 +217,9 @@ export default function Navigation() {
                     className={`transition-colors font-light focus:outline-none focus-visible:ring-2 focus-visible:ring-pace-red ${
                       isActive(item.href)
                         ? 'text-pace-red border-b-2 border-pace-red pb-1'
-                        : 'text-gray-300 hover:text-pace-red-light'
+                        : 'hover:text-pace-red-light'
                     }`}
+                    style={!isActive(item.href) ? { color: '#f9fafb' } : {}}
                   >
                     {item.label}
                   </Link>
@@ -247,8 +251,9 @@ export default function Navigation() {
                   className={`block px-3 py-2 font-light ${
                     isActive(item.href)
                       ? 'text-pace-red bg-gray-800'
-                      : 'text-gray-300 hover:text-pace-red-light'
+                      : 'hover:text-pace-red-light'
                   }`}
+                  style={!isActive(item.href) ? { color: '#f9fafb' } : {}}
                 >
                   {item.label}
                 </Link>
@@ -258,7 +263,8 @@ export default function Navigation() {
                       <div key={section.href}>
                         <Link
                           href={section.href}
-                          className="block px-3 py-1.5 text-sm text-gray-400 hover:text-pace-red-light"
+                          className="block px-3 py-1.5 text-sm hover:text-pace-red-light"
+                          style={{ color: '#f9fafb', opacity: 0.9 }}
                         >
                           {section.label}
                         </Link>
@@ -268,7 +274,8 @@ export default function Navigation() {
                               <Link
                                 key={subsection.href}
                                 href={subsection.href}
-                                className="block px-3 py-1.5 text-xs text-gray-500 hover:text-pace-red-light"
+                                className="block px-3 py-1.5 text-xs hover:text-pace-red-light"
+                                style={{ color: '#f9fafb', opacity: 0.8 }}
                               >
                                 {subsection.label}
                               </Link>
