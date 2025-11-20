@@ -14,7 +14,7 @@ import LazyVisible from '@/components/LazyVisible'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import React from 'react'
-import Breadcrumbs from '@/components/Breadcrumbs'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Entity Forecast — PaCE',
@@ -94,7 +94,15 @@ export default async function EntityForecastPage({ params }: { params: { entity:
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
       <section className="py-12 hero-background-network-image">
-        <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]"><Breadcrumbs /></div>
+        <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]">
+          <nav aria-label="Breadcrumb" className="text-sm text-white/90">
+            <Link href="/" className="hover:underline">Home</Link>
+            <span className="mx-1">/</span>
+            <Link href="/forecasts" className="hover:underline">forecasts</Link>
+            <span className="mx-1">/</span>
+            <span>{entity.name}</span>
+          </nav>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
             {entity.name}

@@ -16,7 +16,7 @@ export default function LandingBanner() {
           </h1>
           <div className="text-2xl md:text-3xl lg:text-4xl text-white font-bold tracking-wide mb-8" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5)' }}>
             <div className="overflow-hidden">
-              <p className="inline-block whitespace-nowrap typewriter-text pr-3">
+              <p className="inline-block whitespace-nowrap typewriter-text pr-8">
                 Forecasting Geopolitical Risk
               </p>
             </div>
