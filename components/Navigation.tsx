@@ -76,6 +76,7 @@ export default function Navigation() {
       href: '/forecasts',
       sections: [
         { label: 'Dashboard', href: '/forecasts' },
+        { label: 'Reports & Newsletters', href: '/reports' },
         { label: 'Downloads', href: '/downloads' },
       ],
     },
@@ -84,14 +85,7 @@ export default function Navigation() {
       href: '/research',
       sections: [
         { label: 'Methodology', href: '/methodology' },
-        {
-          label: 'Publications',
-          href: '/publications',
-          subsections: [
-            { label: 'Academic Publications', href: '/publications#publications' },
-            { label: 'Reports & Newsletters', href: '/publications#reports-newsletters' },
-          ],
-        },
+        { label: 'Publications', href: '/publications' },
         { label: 'Downloads', href: '/downloads' },
         {
           label: 'Dissemination',

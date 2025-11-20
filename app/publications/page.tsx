@@ -85,18 +85,6 @@ export default function PublicationsPage() {
       {/* Publications by year */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Page Navigation */}
-          <div className="mb-12 pb-6 border-b border-gray-200">
-            <nav className="flex space-x-6 text-lg">
-              <a href="#publications" className="text-pace-red hover:text-pace-red-dark">
-                Academic Publications
-              </a>
-              <span className="text-gray-400">/</span>
-              <a href="#reports-newsletters" className="text-pace-red hover:text-pace-red-dark">
-                Reports and Newsletters
-              </a>
-            </nav>
-          </div>
 
           {/* Search and Filter Section */}
           <div className="mb-8 space-y-4">
@@ -139,7 +127,7 @@ export default function PublicationsPage() {
             </div>
           </div>
 
-          <h2 id="publications" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
+          <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
             Academic Publications
           </h2>
 
@@ -231,18 +219,6 @@ export default function PublicationsPage() {
             ))}
             </div>
           )}
-
-          {/* Reports and Newsletters Section */}
-          <div className="mt-16">
-            <h2 id="reports-newsletters" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
-              Reports and Newsletters
-            </h2>
-            <div className="border border-gray-200 rounded-lg p-6 bg-white">
-              <p className="text-gray-600">
-                Coming soon: Research reports, newsletters, and policy briefs.
-              </p>
-            </div>
-          </div>
 
           {/* Footer note */}
           <div className="mt-16 pt-8 border-t border-gray-200">
