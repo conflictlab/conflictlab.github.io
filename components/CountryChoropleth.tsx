@@ -452,30 +452,30 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             {showHotspots && <HotspotMarkers hotspots={hotspots} />}
           </MapContainer>
         )}
-        {/* Compact legend overlay (bottom-left) */}
+        {/* Compact legend overlay (bottom-right, transparent) */}
         {!hideLegend && !error && (
-          <div className="absolute bottom-4 left-4 z-[1000]">
-            <div className="bg-white/85 backdrop-blur-sm border border-gray-200 rounded-md px-2 py-1.5 shadow-sm">
-              <div className="text-[10px] text-gray-600 mb-1">min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
-              <div className="space-y-1 text-[11px] text-gray-800">
+          <div className="absolute bottom-6 right-2 z-[1000]">
+            <div className="text-[12px] text-gray-800">
+              <div className="mb-1 text-[11px] text-gray-700">min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
+              <div className="space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
                   <span>{'< 10'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
                   <span>{'10–50'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
                   <span>{'50–100'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
                   <span>{'100–1000'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-block w-6 h-4 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
+                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
                   <span>{'> 1000'}</span>
                 </div>
               </div>
@@ -493,6 +493,35 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
+            </div>
+          </div>
+        )}
+        {/* Months ahead slider overlay (bottom-left) */}
+        {!error && (
+          <div className="absolute bottom-4 left-4 z-[1000]">
+            <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm flex items-center gap-3 text-sm text-gray-700">
+              <span className="whitespace-nowrap font-medium text-gray-900">Months ahead:</span>
+              <div className="w-48">
+                <input
+                  type="range"
+                  min={1}
+                  max={6}
+                  value={month}
+                  onChange={(e) => setMonth(Number(e.target.value))}
+                  className="range"
+                  style={{ accentColor: '#1e40af' }}
+                  aria-label="Months ahead"
+                  aria-valuemin={1}
+                  aria-valuemax={6}
+                  aria-valuenow={month}
+                />
+                <div className="flex justify-between text-[10px] text-gray-600 mt-1">
+                  {[1,2,3,4,5,6].map(n => (
+                    <span key={n}>{n}m</span>
+                  ))}
+                </div>
+              </div>
+              <span className="w-6 text-right font-medium">{month}</span>
             </div>
           </div>
         )}
@@ -526,34 +555,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
       {/* Controls moved below map */}
       {!hideLegend && (
         <div className="px-4 py-2">
-          <div className="flex items-center justify-between">
-            {/* min/max moved to legend overlay */}
-            <div className="flex items-center gap-3 text-sm text-gray-700">
-              <span className="whitespace-nowrap font-semibold text-base text-gray-900">Months ahead:</span>
-              <div className="w-56 md:w-72">
-                <input
-                  type="range"
-                  min={1}
-                  max={6}
-                  value={month}
-                  onChange={(e) => setMonth(Number(e.target.value))}
-                  className="range"
-                  style={{ accentColor: '#1e40af' }}
-                  aria-label="Months ahead"
-                  aria-valuemin={1}
-                  aria-valuemax={6}
-                  aria-valuenow={month}
-                />
-                <div className="flex justify-between text-[10px] text-gray-500 mt-1">
-                  {[1,2,3,4,5,6].map(n => (
-                    <span key={n}>{n}m</span>
-                  ))}
-                </div>
-              </div>
-              <span className="w-6 text-right font-medium">{month}</span>
-            </div>
-          </div>
-          {/* Legend moved onto the map (bottom-left overlay) */}
+          {/* Legend moved onto the map (bottom-right overlay), slider moved onto map (bottom-left) */}
           {!hideDownloadButton && (
             <div className="mt-4 text-center">
               <Link href="/downloads" className="bg-pace-charcoal text-white px-8 py-3 hover:bg-pace-charcoal-light transition-all duration-200 font-normal rounded-lg inline-flex items-center justify-center shadow-sm hover:shadow-md">
