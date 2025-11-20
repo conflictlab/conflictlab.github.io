@@ -93,7 +93,14 @@ export default function Navigation() {
           ],
         },
         { label: 'Downloads', href: '/downloads' },
-        { label: 'Dissemination', href: '/dissemination' },
+        {
+          label: 'Dissemination',
+          href: '/dissemination',
+          subsections: [
+            { label: 'Workshops', href: '/dissemination#workshops' },
+            { label: 'Presentations', href: '/dissemination#presentations' },
+          ],
+        },
       ],
     },
     {
