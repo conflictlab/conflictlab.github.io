@@ -121,10 +121,10 @@ export default function ReportsPage() {
             <div className="border border-gray-200 rounded-lg p-8 bg-white">
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-2xl font-light text-gray-900 mb-4">
-                  Monthly Global Risk Prediction Map Report
+                  PaCE's Monthly Risk Prediction Report
                 </h2>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  Every month the PaCE Project publishes a Global Risk Prediction Map report. Sign up here to receive it in your inbox!
+                  Every month the PaCE Project publishes a risk prediction report. Sign up here to receive it in your inbox!
                 </p>
                 <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input
