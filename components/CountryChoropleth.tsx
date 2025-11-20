@@ -386,10 +386,13 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             minZoom={1}
             wheelPxPerZoomLevel={40}
             doubleClickZoom={true}
-            zoomAnimation={true}
+            zoomAnimation={false}
+            fadeAnimation={false}
             maxBounds={[[-85, -180], [85, 180]] as any}
             maxBoundsViscosity={1.0}
             preferCanvas={true}
+            updateWhenIdle={true}
+            keepBuffer={1}
             attributionControl={false}
             style={{ height: '100%', width: '100%' }}
           >
@@ -436,12 +439,13 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
               noWrap={true}
-              detectRetina={true}
+              detectRetina={false}
             />
             {(filtered || world) && (
               <GeoJSON
                 data={filtered || world}
-                style={style as any}
+                style={(f: any) => ({ ...style(f), smoothFactor: 1.2 }) as any}
+                renderer={L.canvas() as any}
                 onEachFeature={(feature, layer) => {
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
