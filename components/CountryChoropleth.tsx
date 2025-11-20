@@ -16,11 +16,27 @@ function HotspotMarkers({ hotspots }: { hotspots: Array<{ name: string; lat: num
   useEffect(() => {
     const markers: L.Marker[] = []
 
-    hotspots.forEach((spot) => {
+    if (!hotspots || hotspots.length === 0) return () => {}
+
+    const sorted = hotspots.slice().sort((a, b) => b.value - a.value).slice(0, 16)
+    const values = sorted.map(s => s.value)
+    const vmin = Math.min(...values), vmax = Math.max(...values)
+    const scaleFor = (v: number) => {
+      if (!isFinite(vmin) || !isFinite(vmax) || vmin === vmax) return 1
+      const t = (v - vmin) / Math.max(1e-6, (vmax - vmin))
+      return 0.9 + t * 0.5 // scale ~ 0.9 → 1.4
+    }
+
+    sorted.forEach((spot, idx) => {
+      const tier = idx < 6 ? 'primary' : 'secondary'
+      const sz = scaleFor(spot.value)
+      const speed = tier === 'primary' ? '2.2s' : '2.6s'
+      const pulseColor = tier === 'primary' ? 'rgba(220,38,38,0.4)' : 'rgba(17,24,39,0.35)'
+      const strokeColor = tier === 'primary' ? '#dc2626' : '#374151'
       const icon = L.divIcon({
         className: 'hotspot-marker',
         html: `
-          <div class="hotspot-container">
+          <div class="hotspot-container" data-tier="${tier}" style="--sz:${sz};--speed:${speed};--pulse:${pulseColor};--stroke:${strokeColor};">
             <div class="hotspot-pulse"></div>
             <div class="hotspot-core"></div>
           </div>
@@ -452,17 +468,18 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             100% { transform: scale(3); opacity: 0; }
           }
           .hotspot-marker { background: transparent !important; border: none !important; }
-          .hotspot-container { position: relative; width: 40px; height: 40px; }
+          .hotspot-container { position: relative; width: 40px; height: 40px; transform: scale(var(--sz,1)); }
           .hotspot-pulse {
             position: absolute; top: 50%; left: 50%; width: 20px; height: 20px;
-            margin: -10px 0 0 -10px; border-radius: 50%; background: rgba(220, 38, 38, 0.4);
-            border: 2px solid #dc2626; animation: pulse 2.5s ease-out infinite;
+            margin: -10px 0 0 -10px; border-radius: 50%; background: var(--pulse, rgba(220,38,38,0.4));
+            border: 2px solid var(--stroke, #dc2626); animation: pulse var(--speed, 2.5s) ease-out infinite;
           }
           .hotspot-core {
             position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
             margin: -5px 0 0 -5px; border-radius: 50%; background: #dc2626; border: 2px solid white;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
           }
+          .hotspot-container[data-tier="secondary"] .hotspot-core { display: none; }
 
           /* Dim Leaflet zoom controls when requested */
           .map-dim-controls .leaflet-control-zoom { box-shadow: none; border: none; opacity: 0.8; }
