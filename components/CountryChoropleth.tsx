@@ -597,9 +597,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           }
 
           /* Dim Leaflet zoom controls when requested */
-          .map-dim-controls .leaflet-control-zoom { box-shadow: none; border: none; opacity: 0.5; }
-          .map-dim-controls .leaflet-control-zoom a { background: rgba(255, 255, 255, 0.4); color: #9ca3af; border: 1px solid rgba(0,0,0,0.04); }
-          .map-dim-controls .leaflet-control-zoom a:hover { background: rgba(255, 255, 255, 0.55); }
+          .map-dim-controls .leaflet-control-zoom { box-shadow: none; border: none; opacity: 0.65; }
+          .map-dim-controls .leaflet-control-zoom a { background: rgba(255, 255, 255, 0.5); color: #6b7280; border: 1px solid rgba(0,0,0,0.06); }
+          .map-dim-controls .leaflet-control-zoom a:hover { background: rgba(255, 255, 255, 0.65); }
         `}</style>
       </div>
       {/* Controls moved below map */}
