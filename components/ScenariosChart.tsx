@@ -578,8 +578,9 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
     // Position items horizontally and center the legend
     const totalWidth = itemWidths.reduce((a, b) => a + b, 0) + gapX * Math.max(0, itemWidths.length - 1)
     let x = (width - totalWidth) / 2
+    const legendYOffset = 28
     itemGroups.forEach((g, idx) => {
-      g.attr('transform', `translate(${x}, ${0})`)
+      g.attr('transform', `translate(${x}, ${legendYOffset})`)
       x += itemWidths[idx] + gapX
     })
     // "Now" label on the separator
