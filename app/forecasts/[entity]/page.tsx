@@ -276,7 +276,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
                 <div>
                   <h2 className="text-2xl font-light text-gray-900 mb-4">Risk Drivers</h2>
                   <div className="space-y-4">
-                    {entity.drivers.map((driver, i) => (
+                    {entity.drivers.map((driver: { category: string; impact: number; note?: string }, i: number) => (
                       <div key={i} className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
                         <div className="flex items-center justify-between mb-2">
                           <p className="font-semibold text-gray-800 capitalize">{driver.category}</p>
