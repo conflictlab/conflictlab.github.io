@@ -108,7 +108,6 @@ jobs:
         run: rm -rf app/api
 
       - name: Build (Next.js export + data prebuild)
-        if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.base }}
           BASE_PATH: ${{ steps.base.outputs.base }}
