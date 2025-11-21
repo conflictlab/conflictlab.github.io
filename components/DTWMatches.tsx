@@ -309,14 +309,13 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const n = it.match.length
           const f = it.future?.length || 0
           const total = Math.max(2, n + f)
-          // Shared y-domain for match + future
-          const mfMin = Math.min(...it.match, ...(it.future || []))
-          const mfMax = Math.max(...it.match, ...(it.future || []))
-          const matchPath = buildSegmentPathWithDomain(it.match, total, 0, tileW, tileH, mfMin, mfMax)
-          // Scale the source (current window) using the same y-domain as match+future for comparability
-          const srcPath = buildSegmentPathWithDomain(it.src, total, 0, tileW, tileH, mfMin, mfMax)
-          const futurePath = f ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, tileH, mfMin, mfMax) : ''
-          const joinPath = f ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, tileH, mfMin, mfMax) : ''
+          // Use a shared y-domain based on raw values of match+future only
+          const vals = f && it.future ? [...it.match, ...(it.future as number[])] : [...it.match]
+          const domMin = Math.min(...vals)
+          const domMax = Math.max(...vals)
+          const matchPath = buildSegmentPathWithDomain(it.match, total, 0, tileW, tileH, domMin, domMax)
+          const futurePath = f && it.future ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
+          const joinPath = f && it.future ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
           return (
             <div key={idx} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
@@ -333,14 +332,12 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
                 {/* matched window */}
                 <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
-                {/* source window (scaled to match+future domain) */}
-                <path d={srcPath} fill="none" stroke="#111827" strokeWidth="2.5" strokeDasharray="4,3" />
                 {/* connector between match and future (visual link only) */}
                 {joinPath && <path d={joinPath} fill="none" stroke="#9ca3af" strokeWidth={1.25} strokeDasharray="3,3" />}
                 {/* matched future (next 6 months) */}
                 {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
               </svg>
-              <div className="mt-1 text-[11px] text-gray-500">Black dashed: current window · Gray: matched window · Red: matched future (6m)</div>
+              <div className="mt-1 text-[11px] text-gray-500">Gray: matched window · Red: matched future (6m)</div>
             </div>
           )
         })}
