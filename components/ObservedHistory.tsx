@@ -107,7 +107,8 @@ export default function ObservedHistory({ countryName, height = 220 }: { country
 
   const last = useMemo(() => {
     if (!series.length) return [] as Array<{ date: Date; value: number }>
-    return series.slice(-60)
+    // Match the desired 10-month window
+    return series.slice(-10)
   }, [series])
 
   const padding = { t: 16, r: 16, b: 28, l: 40 }
@@ -169,6 +170,10 @@ export default function ObservedHistory({ countryName, height = 220 }: { country
         ))}
         {/* line */}
         {path && <path d={path} fill="none" stroke="#111827" strokeWidth={2.5} />}
+        {/* markers */}
+        {last.map((d, i) => (
+          <circle key={i} cx={scaleX(d.date.getTime())} cy={scaleY(d.value)} r={4} fill="#111827" />
+        ))}
       </svg>
     </div>
   )
