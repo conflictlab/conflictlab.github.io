@@ -31,6 +31,24 @@ function normalizeName(s: string) {
   return String(s || '').toLowerCase().normalize('NFKD').replace(/[^a-z\s\-']/g,'').trim()
 }
 
+const ALIASES: Record<string, string> = {
+  'Bosnia-Herzegovina': 'Bosnia and Herz.',
+  'Cambodia (Kampuchea)': 'Cambodia',
+  'Central African Republic': 'Central African Rep.',
+  'DR Congo (Zaire)': 'Dem. Rep. Congo',
+  "Ivory Coast": "Côte d'Ivoire",
+  'Kingdom of eSwatini (Swaziland)': 'eSwatini',
+  'Macedonia, FYR': 'Macedonia',
+  'Madagascar (Malagasy)': 'Madagascar',
+  'Myanmar (Burma)': 'Myanmar',
+  'Russia (Soviet Union)': 'Russia',
+  'Serbia (Yugoslavia)': 'Serbia',
+  'South Sudan': 'S. Sudan',
+  'Yemen (North Yemen)': 'Yemen',
+  'Zimbabwe (Rhodesia)': 'Zimbabwe',
+  'Vietnam (North Vietnam)': 'Vietnam',
+}
+
 export default function ObservedHistory({ countryName, height = 220 }: { countryName: string; height?: number }) {
   const [series, setSeries] = useState<Array<{ date: Date; value: number }>>([])
   const containerRef = useRef<HTMLDivElement>(null)
@@ -41,14 +59,22 @@ export default function ObservedHistory({ countryName, height = 220 }: { country
     async function load() {
       try {
         const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        const full = await fetch(`${base}/data/hist_full.csv`).catch(() => null)
-        const resp = full && (full as any).ok ? full as Response : await fetch(`${base}/data/hist.csv`)
+        // Prefer conf.csv (full monthly history); then hist_full.csv; then hist.csv
+        let resp: Response | null = null
+        const tryFiles = ['conf.csv', 'hist_full.csv', 'hist.csv']
+        for (const f of tryFiles) {
+          try {
+            const r = await fetch(`${base}/data/${f}`)
+            if (r.ok) { resp = r; break }
+          } catch {}
+        }
         if (!resp.ok) return
         const text = await resp.text()
         const { header, rows } = parseCSV(text)
-        let col = header.findIndex(h => h === countryName)
+        const sought = ALIASES[countryName] || countryName
+        let col = header.findIndex(h => h === sought)
         if (col < 0) {
-          const target = normalizeName(countryName)
+          const target = normalizeName(sought)
           col = header.findIndex(h => normalizeName(h) === target)
         }
         if (col < 0) return
@@ -147,4 +173,3 @@ export default function ObservedHistory({ countryName, height = 220 }: { country
     </div>
   )
 }
-

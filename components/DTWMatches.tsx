@@ -38,6 +38,24 @@ function normalizeName(s: string) {
   return String(s || '').toLowerCase().normalize('NFKD').replace(/[^a-z\s\-']/g,'').trim()
 }
 
+const ALIASES: Record<string, string> = {
+  'Bosnia-Herzegovina': 'Bosnia and Herz.',
+  'Cambodia (Kampuchea)': 'Cambodia',
+  'Central African Republic': 'Central African Rep.',
+  'DR Congo (Zaire)': 'Dem. Rep. Congo',
+  "Ivory Coast": "Côte d'Ivoire",
+  'Kingdom of eSwatini (Swaziland)': 'eSwatini',
+  'Macedonia, FYR': 'Macedonia',
+  'Madagascar (Malagasy)': 'Madagascar',
+  'Myanmar (Burma)': 'Myanmar',
+  'Russia (Soviet Union)': 'Russia',
+  'Serbia (Yugoslavia)': 'Serbia',
+  'South Sudan': 'S. Sudan',
+  'Yemen (North Yemen)': 'Yemen',
+  'Zimbabwe (Rhodesia)': 'Zimbabwe',
+  'Vietnam (North Vietnam)': 'Vietnam',
+}
+
 function formatDate(s?: string) {
   if (!s) return ''
   // accept YYYY-MM-DD HH:MM:SS or YYYY-MM-DD
@@ -100,16 +118,14 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
     async function loadAll() {
       try {
         const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        // Try full historical CSV first, then fallback to short hist.csv
-        const [mj, hf] = await Promise.all([
+        // Prefer conf.csv (full monthly history); then hist_full.csv; then hist.csv
+        const [mj, cf, hf] = await Promise.all([
           fetch(`${base}/data/matches.json`),
-          fetch(`${base}/data/hist_full.csv`).catch(()=>null),
+          fetch(`${base}/data/conf.csv`).catch(() => null),
+          fetch(`${base}/data/hist_full.csv`).catch(() => null),
         ])
-        let hc: Response | null = hf && (hf as any).ok ? hf as Response : null
-        if (!hc) {
-          const r = await fetch(`${base}/data/hist.csv`)
-          hc = r
-        }
+        let hc: Response | null = (cf && (cf as any).ok) ? (cf as Response) : ((hf && (hf as any).ok) ? (hf as Response) : null)
+        if (!hc) { hc = await fetch(`${base}/data/hist.csv`) }
         if (!mj.ok) throw new Error('matches.json not available')
         if (!hc || !hc.ok) throw new Error('hist.csv not available')
         const mjson = (await mj.json()) as MatchesMap
@@ -127,8 +143,8 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
         if (!cancelled) setHistDates(dates)
 
         // Identify columns of interest
-        const wantNames = new Set<string>([countryName])
-        top.forEach(m => { if (m.series?.name) wantNames.add(m.series.name) })
+        const wantNames = new Set<string>([ALIASES[countryName] || countryName])
+        top.forEach(m => { if (m.series?.name) wantNames.add(ALIASES[m.series.name] || m.series.name) })
         const cols: Record<string, number[]> = {}
         for (let ci = 1; ci < header.length; ci++) {
           const name = header[ci]
@@ -146,7 +162,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const key = Object.keys(cols).find(k => normalizeName(k) === normalizeName(nm))
           return key ? cols[key] : undefined
         }
-        const cur = resolve(countryName)
+        const cur = resolve(ALIASES[countryName] || countryName)
         if (!cur) throw new Error(`Country column not found in hist.csv: ${countryName}`)
         if (!cancelled) {
           setHistSeries(cur.filter(v => Number.isFinite(v)) as number[])
@@ -187,7 +203,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
       let future: number[] | undefined
       let futureRange: string | undefined
       const nm = m.series?.name
-      const col = getCol(nm)
+      const col = getCol(nm ? (ALIASES[nm] || nm) : undefined)
       if (col && m.series?.index && m.series.index.length) {
         const endDate = String(m.series.index[m.series.index.length - 1]).slice(0, 10)
         const pos = histDates.indexOf(endDate)
