@@ -226,10 +226,10 @@ export default async function EntityForecastPage({ params }: { params: { entity:
               <LazyVisible minHeight="240px">
                 <TimeSeriesChart
                   data={{
-                    historical: historicalSeries.map(s => s.index),
+                    historical: historicalSeries.map((s: { index: number; period: string }) => s.index),
                     forecast: months,
                     country: entity.name,
-                    histPeriods: historicalSeries.map(s => s.period),
+                    histPeriods: historicalSeries.map((s: { index: number; period: string }) => s.period),
                     forecastPeriods: (() => {
                       const [yy, mm] = snapshot.period.split('-').map(Number)
                       const start = new Date(Date.UTC(yy, (mm - 1), 1))
