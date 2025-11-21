@@ -102,6 +102,64 @@ function buildSegmentPath(segment: number[], totalLen: number, offset: number, w
   return d
 }
 
+function connectorForSegments(past: number[], future: number[], totalLen: number, offsetFuture: number, width: number, height: number, padding = { t: 16, r: 12, b: 18, l: 12 }) {
+  if (!past.length || !future.length || totalLen < 2) return ''
+  const minP = Math.min(...past), maxP = Math.max(...past)
+  const minF = Math.min(...future), maxF = Math.max(...future)
+  const x0 = padding.l
+  const x1 = width - padding.r
+  const y0 = padding.t
+  const y1 = height - padding.b
+  const w = Math.max(1, x1 - x0)
+  const h = Math.max(1, y1 - y0)
+  const rngP = (maxP - minP) || 1
+  const rngF = (maxF - minF) || 1
+  const sx = (i: number) => x0 + (i / Math.max(1, totalLen - 1)) * w
+  const syP = (v: number) => y1 - ((v - minP) / rngP) * h
+  const syF = (v: number) => y1 - ((v - minF) / rngF) * h
+  const xPast = sx(past.length - 1)
+  const yPast = syP(past[past.length - 1])
+  const xFuture = sx(offsetFuture)
+  const yFuture = syF(future[0])
+  return `M ${xPast} ${yPast} L ${xFuture} ${yFuture}`
+}
+
+// Build using a shared y-domain (yMin..yMax) for both segments (used for match+future)
+function buildSegmentPathWithDomain(segment: number[], totalLen: number, offset: number, width: number, height: number, yMin: number, yMax: number, padding = { t: 16, r: 12, b: 18, l: 12 }) {
+  const n = segment.length
+  if (!n || totalLen < 2) return ''
+  const x0 = padding.l
+  const x1 = width - padding.r
+  const y0 = padding.t
+  const y1 = height - padding.b
+  const w = Math.max(1, x1 - x0)
+  const h = Math.max(1, y1 - y0)
+  const rng = (yMax - yMin) || 1
+  const sx = (i: number) => x0 + ((offset + i) / Math.max(1, totalLen - 1)) * w
+  const sy = (v: number) => y1 - ((v - yMin) / rng) * h
+  let d = `M ${sx(0)} ${sy(segment[0])}`
+  for (let i = 1; i < n; i++) d += ` L ${sx(i)} ${sy(segment[i])}`
+  return d
+}
+
+function connectorWithDomain(past: number[], future: number[], totalLen: number, offsetFuture: number, width: number, height: number, yMin: number, yMax: number, padding = { t: 16, r: 12, b: 18, l: 12 }) {
+  if (!past.length || !future.length || totalLen < 2) return ''
+  const x0 = padding.l
+  const x1 = width - padding.r
+  const y0 = padding.t
+  const y1 = height - padding.b
+  const w = Math.max(1, x1 - x0)
+  const h = Math.max(1, y1 - y0)
+  const rng = (yMax - yMin) || 1
+  const sx = (i: number) => x0 + (i / Math.max(1, totalLen - 1)) * w
+  const sy = (v: number) => y1 - ((v - yMin) / rng) * h
+  const xPast = sx(past.length - 1)
+  const yPast = sy(past[past.length - 1])
+  const xFuture = sx(offsetFuture)
+  const yFuture = sy(future[0])
+  return `M ${xPast} ${yPast} L ${xFuture} ${yFuture}`
+}
+
 export default function DTWMatches({ countryName }: { countryName: string }) {
   const [matches, setMatches] = useState<MatchEntry[] | null>(null)
   const [histSeries, setHistSeries] = useState<number[]>([])
@@ -251,9 +309,13 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const n = it.match.length
           const f = it.future?.length || 0
           const total = Math.max(2, n + f)
-          const matchPath = buildSegmentPath(it.match, total, 0, tileW, tileH)
+          // Shared y-domain for match + future
+          const mfMin = Math.min(...it.match, ...(it.future || []))
+          const mfMax = Math.max(...it.match, ...(it.future || []))
+          const matchPath = buildSegmentPathWithDomain(it.match, total, 0, tileW, tileH, mfMin, mfMax)
           const srcPath = buildSegmentPath(it.src, total, 0, tileW, tileH)
-          const futurePath = f ? buildSegmentPath(it.future as number[], total, n, tileW, tileH) : ''
+          const futurePath = f ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, tileH, mfMin, mfMax) : ''
+          const joinPath = f ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, tileH, mfMin, mfMax) : ''
           return (
             <div key={idx} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
@@ -272,6 +334,8 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
                 {/* source window */}
                 <path d={srcPath} fill="none" stroke="#B91C1C" strokeWidth="2.5" strokeDasharray="4,3" />
+                {/* connector between match and future (visual link only) */}
+                {joinPath && <path d={joinPath} fill="none" stroke="#9ca3af" strokeWidth={1.25} strokeDasharray="3,3" />}
                 {/* matched future (next 6 months) */}
                 {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
               </svg>
