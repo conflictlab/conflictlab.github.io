@@ -49,8 +49,8 @@ export default function ProjectSummaryPage() {
               <h2 className="text-xl font-light text-gray-900 mb-2">Affiliations</h2>
               <p className="text-gray-700">Department of Political Science, Trinity College Dublin</p>
               <div className="mt-3 flex items-center gap-4">
-                <img src="/logo.png" alt="PaCE" className="h-10 object-contain" />
-                <img src="/erc-logo.png" alt="ERC" className="h-12 object-contain" />
+                <img src="/logos/logo.png" alt="PaCE" className="h-10 object-contain" />
+                <img src="/logos/erc-logo.png" alt="ERC" className="h-12 object-contain" />
               </div>
             </div>
           </div>

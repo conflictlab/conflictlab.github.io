@@ -59,8 +59,8 @@ export default function PublicationsPage() {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
-    } catch (err) {
-      console.error('Failed to copy:', err)
+    } catch {
+      // Silently fail if clipboard API not available
     }
   }
 

@@ -13,7 +13,7 @@ export default function About() {
           <div className="mb-4">
             <div className="flex items-center gap-4">
               <Image
-                src="/logo.png"
+                src="/logos/logo.png"
                 alt="PaCE logo"
                 width={72}
                 height={72}
@@ -88,7 +88,7 @@ export default function About() {
                 Horizon 2020 research and innovation programme (Grant agreement no: 101002240).
               </p>
               <div className="mt-3">
-                <Image src="/erc-logo.png" alt="European Research Council" width={520} height={240} className="h-32 md:h-40 w-auto" />
+                <Image src="/logos/erc-logo.png" alt="European Research Council" width={520} height={240} className="h-32 md:h-40 w-auto" />
               </div>
             </div>
           </div>

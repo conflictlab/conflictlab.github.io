@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { RISK_THRESHOLDS } from './config'
 
 export type DriverCategory = 'election' | 'unrest' | 'macro' | 'security' | 'policy'
 
@@ -161,40 +162,57 @@ export function generateEntityNarrative(
   snapshot: ForecastSnapshot
 ): string {
   const paragraphs: string[] = []
+  const fmtInt = (v: number) => String(Math.round(Number(v)))
 
-  // 1. Current Status
+  // 1. Current Status (use predicted fatalities, next month p50)
+  const currentP50 = entity.horizons?.['1m']?.p50 ?? entity.index
   let statusLine = ''
   if (entity.band === 'high') {
-    statusLine = `${entity.name} is currently in a **high-risk** state with a risk index of **${entity.index.toFixed(1)}**.`
+    statusLine = `${entity.name} is currently in a **high-risk** state with predicted fatalities next month of **${fmtInt(currentP50)}**.`
   } else if (entity.band === 'medium') {
-    statusLine = `${entity.name} shows **moderate** conflict risk levels with an index of **${entity.index.toFixed(1)}**.`
+    statusLine = `${entity.name} shows **moderate** risk, with predicted fatalities next month of **${fmtInt(currentP50)}**.`
   } else {
-    statusLine = `${entity.name} maintains **relatively low** conflict risk with an index of **${entity.index.toFixed(1)}**.`
+    statusLine = `${entity.name} maintains **relatively low** risk, with predicted fatalities next month of **${fmtInt(currentP50)}**.`
   }
   paragraphs.push(statusLine)
 
-  // 2. Recent Change
-  if (Math.abs(entity.deltaMoM) > 0.5) {
-    let changeLine = ''
-    if (entity.deltaMoM > 20) {
-      changeLine = `Risk has **surged dramatically** by ${entity.deltaMoM.toFixed(1)} points since last month, representing a significant escalation.`
-    } else if (entity.deltaMoM > 10) {
-      changeLine = `Risk has **increased substantially** by ${entity.deltaMoM.toFixed(1)} points since last month.`
-    } else if (entity.deltaMoM > 5) {
-      changeLine = `Risk has **risen moderately** by ${entity.deltaMoM.toFixed(1)} points since last month.`
-    } else if (entity.deltaMoM > 0) {
-      changeLine = `Risk has **increased slightly** by ${entity.deltaMoM.toFixed(1)} points from the previous month.`
-    } else if (entity.deltaMoM < -20) {
-      changeLine = `Risk has **dropped sharply** by ${Math.abs(entity.deltaMoM).toFixed(1)} points, showing major improvement.`
-    } else if (entity.deltaMoM < -10) {
-      changeLine = `Risk has **declined significantly** by ${Math.abs(entity.deltaMoM).toFixed(1)} points since last month.`
-    } else if (entity.deltaMoM < -5) {
-      changeLine = `Risk has **decreased moderately** by ${Math.abs(entity.deltaMoM).toFixed(1)} points.`
-    } else {
-      changeLine = `Risk has **edged down** slightly by ${Math.abs(entity.deltaMoM).toFixed(1)} points.`
+  // 2. Recent Change (compute MoM from previous snapshot's next‑month p50)
+  try {
+    const periods = getAvailablePeriods()
+    const currentIdx = periods.indexOf(snapshot.period)
+    const prevPeriod = currentIdx > 0 ? periods[currentIdx - 1] : undefined
+    if (prevPeriod) {
+      const prevSnap = readSnapshot(prevPeriod)
+      const prevMatch = prevSnap.entities.find(
+        (e) => e.id === entity.id || (entity.iso3 && e.iso3 === entity.iso3) || (e.name || '').toUpperCase() === (entity.name || '').toUpperCase()
+      )
+      const prevP50 = prevMatch ? (prevMatch.horizons?.['1m']?.p50 ?? prevMatch.index) : undefined
+      if (prevP50 !== undefined) {
+        const delta = currentP50 - prevP50
+        if (Math.abs(delta) > 0.5) {
+          let changeLine = ''
+          if (delta > 200) {
+            changeLine = `Predicted fatalities have **surged dramatically** by ${fmtInt(delta)} since last month.`
+          } else if (delta > 50) {
+            changeLine = `Predicted fatalities have **increased substantially** by ${fmtInt(delta)} since last month.`
+          } else if (delta > 10) {
+            changeLine = `Predicted fatalities have **risen moderately** by ${fmtInt(delta)} since last month.`
+          } else if (delta > 0) {
+            changeLine = `Predicted fatalities have **increased slightly** by ${fmtInt(delta)} since last month.`
+          } else if (delta < -200) {
+            changeLine = `Predicted fatalities have **dropped sharply** by ${fmtInt(Math.abs(delta))}, indicating a marked improvement.`
+          } else if (delta < -50) {
+            changeLine = `Predicted fatalities have **declined significantly** by ${fmtInt(Math.abs(delta))} since last month.`
+          } else if (delta < -10) {
+            changeLine = `Predicted fatalities have **decreased moderately** by ${fmtInt(Math.abs(delta))}.`
+          } else {
+            changeLine = `Predicted fatalities have **edged down** slightly by ${fmtInt(Math.abs(delta))}.`
+          }
+          paragraphs.push(changeLine)
+        }
+      }
     }
-    paragraphs.push(changeLine)
-  }
+  } catch {}
 
   // 3. Historical Trend Context
   if (historicalSeries.length >= 3) {
@@ -219,29 +237,29 @@ export function generateEntityNarrative(
     }
   }
 
-  // 5. Outlook
+  // 5. Outlook (predicted fatalities trajectory)
   const outlook1m = entity.horizons['1m'].p50
   const outlook6m = entity.horizons['6m'].p50
   const outlookChange = outlook6m - outlook1m
 
   if (Math.abs(outlookChange) > 10) {
     if (outlookChange > 20) {
-      paragraphs.push(`The 6-month outlook suggests **sharply increasing risk**, with forecasts rising to ${outlook6m.toFixed(1)}.`)
+      paragraphs.push(`The 6‑month outlook suggests **sharply rising predicted fatalities**, reaching ${fmtInt(outlook6m)}.`)
     } else if (outlookChange > 10) {
-      paragraphs.push(`The outlook indicates **moderately increasing risk** over the next six months, forecasting ${outlook6m.toFixed(1)}.`)
+      paragraphs.push(`The outlook indicates **moderately increasing predicted fatalities** over the next six months, forecasting ${fmtInt(outlook6m)}.`)
     } else if (outlookChange < -20) {
-      paragraphs.push(`Forecasts indicate **substantially improving conditions** ahead, with risk expected to decline to ${outlook6m.toFixed(1)}.`)
+      paragraphs.push(`Forecasts indicate **substantially improving conditions** ahead, with predicted fatalities expected to decline to ${fmtInt(outlook6m)}.`)
     } else {
-      paragraphs.push(`The outlook suggests **gradual improvement**, with risk forecast to decrease to ${outlook6m.toFixed(1)}.`)
+      paragraphs.push(`The outlook suggests **gradual improvement**, with predicted fatalities forecast to decrease to ${fmtInt(outlook6m)}.`)
     }
   } else if (Math.abs(outlookChange) > 5) {
     if (outlookChange > 0) {
-      paragraphs.push(`Risk is expected to **edge higher** over the next six months.`)
+      paragraphs.push(`Predicted fatalities are expected to **edge higher** over the next six months.`)
     } else {
-      paragraphs.push(`Risk is expected to **decline modestly** over the next six months.`)
+      paragraphs.push(`Predicted fatalities are expected to **decline modestly** over the next six months.`)
     }
   } else {
-    paragraphs.push(`Risk levels are forecast to **remain relatively stable** over the next six months.`)
+    paragraphs.push(`Predicted fatalities are forecast to **remain relatively stable** over the next six months.`)
   }
 
   // 6. Confidence note
@@ -259,18 +277,20 @@ export function getEntityComparativeStats(entity: ForecastEntity, snapshot: Fore
   const sameTypeEntities = allEntities.filter(e => e.entityType === entity.entityType)
 
   // Calculate percentile (what % of entities have lower risk)
-  const lowerRiskCount = sameTypeEntities.filter(e => e.index < entity.index).length
+  const valueOf = (e: ForecastEntity) => (e.horizons?.['1m']?.p50 ?? e.index)
+  const entityVal = valueOf(entity)
+  const lowerRiskCount = sameTypeEntities.filter(e => valueOf(e) < entityVal).length
   const percentile = Math.round((lowerRiskCount / sameTypeEntities.length) * 100)
 
   // Calculate rank
-  const sorted = [...sameTypeEntities].sort((a, b) => b.index - a.index)
+  const sorted = [...sameTypeEntities].sort((a, b) => valueOf(b) - valueOf(a))
   const rank = sorted.findIndex(e => e.id === entity.id) + 1
 
   // Global average
-  const globalAvg = allEntities.reduce((sum, e) => sum + e.index, 0) / allEntities.length
+  const globalAvg = allEntities.reduce((sum, e) => sum + valueOf(e), 0) / allEntities.length
 
   // Type-specific average
-  const typeAvg = sameTypeEntities.reduce((sum, e) => sum + e.index, 0) / sameTypeEntities.length
+  const typeAvg = sameTypeEntities.reduce((sum, e) => sum + valueOf(e), 0) / sameTypeEntities.length
 
   return {
     percentile,
@@ -328,6 +348,27 @@ export function getEntityHorizonMonths(period: string, entityName: string): numb
   }
 }
 
+// Calculate default 6-month horizon by interpolating between 1m, 3m, and 6m forecasts
+function calculateDefaultMonths(entity: ForecastEntity): number[] {
+  const h1m = entity.horizons['1m'].p50
+  const h3m = entity.horizons['3m'].p50
+  const h6m = entity.horizons['6m'].p50
+
+  return [
+    h1m,
+    Number(((h1m + h3m) / 2).toFixed(1)),
+    h3m,
+    Number((h3m + (h6m - h3m) / 3).toFixed(1)),
+    Number((h3m + (h6m - h3m) * 2 / 3).toFixed(1)),
+    h6m,
+  ]
+}
+
+// Get monthly forecast values, either from CSV data or by interpolating horizons
+export function getOrCalculateMonths(period: string, entity: ForecastEntity): number[] {
+  return getEntityHorizonMonths(period, entity.name) || calculateDefaultMonths(entity)
+}
+
 function splitCSVLine(line: string): string[] {
   const out: string[] = []
   let cur = ''
@@ -376,14 +417,7 @@ export async function getForecastsPageData() {
   const rows = snapshot.entities.map((e) => {
     const prev = prevIndexMap.get(e.id) ?? prevIndexMap.get(e.iso3 || '') ?? prevIndexMap.get((e.name || '').toUpperCase())
     const deltaMoM = prev !== undefined ? Number((e.horizons['1m'].index - prev).toFixed(1)) : 0
-    const months = getEntityHorizonMonths(snapshot.period, e.name) || [
-      e.horizons['1m'].p50,
-      Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
-      e.horizons['3m'].p50,
-      Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
-      Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
-      e.horizons['6m'].p50,
-    ]
+    const months = getOrCalculateMonths(snapshot.period, e)
     return {
       id: e.id,
       name: e.name,
@@ -399,14 +433,7 @@ export async function getForecastsPageData() {
   const countryMapItems = snapshot.entities
     .filter((e) => (e.entityType || 'country') === 'country')
     .map((e) => {
-      const months = getEntityHorizonMonths(snapshot.period, e.name) || [
-        e.horizons['1m'].p50,
-        Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
-        e.horizons['3m'].p50,
-        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
-        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
-        e.horizons['6m'].p50,
-      ]
+      const months = getOrCalculateMonths(snapshot.period, e)
       return { id: e.id, name: e.name, iso3: e.iso3, months }
     })
 
@@ -429,7 +456,7 @@ export async function getForecastsPageData() {
     .sort((a, b) => Math.abs(b.deltaMoM) - Math.abs(a.deltaMoM))
     .slice(0, 6)
 
-  const HIGH_THRESHOLD = 100
+  const HIGH_THRESHOLD = RISK_THRESHOLDS.HIGH_RISK
   const countryEntities = snapshot.entities.filter((e) => (e.entityType || 'country') === 'country')
   const highByThresholdCount = countryEntities.filter((e) => Number(e.horizons['1m'].p50) > HIGH_THRESHOLD).length
   const prevHighByThresholdCount = (() => {

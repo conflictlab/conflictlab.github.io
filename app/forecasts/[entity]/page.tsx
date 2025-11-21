@@ -1,16 +1,21 @@
 import {
   getForecastsPageData,
-  getEntityHorizonMonths,
+  getOrCalculateMonths,
   readSnapshot,
   getEntitySeries,
   generateEntityNarrative,
   getEntityComparativeStats,
   getAvailablePeriods,
 } from '@/lib/forecasts'
+import { getCountryScenarios } from '@/lib/scenarios'
 import dynamic from 'next/dynamic'
 const ForecastFanChart = dynamic(() => import('@/components/ForecastFanChart'), { ssr: false })
 const TimeSeriesChart = dynamic(() => import('@/components/TimeSeriesChart'), { ssr: false })
+const ScenariosChart = dynamic(() => import('@/components/ScenariosChart'), { ssr: false })
+const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 import LazyVisible from '@/components/LazyVisible'
+import { getContextForEntity } from '@/lib/context'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import React from 'react'
@@ -33,18 +38,12 @@ async function getEntityData(entityId: string) {
   const entity = snapshot.entities.find(e => e.id === entityId)
   if (!entity) return null
 
-  const months = getEntityHorizonMonths(snapshot.period, entity.name) || [
-    entity.horizons['1m'].p50,
-    Number(((entity.horizons['1m'].p50 + entity.horizons['3m'].p50) / 2).toFixed(1)),
-    entity.horizons['3m'].p50,
-    Number((entity.horizons['3m'].p50 + (entity.horizons['6m'].p50 - entity.horizons['3m'].p50) / 3).toFixed(1)),
-    Number((entity.horizons['3m'].p50 + (entity.horizons['6m'].p50 - entity.horizons['3m'].p50) * 2 / 3).toFixed(1)),
-    entity.horizons['6m'].p50,
-  ]
+  const months = getOrCalculateMonths(snapshot.period, entity)
 
   const historicalSeries = getEntitySeries(entityId)
   const narrative = generateEntityNarrative(entity, historicalSeries, snapshot)
   const comparativeStats = getEntityComparativeStats(entity, snapshot)
+  const scenarios = getCountryScenarios(entity.name)
 
   // Compute MoM change exactly as the dashboard table does: current 1m index minus previous snapshot's 1m index
   let computedDeltaMoM = entity.deltaMoM
@@ -64,7 +63,7 @@ async function getEntityData(entityId: string) {
     }
   } catch {}
 
-  return { entity, months, historicalSeries, narrative, snapshot, comparativeStats, computedDeltaMoM }
+  return { entity, months, historicalSeries, narrative, snapshot, comparativeStats, computedDeltaMoM, scenarios }
 }
 
 export default async function EntityForecastPage({ params }: { params: { entity: string } }) {
@@ -74,7 +73,16 @@ export default async function EntityForecastPage({ params }: { params: { entity:
     notFound()
   }
 
-  const { entity, months, historicalSeries, narrative, comparativeStats, computedDeltaMoM } = data
+  const { entity, months, historicalSeries, narrative, comparativeStats, computedDeltaMoM, scenarios, snapshot } = data as any
+  const extContext = getContextForEntity(entity.name)
+
+  function formatMonthLabel(period: string) {
+    const [y, m] = period.split('-').map(Number)
+    const dt = new Date(y, (m - 1), 1)
+    return dt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+  }
+  const nextMonthLabel = formatMonthLabel(snapshot.period)
+  const predicted6mChange = Number((entity.horizons['6m'].p50 - entity.horizons['1m'].p50).toFixed(1))
 
   const getBandColor = (band: string) => {
     if (band === 'high') return 'bg-red-100 text-red-800 border-red-300'
@@ -95,13 +103,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       {/* Hero Section */}
       <section className="py-12 hero-background-network-image">
         <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]">
-          <nav aria-label="Breadcrumb" className="text-sm text-gray-700">
-            <Link href="/" className="text-pace-red hover:text-pace-red-dark">Home</Link>
-            <span className="mx-1">/</span>
-            <Link href="/forecasts" className="text-pace-red hover:text-pace-red-dark">forecasts</Link>
-            <span className="mx-1">/</span>
-            <span className="text-gray-700">{entity.name}</span>
-          </nav>
+          <Breadcrumbs />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
@@ -113,50 +115,107 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         </div>
       </section>
 
-      {/* Summary Stats Cards */}
+      
+
+      
+
+      {/* Unified Key Metrics + Situation Overview */}
       <section className="py-8 -mt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {/* Risk Index */}
-            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-              <div className="text-sm text-gray-500 mb-1">Risk Index</div>
-              <div className="text-3xl font-semibold text-gray-900">{entity.index.toFixed(1)}</div>
-            </div>
-
-            {/* Risk Band */}
-            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-              <div className="text-sm text-gray-500 mb-1">Risk Band</div>
-              <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getBandColor(entity.band)}`}>
-                {entity.band.toUpperCase()}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Left: Country Grid Map */}
+            <div className="rounded-lg p-0 bg-gray-50 overflow-hidden">
+              <h2 className="text-lg font-light text-gray-900 px-4 pt-3 pb-2">Predicted fatalities, {entity.name}</h2>
+              <div className="h-[520px]">
+                <PrioGridMap period={snapshot.period} countryName={entity.name} hideViewToggle={true} />
               </div>
             </div>
+            {/* Right: Unified Key Metrics + Situation Overview */}
+            <div className="p-6 rounded-lg">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-x-4 gap-y-1">
+                <div>
+                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis" title={`Predicted fatalities — ${nextMonthLabel}`}>Predicted fatalities — {nextMonthLabel}</div>
+                  <div className="text-3xl font-semibold text-gray-900">{entity.horizons['1m'].p50.toFixed(1)}</div>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">Risk Band</div>
+                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getBandColor(entity.band)}`}>
+                    {entity.band.toUpperCase()}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">MoM Change</div>
+                  <div className={`text-2xl font-semibold ${computedDeltaMoM > 0 ? 'text-red-600' : computedDeltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
+                    {computedDeltaMoM > 0 ? '+' : ''}{computedDeltaMoM.toFixed(1)} {getTrendIcon(computedDeltaMoM)}
+                  </div>
+                </div>
 
-            {/* Month-over-Month (matches dashboard table calculation) */}
-            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-              <div className="text-sm text-gray-500 mb-1">MoM Change</div>
-              <div className={`text-2xl font-semibold ${computedDeltaMoM > 0 ? 'text-red-600' : computedDeltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                {computedDeltaMoM > 0 ? '+' : ''}{computedDeltaMoM.toFixed(1)} {getTrendIcon(computedDeltaMoM)}
+                <div>
+                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">Predicted 6‑month change</div>
+                  <div className={`text-2xl font-semibold ${predicted6mChange > 0 ? 'text-red-600' : predicted6mChange < 0 ? 'text-green-600' : 'text-gray-600'}`}>
+                    {predicted6mChange > 0 ? '+' : ''}{predicted6mChange.toFixed(1)} {getTrendIcon(predicted6mChange)}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis" title="Ranking (by predicted fatalities, next month)">Ranking (by predicted fatalities, next month)</div>
+                  <div className="text-2xl font-semibold text-gray-900">
+                    #{comparativeStats.rank} <span className="text-sm text-gray-500">/ {comparativeStats.totalInType}</span>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            {/* Confidence */}
-            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-              <div className="text-sm text-gray-500 mb-1">Confidence</div>
-              <div className="text-2xl font-semibold text-gray-900">{(entity.confidence * 100).toFixed(0)}%</div>
-            </div>
-
-            {/* Ranking */}
-            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-              <div className="text-sm text-gray-500 mb-1">Ranking</div>
-              <div className="text-2xl font-semibold text-gray-900">
-                #{comparativeStats.rank} <span className="text-sm text-gray-500">/ {comparativeStats.totalInType}</span>
+              <div className="mt-4">
+                <h2 className="text-lg font-light text-gray-900 mb-2">Situation Overview</h2>
+                <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed text-justify">
+                  {renderNarrative(narrative)}
+                </div>
+              {extContext && (
+                <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed mt-3 text-justify">
+                  {extContext.updates && extContext.updates.length > 0 && (
+                    <div className="mb-3">
+                      <div className="text-[13px] text-gray-500 mb-1">Latest updates</div>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {extContext.updates.slice(0, 4).map((u, i) => (
+                          <li key={i}>
+                            <a href={u.url} target="_blank" rel="noopener noreferrer" className="text-link">{u.title}</a>
+                            {u.source ? <span className="text-gray-500"> — {u.source}</span> : null}
+                            {u.excerpt ? <div className="text-[12px] text-gray-600">{u.excerpt}</div> : null}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {extContext.summary && (
+                    <>
+                      <div className="text-[13px] text-gray-500 mb-1">Context (Wikipedia)</div>
+                      <p>{extContext.summary} {extContext.url && (<a href={extContext.url} target="_blank" rel="noopener noreferrer" className="text-link">Read more</a>)}.</p>
+                    </>
+                  )}
+                </div>
+              )}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Charts Section (moved before Situation Overview) */}
+      {/* Scenario clusters (moved just below overview) */}
+      {scenarios && (
+        <section className="py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+              <h2 className="text-2xl font-light text-gray-900 mb-2">Historical Scenarios for {entity.name}</h2>
+              <LazyVisible minHeight="500px">
+                <ScenariosChart data={scenarios} countryName={entity.name} />
+              </LazyVisible>
+              <p className="text-sm text-gray-600 mt-4">
+                Our model identified clusters of similar historical conflicts worldwide that inform the forecast for {entity.name}. Each line shows a cluster’s trajectory (dashed red) with opacity reflecting its probability; past observed values are shown in dark gray.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Charts Section */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -164,18 +223,28 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             {historicalSeries.length > 0 && (
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h2 className="text-2xl font-light text-gray-900 mb-4">Historical Trend</h2>
-                <LazyVisible minHeight="240px">
-                  <TimeSeriesChart
-                    data={{
-                      historical: historicalSeries.map(s => s.index),
-                      forecast: [entity.horizons['1m'].p50, entity.horizons['3m'].p50, entity.horizons['6m'].p50],
-                      country: entity.name
-                    }}
-                  />
-                </LazyVisible>
-                <div className="mt-4 text-sm text-gray-500">
-                  Historical risk index showing {historicalSeries.length} months of data
-                </div>
+              <LazyVisible minHeight="240px">
+                <TimeSeriesChart
+                  data={{
+                    historical: historicalSeries.map(s => s.index),
+                    forecast: months,
+                    country: entity.name,
+                    histPeriods: historicalSeries.map(s => s.period),
+                    forecastPeriods: (() => {
+                      const [yy, mm] = snapshot.period.split('-').map(Number)
+                      const start = new Date(Date.UTC(yy, (mm - 1), 1))
+                      const out: string[] = []
+                      for (let i = 0; i < 6; i++) {
+                        const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + i, 1))
+                        const y = d.getUTCFullYear()
+                        const m = String(d.getUTCMonth() + 1).padStart(2, '0')
+                        out.push(`${y}-${m}`)
+                      }
+                      return out
+                    })()
+                  }}
+                />
+              </LazyVisible>
               </div>
             )}
 
@@ -183,131 +252,58 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h2 className="text-2xl font-light text-gray-900 mb-4">6-Month Forecast</h2>
               <LazyVisible minHeight="240px">
-                <ForecastFanChart title="" months={months} />
+                <ForecastFanChart title="" months={months} countryName={entity.name} />
               </LazyVisible>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Narrative Section */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Situation Overview</h2>
-            <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed">
-              {renderNarrative(narrative)}
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
-      {/* Comparative Context */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Comparative Context</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <div className="text-sm text-gray-500 mb-2">Percentile Ranking</div>
-                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.percentile}th</div>
-                <p className="text-sm text-gray-600">
-                  Higher risk than {comparativeStats.percentile}% of monitored {entity.entityType}s
-                </p>
-              </div>
-              <div>
-                <div className="text-sm text-gray-500 mb-2">{entity.entityType.charAt(0).toUpperCase() + entity.entityType.slice(1)} Average</div>
-                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.typeAvg}</div>
-                <p className="text-sm text-gray-600">
-                  {comparativeStats.aboveTypeAvg ? 'Above' : 'Below'} the average for this type
-                </p>
-              </div>
-              <div>
-                <div className="text-sm text-gray-500 mb-2">Global Average</div>
-                <div className="text-4xl font-semibold text-gray-900 mb-2">{comparativeStats.globalAvg}</div>
-                <p className="text-sm text-gray-600">
-                  Average across all monitored entities
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
-      {/* Horizon Comparison */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h2 className="text-2xl font-light text-gray-900 mb-6">Forecast Horizons</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {(['1m', '3m', '6m'] as const).map((horizon) => (
-                <div key={horizon} className="border border-gray-200 rounded-lg p-5">
-                  <div className="text-sm text-gray-500 mb-2">{horizon === '1m' ? '1 Month' : horizon === '3m' ? '3 Months' : '6 Months'}</div>
-                  <div className="text-4xl font-semibold text-gray-900 mb-4">
-                    {entity.horizons[horizon].p50.toFixed(1)}
-                  </div>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">10th percentile:</span>
-                      <span className="font-medium text-gray-700">{entity.horizons[horizon].p10.toFixed(1)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">50th percentile:</span>
-                      <span className="font-medium text-gray-900">{entity.horizons[horizon].p50.toFixed(1)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">90th percentile:</span>
-                      <span className="font-medium text-gray-700">{entity.horizons[horizon].p90.toFixed(1)}</span>
-                    </div>
+      
+
+      
+
+      {/* Drivers and Notes - only show if there's actual content */}
+      {(entity.drivers.length > 0 || entity.notes) && (
+        <section className="py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {entity.drivers.length > 0 && (
+                <div>
+                  <h2 className="text-2xl font-light text-gray-900 mb-4">Risk Drivers</h2>
+                  <div className="space-y-4">
+                    {entity.drivers.map((driver, i) => (
+                      <div key={i} className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="font-semibold text-gray-800 capitalize">{driver.category}</p>
+                          <span className="text-sm text-gray-500">{driver.impact}% impact</span>
+                        </div>
+                        {driver.note && <p className="text-sm text-gray-600 mb-3">{driver.note}</p>}
+                        <div className="w-full bg-gray-200 rounded-full h-2.5">
+                          <div className="bg-pace-red h-2.5 rounded-full transition-all" style={{ width: `${driver.impact}%` }}></div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+              )}
 
-      {/* Drivers and Notes */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
-              <h2 className="text-2xl font-light text-gray-900 mb-4">Risk Drivers</h2>
-              <div className="space-y-4">
-                {entity.drivers.length > 0 ? (
-                  entity.drivers.map((driver, i) => (
-                    <div key={i} className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="font-semibold text-gray-800 capitalize">{driver.category}</p>
-                        <span className="text-sm text-gray-500">{driver.impact}% impact</span>
-                      </div>
-                      {driver.note && <p className="text-sm text-gray-600 mb-3">{driver.note}</p>}
-                      <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div className="bg-pace-red h-2.5 rounded-full transition-all" style={{ width: `${driver.impact}%` }}></div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
+              {entity.notes && (
+                <div>
+                  <h2 className="text-2xl font-light text-gray-900 mb-4">Analyst Notes</h2>
                   <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-                    <p className="text-gray-500">No specific drivers identified for this period.</p>
+                    <p className="text-gray-700 leading-relaxed">{entity.notes}</p>
                   </div>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-light text-gray-900 mb-4">Analyst Notes</h2>
-              <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
-                {entity.notes ? (
-                  <p className="text-gray-700 leading-relaxed">{entity.notes}</p>
-                ) : (
-                  <p className="text-gray-500 italic">No analyst notes available for this period.</p>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   )
 }

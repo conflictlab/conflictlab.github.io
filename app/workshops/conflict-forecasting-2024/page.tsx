@@ -27,9 +27,9 @@ export default function ConflictForecastingWorkshop2024() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Photos */}
           <div className="grid grid-cols-3 gap-2 mb-8">
-            <Image src="/workshop1.jpeg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
-            <Image src="/workshop2.jpg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
-            <Image src="/workshop3.jpeg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
+            <Image src="/workshops/workshop1.jpeg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
+            <Image src="/workshops/workshop2.jpg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
+            <Image src="/workshops/workshop3.jpeg" alt="Conflict Forecasting Workshop" width={640} height={384} className="w-full h-48 object-cover rounded-lg" />
           </div>
 
           <div className="mb-6">
@@ -73,7 +73,7 @@ export default function ConflictForecastingWorkshop2024() {
           {/* Bottom Photo */}
           <div className="mt-8 flex justify-center">
             <img
-              src="/workshop4.jpeg"
+              src="/workshops/workshop4.jpeg"
               alt="Conflict Forecasting Workshop"
               className="max-w-full h-auto rounded-lg"
             />

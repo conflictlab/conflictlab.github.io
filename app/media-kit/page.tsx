@@ -40,17 +40,17 @@ export default function MediaKitPage() {
             <h2 className="text-3xl font-light text-gray-900 mb-4">Logos</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
               <div className="p-4 border border-gray-200 rounded-lg bg-white text-center">
-                <img src="/logo.png" alt="PaCE logo" className="h-20 mx-auto object-contain" />
+                <img src="/logos/logo.png" alt="PaCE logo" className="h-20 mx-auto object-contain" />
                 <div className="mt-3 text-sm">
-                  <a href="/logo.png" className="text-link">PNG</a>
+                  <a href="/logos/logo.png" className="text-link">PNG</a>
                 </div>
               </div>
               <div className="p-4 border border-gray-200 rounded-lg bg-white text-center">
-                <img src="/PaCE final icon.svg" alt="PaCE vector icon" className="h-20 mx-auto object-contain" />
+                <img src="/logos/PaCE final icon.svg" alt="PaCE vector icon" className="h-20 mx-auto object-contain" />
                 <div className="mt-3 text-sm">
-                  <a href="/PaCE final icon.svg" className="text-link">SVG</a>
+                  <a href="/logos/PaCE final icon.svg" className="text-link">SVG</a>
                   <span className="mx-2">·</span>
-                  <a href="/PaCE final icon.pdf" className="text-link">PDF</a>
+                  <a href="/logos/PaCE final icon.pdf" className="text-link">PDF</a>
                 </div>
               </div>
             </div>

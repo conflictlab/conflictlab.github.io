@@ -8,6 +8,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 // TopoJSON client for converting topology to GeoJSON (loaded only if used)
 import { feature as topoFeature } from 'topojson-client'
+import { RISK_THRESHOLDS, getRiskColor } from '@/lib/config'
 
 type CountryValue = { id?: string; name: string; iso3?: string; value?: number; months?: number[] }
 
@@ -163,21 +164,12 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   const values = useMemo(() => items
     .map(i => Number((i.months ? i.months[month - 1] : i.value) ?? 0))
     .filter(v => Number.isFinite(v)), [items, month])
-  const thresholds = useMemo(() => [10, 50, 100, 500], [])
+  const thresholds = useMemo(() => RISK_THRESHOLDS.LEVELS, [])
   const { vmin, vmax } = useMemo(() => {
     if (!values.length) return { vmin: 0, vmax: 1 }
     const sorted = values.slice().sort((a,b)=>a-b)
     return { vmin: sorted[0], vmax: sorted[sorted.length-1] }
   }, [values])
-
-  function colorFor(v: number) {
-    if (!thresholds || thresholds.length === 0) return '#f5f5f5'
-    if (v <= thresholds[0]) return '#fee8c8'
-    if (v <= thresholds[1]) return '#fdbb84'
-    if (v <= thresholds[2]) return '#ef6548'
-    if (v <= thresholds[3]) return '#d7301f'
-    return '#b30000'
-  }
 
   const style = (f: any) => {
     const name = normalizeName(f?.properties?.name || f?.properties?.NAME || '')
@@ -185,7 +177,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     return {
       weight: val === 0 ? 0.3 : 0.6,
       color: val === 0 ? '#dddddd' : '#ffffff',
-      fillColor: colorFor(val),
+      fillColor: getRiskColor(val),
       fillOpacity: val === 0 ? 0.35 : 0.8,
       cursor: 'pointer',
     }
@@ -262,7 +254,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   const hotspots = useMemo(() => {
     if (!showHotspots || !world?.features?.length) return []
     const spots: Array<{ name: string; lat: number; lon: number; value: number }> = []
-    const threshold = 100 // Only show hotspots for countries with risk > 100
+    const threshold = RISK_THRESHOLDS.HOTSPOT_MIN
 
     for (const f of world.features) {
       const name = normalizeName(f?.properties?.name || f?.properties?.NAME || '')
@@ -670,78 +662,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             </div>
           </div>
         )}
-        {/* Map-specific styles (hotspots + optional dimmed controls) */}
-        <style jsx global>{`
-          @keyframes pulse {
-            0% { transform: scale(0.5); opacity: 0.8; }
-            50% { transform: scale(2); opacity: 0.3; }
-            100% { transform: scale(3); opacity: 0; }
-          }
-          @keyframes legendPulse {
-            0% { transform: scale(0.8); opacity: 0.7; }
-            50% { transform: scale(2.2); opacity: 0.2; }
-            100% { transform: scale(3); opacity: 0; }
-          }
-          .hotspot-marker { background: transparent !important; border: none !important; }
-          .hotspot-container { position: relative; width: 40px; height: 40px; transform: scale(var(--sz,1)); }
-          .hotspot-pulse {
-            position: absolute; top: 50%; left: 50%; width: 20px; height: 20px;
-            margin: -10px 0 0 -10px; border-radius: 50%; background: var(--pulse, rgba(220,38,38,0.4));
-            border: 2px solid var(--stroke, #dc2626); animation: pulse var(--speed, 2.5s) ease-out infinite;
-          }
-          .hotspot-core {
-            position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
-            margin: -5px 0 0 -5px; border-radius: 50%; background: #dc2626; border: 2px solid white;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-          }
-          .hotspot-container[data-tier="secondary"] .hotspot-core { display: none; }
 
-          /* Legend hotspot pulse animations */
-          .legend-hotspot-pulse-primary {
-            position: absolute; top: 50%; left: 50%; width: 8px; height: 8px;
-            margin: -4px 0 0 -4px; border-radius: 50%;
-            background: rgba(220,38,38,0.4); border: 1px solid #dc2626;
-            animation: legendPulse 2.2s ease-out infinite;
-          }
-          .legend-hotspot-pulse-secondary {
-            position: absolute; top: 50%; left: 50%; width: 8px; height: 8px;
-            margin: -4px 0 0 -4px; border-radius: 50%;
-            background: rgba(55,65,81,0.35); border: 1px solid #374151;
-            animation: legendPulse 2.6s ease-out infinite;
-          }
-
-          /* Custom tooltip styling */
-          .custom-country-tooltip {
-            background: rgba(255, 255, 255, 0.98) !important;
-            backdrop-filter: blur(8px);
-            border: 1px solid #e5e7eb !important;
-            border-radius: 8px !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-            padding: 10px 12px !important;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            line-height: 1.4;
-          }
-          .custom-country-tooltip::before {
-            border-top-color: #e5e7eb !important;
-          }
-          .leaflet-tooltip-top.custom-country-tooltip::before {
-            border-top-color: #e5e7eb !important;
-          }
-          .leaflet-tooltip-bottom.custom-country-tooltip::before {
-            border-bottom-color: #e5e7eb !important;
-          }
-          .leaflet-tooltip-left.custom-country-tooltip::before {
-            border-left-color: #e5e7eb !important;
-          }
-          .leaflet-tooltip-right.custom-country-tooltip::before {
-            border-right-color: #e5e7eb !important;
-          }
-
-          /* Dim Leaflet zoom controls when requested */
-          .map-dim-controls .leaflet-control-zoom { box-shadow: none; border: none; opacity: 0.65; }
-          .map-dim-controls .leaflet-control-zoom a { background: rgba(255, 255, 255, 0.5); color: #6b7280; border: 1px solid rgba(0,0,0,0.06); }
-          .map-dim-controls .leaflet-control-zoom a:hover { background: rgba(255, 255, 255, 0.65); }
-        `}</style>
       </div>
       {/* Controls moved below map */}
       {!hideLegend && (

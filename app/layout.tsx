@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   authors: [{ name: 'PaCE' }],
   robots: 'index, follow',
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: '/logos/logo.png',
+    apple: '/logos/logo.png',
   },
   openGraph: {
     title: 'PaCE - Forecasting the Future of Conflict and Risk',
@@ -56,10 +56,10 @@ export default function RootLayout({
           <style
             // Override image URLs to respect basePath on GitHub Pages
             dangerouslySetInnerHTML={{ __html: `
-              .hero-background-network-image { background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%), url('${base}/hero-bg-network.svg') center/cover no-repeat; }
-              .hero-background-network-image::before { background-image: url('${base}/network-minimalist.jpg'); }
-              .hero-background-network-image::after { background-image: url('${base}/network-minimalist.jpg'); }
-              .logo-watermark::after { background: url('${base}/logo.png') center/contain no-repeat; }
+              .hero-background-network-image { background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%), url('${base}/backgrounds/hero-bg-network.svg') center/cover no-repeat; }
+              .hero-background-network-image::before { background-image: url('${base}/backgrounds/network-minimalist.jpg'); }
+              .hero-background-network-image::after { background-image: url('${base}/backgrounds/network-minimalist.jpg'); }
+              .logo-watermark::after { background: url('${base}/logos/logo.png') center/contain no-repeat; }
             ` }}
           />
         )}

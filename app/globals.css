@@ -9,7 +9,7 @@
   }
   
   body {
-    @apply text-gray-900 font-light;
+    @apply text-gray-900 font-normal;
     /* Clean light background with subtle warmth */
     background: #fafafa;
     line-height: 1.6;
@@ -126,7 +126,7 @@
   .hero-background {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.03) 0%, rgba(255, 255, 255, 0.95) 50%, rgba(30, 64, 175, 0.03) 100%),
-      url('/hero-bg.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -135,7 +135,7 @@
   .hero-background-satellite {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(255, 255, 255, 0.97) 50%, rgba(30, 64, 175, 0.02) 100%),
-      url('/hero-bg-satellite.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-satellite.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -143,7 +143,7 @@
   .hero-background-minimal {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.01) 0%, rgba(255, 255, 255, 0.99) 50%, rgba(30, 64, 175, 0.01) 100%),
-      url('/hero-bg-minimal.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-minimal.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -151,7 +151,7 @@
   .hero-background-topographic {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(255, 255, 255, 0.97) 50%, rgba(30, 64, 175, 0.02) 100%),
-      url('/hero-bg-topographic.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-topographic.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -159,7 +159,7 @@
   .hero-background-data-viz {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.015) 0%, rgba(255, 255, 255, 0.98) 50%, rgba(30, 64, 175, 0.015) 100%),
-      url('/hero-bg-data-viz.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-data-viz.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -167,191 +167,16 @@
   .hero-background-globe {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(255, 255, 255, 0.97) 50%, rgba(30, 64, 175, 0.02) 100%),
-      url('/hero-bg-globe.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-globe.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
-  }
-
-  /* Palantir-style strong backgrounds */
-  .hero-background-intel {
-    background: 
-      linear-gradient(135deg, rgba(17, 24, 39, 0.85) 0%, rgba(55, 65, 81, 0.75) 50%, rgba(17, 24, 39, 0.85) 100%),
-      radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.2) 0%, transparent 50%),
-      url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="%23111827"/><g opacity="0.4"><circle cx="200" cy="200" r="100" fill="none" stroke="%233b82f6" stroke-width="2"/><circle cx="1720" cy="880" r="150" fill="none" stroke="%2310b981" stroke-width="2"/><path d="M400 600 L600 400 L800 600 L600 800 Z" fill="none" stroke="%23f59e0b" stroke-width="3"/><path d="M1200 200 Q1400 300 1600 200 T2000 200" fill="none" stroke="%233b82f6" stroke-width="2"/><circle cx="960" cy="540" r="300" fill="none" stroke="%2310b981" stroke-width="1" opacity="0.5"/></g><g opacity="0.2"><line x1="0" y1="0" x2="1920" y2="1080" stroke="%236b7280" stroke-width="1"/><line x1="0" y1="1080" x2="1920" y2="0" stroke="%236b7280" stroke-width="1"/></g></svg>');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-    color: white;
-  }
-
-  .hero-background-intel::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 70% 30%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
-      radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.10) 0%, transparent 50%);
-    animation: intelFloat 25s ease-in-out infinite;
-  }
-
-  .hero-background-intel::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      linear-gradient(45deg, transparent 40%, rgba(59, 130, 246, 0.05) 50%, transparent 60%),
-      linear-gradient(-45deg, transparent 40%, rgba(16, 185, 129, 0.04) 50%, transparent 60%);
-    animation: intelFlow 20s linear infinite;
-  }
-
-  @keyframes intelFloat {
-    0%, 100% {
-      transform: translateY(0px) scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: translateY(-20px) scale(1.02);
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes intelFlow {
-    0% {
-      transform: translateX(-100px) rotate(0deg);
-    }
-    100% {
-      transform: translateX(100px) rotate(360deg);
-    }
-  }
-
-  /* Override text colors for intel background */
-  .hero-background-intel h1,
-  .hero-background-intel p,
-  .hero-background-intel a {
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  }
-
-  .hero-background-intel .word-highlight {
-    color: #60a5fa;
-    font-weight: 600;
-  }
-
-  .hero-background-intel a {
-    color: #60a5fa;
-    border-color: #60a5fa;
-  }
-
-  .hero-background-intel a:hover {
-    color: #93c5fd;
-    border-color: #93c5fd;
-  }
-
-  /* Professional neutral hero background */
-  .hero-background-pro {
-    background:
-      radial-gradient(1200px 800px at 20% 10%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 60%),
-      radial-gradient(1000px 700px at 80% 80%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
-      linear-gradient(180deg, #0b1220 0%, #0e1a2a 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-background-pro::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      url('/real-world-map.svg') center/90% no-repeat;
-    opacity: 0.06;
-    filter: grayscale(100%);
-  }
-
-  .hero-background-pro::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 100px,
-        rgba(148, 163, 184, 0.06) 101px,
-        rgba(148, 163, 184, 0.06) 102px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 100px,
-        rgba(148, 163, 184, 0.04) 101px,
-        rgba(148, 163, 184, 0.04) 102px
-      );
-    opacity: 0.35;
-    transform: rotate(0.25deg);
-  }
-
-  .hero-background-pro h1,
-  .hero-background-pro p,
-  .hero-background-pro a {
-    color: white;
-  }
-
-  .hero-background-pro .word-highlight {
-    color: #60a5fa;
-    font-weight: 500;
-  }
-
-  /* Light hero with faint grayscale world map */
-  .hero-background-map-light {
-    background:
-      linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-background-map-light::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url('/accurate-world-map.svg') center/85% no-repeat;
-    opacity: 0.16;
-    filter: grayscale(100%) contrast(1.25) brightness(0.85);
-    mix-blend-mode: multiply;
-  }
-
-  /* Minimalist abstract network (nodes + edges) */
-  .hero-background-network {
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-background-network::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url('/hero-bg-network.svg') center/cover no-repeat;
-    opacity: 0.16; /* slightly more visible */
   }
 
   /* Network photo provided by user (fallback-safe) */
   .hero-background-network-image {
     background:
       linear-gradient(180deg, #ffffff 0%, #f8fafc 100%), /* Reverted to light gradient */
-      url('/hero-bg-network.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-network.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -360,7 +185,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('/network-minimalist.jpg');
+    background-image: url('/backgrounds/network-minimalist.jpg');
     background-repeat: no-repeat;
     background-size: 70vmin auto; /* scale relative to viewport */
     background-position: right bottom; /* push to viewport edge */
@@ -373,7 +198,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('/network-minimalist.jpg');
+    background-image: url('/backgrounds/network-minimalist.jpg');
     background-repeat: no-repeat;
     background-size: 70vmin auto;
     /* Use same anchor as ::before, rotation will mirror to top-left visually */
@@ -397,7 +222,7 @@
     width: min(30vw, 160px);
     aspect-ratio: 1 / 1;
     transform: translateY(-50%) rotate(-8deg);
-    background: url('/logo.png') center/contain no-repeat;
+    background: url('/logos/logo.png') center/contain no-repeat;
     opacity: 1;
     pointer-events: none;
     mix-blend-mode: normal;
@@ -466,7 +291,7 @@
     width: 200px;
     height: 200px;
     margin: -100px 0 0 -100px;
-    background: url('/logo.png') center/contain no-repeat;
+    background: url('/logos/logo.png') center/contain no-repeat;
     opacity: 0.15;
     animation: logoPulse 6s ease-in-out infinite;
     pointer-events: none;
@@ -507,7 +332,7 @@
   .hero-background-floating {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.04) 0%, rgba(255, 255, 255, 0.96) 50%, rgba(30, 64, 175, 0.04) 100%),
-      url('/hero-bg-minimal.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-minimal.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -535,7 +360,7 @@
     width: 300px;
     height: 300px;
     margin: -150px 0 0 -150px;
-    background: url('/logo.png') center/contain no-repeat;
+    background: url('/logos/logo.png') center/contain no-repeat;
     opacity: 0.12;
     animation: floatingLogo 12s ease-in-out infinite;
     pointer-events: none;
@@ -574,7 +399,7 @@
   .hero-background-particles {
     background: 
       linear-gradient(135deg, rgba(30, 64, 175, 0.03) 0%, rgba(255, 255, 255, 0.97) 50%, rgba(30, 64, 175, 0.03) 100%),
-      url('/hero-bg-data-viz.svg') center/cover no-repeat;
+      url('/backgrounds/hero-bg-data-viz.svg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -812,525 +637,75 @@
     }
   }
 
-  /* Data visualization background */
-  .data-background {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .data-background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.03;
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(30, 64, 175, 0.1) 0%, transparent 25%),
-      radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.1) 0%, transparent 25%),
-      linear-gradient(45deg, transparent 40%, rgba(30, 64, 175, 0.05) 50%, transparent 60%);
-    animation: dataFlow 20s ease-in-out infinite;
-  }
-
-  @keyframes dataFlow {
-    0%, 100% {
-      transform: translateX(0) translateY(0);
-      opacity: 0.03;
-    }
-    50% {
-      transform: translateX(10px) translateY(-5px);
-      opacity: 0.06;
-    }
-  }
-
-  /* Logo-inspired dot animation background */
-  .hero-background-logo-dots {
-    background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(255, 255, 255, 0.98) 50%, rgba(248, 250, 252, 0.95) 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-background-logo-dots h1,
-  .hero-background-logo-dots p,
-  .hero-background-logo-dots a {
-    color: #1f2937;
-    text-shadow: none;
-  }
-
-  .hero-background-logo-dots .word-highlight {
-    color: #dc2626;
-    font-weight: 600;
-  }
-
-  .hero-background-logo-dots a {
-    color: #1e40af;
-    border-color: #1e40af;
-  }
-
-  .hero-background-logo-dots a:hover {
-    color: #1d4ed8;
-    border-color: #1d4ed8;
-  }
-
-  .hero-background-logo-dots::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 15% 25%, rgba(220, 38, 38, 0.15) 0%, transparent 12%),
-      radial-gradient(circle at 85% 75%, rgba(239, 68, 68, 0.12) 0%, transparent 10%),
-      radial-gradient(circle at 25% 80%, rgba(220, 38, 38, 0.10) 0%, transparent 8%),
-      radial-gradient(circle at 75% 30%, rgba(239, 68, 68, 0.08) 0%, transparent 15%),
-      radial-gradient(circle at 60% 60%, rgba(185, 28, 28, 0.05) 0%, transparent 20%),
-      radial-gradient(circle at 40% 40%, rgba(220, 38, 38, 0.06) 0%, transparent 18%),
-      radial-gradient(circle at 90% 20%, rgba(239, 68, 68, 0.04) 0%, transparent 12%),
-      radial-gradient(circle at 10% 85%, rgba(185, 28, 28, 0.07) 0%, transparent 14%);
-    animation: logoDotsFloat 20s ease-in-out infinite;
-  }
-
-  .hero-background-logo-dots::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      linear-gradient(45deg, transparent 20%, rgba(17, 24, 39, 0.02) 30%, transparent 35%),
-      linear-gradient(135deg, transparent 40%, rgba(17, 24, 39, 0.03) 50%, transparent 60%),
-      linear-gradient(-45deg, transparent 60%, rgba(17, 24, 39, 0.01) 70%, transparent 80%);
-    animation: logoLinesFlow 25s linear infinite;
-  }
-
-  @keyframes logoDotsFloat {
-    0%, 100% {
-      transform: translateY(0px) translateX(0px) scale(1);
-      opacity: 1;
-    }
-    25% {
-      transform: translateY(-15px) translateX(10px) scale(1.05);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateY(10px) translateX(-8px) scale(0.95);
-      opacity: 0.6;
-    }
-    75% {
-      transform: translateY(-8px) translateX(12px) scale(1.02);
-      opacity: 0.9;
-    }
-  }
-
-  @keyframes logoLinesFlow {
-    0% {
-      transform: translateX(-50px) translateY(-25px) rotate(0deg);
-      opacity: 0.8;
-    }
-    25% {
-      transform: translateX(20px) translateY(30px) rotate(2deg);
-      opacity: 1;
-    }
-    50% {
-      transform: translateX(-30px) translateY(10px) rotate(-1deg);
-      opacity: 0.6;
-    }
-    75% {
-      transform: translateX(40px) translateY(-20px) rotate(1.5deg);
-      opacity: 0.9;
-    }
-    100% {
-      transform: translateX(-50px) translateY(-25px) rotate(0deg);
-      opacity: 0.8;
-    }
-  }
-
-  /* High-tech animated background */
-  .hero-tech-bg {
-    background: 
-      linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-tech-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 60% 20%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
-      linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.03) 50%, transparent 70%),
-      linear-gradient(-45deg, transparent 40%, rgba(16, 185, 129, 0.02) 60%, transparent 80%);
-    animation: techFlow 20s ease-in-out infinite;
-  }
-
-  .hero-tech-bg::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 100px,
-        rgba(59, 130, 246, 0.02) 101px,
-        rgba(59, 130, 246, 0.02) 102px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 150px,
-        rgba(16, 185, 129, 0.015) 151px,
-        rgba(16, 185, 129, 0.015) 152px
-      ),
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 200px,
-        rgba(245, 158, 11, 0.01) 201px,
-        rgba(245, 158, 11, 0.01) 202px
-      );
-    animation: techGrid 30s linear infinite;
-  }
-
-  @keyframes techFlow {
-    0%, 100% {
-      transform: translateX(0) translateY(0) scale(1);
-      opacity: 1;
-    }
-    25% {
-      transform: translateX(20px) translateY(-10px) scale(1.02);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateX(-10px) translateY(15px) scale(0.98);
-      opacity: 0.9;
-    }
-    75% {
-      transform: translateX(15px) translateY(-5px) scale(1.01);
-      opacity: 0.85;
-    }
-  }
-
-  @keyframes techGrid {
-    0% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    100% {
-      transform: translate(-50px, -50px) rotate(0.5deg);
-    }
-  }
-
-  /* Override text colors for tech background */
-  .hero-tech-bg h1,
-  .hero-tech-bg p,
-  .hero-tech-bg a {
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .hero-tech-bg .word-highlight {
-    color: #60a5fa;
-    font-weight: 600;
-  }
-
-  .hero-tech-bg a {
-    color: #60a5fa;
-    border-color: #60a5fa;
-  }
-
-  .hero-tech-bg a:hover {
-    color: #93c5fd;
-    border-color: #93c5fd;
-  }
-
-  /* Vector Backgrounds for Subpages - Fuller, Non-Moving Designs */
-  
-  /* Network topology background - Comprehensive neural network */
-  .bg-network-pattern {
-    background: 
-      linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%),
-      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.18) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.14) 0%, transparent 40%),
-      radial-gradient(circle at 60% 20%, rgba(245, 158, 11, 0.12) 0%, transparent 30%),
-      radial-gradient(circle at 15% 80%, rgba(59, 130, 246, 0.16) 0%, transparent 35%),
-      radial-gradient(circle at 85% 40%, rgba(16, 185, 129, 0.15) 0%, transparent 38%);
-    position: relative;
-  }
-
-  .bg-network-pattern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 120px,
-        rgba(59, 130, 246, 0.08) 121px,
-        rgba(59, 130, 246, 0.08) 123px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 150px,
-        rgba(16, 185, 129, 0.06) 151px,
-        rgba(16, 185, 129, 0.06) 153px
-      );
-    opacity: 0.9;
-  }
-
-  .bg-network-pattern::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.22) 0%, transparent 8%),
-      radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.18) 0%, transparent 6%),
-      radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
-      radial-gradient(circle at 90% 60%, rgba(59, 130, 246, 0.14) 0%, transparent 4%),
-      radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.20) 0%, transparent 7%),
-      radial-gradient(circle at 65% 85%, rgba(245, 158, 11, 0.16) 0%, transparent 6%);
-    opacity: 0.9;
-  }
-
-  /* Data visualization background - Comprehensive AI brain structure */
-  .bg-data-pattern {
-    background: 
-      linear-gradient(135deg, #fefefe 0%, #f8fafc 100%),
-      radial-gradient(ellipse at 30% 40%, rgba(59, 130, 246, 0.20) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 60%, rgba(16, 185, 129, 0.18) 0%, transparent 45%),
-      radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.14) 0%, transparent 35%),
-      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.16) 0%, transparent 40%);
-    position: relative;
-  }
-
-  .bg-data-pattern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      repeating-linear-gradient(
-        30deg,
-        transparent,
-        transparent 80px,
-        rgba(59, 130, 246, 0.07) 81px,
-        rgba(59, 130, 246, 0.07) 83px
-      ),
-      repeating-linear-gradient(
-        -30deg,
-        transparent,
-        transparent 100px,
-        rgba(16, 185, 129, 0.05) 101px,
-        rgba(16, 185, 129, 0.05) 103px
-      );
-    opacity: 0.9;
-  }
-
-  .bg-data-pattern::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 35% 30%, rgba(59, 130, 246, 0.18) 0%, transparent 6%),
-      radial-gradient(circle at 65% 70%, rgba(16, 185, 129, 0.16) 0%, transparent 5%),
-      radial-gradient(circle at 15% 60%, rgba(147, 51, 234, 0.14) 0%, transparent 4%),
-      radial-gradient(circle at 85% 40%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
-      radial-gradient(circle at 50% 85%, rgba(59, 130, 246, 0.12) 0%, transparent 3%);
-    opacity: 0.9;
-  }
-
-  /* Geographic/mapping background - Comprehensive global pattern */
-  .bg-geo-pattern {
-    background: 
-      linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%),
-      radial-gradient(ellipse at 25% 30%, rgba(16, 185, 129, 0.22) 0%, transparent 60%),
-      radial-gradient(ellipse at 75% 70%, rgba(59, 130, 246, 0.18) 0%, transparent 55%),
-      radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.14) 0%, transparent 45%),
-      radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.16) 0%, transparent 50%);
-    position: relative;
-  }
-
-  .bg-geo-pattern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 100px,
-        rgba(16, 185, 129, 0.08) 101px,
-        rgba(16, 185, 129, 0.08) 103px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 120px,
-        rgba(59, 130, 246, 0.07) 121px,
-        rgba(59, 130, 246, 0.07) 123px
-      );
-    opacity: 0.9;
-  }
-
-  .bg-geo-pattern::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 25%, rgba(16, 185, 129, 0.18) 0%, transparent 8%),
-      radial-gradient(circle at 80% 75%, rgba(59, 130, 246, 0.16) 0%, transparent 7%),
-      radial-gradient(circle at 60% 40%, rgba(245, 158, 11, 0.14) 0%, transparent 6%),
-      radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 5%),
-      radial-gradient(circle at 90% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 4%);
-    opacity: 0.9;
-  }
-
-  /* Analytics/dashboard background - Comprehensive data visualization */
-  .bg-analytics-pattern {
-    background: 
-      linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%),
-      radial-gradient(ellipse at 20% 25%, rgba(147, 51, 234, 0.18) 0%, transparent 45%),
-      radial-gradient(ellipse at 80% 75%, rgba(59, 130, 246, 0.16) 0%, transparent 50%),
-      radial-gradient(circle at 60% 15%, rgba(16, 185, 129, 0.14) 0%, transparent 40%),
-      radial-gradient(circle at 15% 85%, rgba(245, 158, 11, 0.15) 0%, transparent 42%);
-    position: relative;
-  }
-
-  .bg-analytics-pattern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      repeating-linear-gradient(
-        15deg,
-        transparent,
-        transparent 90px,
-        rgba(147, 51, 234, 0.07) 91px,
-        rgba(147, 51, 234, 0.07) 93px
-      ),
-      repeating-linear-gradient(
-        75deg,
-        transparent,
-        transparent 110px,
-        rgba(59, 130, 246, 0.06) 111px,
-        rgba(59, 130, 246, 0.06) 113px
-      );
-    opacity: 0.9;
-  }
-
-  .bg-analytics-pattern::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 30% 20%, rgba(147, 51, 234, 0.16) 0%, transparent 5%),
-      radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.14) 0%, transparent 4%),
-      radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.12) 0%, transparent 6%),
-      radial-gradient(circle at 25% 70%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
-      radial-gradient(circle at 55% 55%, rgba(147, 51, 234, 0.11) 0%, transparent 3%);
-    opacity: 0.9;
-  }
-
-  /* Comprehensive tech grid background - Fuller geometric design */
-  .bg-grid-pattern {
-    background: 
-      linear-gradient(135deg, #ffffff 0%, #f8fafc 100%),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 80px,
-        rgba(59, 130, 246, 0.14) 81px,
-        rgba(59, 130, 246, 0.14) 82px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 80px,
-        rgba(16, 185, 129, 0.12) 81px,
-        rgba(16, 185, 129, 0.12) 82px
-      ),
-      radial-gradient(ellipse at 40% 30%, rgba(59, 130, 246, 0.18) 0%, transparent 50%),
-      radial-gradient(ellipse at 60% 70%, rgba(16, 185, 129, 0.16) 0%, transparent 45%),
-      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.14) 0%, transparent 35%);
-    position: relative;
-  }
-
-  .bg-grid-pattern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 140px,
-        rgba(59, 130, 246, 0.07) 141px,
-        rgba(59, 130, 246, 0.07) 143px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 160px,
-        rgba(16, 185, 129, 0.06) 161px,
-        rgba(16, 185, 129, 0.06) 163px
-      );
-    opacity: 0.9;
-  }
-
-  .bg-grid-pattern::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.16) 0%, transparent 7%),
-      radial-gradient(circle at 75% 25%, rgba(16, 185, 129, 0.14) 0%, transparent 6%),
-      radial-gradient(circle at 25% 75%, rgba(245, 158, 11, 0.15) 0%, transparent 5%),
-      radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.12) 0%, transparent 4%),
-      radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.11) 0%, transparent 8%);
-    opacity: 0.9;
-  }
-
   /* Static backgrounds - no animations for improved performance and stability */
 }
+
+          @keyframes pulse {
+            0% { transform: scale(0.5); opacity: 0.8; }
+            50% { transform: scale(2); opacity: 0.3; }
+            100% { transform: scale(3); opacity: 0; }
+          }
+          @keyframes legendPulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(2.2); opacity: 0.2; }
+            100% { transform: scale(3); opacity: 0; }
+          }
+          .hotspot-marker { background: transparent !important; border: none !important; }
+          .hotspot-container { position: relative; width: 40px; height: 40px; transform: scale(var(--sz,1)); }
+          .hotspot-pulse {
+            position: absolute; top: 50%; left: 50%; width: 20px; height: 20px;
+            margin: -10px 0 0 -10px; border-radius: 50%; background: var(--pulse, rgba(220,38,38,0.4));
+            border: 2px solid var(--stroke, #dc2626); animation: pulse var(--speed, 2.5s) ease-out infinite;
+          }
+          .hotspot-core {
+            position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
+            margin: -5px 0 0 -5px; border-radius: 50%; background: #dc2626; border: 2px solid white;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+          }
+          .hotspot-container[data-tier="secondary"] .hotspot-core { display: none; }
+
+          /* Legend hotspot pulse animations */
+          .legend-hotspot-pulse-primary {
+            position: absolute; top: 50%; left: 50%; width: 8px; height: 8px;
+            margin: -4px 0 0 -4px; border-radius: 50%;
+            background: rgba(220,38,38,0.4); border: 1px solid #dc2626;
+            animation: legendPulse 2.2s ease-out infinite;
+          }
+          .legend-hotspot-pulse-secondary {
+            position: absolute; top: 50%; left: 50%; width: 8px; height: 8px;
+            margin: -4px 0 0 -4px; border-radius: 50%;
+            background: rgba(55,65,81,0.35); border: 1px solid #374151;
+            animation: legendPulse 2.6s ease-out infinite;
+          }
+
+          /* Custom tooltip styling */
+          .custom-country-tooltip {
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(8px);
+            border: 1px solid #e5e7eb !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            padding: 10px 12px !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.4;
+          }
+          .custom-country-tooltip::before {
+            border-top-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-top.custom-country-tooltip::before {
+            border-top-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-bottom.custom-country-tooltip::before {
+            border-bottom-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-left.custom-country-tooltip::before {
+            border-left-color: #e5e7eb !important;
+          }
+          .leaflet-tooltip-right.custom-country-tooltip::before {
+            border-right-color: #e5e7eb !important;
+          }
+
+          /* Dim Leaflet zoom controls when requested */
+          .map-dim-controls .leaflet-control-zoom { box-shadow: none; border: none; opacity: 0.65; }
+          .map-dim-controls .leaflet-control-zoom a { background: rgba(255, 255, 255, 0.5); color: #6b7280; border: 1px solid rgba(0,0,0,0.06); }
+          .map-dim-controls .leaflet-control-zoom a:hover { background: rgba(255, 255, 255, 0.65); }

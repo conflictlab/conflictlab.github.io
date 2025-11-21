@@ -28,7 +28,7 @@ export default function HierarchicalHurdleWorkshop2024() {
           {/* Photo */}
           <div className="flex justify-center mb-8">
             <Image
-              src="/Cornelius Fritz.jpg"
+              src="/team/Cornelius Fritz.jpg"
               alt="Dr Cornelius Fritz"
               width={800}
               height={600}

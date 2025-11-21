@@ -28,7 +28,7 @@ export default function SensitivityAnalysisWorkshop2024() {
           {/* Photo */}
           <div className="flex justify-center mb-8">
             <Image
-              src="/PaCE Workshops November 2024_jfif.jpeg"
+              src="/workshops/PaCE Workshops November 2024_jfif.jpeg"
               alt="PaCE Workshop November 2024"
               width={800}
               height={600}

@@ -46,7 +46,7 @@ export default function DisseminationPage() {
                 <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
                   <div className="relative h-48 w-full">
                     <Image
-                      src="/workshop1.jpeg"
+                      src="/workshops/workshop1.jpeg"
                       alt="Conflict Forecasting Workshop"
                       fill
                       className="object-cover"
@@ -67,7 +67,7 @@ export default function DisseminationPage() {
                 <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
                   <div className="relative h-48 w-full">
                     <Image
-                      src="/PaCE Workshops November 2024_jfif.jpeg"
+                      src="/workshops/PaCE Workshops November 2024_jfif.jpeg"
                       alt="Sensitivity Analysis Workshop"
                       fill
                       className="object-cover"
@@ -88,7 +88,7 @@ export default function DisseminationPage() {
                 <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
                   <div className="relative h-48 w-full">
                     <Image
-                      src="/Cornelius Fritz.jpg"
+                      src="/team/Cornelius Fritz.jpg"
                       alt="Dr Cornelius Fritz"
                       fill
                       className="object-cover"
@@ -109,7 +109,7 @@ export default function DisseminationPage() {
                 <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
                   <div className="relative h-48 w-full">
                     <Image
-                      src="/Galit Shmueli NTHU 2020 Small.jpeg"
+                      src="/team/Galit Shmueli NTHU 2020 Small.jpeg"
                       alt="Professor Galit Shmueli"
                       fill
                       className="object-cover"

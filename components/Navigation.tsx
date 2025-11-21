@@ -121,7 +121,7 @@ export default function Navigation() {
                     style={{ width: '60px', height: '60px', marginTop: '5px' }}
                   >
                     <img
-                      src="/paceWhite.svg"
+                      src="/logos/paceWhite.svg"
                       alt="PaCE"
                       width={imgSize}
                       height={imgSize}

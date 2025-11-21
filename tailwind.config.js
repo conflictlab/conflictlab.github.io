@@ -8,9 +8,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'clairient-blue': '#1e40af',
-        'clairient-light': '#3b82f6',
-        'clairient-dark': '#1e3a8a',
         'pace-red': '#B91C1C',
         'pace-red-light': '#DC2626',
         'pace-red-dark': '#991B1B',

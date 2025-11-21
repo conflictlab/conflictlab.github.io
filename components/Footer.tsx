@@ -14,7 +14,7 @@ export default function Footer() {
             <p className="max-w-md text-xs flex items-center gap-2">
               <span className="inline-flex items-center gap-2">
                 <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-white/95 ring-1 ring-black/10 shadow">
-                  <Image src="/logo.png" alt="PaCE" width={16} height={16} className="drop-shadow-sm" />
+                  <Image src="/logos/logo.png" alt="PaCE" width={16} height={16} className="drop-shadow-sm" />
                 </span>
                 <span className="text-base font-light text-white">PaCE</span>
               </span>

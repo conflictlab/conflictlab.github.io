@@ -1,10 +1,9 @@
-import { readSnapshot } from '@/lib/forecasts'
-import { getEntityHorizonMonths } from '@/lib/forecasts'
+import { readSnapshot, getOrCalculateMonths } from '@/lib/forecasts'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import LandingBanner from '@/components/LandingBanner'
-import { Brain, Globe, TrendingUp, Database, Network, Target, ArrowRight, FileText, Users } from 'lucide-react'
+import { Brain, Globe, TrendingUp, Database, ArrowRight, FileText, Users } from 'lucide-react'
 
 const CountryChoropleth = dynamic(() => import('@/components/CountryChoropleth'), { ssr: false })
 
@@ -14,14 +13,7 @@ export default async function Home() {
   const countryMapItems = snapshot.entities
     .filter((e) => (e.entityType || 'country') === 'country')
     .map((e) => {
-      const months = getEntityHorizonMonths(snapshot.period, e.name) || [
-        e.horizons['1m'].p50,
-        Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
-        e.horizons['3m'].p50,
-        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
-        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
-        e.horizons['6m'].p50,
-      ]
+      const months = getOrCalculateMonths(snapshot.period, e)
       return { id: e.id, name: e.name, iso3: e.iso3, months }
     })
 
@@ -48,11 +40,11 @@ export default async function Home() {
       <section className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto mb-16">
-            <div className="rounded-xl shadow-xl border overflow-hidden" style={{ backgroundColor: 'rgb(145, 148, 149)', borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+            <div className="rounded-xl shadow-xl border overflow-hidden bg-railings border-gray-700">
               <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-10 md:p-12">
                 <div className="flex-shrink-0">
                   <Image
-                    src="/logo.png"
+                    src="/logos/logo.png"
                     alt="PaCE"
                     width={140}
                     height={140}
@@ -179,9 +171,11 @@ export default async function Home() {
 
             {/* ERC Logo */}
             <div className="flex justify-center">
-              <img
-                src="/erc-logo.png"
+              <Image
+                src="/logos/erc-logo.png"
                 alt="European Research Council"
+                width={160} // Approximate width based on h-36 md:h-40 (144px for h-36, 160px for h-40)
+                height={160} // height needs to be set for Next/Image
                 className="h-36 md:h-40 object-contain"
               />
             </div>

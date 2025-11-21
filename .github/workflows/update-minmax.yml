@@ -1,0 +1,32 @@
+name: Update minmax and denorm scenarios
+
+on:
+  schedule:
+    - cron: '0 3 1 * *' # monthly on the 1st at 03:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build minmax and denormalized scenarios
+        run: |
+          npm run data:update
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(data): update hist minmax and denormalized scenarios'
+          file_pattern: public/data/minmax.json public/data/scenarios.denorm.json public/data/hist.csv
+

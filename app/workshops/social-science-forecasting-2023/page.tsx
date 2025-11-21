@@ -28,7 +28,7 @@ export default function SocialScienceForecasting2023() {
           {/* Photo */}
           <div className="flex justify-center mb-8">
             <Image
-              src="/Galit Shmueli NTHU 2020 Small.jpeg"
+              src="/team/Galit Shmueli NTHU 2020 Small.jpeg"
               alt="Professor Galit Shmueli"
               width={800}
               height={600}

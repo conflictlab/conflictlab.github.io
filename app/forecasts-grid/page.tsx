@@ -4,6 +4,7 @@ const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: fal
 import { getForecastsPageData } from '@/lib/forecasts'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { AlertTriangle } from 'lucide-react'
+import Link from 'next/link'
 // Inline download cards removed; use /data page via map button
 
 export const metadata: Metadata = {
@@ -42,44 +43,30 @@ export default async function ForecastsGridPage() {
   // Removed inline grid download list in favor of centralized data page
   return (
     <div>
-      {/* Shared hero banner with Forecasts page */}
+      {/* Hero */}
       <section className="pt-6 pb-6 hero-background-network-image">
         <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]"><Breadcrumbs /></div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight flex items-center gap-2">
-            Forecast Dashboard
-          </h1>
-          <p className="text-xl text-gray-600 font-light leading-relaxed mb-6">
-            Six-month forecasts of <span className="word-emphasis">conflict fatalities</span> from state-based armed conflict.
-            Predictions are updated monthly for countries and <span title="0.5° map squares (~55 km)">Sub‑national Areas</span> worldwide.
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight">Forecasts</h1>
+          <p className="text-xl text-gray-600 font-light leading-relaxed mb-4 max-w-3xl">
+            Six‑month forecasts of conflict fatalities at the country and sub‑national level.
           </p>
-          {/* Key Takeaways (same placement and style as country dashboard) */}
-          {(() => {
-            const [year, month] = snap.period.split('-').map(Number)
-            const forecastDate = new Date(year, month)
-            const forecastMonth = forecastDate.toLocaleString('default', { month: 'long' })
-            const forecastYear = forecastDate.getFullYear()
-            const takeawaysDate = `${forecastMonth} ${forecastYear}`
-            return (
-              <div className="bg-white rounded-lg p-4 mt-4 border border-gray-200">
-                <div className="flex items-start">
-                  <div className="w-1/3 pr-4 border-r border-gray-300">
-                    <h3 className="text-lg font-semibold text-gray-800">Key Takeaways for {takeawaysDate}</h3>
-                  </div>
-                  <div className="w-2/3 pl-4">
-                    <ul className="space-y-1">
-                      {keyTakeaways.map((item, i) => (
-                        <li key={i} className="flex items-start text-sm text-gray-600">
-                          <AlertTriangle className="w-4 h-4 text-pace-red mr-2 mt-1 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            )
-          })()}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link href="/forecasts#dashboard" className="btn-secondary inline-flex items-center gap-1">Dashboard</Link>
+            <Link href="/reports" className="btn-secondary inline-flex items-center gap-1">Reports</Link>
+            <Link href="/downloads" className="btn-secondary inline-flex items-center gap-1">Downloads</Link>
+          </div>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: '/' },
+                { '@type': 'ListItem', position: 2, name: 'Forecasts', item: '/forecasts' },
+              ],
+            }) }}
+          />
         </div>
       </section>
 

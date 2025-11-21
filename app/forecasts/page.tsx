@@ -1,5 +1,5 @@
 import SummaryCard from '@/components/SummaryCard'
-import { getForecastsPageData, getEntityHorizonMonths } from '@/lib/forecasts'
+import { getForecastsPageData, getOrCalculateMonths } from '@/lib/forecasts'
 import RiskIndexTable from '@/components/RiskIndexTable'
 import Collapsible from '@/components/Collapsible'
 import ThresholdHighlights from '@/components/ThresholdHighlights'
@@ -163,20 +163,13 @@ export default async function ForecastsPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {highlights.map((e) => {
-              const months = getEntityHorizonMonths(snapshot.period, e.name)
+              const months = getOrCalculateMonths(snapshot.period, e)
               return (
                 <LazyVisible key={e.id} minHeight="200px">
                   <Link href={`/forecasts/${e.id}`} className="block hover:opacity-80 transition-opacity">
                     <ForecastFanChart
                       title={`${e.name} — Predicted fatalities`}
-                      months={months || [
-                        e.horizons['1m'].p50,
-                        Number(((e.horizons['1m'].p50 + e.horizons['3m'].p50) / 2).toFixed(1)),
-                        e.horizons['3m'].p50,
-                        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) / 3).toFixed(1)),
-                        Number((e.horizons['3m'].p50 + (e.horizons['6m'].p50 - e.horizons['3m'].p50) * 2 / 3).toFixed(1)),
-                        e.horizons['6m'].p50,
-                      ]}
+                      months={months}
                     />
                   </Link>
                 </LazyVisible>

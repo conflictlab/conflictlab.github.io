@@ -1,0 +1,118 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="#ffffff"/>
+  
+  <!-- Floating geometric elements with subtle animations -->
+  <defs>
+    <!-- Floating gradient -->
+    <radialGradient id="floatGrad1" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.04"/>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0"/>
+    </radialGradient>
+    
+    <radialGradient id="floatGrad2" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.03"/>
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0"/>
+    </radialGradient>
+    
+    <!-- Pulse animation -->
+    <radialGradient id="pulseGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:0.02">
+        <animate attributeName="stop-opacity" values="0.02;0.06;0.02" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Large floating circles -->
+  <circle cx="300" cy="200" r="150" fill="url(#floatGrad1)">
+    <animateTransform attributeName="transform" type="translate" values="0,0;20,15;0,0" dur="20s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="150;170;150" dur="25s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="1600" cy="300" r="120" fill="url(#floatGrad2)">
+    <animateTransform attributeName="transform" type="translate" values="0,0;-15,20;0,0" dur="18s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="120;140;120" dur="22s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="800" cy="800" r="180" fill="url(#floatGrad1)">
+    <animateTransform attributeName="transform" type="translate" values="0,0;25,-10;0,0" dur="24s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="180;200;180" dur="28s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="1400" cy="700" r="100" fill="url(#floatGrad2)">
+    <animateTransform attributeName="transform" type="translate" values="0,0;-20,-15;0,0" dur="16s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="100;115;100" dur="20s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Medium floating shapes -->
+  <ellipse cx="500" cy="600" rx="80" ry="60" fill="url(#floatGrad2)" opacity="0.6">
+    <animateTransform attributeName="transform" type="translate rotate" values="0,0,0;15,10,5;0,0,0" dur="30s" repeatCount="indefinite"/>
+  </ellipse>
+  
+  <ellipse cx="1200" cy="150" rx="70" ry="90" fill="url(#floatGrad1)" opacity="0.5">
+    <animateTransform attributeName="transform" type="translate rotate" values="0,0,0;-10,20,-3;0,0,0" dur="26s" repeatCount="indefinite"/>
+  </ellipse>
+  
+  <ellipse cx="200" cy="700" rx="60" ry="80" fill="url(#floatGrad2)" opacity="0.7">
+    <animateTransform attributeName="transform" type="translate rotate" values="0,0,0;20,-5,4;0,0,0" dur="22s" repeatCount="indefinite"/>
+  </ellipse>
+  
+  <!-- Small floating dots -->
+  <g opacity="0.3">
+    <circle cx="150" cy="150" r="4" fill="#1e40af">
+      <animateTransform attributeName="transform" type="translate" values="0,0;10,8;0,0" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="1800" cy="100" r="3" fill="#3b82f6">
+      <animateTransform attributeName="transform" type="translate" values="0,0;-8,12;0,0" dur="14s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.5;0.3" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="50" cy="500" r="5" fill="#1e40af">
+      <animateTransform attributeName="transform" type="translate" values="0,0;15,-5;0,0" dur="16s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="12s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="1850" cy="900" r="3" fill="#3b82f6">
+      <animateTransform attributeName="transform" type="translate" values="0,0;-12,6;0,0" dur="18s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.5;0.3" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="960" cy="100" r="4" fill="#1e40af">
+      <animateTransform attributeName="transform" type="translate" values="0,0;8,15;0,0" dur="20s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="11s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Connecting lines with subtle flow -->
+  <g opacity="0.02">
+    <path d="M 300 200 Q 650 400 1600 300" fill="none" stroke="#1e40af" stroke-width="1">
+      <animate attributeName="stroke-dasharray" values="0,1000;20,980;0,1000" dur="15s" repeatCount="indefinite"/>
+    </path>
+    
+    <path d="M 800 800 Q 1100 550 1400 700" fill="none" stroke="#3b82f6" stroke-width="1">
+      <animate attributeName="stroke-dasharray" values="0,800;15,785;0,800" dur="12s" repeatCount="indefinite"/>
+    </path>
+    
+    <path d="M 500 600 Q 850 400 1200 150" fill="none" stroke="#1e40af" stroke-width="0.8">
+      <animate attributeName="stroke-dasharray" values="0,900;18,882;0,900" dur="18s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Subtle logo elements integrated -->
+  <g opacity="0.015" transform="translate(960, 540)">
+    <!-- Large background C -->
+    <circle cx="0" cy="0" r="200" fill="none" stroke="#1e40af" stroke-width="2"/>
+    <path d="M -140 -100 A 160 160 0 0 1 -140 100" fill="none" stroke="#1e40af" stroke-width="3"/>
+    
+    <!-- Pulsing overlay -->
+    <circle cx="0" cy="0" r="200" fill="url(#pulseGrad)"/>
+  </g>
+  
+  <!-- Ambient light effect -->
+  <circle cx="960" cy="540" r="400" fill="url(#pulseGrad)" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.1;0.3" dur="20s" repeatCount="indefinite"/>
+  </circle>
+</svg>

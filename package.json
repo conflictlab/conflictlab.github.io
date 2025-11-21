@@ -9,6 +9,9 @@
     "prebuild": "node scripts/prebuild.js",
     "covers": "node scripts/generate-covers.js",
     "scenarios:convert": "node scripts/convert-scenarios-pkl.js --src sce_dictionary.pkl --out public/data/scenarios.json",
+    "data:minmax": "node scripts/update-minmax-from-hist.js",
+    "scenarios:denorm": "node scripts/denorm-scenarios.js",
+    "data:update": "npm run data:minmax && npm run scenarios:denorm",
     "start": "next start",
     "lint": "next lint",
     "csv:snapshot": "node scripts/csv-to-snapshot.js",
@@ -17,10 +20,14 @@
     "grid:build": "node scripts/priogrid-shp-join-csv.js --csv https://raw.githubusercontent.com/ThomasSchinca/Live_3D_forecast/main/df_output.csv",
     "grid:csv": "node scripts/grid-geojson-to-csv.js",
     "grid:csv:months": "node scripts/grid-month-points-to-csv.js",
-    "api:export": "node scripts/export-static-api.js"
+    "api:export": "node scripts/export-static-api.js",
+    "context:fetch:wikipedia": "node scripts/fetch-wikipedia-summaries.js",
+    "context:fetch:reliefweb": "node scripts/fetch-reliefweb-updates.js",
+    "context:update": "npm run context:fetch:reliefweb && npm run context:fetch:wikipedia"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.20",
+    "d3": "^7.9.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.292.0",
     "next": "14.0.0",
