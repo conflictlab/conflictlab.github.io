@@ -13,7 +13,7 @@ import { RISK_THRESHOLDS, getRiskColor } from '@/lib/config'
 type CountryValue = { id?: string; name: string; iso3?: string; value?: number; months?: number[] }
 
 // Component to add pulsing hotspot markers using HTML/CSS
-function HotspotMarkers({ hotspots }: { hotspots: Array<{ name: string; lat: number; lon: number; value: number }> }) {
+function HotspotMarkers({ hotspots, onHotspotClick }: { hotspots: Array<{ name: string; lat: number; lon: number; value: number }>; onHotspotClick?: (name: string) => void }) {
   const map = useMap()
 
   useEffect(() => {
@@ -44,11 +44,15 @@ function HotspotMarkers({ hotspots }: { hotspots: Array<{ name: string; lat: num
             <div class="hotspot-core"></div>
           </div>
         `,
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
+        iconSize: [80, 80],
+        iconAnchor: [40, 40],
       })
 
       const marker = L.marker([spot.lat, spot.lon], { icon })
+      // Ensure hotspot clicks route to the country/entity
+      if (onHotspotClick) {
+        marker.on('click', () => onHotspotClick(spot.name))
+      }
       marker.addTo(map)
       markers.push(marker)
     })
@@ -56,7 +60,7 @@ function HotspotMarkers({ hotspots }: { hotspots: Array<{ name: string; lat: num
     return () => {
       markers.forEach(m => map.removeLayer(m))
     }
-  }, [map, hotspots])
+  }, [map, hotspots, onHotspotClick])
 
   return null
 }
@@ -556,7 +560,12 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               />
             )}
             {/* Animated pulsing hotspots for high-risk countries (optionally deferred) */}
-            {showHotspots && hotspotsReady && <HotspotMarkers hotspots={hotspots} />}
+            {showHotspots && hotspotsReady && (
+              <HotspotMarkers
+                hotspots={hotspots}
+                onHotspotClick={(name) => goToEntity(name)}
+              />
+            )}
           </MapContainer>
         )}
         {/* Compact legend overlay (bottom-right) */}

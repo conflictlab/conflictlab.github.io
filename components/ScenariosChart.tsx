@@ -502,6 +502,14 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .attr('stroke', '#9ca3af')
       .attr('stroke-opacity', 0.6)
       .attr('stroke-dasharray', '4,4')
+    // "Now" label on the separator
+    svg.append('text')
+      .attr('x', sepX)
+      .attr('y', 14)
+      .attr('text-anchor', 'middle')
+      .style('font-size', '12px')
+      .style('fill', '#6b7280')
+      .text('Now')
 
   }, [data, countryName, pastSeries, selectedClusterId])
 

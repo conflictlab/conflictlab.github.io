@@ -226,6 +226,8 @@ export default function ForecastFanChart({ title, horizons, months, countryName,
         </g>
         {/* Separator between past and future */}
         <line x1={xScaleTime(firstFutureDate)} y1={mTop} x2={xScaleTime(firstFutureDate)} y2={mTop + innerH} stroke="#9ca3af" strokeDasharray="4,4" strokeWidth={1.5} opacity={0.8} />
+        {/* Now label */}
+        <text x={xScaleTime(firstFutureDate)} y={mTop + 12} textAnchor="middle" className="text-xs" fill="#6b7280">Now</text>
         {/* Y Axis */}
         <g>
           <line x1={mLeft} y1={mTop} x2={mLeft} y2={mTop + innerH} stroke="#e5e7eb" />

@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 export default function Footer() {
   const pathname = usePathname()
@@ -13,9 +13,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <p className="max-w-md text-xs flex items-center gap-2">
               <span className="inline-flex items-center gap-2">
-                <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-white/95 ring-1 ring-black/10 shadow">
-                  <Image src="/logos/logo.png" alt="PaCE" width={16} height={16} className="drop-shadow-sm" />
-                </span>
+                <img src="/logos/paceWhite.svg" alt="PaCE" width={20} height={20} className="drop-shadow-sm" />
                 <span className="text-base font-light text-white">PaCE</span>
               </span>
             </p>
