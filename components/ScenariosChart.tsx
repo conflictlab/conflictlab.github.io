@@ -119,8 +119,8 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
     d3.select(svgRef.current).selectAll('*').remove()
 
     // Responsive margins and size
-    const baseRight = 250
-    const margin = { top: 40, right: (containerWidth > 720 ? baseRight : 180), bottom: 80, left: 80 }
+    // Use minimal right margin and a larger bottom margin to place legend below
+    const margin = { top: 40, right: 40, bottom: 140, left: 80 }
     const width = Math.max(300, containerWidth - margin.left - margin.right)
     const height = Math.max(360, Math.min(540, Math.round(width * 0.55)))
 
@@ -496,7 +496,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
 
     // Legend on the right: list scenarios with probabilities
     const legend = svg.append('g')
-      .attr('transform', `translate(${width + 16}, 0)`) // into right margin
+      .attr('transform', `translate(0, ${height + 24})`) // below plot
 
     const legendTitle = legend.append('text')
       .text('Scenarios')
@@ -505,9 +505,9 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .style('fill', '#374151')
 
     const legItems = [...clusterLines].sort((a, b) => b.weight - a.weight)
-    const itemGap = 24
+    const itemGap = 22
     legItems.forEach((cl, idx) => {
-      const y = 28 + idx * itemGap
+      const y = 24 + idx * itemGap
       const isMax = cl.clusterId === maxWeightClusterId
       const isSel = (selectedClusterId || maxWeightClusterId) === cl.clusterId
       const color = '#B91C1C'
@@ -535,7 +535,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       const hit = legend.append('rect')
         .attr('x', 0)
         .attr('y', y - 18)
-        .attr('width', Math.max(120, bb.width + 30))
+        .attr('width', Math.max(140, bb.width + 30))
         .attr('height', 20)
         .attr('fill', 'transparent')
         .style('cursor', 'pointer')
