@@ -304,6 +304,22 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
 
   return (
     <div ref={containerRef} className="w-full">
+      {/* Legend */}
+      <div className="flex flex-wrap items-center gap-4 text-xs text-gray-600 mb-3">
+        <div className="inline-flex items-center gap-2">
+          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#6b7280" strokeWidth="2.5" /></svg>
+          <span>Match (past)</span>
+        </div>
+        <div className="inline-flex items-center gap-2">
+          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#dc2626" strokeWidth="2.5" /></svg>
+          <span>Future</span>
+        </div>
+        <div className="inline-flex items-center gap-2">
+          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" /></svg>
+          <span>Source (current)</span>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {items.slice(0, 4).map((it, idx) => {
           const n = it.match.length
