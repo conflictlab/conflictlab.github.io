@@ -104,12 +104,43 @@ export default async function EntityForecastPage({ params }: { params: { entity:
           <Breadcrumbs />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight">
             {entity.name}
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             Predicted fatalities from state‑based armed conflict — forecast and analysis
           </p>
+          {/* Key metrics (moved into hero) */}
+          <div className="mt-4 grid grid-cols-2 md:grid-cols-5 gap-x-4 gap-y-1 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-lg p-3">
+            <div>
+              <div className="text-xs text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis" title={`Predicted fatalities — ${nextMonthLabel}`}>Predicted fatalities — {nextMonthLabel}</div>
+              <div className="text-2xl md:text-3xl font-semibold text-gray-900">{entity.horizons['1m'].p50.toFixed(1)}</div>
+            </div>
+            <div>
+              <div className="text-xs text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">Risk Band</div>
+              <div className={`inline-block px-2.5 py-1 rounded-full text-xs md:text-sm font-medium border ${getBandColor(entity.band)}`}>
+                {entity.band.toUpperCase()}
+              </div>
+            </div>
+            <div>
+              <div className="text-xs text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">MoM Change</div>
+              <div className={`text-xl md:text-2xl font-semibold ${computedDeltaMoM > 0 ? 'text-red-600' : computedDeltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
+                {computedDeltaMoM > 0 ? '+' : ''}{computedDeltaMoM.toFixed(1)} {getTrendIcon(computedDeltaMoM)}
+              </div>
+            </div>
+            <div>
+              <div className="text-xs text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">Predicted 6‑month change</div>
+              <div className={`text-xl md:text-2xl font-semibold ${predicted6mChange > 0 ? 'text-red-600' : predicted6mChange < 0 ? 'text-green-600' : 'text-gray-600'}`}>
+                {predicted6mChange > 0 ? '+' : ''}{predicted6mChange.toFixed(1)} {getTrendIcon(predicted6mChange)}
+              </div>
+            </div>
+            <div>
+              <div className="text-xs text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis" title="Ranking (by predicted fatalities, next month)">Ranking (by predicted fatalities, next month)</div>
+              <div className="text-xl md:text-2xl font-semibold text-gray-900">
+                #{comparativeStats.rank} <span className="text-xs md:text-sm text-gray-500">/ {comparativeStats.totalInType}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -121,73 +152,32 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       <section className="py-8 -mt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left: Country Grid Map */}
+            {/* Left: Country Grid Map (slightly smaller) */}
             <div className="rounded-lg p-0 bg-gray-50 overflow-hidden">
               <h2 className="text-lg font-light text-gray-900 px-4 pt-3 pb-2">Predicted fatalities, {entity.name}</h2>
-              <div className="h-[520px]">
+              <div className="h-[420px]">
                 <PrioGridMap period={snapshot.period} countryName={entity.name} hideViewToggle={true} />
               </div>
             </div>
-            {/* Right: Unified Key Metrics + Situation Overview */}
-            <div className="p-6 rounded-lg">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-x-4 gap-y-1">
-                <div>
-                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis" title={`Predicted fatalities — ${nextMonthLabel}`}>Predicted fatalities — {nextMonthLabel}</div>
-                  <div className="text-3xl font-semibold text-gray-900">{entity.horizons['1m'].p50.toFixed(1)}</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">Risk Band</div>
-                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getBandColor(entity.band)}`}>
-                    {entity.band.toUpperCase()}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">MoM Change</div>
-                  <div className={`text-2xl font-semibold ${computedDeltaMoM > 0 ? 'text-red-600' : computedDeltaMoM < 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                    {computedDeltaMoM > 0 ? '+' : ''}{computedDeltaMoM.toFixed(1)} {getTrendIcon(computedDeltaMoM)}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis">Predicted 6‑month change</div>
-                  <div className={`text-2xl font-semibold ${predicted6mChange > 0 ? 'text-red-600' : predicted6mChange < 0 ? 'text-green-600' : 'text-gray-600'}`}>
-                    {predicted6mChange > 0 ? '+' : ''}{predicted6mChange.toFixed(1)} {getTrendIcon(predicted6mChange)}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 mb-1 h-5 whitespace-nowrap overflow-hidden text-ellipsis" title="Ranking (by predicted fatalities, next month)">Ranking (by predicted fatalities, next month)</div>
-                  <div className="text-2xl font-semibold text-gray-900">
-                    #{comparativeStats.rank} <span className="text-sm text-gray-500">/ {comparativeStats.totalInType}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-lg font-light text-gray-900 mb-2">Situation Overview</h2>
-                <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed text-justify">
-                  {renderNarrative(narrative)}
-                </div>
-              </div>
+            {/* Right: Scenarios panel */}
+            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+              <h2 className="text-2xl font-light text-gray-900 mb-2">Scenarios for {entity.name}</h2>
+              <LazyVisible minHeight="420px">
+                {scenarios ? (
+                  <ScenariosChart data={scenarios} countryName={entity.name} />
+                ) : (
+                  <div className="text-sm text-gray-500">No scenario data available.</div>
+                )}
+              </LazyVisible>
+              <p className="text-sm text-gray-600 mt-3">
+                Our model identified clusters of similar historical conflicts worldwide that inform the forecast for {entity.name}.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Scenario clusters (moved just below overview) */}
-      {scenarios && (
-        <section className="py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h2 className="text-2xl font-light text-gray-900 mb-2">Scenarios for {entity.name}</h2>
-              <LazyVisible minHeight="500px">
-                <ScenariosChart data={scenarios} countryName={entity.name} />
-              </LazyVisible>
-              <p className="text-sm text-gray-600 mt-4">
-                Our model identified clusters of similar historical conflicts worldwide that inform the forecast for {entity.name}. Each line shows a cluster’s trajectory (dashed red) with opacity reflecting its probability; past observed values are shown in dark gray.
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Scenario clusters moved next to map above */}
 
       {/* Charts Section */}
       <section className="py-8">
