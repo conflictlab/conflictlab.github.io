@@ -428,12 +428,24 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       }
     }
 
-    // Add lines and circles for each cluster (no inline end labels)
+    // Add shaded area, then lines and circles for each cluster (no inline end labels)
+    const area = d3.area<{ date: Date; value: number }>()
+      .x(d => xScale(d.date))
+      .y0(() => yScale(0))
+      .y1(d => yScale(d.value))
+
     clusterLines.forEach((cluster, i) => {
       const isHighest = cluster.clusterId === maxWeightClusterId
       const isSelected = cluster.clusterId === activeSelected
       const color = '#B91C1C' // pace-red for all future lines
       const op = Math.max(0.25, Math.min(1, cluster.weight))
+      // Shaded area under the time series (subtle)
+      svg.append('path')
+        .datum(cluster.values)
+        .attr('d', area)
+        .attr('fill', '#ef444408') // red-500 with low alpha
+        .attr('stroke', 'none')
+        .attr('fill-opacity', Math.min(0.25, op))
 
       const path = svg.append('path')
         .datum(cluster.values)
