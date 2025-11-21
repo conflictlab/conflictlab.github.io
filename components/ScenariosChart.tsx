@@ -120,8 +120,8 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
 
     // Responsive margins and size
     // Use minimal right margin and a larger bottom margin to place legend below
-    // Extra bottom margin so legend can sit fully below x-axis labels
-    const margin = { top: 40, right: 40, bottom: 190, left: 80 }
+    // Place legend at top-center: increase top margin a bit, reduce bottom
+    const margin = { top: 80, right: 40, bottom: 100, left: 80 }
     const width = Math.max(300, containerWidth - margin.left - margin.right)
     const height = Math.max(360, Math.min(540, Math.round(width * 0.55)))
 
@@ -497,49 +497,44 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .attr('stroke-dasharray', '4,4')
 
     // Legend on the right: list scenarios with probabilities
+    // Top-center legend
     const legend = svg.append('g')
-      // Position legend below axis tick labels, above caption in the card
-      .attr('transform', `translate(0, ${height + 60})`)
-
-    const legendTitle = legend.append('text')
-      .text('Scenarios')
-      .style('font-size', '16px')
-      .style('font-weight', '700')
-      .style('fill', '#374151')
-
     const legItems = [...clusterLines].sort((a, b) => b.weight - a.weight)
-    const itemGap = 22
-    legItems.forEach((cl, idx) => {
-      const y = 24 + idx * itemGap
+    let cursorX = 0
+    const gapX = 28
+    const itemWidths: number[] = []
+    const itemGroups: d3.Selection<SVGGElement, unknown, null, undefined>[] = []
+    legItems.forEach((cl) => {
       const isMax = cl.clusterId === maxWeightClusterId
       const isSel = (selectedClusterId || maxWeightClusterId) === cl.clusterId
       const color = '#B91C1C'
       const op = Math.max(0.25, Math.min(1, cl.weight))
 
+      const gItem = legend.append('g')
       // sample line
-      legend.append('line')
-        .attr('x1', 0).attr('y1', y - 6)
-        .attr('x2', 20).attr('y2', y - 6)
+      gItem.append('line')
+        .attr('x1', 0).attr('y1', 0)
+        .attr('x2', 20).attr('y2', 0)
         .attr('stroke', color)
         .attr('stroke-width', isMax ? 4 : 3)
         .attr('stroke-opacity', op)
         .attr('stroke-dasharray', '5,4')
 
-      // text
-      const t = legend.append('text')
+      const t = gItem.append('text')
         .attr('x', 26)
-        .attr('y', y - 3)
+        .attr('y', 3)
         .style('font-size', '14px')
         .style('fill', isSel ? '#111827' : '#4b5563')
         .style('font-weight', isSel ? '700' : '500')
         .text(`Scenario ${cl.clusterId}: ${(cl.weight * 100).toFixed(0)}%`)
 
       const bb = (t.node() as SVGTextElement).getBBox()
-      const hit = legend.append('rect')
+      const widthItem = Math.max(140, bb.width + 30)
+      gItem.append('rect')
         .attr('x', 0)
-        .attr('y', y - 18)
-        .attr('width', Math.max(140, bb.width + 30))
-        .attr('height', 20)
+        .attr('y', -12)
+        .attr('width', widthItem)
+        .attr('height', 22)
         .attr('fill', 'transparent')
         .style('cursor', 'pointer')
         .on('click', () => setSelectedClusterId(cl.clusterId))
@@ -549,6 +544,17 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
         .on('mouseout', () => {
           t.style('fill', isSel ? '#111827' : '#4b5563').style('font-weight', isSel ? '700' : '500')
         })
+
+      itemWidths.push(widthItem)
+      itemGroups.push(gItem)
+    })
+
+    // Position items horizontally and center the legend
+    const totalWidth = itemWidths.reduce((a, b) => a + b, 0) + gapX * Math.max(0, itemWidths.length - 1)
+    let x = (width - totalWidth) / 2
+    itemGroups.forEach((g, idx) => {
+      g.attr('transform', `translate(${x}, ${-40})`)
+      x += itemWidths[idx] + gapX
     })
     // "Now" label on the separator
     svg.append('text')
