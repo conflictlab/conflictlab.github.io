@@ -1,13 +1,16 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Search, X } from 'lucide-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 import { publications, Publication } from '@/content/publications'
 
 export default function PublicationsPage() {
-  const [searchQuery, setSearchQuery] = useState('')
+  const searchParams = useSearchParams()
+  const initialAuthor = (searchParams?.get('author') || '').trim()
+  const [searchQuery, setSearchQuery] = useState(initialAuthor)
   const [showCitation, setShowCitation] = useState<number | null>(null)
 
   // Filter publications
@@ -79,6 +82,12 @@ export default function PublicationsPage() {
             Research publications from the <span className="word-emphasis">PaCE Conflict Research Lab</span>.
             Peer-reviewed papers on conflict forecasting, pattern recognition, and computational methods.
           </p>
+          <div className="mt-4 text-sm text-gray-600">
+            Quick filters:
+            <Link href={{ pathname: '/publications', query: { author: 'Schincariol' } }} className="ml-2 text-link">Schincariol</Link>
+            <span className="mx-1 text-gray-400">·</span>
+            <Link href={{ pathname: '/publications', query: { author: 'Frank' } }} className="text-link">Frank</Link>
+          </div>
         </div>
       </section>
 

@@ -18,6 +18,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import React from 'react'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'PaCE',
@@ -109,7 +110,9 @@ export default async function EntityForecastPage({ params }: { params: { entity:
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             Predicted fatalities from state‑based armed conflict — forecast and analysis
           </p>
-          <p className="text-xs text-gray-500 mt-1">Data from Thomas Schincariol.</p>
+          <p className="text-xs text-gray-500 mt-1">
+            <Link href="/acknowledgements" className="text-link">Acknowledgements</Link>
+          </p>
         </div>
       </section>
 

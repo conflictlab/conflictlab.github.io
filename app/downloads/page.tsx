@@ -135,7 +135,7 @@ export default async function DataPage() {
             Access our <span className="word-emphasis">conflict forecasts</span> as raw data.
             Country-level and grid-level predictions available in CSV and GeoJSON formats.
           </p>
-          <p className="text-xs text-gray-500 mt-1">Data from Thomas Schincariol.</p>
+          <p className="text-xs text-gray-500 mt-1"><Link href="/acknowledgements" className="text-link">Acknowledgements</Link></p>
           <p className="text-lg text-gray-600 font-light mt-4">
             Latest update: {formatDMY(snapshot.generatedAt)}
           </p>

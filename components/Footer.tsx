@@ -32,7 +32,9 @@ export default function Footer() {
         </div>
         <div className="mt-1 pt-1 text-center text-gray-500 text-[11px] space-y-1">
           <p>&copy; {new Date().getFullYear()} PaCE. All rights reserved.</p>
-          <p>Data from Thomas Schincariol.</p>
+          <p>
+            <Link href="/acknowledgements" className="hover:text-pace-red-light">Acknowledgements</Link>
+          </p>
         </div>
       </div>
     </footer>
