@@ -192,6 +192,9 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
   const [error, setError] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(900)
+  const sourceRef = useRef<HTMLDivElement>(null)
+  const matchRefs = useRef<Array<HTMLDivElement | null>>([])
+  const [arrows, setArrows] = useState<Array<{ x1: number, y1: number, x2: number, y2: number }>>([])
 
   // Load matches.json and hist.csv
   useEffect(() => {
@@ -269,6 +272,8 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
     return () => { if (ro && el) ro.unobserve(el); window.removeEventListener('resize', update) }
   }, [])
 
+  
+
   const items = useMemo(() => {
     if (!matches || !histSeries.length || !histDates.length) return []
     const getCol = (nm?: string): number[] | undefined => {
@@ -312,6 +317,39 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
     })
   }, [matches, histSeries, histColumns, histDates])
 
+  // Compute connector arrows from source tile to each match tile (desktop only)
+  useEffect(() => {
+    const updateArrows = () => {
+      if (!containerRef.current || !sourceRef.current) { setArrows([]); return }
+      const contRect = containerRef.current.getBoundingClientRect()
+      const srcRect = sourceRef.current.getBoundingClientRect()
+      const srcX = srcRect.right - contRect.left
+      const srcY = srcRect.top + srcRect.height / 2 - contRect.top
+      const out: Array<{ x1: number, y1: number, x2: number, y2: number }> = []
+      for (let i = 0; i < 4; i++) {
+        const el = matchRefs.current[i]
+        if (!el) continue
+        const r = el.getBoundingClientRect()
+        const dstX = r.left - contRect.left
+        const dstY = r.top + r.height / 2 - contRect.top
+        out.push({ x1: srcX, y1: srcY, x2: dstX, y2: dstY })
+      }
+      setArrows(out)
+    }
+    updateArrows()
+    let ro: ResizeObserver | null = null
+    if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+      ro = new ResizeObserver(() => updateArrows())
+      ro.observe(containerRef.current)
+    } else {
+      window.addEventListener('resize', updateArrows)
+    }
+    return () => {
+      if (ro && containerRef.current) ro.unobserve(containerRef.current)
+      window.removeEventListener('resize', updateArrows)
+    }
+  }, [width, items])
+
   if (error) {
     return <div className="text-sm text-gray-500">Failed to load matches: {error}</div>
   }
@@ -322,69 +360,73 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
     return <div className="text-sm text-gray-500">No matches available for this country.</div>
   }
 
-  const tileW = Math.floor((width - 16) / 2)
+  // Compute tile width based on responsive grid (1, 2, or 3 columns)
+  const cols = width >= 768 ? 2 : 1
+  const gapPx = 16 // gap-4
+  const tileW = Math.floor((width - (cols - 1) * gapPx) / cols)
   const tileH = 170
 
   return (
-    <div ref={containerRef} className="w-full">
-      {/* Legend */}
-      <div className="flex flex-wrap items-center gap-4 text-xs text-gray-600 mb-3">
-        <div className="inline-flex items-center gap-2">
-          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#6b7280" strokeWidth="2.5" /></svg>
-          <span>Match (past)</span>
-        </div>
-        <div className="inline-flex items-center gap-2">
-          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#dc2626" strokeWidth="2.5" /></svg>
-          <span>Future</span>
-        </div>
-        <div className="inline-flex items-center gap-2">
-          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" /></svg>
-          <span>Source (current)</span>
-        </div>
-      </div>
+    <div ref={containerRef} className="w-full relative">
+      {/* Arrows overlay (desktop only) */}
+      {width >= 768 && arrows.length > 0 && (
+        <svg className="pointer-events-none absolute inset-0" width="100%" height="100%" viewBox={`0 0 ${containerRef.current?.clientWidth || 0} ${containerRef.current?.clientHeight || 0}`}>
+          <defs>
+            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#B91C1C" />
+            </marker>
+          </defs>
+          {arrows.map((a, i) => (
+            <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#B91C1C" strokeWidth={1.5} markerEnd="url(#arrowhead)" opacity={0.9} />
+          ))}
+        </svg>
+      )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {/* Source tile first (top-left) */}
-        {(() => {
-          const first = items[0]
-          const n = first?.match?.length || 10
-          const srcOnly = histSeries.slice(-n)
-          if (!srcOnly.length) return null
-          const yMin = Math.min(...srcOnly)
-          const yMax = Math.max(...srcOnly)
-          const pathSrc = buildSegmentPathWithDomain(srcOnly, n, 0, tileW, tileH, yMin, yMax)
-          // Marker helpers
-          const x0 = 12
-          const x1 = tileW - 12
-          const y0 = 16
-          const y1 = tileH - 18
-          const w = Math.max(1, x1 - x0)
-          const h = Math.max(1, y1 - y0)
-          const rng = (yMax - yMin) || 1
-          const sx = (i: number) => x0 + (i / Math.max(1, (n - 1))) * w
-          const sy = (v: number) => y1 - ((v - yMin) / rng) * h
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Left column: source tile */}
+        <div ref={sourceRef}>
+          {(() => {
+            const first = items[0]
+            const n = first?.match?.length || 10
+            const srcOnly = histSeries.slice(-n)
+            if (!srcOnly.length) return null
+            const yMin = Math.min(...srcOnly)
+            const yMax = Math.max(...srcOnly)
+            const pathSrc = buildSegmentPathWithDomain(srcOnly, n, 0, tileW, tileH, yMin, yMax)
+            // Marker helpers
+            const x0 = 12
+            const x1 = tileW - 12
+            const y0 = 16
+            const y1 = tileH - 18
+            const w = Math.max(1, x1 - x0)
+            const h = Math.max(1, y1 - y0)
+            const rng = (yMax - yMin) || 1
+            const sx = (i: number) => x0 + (i / Math.max(1, (n - 1))) * w
+            const sy = (v: number) => y1 - ((v - yMin) / rng) * h
 
-          return (
-            <div key="source-tile" className="bg-white border-2 border-pace-red rounded-lg p-3 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium text-gray-900">{countryName}</div>
-                <div className="text-xs text-pace-red font-medium">Source</div>
+            return (
+              <div key="source-tile" className="bg-white border-2 border-pace-red rounded-lg p-3 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-900">{countryName}</div>
+                  <div className="text-xs text-pace-red font-medium">Source</div>
+                </div>
+                <div className="text-xs text-gray-500 mb-2">Last {n} months</div>
+                <svg role="img" aria-label={`Source current window`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
+                  <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                  <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                  <path d={pathSrc} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
+                  {srcOnly.map((v, i) => (
+                    <circle key={`src-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
+                  ))}
+                </svg>
               </div>
-              <div className="text-xs text-gray-500 mb-2">Last {n} months</div>
-              <svg role="img" aria-label={`Source current window`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
-                <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
-                <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
-                <path d={pathSrc} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
-                {srcOnly.map((v, i) => (
-                  <circle key={`src-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
-                ))}
-              </svg>
-            </div>
-          )
-        })()}
+            )
+          })()}
+        </div>
 
-        {/* Then 5 matches */}
-        {items.slice(0, 5).map((it, idx) => {
+        {/* Right column: 4 matches stacked vertically */}
+        <div className="grid grid-cols-1 gap-4">
+        {items.slice(0, 4).map((it, idx) => {
           const n = it.match.length
           const f = it.future?.length || 0
           const total = Math.max(2, n + f)
@@ -419,15 +461,12 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const sx = (i: number) => x0 + ((i) / Math.max(1, total - 1)) * w
           const sy = (v: number) => y1 - ((v - domMin) / denom) * h
           return (
-            <div key={idx} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+            <div key={idx} ref={el => (matchRefs.current[idx] = el)} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <div className="text-sm font-medium text-gray-900">{it.name ? `${it.name}` : `Match ${idx + 1}`}</div>
                 <div className="text-xs text-gray-500">distance {Number(it.distance).toFixed(4)}</div>
               </div>
-              <div className="text-xs text-gray-500 mb-2">
-                {it.range ? it.range : ''}
-                {it.futureRange ? ` · future: ${it.futureRange}` : ''}
-              </div>
+              <div className="text-xs text-gray-500 mb-2">{it.range || ''}</div>
               <svg role="img" aria-label={`Match ${idx + 1}`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
                 {/* axes (subtle) */}
                 <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
@@ -455,49 +494,27 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                   <circle key={`f-${i}`} cx={sx(n + i)} cy={sy(v as number)} r={3.5} fill="#dc2626" stroke="#ffffff" strokeWidth={1} />
                 ))}
               </svg>
-              <div className="mt-1 text-[11px] text-gray-500">Black dashed: current window (min-max to match past) · Gray: match · Red: future (6m)</div>
+              
             </div>
           )
         })}
+        </div>
+      </div>
 
-        {/* Source tile (fits as the 6th tile in 2x3 matrix) */}
-        {(() => {
-          const first = items[0]
-          const n = first?.match?.length || 10
-          const srcOnly = histSeries.slice(-n)
-          if (!srcOnly.length) return null
-          const yMin = Math.min(...srcOnly)
-          const yMax = Math.max(...srcOnly)
-          const pathSrc = buildSegmentPathWithDomain(srcOnly, n, 0, tileW, tileH, yMin, yMax)
-          // Marker helpers (reuse same calc as above)
-          const x0 = 12
-          const x1 = tileW - 12
-          const y0 = 16
-          const y1 = tileH - 18
-          const w = Math.max(1, x1 - x0)
-          const h = Math.max(1, y1 - y0)
-          const rng = (yMax - yMin) || 1
-          const sx = (i: number) => x0 + (i / Math.max(1, (n - 1))) * w
-          const sy = (v: number) => y1 - ((v - yMin) / rng) * h
-
-          return (
-            <div key="source-tile" className="bg-white border-2 border-pace-red rounded-lg p-3 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium text-gray-900">{countryName}</div>
-                <div className="text-xs text-pace-red font-medium">Source</div>
-              </div>
-              <div className="text-xs text-gray-500 mb-2">Last {n} months</div>
-              <svg role="img" aria-label={`Source current window`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
-                <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
-                <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
-                <path d={pathSrc} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
-                {srcOnly.map((v, i) => (
-                  <circle key={`src-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
-                ))}
-              </svg>
-            </div>
-          )
-        })()}
+      {/* Single shared legend below */}
+      <div className="flex flex-wrap items-center gap-4 text-xs text-gray-600 mt-3">
+        <div className="inline-flex items-center gap-2">
+          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#6b7280" strokeWidth="2.5" /></svg>
+          <span>Match (past)</span>
+        </div>
+        <div className="inline-flex items-center gap-2">
+          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#dc2626" strokeWidth="2.5" /></svg>
+          <span>Future</span>
+        </div>
+        <div className="inline-flex items-center gap-2">
+          <svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" /></svg>
+          <span>Source (current)</span>
+        </div>
       </div>
     </div>
   )
