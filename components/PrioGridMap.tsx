@@ -435,7 +435,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
         )}
         {/* Months ahead slider overlay (bottom-left) */}
         {!error && !loading && (
-          <div className="absolute bottom-12 left-4 z-[1000]">
+          <div className="absolute bottom-20 left-4 z-[1000]">
             <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm flex items-center gap-3 text-sm text-gray-700">
               <span className="whitespace-nowrap font-medium text-gray-900">Months ahead:</span>
               <div className="w-48">

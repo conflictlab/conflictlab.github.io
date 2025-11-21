@@ -123,13 +123,12 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight }: Sc
     // Responsive margins and size
     // Use minimal right margin and a larger bottom margin to place legend below
     // Place legend at top-center: increase top margin a bit, reduce bottom
-    const margin = { top: 80, right: 40, bottom: 100, left: 80 }
+    const margin = { top: 50, right: 40, bottom: 60, left: 70 }
     const width = Math.max(300, containerWidth - margin.left - margin.right)
-    const desiredByWidth = Math.max(240, Math.min(540, Math.round(width * 0.5)))
-    const heightCap = (maxTotalHeight && maxTotalHeight > (margin.top + margin.bottom))
-      ? Math.max(160, maxTotalHeight - margin.top - margin.bottom)
-      : Infinity
-    const height = Math.min(desiredByWidth, heightCap)
+    // If maxTotalHeight provided, use it directly; otherwise fall back to aspect ratio
+    const height = (maxTotalHeight && maxTotalHeight > (margin.top + margin.bottom))
+      ? maxTotalHeight - margin.top - margin.bottom
+      : Math.max(240, Math.min(540, Math.round(width * 0.5)))
 
     const svg = d3.select(svgRef.current)
       .attr('width', width + margin.left + margin.right)
