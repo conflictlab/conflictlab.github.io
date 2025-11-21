@@ -22,7 +22,7 @@ import React from 'react'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Entity Forecast — PaCE',
+  title: 'PaCE',
   description: 'Detailed six-month forecast and comparative context for conflict fatalities.',
 }
 

@@ -6,7 +6,7 @@ export interface EntityContext {
   url?: string
   source?: 'wikipedia' | 'crisiswatch' | 'other'
   updatedAt?: string
-  updates?: Array<{ title: string; date: string; url: string; source?: string }>
+  updates?: Array<{ title: string; date: string; url: string; source?: string; excerpt?: string }>
 }
 
 let cache: Record<string, EntityContext> | null = null
