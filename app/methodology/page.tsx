@@ -42,7 +42,7 @@ export default async function Methodology() {
       </section>
 
       {/* PRIO-GRID Diffusion Model */}
-      <section className="py-24 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">
@@ -57,11 +57,11 @@ export default async function Methodology() {
           <div className="mb-12">
             <PrioGridAnimation />
           </div>
-        </div>
+                  </div>
       </section>
 
       {/* Pattern Discovery & Time‑Series AI */}
-      <section className="py-24 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">Pattern Discovery & Time‑Series AI</h2>
@@ -157,13 +157,7 @@ export default async function Methodology() {
               </div>
             </div>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-500">
-                See: <a href="https://doi.org/10.1177/00223433241234567" target="_blank" rel="noopener noreferrer" className="text-pace-red hover:underline">Schincariol, Frank & Chadefaux (2025)</a> |
-                <a href="/academicPapers/Chadefaux_2024_JCS.pdf" target="_blank" className="text-pace-red hover:underline ml-2">Chadefaux (2024)</a>
-              </p>
-            </div>
-          </div>
+                      </div>
 
           {/* 3D Spatial-Temporal Visualization */}
           <div className="max-w-5xl mx-auto mt-16">
@@ -186,12 +180,12 @@ export default async function Methodology() {
               Conflict trajectories visualized across latitude, longitude, and time dimensions. Similar shapes in this space
               indicate conflicts with comparable spatial-temporal dynamics, regardless of when or where they occurred.
             </p>
-          </div>
+                      </div>
         </div>
       </section>
 
       {/* Data Sources & Processing */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">Data Sources & Processing</h2>
@@ -233,12 +227,12 @@ export default async function Methodology() {
               </div>
             </div>
 
-          </div>
+                      </div>
         </div>
       </section>
 
       {/* Rich Covariates for Forecasting */}
-      <section className="py-24 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">What We Feed The Models</h2>
@@ -311,11 +305,11 @@ export default async function Methodology() {
               <p className="text-sm text-gray-600">Local food prices; crop/harvest proxies; shocks to household purchasing power.</p>
             </div>
           </div>
-        </div>
+                  </div>
       </section>
 
       {/* Performance & Validation */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">Performance & Validation</h2>
@@ -408,7 +402,7 @@ export default async function Methodology() {
       </section>
 
       {/* Applications & Use Cases */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">Applications Beyond Conflict</h2>
@@ -475,7 +469,7 @@ export default async function Methodology() {
       </section>
 
       {/* Live Forecast Demo (Grid-level map) */}
-      <section className="py-24 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">
@@ -490,9 +484,12 @@ export default async function Methodology() {
             <PrioGridMap period={snap.period} activeView="grid" />
           </div>
           
-          <div className="text-center">
+          <div className="text-center space-x-6">
             <Link href="/forecasts" className="text-link">
               View our forecasts
+            </Link>
+            <Link href="/publications" className="text-link">
+              View our publications
             </Link>
           </div>
         </div>

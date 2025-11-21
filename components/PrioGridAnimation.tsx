@@ -140,7 +140,7 @@ export default function PrioGridAnimation() {
 
     // Animation loop
     const animate = () => {
-      currentTimeRef.current += 0.3
+      currentTimeRef.current += 0.1
       if (currentTimeRef.current >= MAX_TIME) {
         currentTimeRef.current = 0
       }
