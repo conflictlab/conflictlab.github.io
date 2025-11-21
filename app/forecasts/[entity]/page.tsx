@@ -161,10 +161,9 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             </div>
             {/* Right: Scenarios panel */}
             <div className="bg-gray-50 p-6 rounded-lg lg:col-span-7">
-              <h2 className="text-2xl font-light text-gray-900 mb-2">Scenarios for {entity.name}</h2>
-              <LazyVisible minHeight="420px">
+              <LazyVisible minHeight="520px">
                 {scenarios ? (
-                  <ScenariosChart data={scenarios} countryName={entity.name} maxTotalHeight={420} />
+                  <ScenariosChart data={scenarios} countryName={entity.name} maxTotalHeight={520} />
                 ) : (
                   <div className="text-sm text-gray-500">No scenario data available.</div>
                 )}
