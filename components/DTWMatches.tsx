@@ -371,6 +371,13 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const x1 = tileW - 12
           const w = Math.max(1, x1 - x0)
           const xNow = x0 + ((Math.max(0, n - 1)) / Math.max(1, total - 1)) * w
+          // Helpers to plot point markers
+          const y0 = 16
+          const y1 = tileH - 18
+          const h = Math.max(1, y1 - y0)
+          const denom = (domMax - domMin) || 1
+          const sx = (i: number) => x0 + ((i) / Math.max(1, total - 1)) * w
+          const sy = (v: number) => y1 - ((v - domMin) / denom) * h
           return (
             <div key={idx} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
@@ -389,12 +396,24 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 <line x1={xNow} y1={16} x2={xNow} y2={tileH - 18} stroke="#9ca3af" strokeWidth={2.25} strokeDasharray="4,4" opacity={0.85} />
                 {/* matched window */}
                 <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
+                {/* matched markers */}
+                {it.match.map((v, i) => (
+                  <circle key={`m-${i}`} cx={sx(i)} cy={sy(v)} r={3.5} fill="#6b7280" stroke="#ffffff" strokeWidth={1} />
+                ))}
                 {/* source window (min-max to matched past domain) */}
                 <path d={srcPath} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
+                {/* source markers */}
+                {srcScaled.map((v, i) => (
+                  <circle key={`s-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
+                ))}
                 {/* connector between match and future (visual link only) */}
                 {joinPath && <path d={joinPath} fill="none" stroke="#dc2626" strokeWidth={2.25} />}
                 {/* matched future (next 6 months) */}
                 {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
+                {/* future markers */}
+                {(it.future || []).map((v, i) => (
+                  <circle key={`f-${i}`} cx={sx(n + i)} cy={sy(v as number)} r={3.5} fill="#dc2626" stroke="#ffffff" strokeWidth={1} />
+                ))}
               </svg>
               <div className="mt-1 text-[11px] text-gray-500">Black dashed: current window (min-max to match past) · Gray: match · Red: future (6m)</div>
             </div>
