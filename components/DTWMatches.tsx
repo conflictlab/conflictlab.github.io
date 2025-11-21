@@ -343,8 +343,48 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {items.slice(0, 4).map((it, idx) => {
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {/* Source tile first (top-left) */}
+        {(() => {
+          const first = items[0]
+          const n = first?.match?.length || 10
+          const srcOnly = histSeries.slice(-n)
+          if (!srcOnly.length) return null
+          const yMin = Math.min(...srcOnly)
+          const yMax = Math.max(...srcOnly)
+          const pathSrc = buildSegmentPathWithDomain(srcOnly, n, 0, tileW, tileH, yMin, yMax)
+          // Marker helpers
+          const x0 = 12
+          const x1 = tileW - 12
+          const y0 = 16
+          const y1 = tileH - 18
+          const w = Math.max(1, x1 - x0)
+          const h = Math.max(1, y1 - y0)
+          const rng = (yMax - yMin) || 1
+          const sx = (i: number) => x0 + (i / Math.max(1, (n - 1))) * w
+          const sy = (v: number) => y1 - ((v - yMin) / rng) * h
+
+          return (
+            <div key="source-tile" className="bg-white border-2 border-pace-red rounded-lg p-3 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-sm font-medium text-gray-900">{countryName}</div>
+                <div className="text-xs text-pace-red font-medium">Source</div>
+              </div>
+              <div className="text-xs text-gray-500 mb-2">Last {n} months</div>
+              <svg role="img" aria-label={`Source current window`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
+                <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                <path d={pathSrc} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
+                {srcOnly.map((v, i) => (
+                  <circle key={`src-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
+                ))}
+              </svg>
+            </div>
+          )
+        })()}
+
+        {/* Then 5 matches */}
+        {items.slice(0, 5).map((it, idx) => {
           const n = it.match.length
           const f = it.future?.length || 0
           const total = Math.max(2, n + f)
@@ -419,6 +459,45 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             </div>
           )
         })}
+
+        {/* Source tile (fits as the 6th tile in 2x3 matrix) */}
+        {(() => {
+          const first = items[0]
+          const n = first?.match?.length || 10
+          const srcOnly = histSeries.slice(-n)
+          if (!srcOnly.length) return null
+          const yMin = Math.min(...srcOnly)
+          const yMax = Math.max(...srcOnly)
+          const pathSrc = buildSegmentPathWithDomain(srcOnly, n, 0, tileW, tileH, yMin, yMax)
+          // Marker helpers (reuse same calc as above)
+          const x0 = 12
+          const x1 = tileW - 12
+          const y0 = 16
+          const y1 = tileH - 18
+          const w = Math.max(1, x1 - x0)
+          const h = Math.max(1, y1 - y0)
+          const rng = (yMax - yMin) || 1
+          const sx = (i: number) => x0 + (i / Math.max(1, (n - 1))) * w
+          const sy = (v: number) => y1 - ((v - yMin) / rng) * h
+
+          return (
+            <div key="source-tile" className="bg-white border-2 border-pace-red rounded-lg p-3 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-sm font-medium text-gray-900">{countryName}</div>
+                <div className="text-xs text-pace-red font-medium">Source</div>
+              </div>
+              <div className="text-xs text-gray-500 mb-2">Last {n} months</div>
+              <svg role="img" aria-label={`Source current window`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
+                <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                <path d={pathSrc} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
+                {srcOnly.map((v, i) => (
+                  <circle key={`src-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
+                ))}
+              </svg>
+            </div>
+          )
+        })()}
       </div>
     </div>
   )
