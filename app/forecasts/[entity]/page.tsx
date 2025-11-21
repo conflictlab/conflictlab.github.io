@@ -151,16 +151,16 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       {/* Unified Key Metrics + Situation Overview */}
       <section className="py-8 -mt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Left: Country Grid Map (slightly smaller) */}
-            <div className="rounded-lg p-0 bg-gray-50 overflow-hidden -ml-8 sm:-ml-12 lg:-ml-20 xl:-ml-28 2xl:-ml-40">
+            <div className="rounded-lg p-0 bg-gray-50 overflow-hidden -ml-8 sm:-ml-12 lg:-ml-20 xl:-ml-28 2xl:-ml-40 lg:col-span-5">
               <h2 className="text-lg font-light text-gray-900 px-4 pt-3 pb-2">Predicted fatalities, {entity.name}</h2>
               <div className="h-[420px]">
                 <PrioGridMap period={snapshot.period} countryName={entity.name} hideViewToggle={true} />
               </div>
             </div>
             {/* Right: Scenarios panel */}
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm lg:col-span-7">
               <h2 className="text-2xl font-light text-gray-900 mb-2">Scenarios for {entity.name}</h2>
               <LazyVisible minHeight="420px">
                 {scenarios ? (
