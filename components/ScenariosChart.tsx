@@ -565,7 +565,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
     const totalWidth = itemWidths.reduce((a, b) => a + b, 0) + gapX * Math.max(0, itemWidths.length - 1)
     let x = (width - totalWidth) / 2
     itemGroups.forEach((g, idx) => {
-      g.attr('transform', `translate(${x}, ${-40})`)
+      g.attr('transform', `translate(${x}, ${0})`)
       x += itemWidths[idx] + gapX
     })
     // "Now" label on the separator
