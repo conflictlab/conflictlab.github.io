@@ -3,6 +3,10 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+function toTitleCase(str: string): string {
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
+}
+
 export default function Breadcrumbs() {
   const pathname = usePathname() || '/'
   const parts = pathname.split('/').filter(Boolean)
@@ -10,7 +14,8 @@ export default function Breadcrumbs() {
   let acc = ''
   for (const p of parts) {
     acc += '/' + p
-    crumbs.push({ href: acc, label: decodeURIComponent(p) })
+    const decoded = decodeURIComponent(p).replace(/_/g, ' ')
+    crumbs.push({ href: acc, label: toTitleCase(decoded) })
   }
   return (
     <nav aria-label="Breadcrumb" className="text-sm text-gray-500 mt-2">
