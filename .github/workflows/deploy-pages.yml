@@ -90,6 +90,12 @@ jobs:
             echo "Building combined CSV for $per"
             node scripts/grid-geojson-to-csv.js --period "$per" || true
           done
+
+      - name: Export static API endpoints
+        run: node scripts/export-static-api.js
+
+      - name: Generate per-month grid CSVs
+        run: |
           # Generate per-month CSVs (m1..m6) for all available monthly JSON periods
           for m in public/data/grid/*-m1.json; do
             [ -e "$m" ] || continue

@@ -67,12 +67,15 @@ jobs:
       - name: Generate per-country grid files
         run: node scripts/generate-country-grids.js
 
+      - name: Export static API for grid points
+        run: node scripts/export-static-api.js
+
       - name: Commit changes (if any)
         run: |
           set -e
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git add content/forecasts public/data/csv public/data/grid || true
+          git add content/forecasts public/data/csv public/data/grid public/api || true
           if ! git diff --cached --quiet; then
             git commit -m "chore: sync forecasts + grid assets (centroids, geojson, monthly points)"
           fi
