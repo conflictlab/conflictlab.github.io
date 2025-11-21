@@ -160,7 +160,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
               </div>
             </div>
             {/* Right: Scenarios panel */}
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm lg:col-span-7">
+            <div className="bg-white/70 backdrop-blur-sm p-6 rounded-lg border border-gray-200 shadow-sm lg:col-span-7">
               <h2 className="text-2xl font-light text-gray-900 mb-2">Scenarios for {entity.name}</h2>
               <LazyVisible minHeight="420px">
                 {scenarios ? (

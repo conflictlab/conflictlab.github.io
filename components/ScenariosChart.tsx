@@ -128,6 +128,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
     const svg = d3.select(svgRef.current)
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
+      .style('background', 'transparent')
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
@@ -339,7 +340,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .attr('flood-opacity', 0.2)
 
     const tooltipBg = tooltip.append('rect')
-      .attr('fill', 'white')
+      .attr('fill', 'rgba(255,255,255,0.92)')
       .attr('stroke', '#d1d5db')
       .attr('rx', 4)
       .attr('ry', 4)
