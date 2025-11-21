@@ -169,7 +169,7 @@ export default function ObservedHistory({ countryName, height = 220 }: { country
           </g>
         ))}
         {/* line */}
-        {path && <path d={path} fill="none" stroke="#111827" strokeWidth={2.5} />}
+        {path && <path d={path} fill="none" stroke="#111827" strokeWidth={2.5} strokeDasharray="4,3" />}
         {/* markers */}
         {last.map((d, i) => (
           <circle key={i} cx={scaleX(d.date.getTime())} cy={scaleY(d.value)} r={4} fill="#111827" />
