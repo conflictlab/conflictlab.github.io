@@ -313,7 +313,8 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const mfMin = Math.min(...it.match, ...(it.future || []))
           const mfMax = Math.max(...it.match, ...(it.future || []))
           const matchPath = buildSegmentPathWithDomain(it.match, total, 0, tileW, tileH, mfMin, mfMax)
-          const srcPath = buildSegmentPath(it.src, total, 0, tileW, tileH)
+          // Scale the source (current window) using the same y-domain as match+future for comparability
+          const srcPath = buildSegmentPathWithDomain(it.src, total, 0, tileW, tileH, mfMin, mfMax)
           const futurePath = f ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, tileH, mfMin, mfMax) : ''
           const joinPath = f ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, tileH, mfMin, mfMax) : ''
           return (
@@ -332,14 +333,14 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
                 {/* matched window */}
                 <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
-                {/* source window */}
-                <path d={srcPath} fill="none" stroke="#B91C1C" strokeWidth="2.5" strokeDasharray="4,3" />
+                {/* source window (scaled to match+future domain) */}
+                <path d={srcPath} fill="none" stroke="#111827" strokeWidth="2.5" strokeDasharray="4,3" />
                 {/* connector between match and future (visual link only) */}
                 {joinPath && <path d={joinPath} fill="none" stroke="#9ca3af" strokeWidth={1.25} strokeDasharray="3,3" />}
                 {/* matched future (next 6 months) */}
                 {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
               </svg>
-              <div className="mt-1 text-[11px] text-gray-500">Red dashed: current window · Gray: matched window · Red: matched future (6m, if available)</div>
+              <div className="mt-1 text-[11px] text-gray-500">Black dashed: current window · Gray: matched window · Red: matched future (6m)</div>
             </div>
           )
         })}
