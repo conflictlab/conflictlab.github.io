@@ -56,12 +56,35 @@ const ALIASES: Record<string, string> = {
   'Vietnam (North Vietnam)': 'Vietnam',
 }
 
-function formatDate(s?: string) {
-  if (!s) return ''
-  // accept YYYY-MM-DD HH:MM:SS or YYYY-MM-DD
-  const d = new Date(s.replace(' ', 'T') + 'Z')
-  if (!isFinite(d.getTime())) return s
-  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+function parseUTCDate(s?: string): Date | null {
+  if (!s) return null
+  const str = String(s)
+  const m = str.match(/^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{2}):(\d{2}):(\d{2}))?$/)
+  if (m) {
+    const y = Number(m[1]); const mo = Number(m[2]) - 1; const d = Number(m[3])
+    return new Date(Date.UTC(y, mo, d))
+  }
+  const d2 = new Date(str)
+  return isFinite(d2.getTime()) ? d2 : null
+}
+
+function formatMonthYear(d: Date | null): string {
+  if (!d) return ''
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+}
+
+function formatFriendlyRange(start?: string, end?: string): string {
+  const ds = parseUTCDate(start)
+  const de = parseUTCDate(end)
+  if (!ds && !de) return ''
+  if (ds && de) {
+    const ys = ds.getUTCFullYear(); const ye = de.getUTCFullYear()
+    const ms = ds.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })
+    const me = de.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })
+    if (ys === ye) return `${ms} – ${me} ${ys}`
+    return `${ms} ${ys} – ${me} ${ye}`
+  }
+  return formatMonthYear(ds || de)
 }
 
 function buildPath(values: number[], width: number, height: number, padding = { t: 16, r: 12, b: 18, l: 12 }) {
@@ -271,7 +294,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             future = arr
             const frStart = histDates[pos + 1]
             const frEnd = histDates[Math.min(histDates.length - 1, pos + arr.length)]
-            futureRange = `${formatDate(frStart)} – ${formatDate(frEnd)}`
+            futureRange = formatFriendlyRange(frStart, frEnd)
           }
         }
       }
@@ -281,7 +304,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
         name: nm,
         src,
         range: m.series.index && m.series.index.length > 1
-          ? `${formatDate(m.series.index[0])} – ${formatDate(m.series.index[m.series.index.length - 1])}`
+          ? formatFriendlyRange(m.series.index[0], m.series.index[m.series.index.length - 1])
           : undefined,
         future,
         futureRange,
@@ -343,6 +366,11 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const srcPath = buildSegmentPathWithDomain(srcScaled, total, 0, tileW, tileH, domMin, domMax)
           const futurePath = f && it.future ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
           const joinPath = f && it.future ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
+          // Compute vertical 'now' divider (at the joint between match and future)
+          const x0 = 12
+          const x1 = tileW - 12
+          const w = Math.max(1, x1 - x0)
+          const xNow = x0 + ((Math.max(0, n - 1)) / Math.max(1, total - 1)) * w
           return (
             <div key={idx} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
@@ -357,6 +385,8 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 {/* axes (subtle) */}
                 <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
                 <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                {/* 'Now' divider */}
+                <line x1={xNow} y1={16} x2={xNow} y2={tileH - 18} stroke="#9ca3af" strokeWidth={2.25} strokeDasharray="4,4" opacity={0.85} />
                 {/* matched window */}
                 <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
                 {/* source window (min-max to matched past domain) */}
