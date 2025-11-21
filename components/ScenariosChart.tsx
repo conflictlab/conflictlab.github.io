@@ -459,7 +459,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       svg.append('path')
         .datum(areaPastVals)
         .attr('d', areaPast)
-        .attr('fill', 'rgba(55,65,81,0.08)')
+        .attr('fill', 'rgba(55,65,81,0.02)')
         .attr('stroke', 'none')
     }
 
@@ -469,7 +469,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       const color = '#B91C1C' // pace-red for all future lines
       const op = Math.max(0.25, Math.min(1, cluster.weight))
       // Shaded area under the time series (more subtle)
-      const fillAlpha = isHighest ? 0.08 : Math.max(0.015, Math.min(0.04, op * 0.05))
+      const fillAlpha = isHighest ? 0.02 : Math.max(0.003, Math.min(0.008, op * 0.01))
       svg.append('path')
         .datum(cluster.values)
         .attr('d', area)
