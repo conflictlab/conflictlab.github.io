@@ -102,7 +102,6 @@ export default function Navigation() {
       sections: [
         { label: 'PaCE', href: '/about' },
         { label: 'Team', href: '/about/team' },
-        { label: 'Acknowledgements', href: '/acknowledgements' },
         { label: 'Contact', href: '/contact' },
       ],
     },

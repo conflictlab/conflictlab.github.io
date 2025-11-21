@@ -97,6 +97,7 @@ export default function About() {
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <Link href="/about/team" className="btn-secondary inline-flex items-center justify-center">Meet the Team</Link>
             <Link href="/contact" className="btn-secondary inline-flex items-center justify-center">Contact Us</Link>
+            <Link href="/acknowledgements" className="btn-secondary inline-flex items-center justify-center">Acknowledgements</Link>
           </div>
 
           {/* Resources subsection */}
