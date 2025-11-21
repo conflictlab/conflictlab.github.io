@@ -362,11 +362,11 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
 
   // Compute tile width based on responsive grid (1, 2, or 3 columns)
   const isDesktop = width >= 768
-  const cols = isDesktop ? 3 : 1
+  const cols = isDesktop ? 2 : 1
   const gapPx = 16 // gap-4
   const tileW = Math.floor((width - (cols - 1) * gapPx) / cols)
   const matchTileH = isDesktop ? 140 : 170
-  const sourceTileH = isDesktop ? 260 : 170
+  const sourceTileH = isDesktop ? 300 : 180
   const tileH = 170
 
   return (
@@ -375,17 +375,17 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
       {width >= 768 && arrows.length > 0 && (
         <svg className="pointer-events-none absolute inset-0" width="100%" height="100%" viewBox={`0 0 ${containerRef.current?.clientWidth || 0} ${containerRef.current?.clientHeight || 0}`}>
           <defs>
-            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-              <polygon points="0 0, 8 3, 0 6" fill="#B91C1C" />
+            <marker id="arrowhead" markerWidth="5" markerHeight="3" refX="5" refY="1.5" orient="auto">
+              <polygon points="0 0, 5 1.5, 0 3" fill="#B91C1C" />
             </marker>
           </defs>
           {arrows.map((a, i) => (
-            <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#B91C1C" strokeWidth={2.25} markerEnd="url(#arrowhead)" opacity={0.9} />
+            <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#B91C1C" strokeWidth={1.5} markerEnd="url(#arrowhead)" opacity={0.7} vector-effect="non-scaling-stroke" />
           ))}
         </svg>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
         {/* Left column: source tile */}
         <div ref={sourceRef} className="md:self-center">
           {(() => {
@@ -427,9 +427,6 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             )
           })()}
         </div>
-
-        {/* Middle column: arrow gutter (layout only) */}
-        <div className="hidden md:block" />
 
         {/* Right column: 4 matches stacked vertically */}
         <div className="grid grid-cols-1 gap-4">
