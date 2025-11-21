@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import * as d3 from 'd3'
 
 interface TimeSeriesChartProps {
@@ -17,10 +17,13 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
   const [animatedData, setAnimatedData] = useState<number[]>([])
   const [tip, setTip] = useState<null | { x: number; y: number; text: string }>(null)
   const { historical, forecast, country, histPeriods = [], forecastPeriods = [] } = data
+  const [rawSeries, setRawSeries] = useState<Array<{ date: Date; value: number }>>([])
   
   const allData = [...historical, ...forecast]
-  const maxValue = Math.max(...allData)
-  const minValue = Math.min(...allData)
+  const rawValuesForScale = useMemo(() => rawSeries.map(s => s.value), [rawSeries])
+  const scaleValues = [...allData, ...rawValuesForScale]
+  const maxValue = Math.max(...scaleValues)
+  const minValue = Math.min(...scaleValues)
   const range = maxValue - minValue
   // Dimensions
   const svgWidth = 480
@@ -57,9 +60,54 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
   const maxDate = allDates[allDates.length - 1] || new Date(Date.UTC(1970, 5, 30))
   const xScale = d3.scaleUtc().domain([minDate, maxDate]).range([40, 440])
   const nowDate = histDates.length ? histDates[histDates.length - 1] : minDate
-  
+
   // Disable animation for clearer circle rendering of all points
   useEffect(() => { setAnimatedData(allData) }, [allData])
+  
+  // Load observed (raw) fatalities from public/data/hist.csv for the same country
+  useEffect(() => {
+    let cancelled = false
+    async function loadRaw() {
+      try {
+        const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+        const res = await fetch(`${base}/data/hist.csv`)
+        if (!res.ok) return
+        const text = await res.text()
+        const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
+        if (!lines.length) return
+        const split = (line: string) => {
+          const out: string[] = []
+          let cur = ''
+          let inQ = false
+          for (let i = 0; i < line.length; i++) {
+            const ch = line[i]
+            if (inQ) { if (ch === '"') { if (line[i + 1] === '"') { cur += '"'; i++ } else { inQ = false } } else cur += ch }
+            else { if (ch === ',') { out.push(cur); cur = '' } else if (ch === '"') inQ = true; else cur += ch }
+          }
+          out.push(cur)
+          return out
+        }
+        const header = split(lines[0])
+        const norm = (s: string) => String(s || '').toLowerCase().normalize('NFKD').replace(/[^a-z\s\-']/g,'').trim()
+        let colIdx = header.findIndex(h => h === country)
+        if (colIdx < 0) { const target = norm(country); colIdx = header.findIndex(h => norm(h) === target) }
+        if (colIdx < 0) return
+        const parsed: Array<{ date: Date; value: number }> = []
+        const parseD = d3.utcParse('%Y-%m-%d')
+        for (let i = 1; i < lines.length; i++) {
+          const cols = split(lines[i])
+          const dstr = cols[0]
+          const v = Number(cols[colIdx])
+          if (!dstr || !Number.isFinite(v)) continue
+          const dt = parseD(dstr) || new Date(dstr)
+          parsed.push({ date: dt as Date, value: v })
+        }
+        if (!cancelled) setRawSeries(parsed)
+      } catch {}
+    }
+    if (country) loadRaw()
+    return () => { cancelled = true }
+  }, [country])
   
   // Convert data points to SVG coordinates
   const getY = (value: number) => {
@@ -75,6 +123,27 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
     const y = getY(value)
     return index === 0 ? `M ${x} ${y}` : `L ${x} ${y}`
   }).join(' ')
+  
+  // Observed (raw) series aligned to histPeriods
+  const rawMap = useMemo(() => {
+    const m = new Map<string, number>()
+    for (const r of rawSeries) {
+      const y = r.date.getUTCFullYear()
+      const mo = String(r.date.getUTCMonth() + 1).padStart(2, '0')
+      m.set(`${y}-${mo}`, r.value)
+    }
+    return m
+  }, [rawSeries])
+  const rawPoints: { x: number; y: number; period: string; value: number }[] = []
+  histPeriods.forEach((p, i) => {
+    const v = rawMap.get(p)
+    if (v !== undefined) {
+      const x = histDates[i] ? xScale(histDates[i]) : getXIdx(i)
+      const y = getY(v)
+      rawPoints.push({ x, y, period: p, value: v })
+    }
+  })
+  const rawPath = rawPoints.length ? `M ${rawPoints.map(pt => `${pt.x},${pt.y}`).join(' L ')}` : ''
   
   // Create path for forecast data
   const forecastPath = forecast.map((value, index) => {
@@ -146,6 +215,11 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
           className="transition-all duration-300"
         />
 
+        {/* Observed (raw) data line */}
+        {rawPath && (
+          <path d={rawPath} fill="none" stroke="#0ea5e9" strokeWidth={3} />
+        )}
+
         {/* Forecast data line */}
         <path
           d={forecastPath}
@@ -186,13 +260,32 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
           )
         })}
         
+        {/* Raw points */}
+        {rawPoints.map((pt, i) => (
+          <circle
+            key={`raw-${i}`}
+            cx={pt.x}
+            cy={pt.y}
+            r={4}
+            fill="#0ea5e9"
+            stroke="#ffffff"
+            strokeWidth={1.2}
+            className="cursor-pointer"
+            onMouseEnter={() => setTip({ x: pt.x, y: pt.y, text: `${formatPeriod(pt.period)}: ${Math.abs(range) < 10 ? pt.value.toFixed(1) : Math.round(pt.value).toString()}` })}
+            onMouseMove={() => setTip({ x: pt.x, y: pt.y, text: `${formatPeriod(pt.period)}: ${Math.abs(range) < 10 ? pt.value.toFixed(1) : Math.round(pt.value).toString()}` })}
+            onMouseLeave={() => setTip(null)}
+          />
+        ))}
+        
         {/* Legend (top-left inside plot area) */}
         <g transform="translate(48, 26)">
-          <rect x="0" y="0" width="176" height="52" fill="white" stroke="#e5e7eb" rx="6"/>
+          <rect x="0" y="0" width="220" height="72" fill="white" stroke="#e5e7eb" rx="6"/>
           <line x1="10" y1="16" x2="30" y2="16" stroke="#374151" strokeWidth="3"/>
           <text x="35" y="20" className="text-xs fill-gray-700">Historical (monthly)</text>
-          <line x1="10" y1="36" x2="30" y2="36" stroke="#B91C1C" strokeWidth="3" strokeDasharray="5,4"/>
-          <text x="35" y="40" className="text-xs fill-gray-700">Forecast (months 1–6)</text>
+          <line x1="10" y1="34" x2="30" y2="34" stroke="#0ea5e9" strokeWidth="3"/>
+          <text x="35" y="38" className="text-xs fill-gray-700">Observed (monthly)</text>
+          <line x1="10" y1="56" x2="30" y2="56" stroke="#B91C1C" strokeWidth="3" strokeDasharray="5,4"/>
+          <text x="35" y="60" className="text-xs fill-gray-700">Forecast (months 1–6)</text>
         </g>
         
         {/* Current/Forecast label */}
