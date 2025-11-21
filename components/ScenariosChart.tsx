@@ -120,7 +120,8 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
 
     // Responsive margins and size
     // Use minimal right margin and a larger bottom margin to place legend below
-    const margin = { top: 40, right: 40, bottom: 140, left: 80 }
+    // Extra bottom margin so legend can sit fully below x-axis labels
+    const margin = { top: 40, right: 40, bottom: 190, left: 80 }
     const width = Math.max(300, containerWidth - margin.left - margin.right)
     const height = Math.max(360, Math.min(540, Math.round(width * 0.55)))
 
@@ -496,7 +497,8 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
 
     // Legend on the right: list scenarios with probabilities
     const legend = svg.append('g')
-      .attr('transform', `translate(0, ${height + 24})`) // below plot
+      // Position legend below axis tick labels, above caption in the card
+      .attr('transform', `translate(0, ${height + 60})`)
 
     const legendTitle = legend.append('text')
       .text('Scenarios')
