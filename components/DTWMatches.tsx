@@ -314,6 +314,17 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const domMin = Math.min(...vals)
           const domMax = Math.max(...vals)
           const matchPath = buildSegmentPathWithDomain(it.match, total, 0, tileW, tileH, domMin, domMax)
+          // Scale the source window via min-max onto the matched past domain
+          const pastMin = Math.min(...it.match)
+          const pastMax = Math.max(...it.match)
+          const srcMin = Math.min(...it.src)
+          const srcMax = Math.max(...it.src)
+          const srcScaled = it.src.map(v => {
+            const denom = (srcMax - srcMin) || 1
+            const t = (v - srcMin) / denom
+            return pastMin + t * (pastMax - pastMin)
+          })
+          const srcPath = buildSegmentPathWithDomain(srcScaled, total, 0, tileW, tileH, domMin, domMax)
           const futurePath = f && it.future ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
           const joinPath = f && it.future ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
           return (
@@ -332,12 +343,14 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
                 {/* matched window */}
                 <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
+                {/* source window (min-max to matched past domain) */}
+                <path d={srcPath} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
                 {/* connector between match and future (visual link only) */}
                 {joinPath && <path d={joinPath} fill="none" stroke="#9ca3af" strokeWidth={1.25} strokeDasharray="3,3" />}
                 {/* matched future (next 6 months) */}
                 {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
               </svg>
-              <div className="mt-1 text-[11px] text-gray-500">Gray: matched window · Red: matched future (6m)</div>
+              <div className="mt-1 text-[11px] text-gray-500">Black dashed: current window (min-max to match past) · Gray: match · Red: future (6m)</div>
             </div>
           )
         })}
