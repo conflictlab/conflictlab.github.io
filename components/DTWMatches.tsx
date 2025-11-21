@@ -361,9 +361,12 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
   }
 
   // Compute tile width based on responsive grid (1, 2, or 3 columns)
-  const cols = width >= 768 ? 2 : 1
+  const isDesktop = width >= 768
+  const cols = isDesktop ? 2 : 1
   const gapPx = 16 // gap-4
   const tileW = Math.floor((width - (cols - 1) * gapPx) / cols)
+  const matchTileH = isDesktop ? 140 : 170
+  const sourceTileH = isDesktop ? 320 : 170
   const tileH = 170
 
   return (
@@ -377,14 +380,14 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             </marker>
           </defs>
           {arrows.map((a, i) => (
-            <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#B91C1C" strokeWidth={1.5} markerEnd="url(#arrowhead)" opacity={0.9} />
+            <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#B91C1C" strokeWidth={2.25} markerEnd="url(#arrowhead)" opacity={0.9} />
           ))}
         </svg>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
         {/* Left column: source tile */}
-        <div ref={sourceRef}>
+        <div ref={sourceRef} className="md:self-center">
           {(() => {
             const first = items[0]
             const n = first?.match?.length || 10
@@ -392,12 +395,13 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             if (!srcOnly.length) return null
             const yMin = Math.min(...srcOnly)
             const yMax = Math.max(...srcOnly)
-            const pathSrc = buildSegmentPathWithDomain(srcOnly, n, 0, tileW, tileH, yMin, yMax)
+            const sH = sourceTileH
+            const pathSrc = buildSegmentPathWithDomain(srcOnly, n, 0, tileW, sH, yMin, yMax)
             // Marker helpers
             const x0 = 12
             const x1 = tileW - 12
             const y0 = 16
-            const y1 = tileH - 18
+            const y1 = sH - 18
             const w = Math.max(1, x1 - x0)
             const h = Math.max(1, y1 - y0)
             const rng = (yMax - yMin) || 1
@@ -411,9 +415,9 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                   <div className="text-xs text-pace-red font-medium">Source</div>
                 </div>
                 <div className="text-xs text-gray-500 mb-2">Last {n} months</div>
-                <svg role="img" aria-label={`Source current window`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
-                  <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
-                  <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                <svg role="img" aria-label={`Source current window`} viewBox={`0 0 ${tileW} ${sH}`} width="100%" height={sH}>
+                  <line x1="12" y1="16" x2="12" y2={sH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                  <line x1="12" y1={sH - 18} x2={tileW - 12} y2={sH - 18} stroke="#e5e7eb" strokeWidth="1" />
                   <path d={pathSrc} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
                   {srcOnly.map((v, i) => (
                     <circle key={`src-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
@@ -434,7 +438,8 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const vals = f && it.future ? [...it.match, ...(it.future as number[])] : [...it.match]
           const domMin = Math.min(...vals)
           const domMax = Math.max(...vals)
-          const matchPath = buildSegmentPathWithDomain(it.match, total, 0, tileW, tileH, domMin, domMax)
+          const mH = matchTileH
+          const matchPath = buildSegmentPathWithDomain(it.match, total, 0, tileW, mH, domMin, domMax)
           // Scale the source window via min-max onto the matched past domain
           const pastMin = Math.min(...it.match)
           const pastMax = Math.max(...it.match)
@@ -445,9 +450,9 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             const t = (v - srcMin) / denom
             return pastMin + t * (pastMax - pastMin)
           })
-          const srcPath = buildSegmentPathWithDomain(srcScaled, total, 0, tileW, tileH, domMin, domMax)
-          const futurePath = f && it.future ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
-          const joinPath = f && it.future ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, tileH, domMin, domMax) : ''
+          const srcPath = buildSegmentPathWithDomain(srcScaled, total, 0, tileW, mH, domMin, domMax)
+          const futurePath = f && it.future ? buildSegmentPathWithDomain(it.future as number[], total, n, tileW, mH, domMin, domMax) : ''
+          const joinPath = f && it.future ? connectorWithDomain(it.match, it.future as number[], total, n, tileW, mH, domMin, domMax) : ''
           // Compute vertical 'now' divider (at the joint between match and future)
           const x0 = 12
           const x1 = tileW - 12
@@ -455,7 +460,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const xNow = x0 + ((Math.max(0, n - 1)) / Math.max(1, total - 1)) * w
           // Helpers to plot point markers
           const y0 = 16
-          const y1 = tileH - 18
+          const y1 = mH - 18
           const h = Math.max(1, y1 - y0)
           const denom = (domMax - domMin) || 1
           const sx = (i: number) => x0 + ((i) / Math.max(1, total - 1)) * w
@@ -467,28 +472,28 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 <div className="text-xs text-gray-500">distance {Number(it.distance).toFixed(4)}</div>
               </div>
               <div className="text-xs text-gray-500 mb-2">{it.range || ''}</div>
-              <svg role="img" aria-label={`Match ${idx + 1}`} viewBox={`0 0 ${tileW} ${tileH}`} width="100%" height={tileH}>
+              <svg role="img" aria-label={`Match ${idx + 1}`} viewBox={`0 0 ${tileW} ${mH}`} width="100%" height={mH}>
                 {/* axes (subtle) */}
                 <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
-                <line x1="12" y1={tileH - 18} x2={tileW - 12} y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                <line x1="12" y1={mH - 18} x2={tileW - 12} y2={mH - 18} stroke="#e5e7eb" strokeWidth="1" />
                 {/* 'Now' divider */}
-                <line x1={xNow} y1={16} x2={xNow} y2={tileH - 18} stroke="#9ca3af" strokeWidth={2.25} strokeDasharray="4,4" opacity={0.85} />
+                <line x1={xNow} y1={16} x2={xNow} y2={mH - 18} stroke="#9ca3af" strokeWidth={2.25} strokeDasharray="4,4" opacity={0.85} />
                 {/* matched window */}
-                <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
+                <path d={matchPath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#6b7280" strokeWidth="2.5" />
                 {/* matched markers */}
                 {it.match.map((v, i) => (
                   <circle key={`m-${i}`} cx={sx(i)} cy={sy(v)} r={3.5} fill="#6b7280" stroke="#ffffff" strokeWidth={1} />
                 ))}
                 {/* source window (min-max to matched past domain) */}
-                <path d={srcPath} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
+                <path d={srcPath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
                 {/* source markers */}
                 {srcScaled.map((v, i) => (
                   <circle key={`s-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
                 ))}
                 {/* connector between match and future (visual link only) */}
-                {joinPath && <path d={joinPath} fill="none" stroke="#dc2626" strokeWidth={2.25} />}
+                {joinPath && <path d={joinPath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#dc2626" strokeWidth={2.25} />}
                 {/* matched future (next 6 months) */}
-                {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
+                {futurePath && <path d={futurePath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
                 {/* future markers */}
                 {(it.future || []).map((v, i) => (
                   <circle key={`f-${i}`} cx={sx(n + i)} cy={sy(v as number)} r={3.5} fill="#dc2626" stroke="#ffffff" strokeWidth={1} />
