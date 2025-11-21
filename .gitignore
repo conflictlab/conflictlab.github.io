@@ -17,6 +17,11 @@ Scenarios.pkl
 claude/
 CLAUDE.md
 .grok/
+.miniforge/
+.matches-env/
+Miniforge3.sh
+saved_dictionary.pkl
+external/
 
 # testing
 /coverage

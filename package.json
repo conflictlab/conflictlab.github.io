@@ -9,6 +9,7 @@
     "prebuild": "node scripts/prebuild.js",
     "covers": "node scripts/generate-covers.js",
     "scenarios:convert": "node scripts/convert-scenarios-pkl.js --src sce_dictionary.pkl --out public/data/scenarios.json",
+    "matches:convert": "node scripts/convert-matches-pkl.js --src matches.pkl --out public/data/matches.json",
     "data:minmax": "node scripts/update-minmax-from-hist.js",
     "scenarios:denorm": "node scripts/denorm-scenarios.js",
     "data:update": "npm run data:minmax && npm run scenarios:denorm",

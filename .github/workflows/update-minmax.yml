@@ -25,6 +25,9 @@ jobs:
       - name: Install deps
         run: npm ci
 
+      - name: Install Python deps
+        run: pip install numpy pandas
+
       - name: Download scenarios pickle (sce_dictionary.pkl)
         run: |
           set -e

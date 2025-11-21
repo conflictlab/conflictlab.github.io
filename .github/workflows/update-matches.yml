@@ -1,0 +1,65 @@
+name: Update DTW matches JSON
+
+on:
+  schedule:
+    - cron: '0 4 1 * *' # monthly on the 1st at 04:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Node deps
+        run: npm ci
+
+      - name: Install Python deps (numpy/pandas)
+        run: |
+          python -m pip install --upgrade pip
+          pip install "numpy==1.24.4" "pandas==1.5.3"
+
+      - name: Download DTW matches pickle
+        run: |
+          set -e
+          REPO="${{ vars.MATCHES_REPO }}"; REPO="${REPO:-ThomasSchinca/Pace-map-risk}"
+          BRANCH="${{ vars.MATCHES_BRANCH }}"; BRANCH="${BRANCH:-main}"
+          PATH_IN_REPO="${{ vars.MATCHES_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-matches.pkl}"
+          URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
+          echo "Downloading $URL"
+          curl -fsSL "$URL" -o matches.pkl
+
+      - name: Convert matches pickle to JSON
+        run: npm run matches:convert -- --src matches.pkl --out public/data/matches.json
+
+      - name: Download full historical monthly CSV (optional)
+        run: |
+          set -e
+          REPO="${{ vars.MATCHES_HIST_REPO }}"; REPO="${REPO:-}"
+          BRANCH="${{ vars.MATCHES_HIST_BRANCH }}"; BRANCH="${BRANCH:-main}"
+          PATH_IN_REPO="${{ vars.MATCHES_HIST_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-}"
+          if [ -n "$REPO" ] && [ -n "$PATH_IN_REPO" ]; then
+            URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
+            echo "Downloading full historical CSV from $URL"
+            mkdir -p public/data
+            curl -fsSL "$URL" -o public/data/hist_full.csv || echo "Warning: failed to download hist_full.csv"
+          else
+            echo "No MATCHES_HIST_REPO/PATH provided; skipping hist_full.csv"
+          fi
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(data): update DTW matches JSON'
+          file_pattern: public/data/matches.json public/data/hist_full.csv
