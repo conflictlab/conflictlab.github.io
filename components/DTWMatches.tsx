@@ -362,11 +362,11 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
 
   // Compute tile width based on responsive grid (1, 2, or 3 columns)
   const isDesktop = width >= 768
-  const cols = isDesktop ? 2 : 1
+  const cols = isDesktop ? 3 : 1
   const gapPx = 16 // gap-4
   const tileW = Math.floor((width - (cols - 1) * gapPx) / cols)
   const matchTileH = isDesktop ? 140 : 170
-  const sourceTileH = isDesktop ? 320 : 170
+  const sourceTileH = isDesktop ? 260 : 170
   const tileH = 170
 
   return (
@@ -385,7 +385,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
         </svg>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
         {/* Left column: source tile */}
         <div ref={sourceRef} className="md:self-center">
           {(() => {
@@ -427,6 +427,9 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             )
           })()}
         </div>
+
+        {/* Middle column: arrow gutter (layout only) */}
+        <div className="hidden md:block" />
 
         {/* Right column: 4 matches stacked vertically */}
         <div className="grid grid-cols-1 gap-4">
