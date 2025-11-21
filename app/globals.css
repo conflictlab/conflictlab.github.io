@@ -651,7 +651,7 @@
             100% { transform: scale(3); opacity: 0; }
           }
           .hotspot-marker { background: transparent !important; border: none !important; }
-          .hotspot-container { position: relative; width: 40px; height: 40px; transform: scale(var(--sz,1)); }
+          .hotspot-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(var(--sz,1)); width: 40px; height: 40px; }
           .hotspot-pulse {
             position: absolute; top: 50%; left: 50%; width: 20px; height: 20px;
             margin: -10px 0 0 -10px; border-radius: 50%; background: var(--pulse, rgba(220,38,38,0.4));
