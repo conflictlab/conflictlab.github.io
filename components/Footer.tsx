@@ -30,8 +30,9 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-1 pt-1 text-center text-gray-500 text-[11px]">
+        <div className="mt-1 pt-1 text-center text-gray-500 text-[11px] space-y-1">
           <p>&copy; {new Date().getFullYear()} PaCE. All rights reserved.</p>
+          <p>Data from Thomas Schincariol.</p>
         </div>
       </div>
     </footer>

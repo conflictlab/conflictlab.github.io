@@ -400,7 +400,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       }
     }
 
-    // Add lines and circles for each cluster
+    // Add lines and circles for each cluster (no inline end labels)
     clusterLines.forEach((cluster, i) => {
       const isHighest = cluster.clusterId === maxWeightClusterId
       const isSelected = cluster.clusterId === activeSelected
@@ -454,41 +454,6 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
         })
         .on('click', () => setSelectedClusterId(cluster.clusterId))
 
-      // Inline end labels aligned to last value
-      const last = cluster.values[cluster.values.length - 1]
-      const labelG = svg.append('g')
-        .attr('transform', `translate(${xScale(last.date) + 18}, ${yScale(last.value) + 4})`)
-        .style('cursor', 'pointer')
-        .on('mouseover', function() {
-          path.attr('stroke-opacity', 1).attr('stroke-width', 6)
-          svg.selectAll(`.circle-${i}`).attr('fill-opacity', 1).attr('stroke-opacity', 1).attr('r', 7)
-        })
-        .on('mouseout', function() {
-          path.attr('stroke-opacity', op).attr('stroke-width', isHighest ? 6 : 5)
-          svg.selectAll(`.circle-${i}`).attr('fill-opacity', Math.min(1, op + 0.15)).attr('stroke-opacity', isHighest ? 1 : 0.8).attr('r', isHighest ? 6 : 5)
-        })
-        .on('click', () => setSelectedClusterId(cluster.clusterId))
-
-      const label = labelG.append('text')
-        .style('font-size', '16px')
-        .style('fill', '#B91C1C')
-        .style('font-weight', isHighest ? 'bold' : 'normal')
-        .text(`Scenario ${cluster.clusterId}: ${(cluster.weight * 100).toFixed(0)}% probability`)
-
-      if (isSelected) {
-        const bb = (label.node() as SVGTextElement).getBBox()
-        labelG.insert('rect', 'text')
-          .attr('x', bb.x - 8)
-          .attr('y', bb.y - 4)
-          .attr('width', bb.width + 16)
-          .attr('height', bb.height + 8)
-          .attr('rx', 6)
-          .attr('ry', 6)
-          .attr('fill', '#ffffff')
-          .attr('stroke', '#374151')
-          .attr('stroke-width', 1.5)
-          .attr('filter', 'url(#tooltip-shadow)')
-      }
     })
 
 
@@ -502,6 +467,60 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .attr('stroke', '#9ca3af')
       .attr('stroke-opacity', 0.6)
       .attr('stroke-dasharray', '4,4')
+
+    // Legend on the right: list scenarios with probabilities
+    const legend = svg.append('g')
+      .attr('transform', `translate(${width + 16}, 0)`) // into right margin
+
+    const legendTitle = legend.append('text')
+      .text('Scenarios')
+      .style('font-size', '16px')
+      .style('font-weight', '700')
+      .style('fill', '#374151')
+
+    const legItems = [...clusterLines].sort((a, b) => b.weight - a.weight)
+    const itemGap = 24
+    legItems.forEach((cl, idx) => {
+      const y = 28 + idx * itemGap
+      const isMax = cl.clusterId === maxWeightClusterId
+      const isSel = (selectedClusterId || maxWeightClusterId) === cl.clusterId
+      const color = '#B91C1C'
+      const op = Math.max(0.25, Math.min(1, cl.weight))
+
+      // sample line
+      legend.append('line')
+        .attr('x1', 0).attr('y1', y - 6)
+        .attr('x2', 20).attr('y2', y - 6)
+        .attr('stroke', color)
+        .attr('stroke-width', isMax ? 4 : 3)
+        .attr('stroke-opacity', op)
+        .attr('stroke-dasharray', '5,4')
+
+      // text
+      const t = legend.append('text')
+        .attr('x', 26)
+        .attr('y', y - 3)
+        .style('font-size', '14px')
+        .style('fill', isSel ? '#111827' : '#4b5563')
+        .style('font-weight', isSel ? '700' : '500')
+        .text(`Scenario ${cl.clusterId}: ${(cl.weight * 100).toFixed(0)}%`)
+
+      const bb = (t.node() as SVGTextElement).getBBox()
+      const hit = legend.append('rect')
+        .attr('x', 0)
+        .attr('y', y - 18)
+        .attr('width', Math.max(120, bb.width + 30))
+        .attr('height', 20)
+        .attr('fill', 'transparent')
+        .style('cursor', 'pointer')
+        .on('click', () => setSelectedClusterId(cl.clusterId))
+        .on('mouseover', () => {
+          t.style('fill', '#111827').style('font-weight', '700')
+        })
+        .on('mouseout', () => {
+          t.style('fill', isSel ? '#111827' : '#4b5563').style('font-weight', isSel ? '700' : '500')
+        })
+    })
     // "Now" label on the separator
     svg.append('text')
       .attr('x', sepX)

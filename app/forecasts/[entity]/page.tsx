@@ -109,6 +109,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             Predicted fatalities from state‑based armed conflict — forecast and analysis
           </p>
+          <p className="text-xs text-gray-500 mt-1">Data from Thomas Schincariol.</p>
         </div>
       </section>
 
@@ -176,7 +177,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         <section className="py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h2 className="text-2xl font-light text-gray-900 mb-2">Historical Scenarios for {entity.name}</h2>
+              <h2 className="text-2xl font-light text-gray-900 mb-2">Scenarios for {entity.name}</h2>
               <LazyVisible minHeight="500px">
                 <ScenariosChart data={scenarios} countryName={entity.name} />
               </LazyVisible>

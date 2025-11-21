@@ -51,6 +51,7 @@ export default async function ForecastsGridPage() {
           <p className="text-xl text-gray-600 font-light leading-relaxed mb-4 max-w-3xl">
             Six‑month forecasts of conflict fatalities at the country and sub‑national level.
           </p>
+          <p className="text-xs text-gray-500">Data from Thomas Schincariol.</p>
           <div className="mt-4 flex flex-wrap gap-3">
             <Link href="/forecasts#dashboard" className="btn-secondary inline-flex items-center gap-1">Dashboard</Link>
             <Link href="/reports" className="btn-secondary inline-flex items-center gap-1">Reports</Link>
