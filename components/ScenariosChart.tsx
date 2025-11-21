@@ -24,9 +24,11 @@ interface ScenarioData {
 interface ScenariosChartProps {
   data: ScenarioData
   countryName: string
+  // Optional maximum total SVG height (including margins), e.g., to match sibling map height
+  maxTotalHeight?: number
 }
 
-export default function ScenariosChart({ data, countryName }: ScenariosChartProps) {
+export default function ScenariosChart({ data, countryName, maxTotalHeight }: ScenariosChartProps) {
   const svgRef = useRef<SVGSVGElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState<number>(900)
@@ -123,7 +125,11 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
     // Place legend at top-center: increase top margin a bit, reduce bottom
     const margin = { top: 80, right: 40, bottom: 100, left: 80 }
     const width = Math.max(300, containerWidth - margin.left - margin.right)
-    const height = Math.max(360, Math.min(540, Math.round(width * 0.55)))
+    const desiredByWidth = Math.max(240, Math.min(540, Math.round(width * 0.5)))
+    const heightCap = (maxTotalHeight && maxTotalHeight > (margin.top + margin.bottom))
+      ? Math.max(160, maxTotalHeight - margin.top - margin.bottom)
+      : Infinity
+    const height = Math.min(desiredByWidth, heightCap)
 
     const svg = d3.select(svgRef.current)
       .attr('width', width + margin.left + margin.right)
