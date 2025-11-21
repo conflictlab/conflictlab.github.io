@@ -346,7 +346,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
                 {/* source window (min-max to matched past domain) */}
                 <path d={srcPath} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
                 {/* connector between match and future (visual link only) */}
-                {joinPath && <path d={joinPath} fill="none" stroke="#dc2626" strokeWidth={1.5} strokeDasharray="3,3" />}
+                {joinPath && <path d={joinPath} fill="none" stroke="#dc2626" strokeWidth={1.5} />}
                 {/* matched future (next 6 months) */}
                 {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
               </svg>
