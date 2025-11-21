@@ -28,6 +28,8 @@ interface ScenariosChartProps {
 
 export default function ScenariosChart({ data, countryName }: ScenariosChartProps) {
   const svgRef = useRef<SVGSVGElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState<number>(900)
   const [pastSeries, setPastSeries] = useState<Array<{ date: Date; value: number }>>([])
   const [selectedClusterId, setSelectedClusterId] = useState<string | null>(null)
 
@@ -88,15 +90,39 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
     return () => { cancelled = true }
   }, [countryName])
 
+  // Observe container width for responsive sizing
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const update = () => {
+      const w = el.clientWidth || 900
+      setContainerWidth(Math.max(320, w))
+    }
+    update()
+    let ro: ResizeObserver | null = null
+    if (typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(update)
+      ro.observe(el)
+    } else {
+      window.addEventListener('resize', update)
+    }
+    return () => {
+      if (ro && el) ro.unobserve(el)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
   useEffect(() => {
     if (!svgRef.current || !data.clusters || !data.temporal) return
 
     // Clear previous chart
     d3.select(svgRef.current).selectAll('*').remove()
 
-    const margin = { top: 40, right: 250, bottom: 80, left: 80 }
-    const width = 900 - margin.left - margin.right
-    const height = 500 - margin.top - margin.bottom
+    // Responsive margins and size
+    const baseRight = 250
+    const margin = { top: 40, right: (containerWidth > 720 ? baseRight : 180), bottom: 80, left: 80 }
+    const width = Math.max(300, containerWidth - margin.left - margin.right)
+    const height = Math.max(360, Math.min(540, Math.round(width * 0.55)))
 
     const svg = d3.select(svgRef.current)
       .attr('width', width + margin.left + margin.right)
@@ -530,7 +556,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .style('fill', '#6b7280')
       .text('Now')
 
-  }, [data, countryName, pastSeries, selectedClusterId])
+  }, [data, countryName, pastSeries, selectedClusterId, containerWidth])
 
   if (!data.clusters || !data.temporal || Object.keys(data.clusters).length === 0) {
     return (
@@ -541,8 +567,8 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
   }
 
   return (
-    <div className="w-full overflow-x-auto">
-      <svg ref={svgRef} className="mx-auto"></svg>
+    <div ref={containerRef} className="w-full">
+      <svg ref={svgRef} className="block w-full"></svg>
     </div>
   )
 }

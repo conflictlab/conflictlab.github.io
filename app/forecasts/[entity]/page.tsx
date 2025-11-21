@@ -153,7 +153,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left: Country Grid Map (slightly smaller) */}
-            <div className="rounded-lg p-0 bg-gray-50 overflow-hidden -ml-4 sm:-ml-6 lg:-ml-8 xl:-ml-12">
+            <div className="rounded-lg p-0 bg-gray-50 overflow-hidden -ml-8 sm:-ml-12 lg:-ml-20 xl:-ml-28 2xl:-ml-40">
               <h2 className="text-lg font-light text-gray-900 px-4 pt-3 pb-2">Predicted fatalities, {entity.name}</h2>
               <div className="h-[420px]">
                 <PrioGridMap period={snapshot.period} countryName={entity.name} hideViewToggle={true} />
