@@ -22,7 +22,7 @@ export default async function Methodology() {
             Methodology
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
-            <span className="word-emphasis">Machine learning models</span> that forecast geopolitical conflict and civil unrest.
+            Machine learning models that forecast geopolitical conflict, civil unrest and migration.
             Built for precision, transparency, and integration with existing systems.
           </p>
           <Breadcrumbs />
@@ -30,16 +30,12 @@ export default async function Methodology() {
       </section>
 
       {/* Methodology Overview Flowchart */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+      <section className="pt-8 pb-16 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">
-              How Our <span className="word-emphasis">Forecasting System</span> Works
+          <div className="text-center mb-4">
+            <h2 className="text-3xl font-light text-gray-900">
+              How Our Forecasting System Works
             </h2>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
-              From historical data to actionable predictions—our end-to-end methodology combines machine learning,
-              temporal pattern recognition, and rigorous validation.
-            </p>
           </div>
           <MethodologyFlowchart />
         </div>
@@ -50,7 +46,7 @@ export default async function Methodology() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">
-              <span className="word-emphasis">Conflict Diffusion</span> Modeling
+              Conflict Diffusion Modeling
             </h2>
             <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
               Our machine learning models predict how conflict spreads across space and time using 
@@ -483,7 +479,7 @@ export default async function Methodology() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-6">
-              Live <span className="word-highlight" data-text="Global Risk Intelligence"><span className="typing-text">Global Risk Intelligence</span></span>
+              Live Global Risk Intelligence
             </h2>
             <p className="text-lg text-gray-600 font-light">
               Real-time conflict forecasts powered by our machine learning models
