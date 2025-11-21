@@ -14,12 +14,10 @@ const TimeSeriesChart = dynamic(() => import('@/components/TimeSeriesChart'), { 
 const ScenariosChart = dynamic(() => import('@/components/ScenariosChart'), { ssr: false })
 const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
 import LazyVisible from '@/components/LazyVisible'
-import { getContextForEntity } from '@/lib/context'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import React from 'react'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'PaCE',
@@ -74,7 +72,6 @@ export default async function EntityForecastPage({ params }: { params: { entity:
   }
 
   const { entity, months, historicalSeries, narrative, comparativeStats, computedDeltaMoM, scenarios, snapshot } = data as any
-  const extContext = getContextForEntity(entity.name)
 
   function formatMonthLabel(period: string) {
     const [y, m] = period.split('-').map(Number)
@@ -168,30 +165,6 @@ export default async function EntityForecastPage({ params }: { params: { entity:
                 <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed text-justify">
                   {renderNarrative(narrative)}
                 </div>
-              {extContext && (
-                <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed mt-3 text-justify">
-                  {extContext.updates && extContext.updates.length > 0 && (
-                    <div className="mb-3">
-                      <div className="text-[13px] text-gray-500 mb-1">Latest updates</div>
-                      <ul className="list-disc pl-5 space-y-1">
-                        {extContext.updates.slice(0, 4).map((u, i) => (
-                          <li key={i}>
-                            <a href={u.url} target="_blank" rel="noopener noreferrer" className="text-link">{u.title}</a>
-                            {u.source ? <span className="text-gray-500"> — {u.source}</span> : null}
-                            {u.excerpt ? <div className="text-[12px] text-gray-600">{u.excerpt}</div> : null}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {extContext.summary && (
-                    <>
-                      <div className="text-[13px] text-gray-500 mb-1">Context (Wikipedia)</div>
-                      <p>{extContext.summary} {extContext.url && (<a href={extContext.url} target="_blank" rel="noopener noreferrer" className="text-link">Read more</a>)}.</p>
-                    </>
-                  )}
-                </div>
-              )}
               </div>
             </div>
           </div>

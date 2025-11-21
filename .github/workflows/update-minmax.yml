@@ -17,16 +17,32 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Install deps
         run: npm ci
 
-      - name: Build minmax and denormalized scenarios
+      - name: Download scenarios pickle (sce_dictionary.pkl)
         run: |
-          npm run data:update
+          set -e
+          REPO="${{ vars.SCE_REPO }}"; REPO="${REPO:-ThomasSchinca/Pace-map-risk}"
+          BRANCH="${{ vars.SCE_BRANCH }}"; BRANCH="${BRANCH:-main}"
+          PATH_IN_REPO="${{ vars.SCE_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-sce_dictionary.pkl}"
+          URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
+          echo "Downloading $URL"
+          curl -fsSL "$URL" -o sce_dictionary.pkl
+
+      - name: Convert scenarios pickle to JSON
+        run: npm run scenarios:convert -- --src sce_dictionary.pkl --out public/data/scenarios.json
+
+      - name: Build minmax and denormalized scenarios
+        run: npm run data:update
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore(data): update hist minmax and denormalized scenarios'
-          file_pattern: public/data/minmax.json public/data/scenarios.denorm.json public/data/hist.csv
-
+          file_pattern: public/data/minmax.json public/data/scenarios.json public/data/scenarios.denorm.json public/data/hist.csv

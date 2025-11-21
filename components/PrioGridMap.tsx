@@ -169,7 +169,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             let pts = (json?.points || []) as Array<{ lat: number; lon: number; v: number }>
             if (pts && pts.length && countryMulti) {
               // Filter to country polygons
-              pts = pts.filter(p => pointInMultiPoly(p.lon, p.lat, countryMulti))
+              pts = pts.filter(p => pointInPoly(p.lon, p.lat, countryMulti))
             }
             if (pts && pts.length) {
               if (!cancelled) { setPoints(pts); setPointsFromStatic(true); setPointsFromApi(false) }
@@ -185,7 +185,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             const json = await res.json()
             let pts = json?.points as Array<{ lat: number; lon: number; m?: number[]; v?: number }>
             if (pts && pts.length && countryMulti) {
-              pts = pts.filter(p => pointInMultiPoly(p.lon, p.lat, countryMulti))
+              pts = pts.filter(p => pointInPoly(p.lon, p.lat, countryMulti))
             }
             if (pts && pts.length) {
               if (!cancelled) { setPoints(pts); setPointsFromApi(true); setPointsFromStatic(false) }

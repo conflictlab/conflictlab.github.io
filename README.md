@@ -75,6 +75,7 @@ npm run grid:build
 
 # Build monthly point JSONs from the polygon GeoJSON (used by the map for speed)
 node scripts/geojson-to-month-points.js --period 2025-10
+```
 
 Scenario utilities (local testing)
 
@@ -86,14 +87,15 @@ node scripts/convert-scenarios-pkl.js --src /path/to/sce_dictionary.pkl --out pu
 Then run the site and click a country on the forecasts page to see the scenario plot.
 
 CI monthly refresh
-- The workflow `.github/workflows/sync-forecasts.yml` downloads `sce_dictionary.pkl` from `ThomasSchinca/Pace-map-risk@main` (override via repo variables `SCE_REPO`, `SCE_PATH`, `SCE_BRANCH`).
-- It converts it to `public/data/scenarios.json` and commits it, so the site stays up to date.
-```
+- The workflow `.github/workflows/update-minmax.yml` downloads `sce_dictionary.pkl` (defaults to `ThomasSchinca/Pace-map-risk@main`) and converts it to `public/data/scenarios.json` each month, then rebuilds `public/data/minmax.json` and `public/data/scenarios.denorm.json`.
+- Configure via repository variables: `SCE_REPO` (owner/repo), `SCE_BRANCH` (branch), `SCE_PATH` (path to pickle). Defaults are `ThomasSchinca/Pace-map-risk`, `main`, and `sce_dictionary.pkl`.
 
 CI automation (GitHub Actions)
 - `.github/workflows/sync-forecasts.yml` runs on `main` pushes and monthly schedule:
-  - Syncs forecast CSVs, rebuilds centroids, builds GeoJSON, builds monthly points
-  - Commits generated files under `content/forecasts`, `public/data/csv`, and `public/data/grid`
+  - Syncs forecast CSVs, rebuilds centroids, builds GeoJSON, builds monthly points, exports static API
+  - Commits generated files under `content/forecasts`, `public/data/csv`, `public/data/grid`, and `public/api`
+- `.github/workflows/update-minmax.yml` runs monthly:
+  - Downloads `sce_dictionary.pkl`, converts to `public/data/scenarios.json`, computes `public/data/minmax.json`, denormalizes to `public/data/scenarios.denorm.json`
 
 Forecast CSV sync (from GitHub)
 
