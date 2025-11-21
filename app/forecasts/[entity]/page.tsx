@@ -110,9 +110,6 @@ export default async function EntityForecastPage({ params }: { params: { entity:
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             Predicted fatalities from state‑based armed conflict — forecast and analysis
           </p>
-          <p className="text-xs text-gray-500 mt-1">
-            <Link href="/acknowledgements" className="text-link">Acknowledgements</Link>
-          </p>
         </div>
       </section>
 
@@ -281,6 +278,14 @@ export default async function EntityForecastPage({ params }: { params: { entity:
           </div>
         </section>
       )}
+      {/* Page-level acknowledgement (subtle, bottom of page) */}
+      <section className="py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs text-gray-500">
+            <Link href="/acknowledgements" className="text-link">Acknowledgements</Link>
+          </p>
+        </div>
+      </section>
     </div>
   )
 }
