@@ -441,10 +441,14 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .y1(d => yScale(d.value))
 
     if (pastVals.length) {
+      const lastPast = pastVals[pastVals.length - 1]
+      const areaPastVals = (lastPast && (+lastPast.date !== +firstFuture))
+        ? [...pastVals, { date: firstFuture, value: lastPast.value }]
+        : pastVals
       svg.append('path')
-        .datum(pastVals)
+        .datum(areaPastVals)
         .attr('d', areaPast)
-        .attr('fill', 'rgba(55,65,81,0.18)') // gray-700 with alpha
+        .attr('fill', 'rgba(55,65,81,0.12)')
         .attr('stroke', 'none')
     }
 
@@ -453,8 +457,8 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       const isSelected = cluster.clusterId === activeSelected
       const color = '#B91C1C' // pace-red for all future lines
       const op = Math.max(0.25, Math.min(1, cluster.weight))
-      // Shaded area under the time series (stronger for highest-probability)
-      const fillAlpha = isHighest ? 0.28 : Math.max(0.08, Math.min(0.16, op * 0.16))
+      // Shaded area under the time series (more subtle)
+      const fillAlpha = isHighest ? 0.16 : Math.max(0.04, Math.min(0.1, op * 0.1))
       svg.append('path')
         .datum(cluster.values)
         .attr('d', area)
@@ -540,14 +544,14 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       // sample line
       gItem.append('line')
         .attr('x1', 0).attr('y1', 0)
-        .attr('x2', 20).attr('y2', 0)
+        .attr('x2', 32).attr('y2', 0)
         .attr('stroke', color)
-        .attr('stroke-width', isMax ? 4 : 3)
+        .attr('stroke-width', isMax ? 5 : 4)
         .attr('stroke-opacity', op)
         .attr('stroke-dasharray', '5,4')
 
       const t = gItem.append('text')
-        .attr('x', 26)
+        .attr('x', 38)
         .attr('y', 3)
         .style('font-size', '14px')
         .style('fill', isSel ? '#111827' : '#4b5563')
@@ -555,7 +559,7 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
         .text(`Scenario ${cl.clusterId}: ${(cl.weight * 100).toFixed(0)}%`)
 
       const bb = (t.node() as SVGTextElement).getBBox()
-      const widthItem = Math.max(140, bb.width + 30)
+      const widthItem = Math.max(160, 38 + bb.width + 16)
       gItem.append('rect')
         .attr('x', 0)
         .attr('y', -12)
