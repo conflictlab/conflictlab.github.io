@@ -434,18 +434,32 @@ export default function ScenariosChart({ data, countryName }: ScenariosChartProp
       .y0(() => yScale(0))
       .y1(d => yScale(d.value))
 
+    // Shaded area under the past (observed) series
+    const areaPast = d3.area<{ date: Date; value: number }>()
+      .x(d => xScale(d.date))
+      .y0(() => yScale(0))
+      .y1(d => yScale(d.value))
+
+    if (pastVals.length) {
+      svg.append('path')
+        .datum(pastVals)
+        .attr('d', areaPast)
+        .attr('fill', 'rgba(55,65,81,0.18)') // gray-700 with alpha
+        .attr('stroke', 'none')
+    }
+
     clusterLines.forEach((cluster, i) => {
       const isHighest = cluster.clusterId === maxWeightClusterId
       const isSelected = cluster.clusterId === activeSelected
       const color = '#B91C1C' // pace-red for all future lines
       const op = Math.max(0.25, Math.min(1, cluster.weight))
-      // Shaded area under the time series (subtle)
+      // Shaded area under the time series (stronger for highest-probability)
+      const fillAlpha = isHighest ? 0.28 : Math.max(0.08, Math.min(0.16, op * 0.16))
       svg.append('path')
         .datum(cluster.values)
         .attr('d', area)
-        .attr('fill', '#ef444408') // red-500 with low alpha
+        .attr('fill', `rgba(220,38,38,${fillAlpha})`)
         .attr('stroke', 'none')
-        .attr('fill-opacity', Math.min(0.25, op))
 
       const path = svg.append('path')
         .datum(cluster.values)
