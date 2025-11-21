@@ -603,13 +603,15 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight }: Sc
       g.attr('transform', `translate(${x}, ${legendYOffset})`)
       x += itemWidths[idx] + gapX
     })
-    // "Now" label on the separator
+    // "Now" label on the separator - aligned with Past/Future labels
     svg.append('text')
       .attr('x', sepX)
-      .attr('y', 14)
+      .attr('y', -14)
       .attr('text-anchor', 'middle')
-      .style('font-size', '12px')
-      .style('fill', '#6b7280')
+      .style('font-size', '18px')
+      .style('font-weight', '700')
+      .style('fill', '#374151')
+      .attr('dy', '0.35em')
       .text('Now')
 
   }, [data, countryName, pastSeries, selectedClusterId, containerWidth])

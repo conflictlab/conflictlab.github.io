@@ -435,7 +435,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
         )}
         {/* Months ahead slider overlay (bottom-left) */}
         {!error && !loading && (
-          <div className="absolute bottom-20 left-4 z-[1000]">
+          <div className="absolute bottom-4 left-4 z-[1000]">
             <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm flex items-center gap-3 text-sm text-gray-700">
               <span className="whitespace-nowrap font-medium text-gray-900">Months ahead:</span>
               <div className="w-48">
@@ -589,41 +589,34 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             )}
           </MapContainer>
         )}
-        {/* Map attribution (bottom-right) */}
-        {!error && (
-          <div className="absolute bottom-2 right-2 z-[900] text-[10px] text-gray-600">
-            Map data © OpenStreetMap contributors, © CARTO
-          </div>
-        )}
-        {/* Compact legend overlay (bottom-right) */}
+                {/* Compact legend overlay (bottom-right) */}
         {!error && !loading && (
-          <div className="absolute bottom-12 right-2 z-[1000]">
-            <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-2 shadow-sm text-[12px] text-gray-800">
-              <div className="mb-1 text-[11px] text-gray-700">min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#f5f5f5' }} />
-                  <span>{'0'}</span>
+          <div className="absolute bottom-4 right-2 z-[1000]">
+            <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm text-[11px] text-gray-800">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#f5f5f5' }} />
+                  <span>0</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
-                  <span>{'< 5'}</span>
+                <div className="flex items-center gap-1">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#fee8c8' }} />
+                  <span>&lt;5</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
-                  <span>{'5–10'}</span>
+                <div className="flex items-center gap-1">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#fdbb84' }} />
+                  <span>5–10</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
-                  <span>{'10–50'}</span>
+                <div className="flex items-center gap-1">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#ef6548' }} />
+                  <span>10–50</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
-                  <span>{'50–100'}</span>
+                <div className="flex items-center gap-1">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#d7301f' }} />
+                  <span>50–100</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="inline-block w-7 h-5 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
-                  <span>{'> 100'}</span>
+                <div className="flex items-center gap-1">
+                  <span className="inline-block w-4 h-3 rounded border border-gray-300" style={{ backgroundColor: '#b30000' }} />
+                  <span>&gt;100</span>
                 </div>
               </div>
             </div>
@@ -638,6 +631,10 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
           </div>
         )}
       </div>
+      {/* Map attribution below map */}
+      {!error && (
+        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Map data © OpenStreetMap contributors, © CARTO</p>
+      )}
     </div>
   )
 }

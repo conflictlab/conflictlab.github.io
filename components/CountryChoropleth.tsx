@@ -628,13 +628,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             </div>
           </div>
         )}
-        {/* Map attribution (bottom-right) */}
-        {!error && (
-          <div className={`absolute bottom-1 right-2 z-[900] text-[10px] ${dimZoomControls ? 'text-gray-500 opacity-40' : 'text-gray-600'}`}>
-            Map data © OpenStreetMap contributors, © CARTO
-          </div>
-        )}
-        {!hideZoomHint && showZoomHint && (
+                {!hideZoomHint && showZoomHint && (
           <div className="absolute top-4 right-4 z-[1000]">
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
@@ -673,6 +667,10 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
 
       </div>
+      {/* Map attribution below map */}
+      {!error && (
+        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Map data © OpenStreetMap contributors, © CARTO</p>
+      )}
       {/* Controls moved below map */}
       {!hideLegend && (
         <div className="px-4 py-2">

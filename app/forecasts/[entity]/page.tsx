@@ -151,16 +151,16 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       {/* Unified Key Metrics + Situation Overview */}
       <section className="py-8 -mt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Left: Country Grid Map (slightly smaller) */}
-            <div className="rounded-lg p-0 bg-gray-50 overflow-hidden -ml-8 sm:-ml-12 lg:-ml-20 xl:-ml-28 2xl:-ml-40 lg:col-span-5">
-              <h2 className="text-lg font-light text-gray-900 px-4 pt-3 pb-2">Predicted fatalities, {entity.name}</h2>
-              <div className="h-[420px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Left: Country Grid Map */}
+            <div className="rounded-lg p-0 bg-gray-50 overflow-hidden">
+              <h2 className="text-lg font-light text-gray-900 px-4 pt-3 pb-2">Predicted fatalities per grid cell (0.5° × 0.5°), {entity.name}</h2>
+              <div className="h-[540px]">
                 <PrioGridMap period={snapshot.period} countryName={entity.name} hideViewToggle={true} />
               </div>
             </div>
             {/* Right: Scenarios panel */}
-            <div className="bg-gray-50 p-0 rounded-lg lg:col-span-7 h-[540px]">
+            <div className="bg-gray-50 p-0 rounded-lg h-[540px]">
               <LazyVisible minHeight="540px">
                 {scenarios ? (
                   <ScenariosChart data={scenarios} countryName={entity.name} maxTotalHeight={540} />
