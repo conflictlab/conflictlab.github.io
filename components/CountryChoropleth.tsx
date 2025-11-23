@@ -94,7 +94,22 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   const [showSearch, setShowSearch] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [hotspotsReady, setHotspotsReady] = useState(!lazyHotspots)
+  const [isMobile, setIsMobile] = useState(false)
   const [mapControlsEnabled, setMapControlsEnabled] = useState(false)
+
+  // Detect if device is mobile/tablet
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || (window.innerWidth <= 768)
+      setIsMobile(mobile)
+      // On desktop, enable controls by default
+      if (!mobile) setMapControlsEnabled(true)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -325,8 +340,8 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         role="region"
         aria-label="World choropleth of predicted fatalities"
       >
-        {/* Enable map controls button - show on all maps when controls are disabled */}
-        {!mapControlsEnabled && (
+        {/* Enable/Disable map controls button - only show on mobile */}
+        {isMobile && !mapControlsEnabled && (
           <div className="absolute top-4 right-4 z-[1100] pointer-events-auto">
             <button
               onClick={() => setMapControlsEnabled(true)}
@@ -337,8 +352,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             </button>
           </div>
         )}
-        {/* Disable map controls button - show when controls are enabled */}
-        {mapControlsEnabled && (
+        {isMobile && mapControlsEnabled && (
           <div className="absolute top-4 right-4 z-[1100] pointer-events-auto">
             <button
               onClick={() => setMapControlsEnabled(false)}
@@ -351,7 +365,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
         {/* Search overlay */}
         {!hideSearch && mapControlsEnabled && (
-          <div className="absolute top-16 right-4 z-[1100]">
+          <div className={`absolute right-4 z-[1100] ${isMobile ? 'top-16' : 'top-4'}`}>
             <div className="relative">
               <input
                 ref={inputRef}
@@ -664,7 +678,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           </div>
         )}
                 {!hideZoomHint && showZoomHint && mapControlsEnabled && (
-          <div className="absolute top-16 right-4 z-[1000] pointer-events-auto">
+          <div className={`absolute right-4 z-[1000] pointer-events-auto ${isMobile ? 'top-16' : 'top-4'}`}>
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
