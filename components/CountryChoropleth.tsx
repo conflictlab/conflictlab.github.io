@@ -94,6 +94,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
   const [showSearch, setShowSearch] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [hotspotsReady, setHotspotsReady] = useState(!lazyHotspots)
+  const [mapControlsEnabled, setMapControlsEnabled] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -324,8 +325,19 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         role="region"
         aria-label="World choropleth of predicted fatalities"
       >
+        {/* Enable map controls button (mobile) - only show if map should be interactive */}
+        {!mapControlsEnabled && !hideControls && (
+          <div className="absolute top-4 right-4 z-[1100] pointer-events-auto">
+            <button
+              onClick={() => setMapControlsEnabled(true)}
+              className="px-4 py-2 bg-white/95 backdrop-blur border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pace-red"
+            >
+              Enable map controls
+            </button>
+          </div>
+        )}
         {/* Search overlay */}
-        {!hideSearch && (
+        {!hideSearch && mapControlsEnabled && (
           <div className="absolute top-4 right-4 z-[1100]">
             <div className="relative">
               <input
@@ -370,7 +382,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
         {/* View toggle overlay (center-bottom, larger) */}
         {!hideControls && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000]">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform z-[1000] pointer-events-auto">
             <div className="inline-flex rounded-xl border-2 border-pace-charcoal overflow-hidden bg-white/95 backdrop-blur shadow-lg">
               <Link
                 href="/forecasts"
@@ -400,14 +412,23 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             worldCopyJump={true}
             minZoom={1}
             wheelPxPerZoomLevel={40}
-            doubleClickZoom={true}
+            doubleClickZoom={mapControlsEnabled}
+            dragging={mapControlsEnabled}
+            touchZoom={mapControlsEnabled}
+            boxZoom={false}
+            keyboard={false}
             zoomAnimation={false}
             fadeAnimation={false}
             maxBounds={[[-85, -180], [85, 180]] as any}
             maxBoundsViscosity={1.0}
             preferCanvas={true}
             attributionControl={false}
-            style={{ height: '100%', width: '100%' }}
+            style={{
+              height: '100%',
+              width: '100%',
+              pointerEvents: mapControlsEnabled ? 'auto' : 'none',
+              touchAction: mapControlsEnabled ? 'none' : 'pan-y'
+            }}
           >
             {/* Map reference setter */}
             {(() => {
@@ -458,6 +479,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               <GeoJSON
                 data={filtered || world}
                 style={(f: any) => ({ ...style(f), smoothFactor: 1.2 }) as any}
+                interactive={mapControlsEnabled}
                 onEachFeature={(feature, layer) => {
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
@@ -570,7 +592,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
         {/* Compact legend overlay (bottom-right) */}
         {!hideLegend && !error && (
-          <div className={`absolute bottom-6 right-2 z-[1000] ${dimZoomControls ? 'opacity-40' : ''}`}>
+          <div className={`absolute bottom-6 right-2 z-[1000] pointer-events-auto ${dimZoomControls ? 'opacity-40' : ''}`}>
             <div className={`rounded-md px-2.5 py-2 text-[12px] ${dimZoomControls ? 'bg-transparent border-transparent text-gray-500' : 'backdrop-blur-sm bg-white/80 border border-gray-200 shadow-sm text-gray-800'}`}>
               <div className={`mb-1 text-[11px] ${dimZoomControls ? 'text-gray-500' : 'text-gray-700'}`}>min {isFinite(vmin) ? Math.round(vmin) : '—'} → max {isFinite(vmax) ? Math.round(vmax) : '—'}</div>
               <div className="space-y-1.5">
@@ -628,8 +650,8 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             </div>
           </div>
         )}
-                {!hideZoomHint && showZoomHint && (
-          <div className="absolute top-4 right-4 z-[1000]">
+                {!hideZoomHint && showZoomHint && mapControlsEnabled && (
+          <div className="absolute top-4 right-4 z-[1000] pointer-events-auto">
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
@@ -638,7 +660,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
         {/* Months ahead slider overlay (bottom-left) */}
         {!error && !hideMonthSlider && (
-          <div className="absolute bottom-4 left-4 z-[1000]">
+          <div className="absolute bottom-4 left-4 z-[1000] pointer-events-auto">
             <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm flex items-center gap-3 text-sm text-gray-700">
               <span className="whitespace-nowrap font-medium text-gray-900">Months ahead:</span>
               <div className="w-48">
