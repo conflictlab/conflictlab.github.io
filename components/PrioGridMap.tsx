@@ -498,7 +498,6 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             preferCanvas={true}
             attributionControl={false}
             style={{ height: '100%', width: '100%', touchAction: 'pan-y' as any }}
-            tap={false as any}
           >
             {/* Fit view to computed bounds (country or data) */}
             {(() => {
