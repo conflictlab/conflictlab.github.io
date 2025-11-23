@@ -405,6 +405,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
 
   const loading = !error && !data && !points
   const [showZoomHint, setShowZoomHint] = useState(true)
+  const [mapInteractive, setMapInteractive] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setShowZoomHint(false), 7000)
@@ -434,6 +435,18 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
           </div>
         )}
         {/* Months ahead slider overlay (bottom-left) */}
+        {!error && !loading && (
+          <div className="absolute top-2 right-2 z-[1000]">
+            <button
+              type="button"
+              onClick={() => setMapInteractive(v => !v)}
+              className="px-2.5 py-1 rounded-md border border-gray-200 bg-white/80 backdrop-blur-sm text-[11px] text-gray-700 shadow-sm hover:bg-white"
+              aria-pressed={mapInteractive}
+            >
+              {mapInteractive ? 'Disable map controls' : 'Enable map controls'}
+            </button>
+          </div>
+        )}
         {!error && !loading && (
           <div className="absolute bottom-4 left-4 z-[1000]">
             <div className="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-md px-2.5 py-1.5 shadow-sm flex items-center gap-3 text-sm text-gray-700">
@@ -541,6 +554,22 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
                 return null
               }
               return <CtrlScrollZoom />
+            })()}
+            {(() => {
+              function InteractionToggle({ enabled }: { enabled: boolean }) {
+                const map = useMap()
+                useEffect(() => {
+                  const container = map.getContainer()
+                  try { container.style.touchAction = enabled ? 'auto' : 'pan-y' } catch {}
+                  if (enabled) {
+                    map.dragging.enable(); map.touchZoom.enable(); map.doubleClickZoom.enable(); map.boxZoom.enable(); map.keyboard.enable()
+                  } else {
+                    map.dragging.disable(); map.touchZoom.disable(); map.doubleClickZoom.disable(); map.boxZoom.disable(); map.keyboard.disable()
+                  }
+                }, [map, enabled])
+                return null
+              }
+              return <InteractionToggle enabled={mapInteractive} />
             })()}
             {/* Mobile gesture handling: require two fingers to pan/zoom, allow page scroll with one finger */}
             {/* Mobile: keep map non-interactive to allow page scroll */}
