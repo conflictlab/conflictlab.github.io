@@ -77,7 +77,6 @@ export default async function ForecastsPage() {
           <p className="text-xl text-gray-600 font-light leading-relaxed mb-4 max-w-3xl">
             Six‑month forecasts of conflict fatalities at the country and sub‑national level.
           </p>
-          <p className="text-xs text-gray-500"><Link href="/acknowledgements" className="text-link">Acknowledgements</Link></p>
           <div className="mt-4 flex flex-wrap gap-3">
             <Link href="/forecasts#dashboard" className="btn-secondary inline-flex items-center gap-1">Dashboard</Link>
             <Link href="/reports" className="btn-secondary inline-flex items-center gap-1">Reports</Link>
@@ -190,6 +189,15 @@ export default async function ForecastsPage() {
           <Collapsible title="table" initiallyCollapsed={false}>
             <RiskIndexTable rows={rows} />
           </Collapsible>
+        </div>
+      </section>
+
+      {/* Acknowledgements */}
+      <section className="py-8 bg-white border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm text-gray-600">
+            <Link href="/acknowledgements" className="text-link">View full acknowledgements</Link>
+          </p>
         </div>
       </section>
     </div>
