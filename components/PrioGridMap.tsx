@@ -486,6 +486,8 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             zoomSnap={0.5}
             zoomDelta={0.5}
             scrollWheelZoom={false}
+            dragging={false}
+            touchZoom={false}
             worldCopyJump={true}
             minZoom={1}
             wheelPxPerZoomLevel={40}
@@ -495,7 +497,8 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             maxBoundsViscosity={1.0}
             preferCanvas={true}
             attributionControl={false}
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: '100%', width: '100%', touchAction: 'pan-y' as any }}
+            tap={false as any}
           >
             {/* Fit view to computed bounds (country or data) */}
             {(() => {
