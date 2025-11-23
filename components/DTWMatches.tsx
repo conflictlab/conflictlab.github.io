@@ -482,26 +482,26 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
               <div className="text-xs text-gray-500 mb-2">{it.range || ''}</div>
               <svg role="img" aria-label={`Match ${idx + 1}`} viewBox={`0 0 ${tileW} ${mH}`} width="100%" height={mH}>
                 {/* axes (subtle) */}
-                <line x1="12" y1="16" x2="12" y2={tileH - 18} stroke="#e5e7eb" strokeWidth="1" />
+                <line x1="12" y1="16" x2="12" y2={mH - 18} stroke="#e5e7eb" strokeWidth="1" />
                 <line x1="12" y1={mH - 18} x2={tileW - 12} y2={mH - 18} stroke="#e5e7eb" strokeWidth="1" />
                 {/* 'Now' divider */}
                 <line x1={xNow} y1={16} x2={xNow} y2={mH - 18} stroke="#9ca3af" strokeWidth={2.25} strokeDasharray="4,4" opacity={0.85} />
                 {/* matched window */}
-                <path d={matchPath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#6b7280" strokeWidth="2.5" />
+                <path d={matchPath} fill="none" stroke="#6b7280" strokeWidth="2.5" />
                 {/* matched markers */}
                 {it.match.map((v, i) => (
                   <circle key={`m-${i}`} cx={sx(i)} cy={sy(v)} r={3.5} fill="#6b7280" stroke="#ffffff" strokeWidth={1} />
                 ))}
                 {/* source window (min-max to matched past domain) */}
-                <path d={srcPath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
+                <path d={srcPath} fill="none" stroke="#111827" strokeWidth="2.25" strokeDasharray="4,3" />
                 {/* source markers */}
                 {srcScaled.map((v, i) => (
                   <circle key={`s-${i}`} cx={sx(i)} cy={sy(v)} r={3} fill="#111827" stroke="#ffffff" strokeWidth={1} />
                 ))}
                 {/* connector between match and future (visual link only) */}
-                {joinPath && <path d={joinPath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#dc2626" strokeWidth={2.25} />}
+                {joinPath && <path d={joinPath} fill="none" stroke="#dc2626" strokeWidth={2.25} />}
                 {/* matched future (next 6 months) */}
-                {futurePath && <path d={futurePath.replaceAll(`${tileH}`, `${mH}`)} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
+                {futurePath && <path d={futurePath} fill="none" stroke="#dc2626" strokeWidth="2.25" />}
                 {/* future markers */}
                 {(it.future || []).map((v, i) => (
                   <circle key={`f-${i}`} cx={sx(n + i)} cy={sy(v as number)} r={3.5} fill="#dc2626" stroke="#ffffff" strokeWidth={1} />
