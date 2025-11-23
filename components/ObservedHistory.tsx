@@ -68,7 +68,7 @@ export default function ObservedHistory({ countryName, height = 220 }: { country
             if (r.ok) { resp = r; break }
           } catch {}
         }
-        if (!resp.ok) return
+        if (!resp || !resp.ok) return
         const text = await resp.text()
         const { header, rows } = parseCSV(text)
         const sought = ALIASES[countryName] || countryName
