@@ -491,7 +491,9 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             worldCopyJump={true}
             minZoom={1}
             wheelPxPerZoomLevel={40}
-            doubleClickZoom={true}
+            doubleClickZoom={false}
+            boxZoom={false}
+            keyboard={false}
             zoomAnimation={true}
             maxBounds={[[-85, -180], [85, 180]] as any}
             maxBoundsViscosity={1.0}
@@ -541,44 +543,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
               return <CtrlScrollZoom />
             })()}
             {/* Mobile gesture handling: require two fingers to pan/zoom, allow page scroll with one finger */}
-            {(() => {
-              function TwoFingerTouchPan() {
-                const map = useMap()
-                useEffect(() => {
-                  const container = map.getContainer()
-                  try {
-                    // Allow vertical page scroll through the map by default
-                    container.style.touchAction = 'pan-y'
-                  } catch {}
-                  // Disable map drag/zoom by default; enable only on two-finger touches
-                  map.dragging.disable()
-                  map.touchZoom.disable()
-                  const onTouchStart = (e: TouchEvent) => {
-                    if (e.touches && e.touches.length > 1) {
-                      map.dragging.enable()
-                      map.touchZoom.enable()
-                    } else {
-                      map.dragging.disable()
-                      map.touchZoom.disable()
-                    }
-                  }
-                  const onTouchEnd = () => {
-                    map.dragging.disable()
-                    map.touchZoom.disable()
-                  }
-                  container.addEventListener('touchstart', onTouchStart, { passive: true })
-                  container.addEventListener('touchend', onTouchEnd, { passive: true })
-                  container.addEventListener('touchcancel', onTouchEnd, { passive: true })
-                  return () => {
-                    container.removeEventListener('touchstart', onTouchStart as any)
-                    container.removeEventListener('touchend', onTouchEnd as any)
-                    container.removeEventListener('touchcancel', onTouchEnd as any)
-                  }
-                }, [map])
-                return null
-              }
-              return <TwoFingerTouchPan />
-            })()}
+            {/* Mobile: keep map non-interactive to allow page scroll */}
             <TileLayer
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
@@ -604,6 +569,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
                   const v = Number(feature?.properties?.[`m${month}`] ?? 0)
                   layer.bindTooltip(`m${month}: ${Number(v.toFixed(1))}` , { sticky: true })
                 }}
+                interactive={false}
               />
             )}
             {/* Render CSV/static points as square polygons aligned to PRIO‑GRID cells */}
@@ -622,10 +588,7 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
                   })
                 } as any}
                 style={style as any}
-                onEachFeature={(feature, layer) => {
-                  const v = Number(feature?.properties?.[`m${month}`] ?? 0)
-                  layer.bindTooltip(`m${month}: ${Number(v.toFixed(1))}` , { sticky: true })
-                }}
+                interactive={false}
               />
             )}
           </MapContainer>
