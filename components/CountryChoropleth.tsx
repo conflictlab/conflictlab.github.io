@@ -325,20 +325,33 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         role="region"
         aria-label="World choropleth of predicted fatalities"
       >
-        {/* Enable map controls button (mobile) - only show if map should be interactive */}
-        {!mapControlsEnabled && !hideControls && (
+        {/* Enable map controls button - show on all maps when controls are disabled */}
+        {!mapControlsEnabled && (
           <div className="absolute top-4 right-4 z-[1100] pointer-events-auto">
             <button
               onClick={() => setMapControlsEnabled(true)}
               className="px-4 py-2 bg-white/95 backdrop-blur border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pace-red"
+              aria-label="Enable map controls"
             >
               Enable map controls
             </button>
           </div>
         )}
+        {/* Disable map controls button - show when controls are enabled */}
+        {mapControlsEnabled && (
+          <div className="absolute top-4 right-4 z-[1100] pointer-events-auto">
+            <button
+              onClick={() => setMapControlsEnabled(false)}
+              className="px-4 py-2 bg-pace-red/95 backdrop-blur border border-pace-red-dark rounded-md shadow-sm text-sm font-medium text-white hover:bg-pace-red-dark focus:outline-none focus:ring-2 focus:ring-pace-red"
+              aria-label="Disable map controls"
+            >
+              Disable map controls
+            </button>
+          </div>
+        )}
         {/* Search overlay */}
         {!hideSearch && mapControlsEnabled && (
-          <div className="absolute top-4 right-4 z-[1100]">
+          <div className="absolute top-16 right-4 z-[1100]">
             <div className="relative">
               <input
                 ref={inputRef}
@@ -651,7 +664,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           </div>
         )}
                 {!hideZoomHint && showZoomHint && mapControlsEnabled && (
-          <div className="absolute top-4 right-4 z-[1000] pointer-events-auto">
+          <div className="absolute top-16 right-4 z-[1000] pointer-events-auto">
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
