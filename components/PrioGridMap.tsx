@@ -538,6 +538,45 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
               }
               return <CtrlScrollZoom />
             })()}
+            {/* Mobile gesture handling: require two fingers to pan/zoom, allow page scroll with one finger */}
+            {(() => {
+              function TwoFingerTouchPan() {
+                const map = useMap()
+                useEffect(() => {
+                  const container = map.getContainer()
+                  try {
+                    // Allow vertical page scroll through the map by default
+                    container.style.touchAction = 'pan-y'
+                  } catch {}
+                  // Disable map drag/zoom by default; enable only on two-finger touches
+                  map.dragging.disable()
+                  map.touchZoom.disable()
+                  const onTouchStart = (e: TouchEvent) => {
+                    if (e.touches && e.touches.length > 1) {
+                      map.dragging.enable()
+                      map.touchZoom.enable()
+                    } else {
+                      map.dragging.disable()
+                      map.touchZoom.disable()
+                    }
+                  }
+                  const onTouchEnd = () => {
+                    map.dragging.disable()
+                    map.touchZoom.disable()
+                  }
+                  container.addEventListener('touchstart', onTouchStart, { passive: true })
+                  container.addEventListener('touchend', onTouchEnd, { passive: true })
+                  container.addEventListener('touchcancel', onTouchEnd, { passive: true })
+                  return () => {
+                    container.removeEventListener('touchstart', onTouchStart as any)
+                    container.removeEventListener('touchend', onTouchEnd as any)
+                    container.removeEventListener('touchcancel', onTouchEnd as any)
+                  }
+                }, [map])
+                return null
+              }
+              return <TwoFingerTouchPan />
+            })()}
             <TileLayer
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
