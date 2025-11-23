@@ -226,14 +226,19 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
         const dates = rows.map(r => r[0])
         if (!cancelled) setHistDates(dates)
 
-        // Identify columns of interest
-        const wantNames = new Set<string>([ALIASES[countryName] || countryName])
-        top.forEach(m => { if (m.series?.name) wantNames.add(ALIASES[m.series.name] || m.series.name) })
+        // Identify columns of interest (use array to avoid downlevel iteration issues)
+        const wantNames: string[] = [ALIASES[countryName] || countryName]
+        top.forEach(m => {
+          if (m.series?.name) {
+            const nm = ALIASES[m.series.name] || m.series.name
+            if (!wantNames.includes(nm)) wantNames.push(nm)
+          }
+        })
         const cols: Record<string, number[]> = {}
         for (let ci = 1; ci < header.length; ci++) {
           const name = header[ci]
           if (!name) continue
-          if (![...wantNames].some(nm => name === nm || normalizeName(name) === normalizeName(nm))) continue
+          if (!wantNames.some(nm => name === nm || normalizeName(name) === normalizeName(nm))) continue
           const arr: number[] = rows.map(r => {
             const v = Number(r[ci])
             return Number.isFinite(v) ? v : NaN
