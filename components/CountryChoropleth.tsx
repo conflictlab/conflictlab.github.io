@@ -12,6 +12,23 @@ import { RISK_THRESHOLDS, getRiskColor } from '@/lib/config'
 
 type CountryValue = { id?: string; name: string; iso3?: string; value?: number; months?: number[] }
 
+// Component to dynamically enable/disable map controls
+function MapControlsToggler({ enabled }: { enabled: boolean }) {
+  const map = useMap()
+  useEffect(() => {
+    if (enabled) {
+      map.dragging?.enable()
+      map.touchZoom?.enable()
+      map.doubleClickZoom?.enable()
+    } else {
+      map.dragging?.disable()
+      map.touchZoom?.disable()
+      map.doubleClickZoom?.disable()
+    }
+  }, [map, enabled])
+  return null
+}
+
 // Component to add pulsing hotspot markers using HTML/CSS
 function HotspotMarkers({ hotspots, onHotspotClick }: { hotspots: Array<{ name: string; lat: number; lon: number; value: number }>; onHotspotClick?: (name: string) => void }) {
   const map = useMap()
@@ -439,9 +456,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             worldCopyJump={true}
             minZoom={1}
             wheelPxPerZoomLevel={40}
-            doubleClickZoom={mapControlsEnabled}
-            dragging={mapControlsEnabled}
-            touchZoom={mapControlsEnabled}
+            doubleClickZoom={false}
+            dragging={false}
+            touchZoom={false}
             boxZoom={false}
             keyboard={false}
             zoomAnimation={false}
@@ -453,7 +470,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             style={{
               height: '100%',
               width: '100%',
-              pointerEvents: mapControlsEnabled ? 'auto' : 'none',
               touchAction: mapControlsEnabled ? 'none' : 'pan-y'
             }}
           >
@@ -468,6 +484,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               }
               return <MapRefSetter />
             })()}
+            <MapControlsToggler enabled={mapControlsEnabled} />
             {/* Require Cmd/Ctrl + scroll to zoom */}
             {(() => {
               function CtrlScrollZoom() {
@@ -506,7 +523,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               <GeoJSON
                 data={filtered || world}
                 style={(f: any) => ({ ...style(f), smoothFactor: 1.2 }) as any}
-                interactive={mapControlsEnabled}
                 onEachFeature={(feature, layer) => {
                   const name = feature?.properties?.name || feature?.properties?.NAME || ''
                   const val = Number(valueByName.get(normalizeName(name)) || 0)
