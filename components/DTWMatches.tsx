@@ -474,7 +474,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
           const sx = (i: number) => x0 + ((i) / Math.max(1, total - 1)) * w
           const sy = (v: number) => y1 - ((v - domMin) / denom) * h
           return (
-            <div key={idx} ref={el => (matchRefs.current[idx] = el)} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+            <div key={idx} ref={(el) => { matchRefs.current[idx] = el }} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <div className="text-sm font-medium text-gray-900">{it.name ? `${it.name}` : `Match ${idx + 1}`}</div>
                 <div className="text-xs text-gray-500">distance {Number(it.distance).toFixed(4)}</div>
