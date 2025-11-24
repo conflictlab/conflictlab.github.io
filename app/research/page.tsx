@@ -76,7 +76,6 @@ export default function ResearchPage() {
                     </Collapsible>
                     <div className="flex flex-wrap gap-2">
                       <FeaturedBadge href={p.url || '/publications'} label="Paper" />
-                      <FeaturedBadge href="/downloads" label="Dataset" />
                     </div>
                   </div>
                   <div className="w-full md:w-80">
