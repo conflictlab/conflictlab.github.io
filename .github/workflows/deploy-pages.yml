@@ -106,6 +106,7 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.base }}
           BASE_PATH: ${{ steps.base.outputs.base }}
+          NEXT_PUBLIC_SITE_URL: https://forecastlab.org
           SKIP_PREBUILD: '1'
         run: |
           set -e

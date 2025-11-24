@@ -1,33 +1,64 @@
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
 import { FileText } from 'lucide-react'
-import NewsletterSignup from '@/components/NewsletterSignup'
 import MailchimpEmbed from '@/components/MailchimpEmbed'
 import companyData from '@/content/company.json'
 
+import fs from 'fs'
+import path from 'path'
+
+type NewsletterItem = { title: string; file: string; sort: number; year: number }
+
+function parseNewsletter(fileName: string): NewsletterItem | null {
+  const base = fileName.replace(/[_-]+/g, ' ')
+  const lower = base.toLowerCase()
+  if (!lower.endsWith('.pdf')) return null
+  if (!lower.includes('newsletter')) return null
+
+  const monthMap: Record<string, number> = {
+    january: 0, jan: 0,
+    february: 1, feb: 1,
+    march: 2, mar: 2,
+    april: 3, apr: 3,
+    may: 4,
+    june: 5, jun: 5,
+    july: 6, jul: 6,
+    august: 7, aug: 7,
+    september: 8, sept: 8, sep: 8, septemeber: 8,
+    october: 9, oct: 9,
+    november: 10, nov: 10,
+    december: 11, dec: 11,
+  }
+
+  // find month and year in filename
+  const match = lower.match(/(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t|temeber|tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s*(\d{4})/)
+  if (!match) return null
+  const monthStr = match[1]
+  const year = parseInt(match[2], 10)
+  const monthIndex = monthMap[monthStr]
+  if (monthIndex === undefined || !Number.isFinite(year)) return null
+  const sort = new Date(Date.UTC(year, monthIndex, 1)).getTime()
+  const title = `${monthStr.charAt(0).toUpperCase()}${monthStr.slice(1)} ${year}`.replace('septemeber', 'September').replace('Sep ', 'Sep ').replace('Sept ', 'Sept ')
+  return { title, file: `/newslettersAndReports/${fileName}`, sort, year }
+}
+
+function getNewsletters(): NewsletterItem[] {
+  try {
+    const dir = path.join(process.cwd(), 'public', 'newslettersAndReports')
+    const files = fs.readdirSync(dir)
+    const items = files
+      .filter(f => f.toLowerCase().endsWith('.pdf'))
+      .map(parseNewsletter)
+      .filter((n): n is NewsletterItem => !!n)
+      .sort((a, b) => b.sort - a.sort)
+    return items
+  } catch {
+    return []
+  }
+}
+
 export default function ReportsPage() {
-  const newsletters = [
-    { title: 'November 2025', file: '/newslettersAndReports/November 2025 Newsletter.pdf' },
-    { title: 'October 2025', file: '/newslettersAndReports/October 2025 Newsletter.pdf' },
-    { title: 'August 2025', file: '/newslettersAndReports/August 2025 Newsletter.pdf' },
-    { title: 'July 2025', file: '/newslettersAndReports/July 2025 Newsletter.pdf' },
-    { title: 'June 2025', file: '/newslettersAndReports/June 2025 Newsletter.pdf' },
-    { title: 'May 2025', file: '/newslettersAndReports/May 25 newsletter.pdf' },
-    { title: 'April 2025', file: '/newslettersAndReports/April 2025 newsletter.pdf' },
-    { title: 'March 2025', file: '/newslettersAndReports/March 2025 newsletter.pdf' },
-    { title: 'February 2025', file: '/newslettersAndReports/February 2025 newsletter.pdf' },
-    { title: 'January 2025', file: '/newslettersAndReports/January 2025 newsletter.pdf' },
-    { title: 'December 2024', file: '/newslettersAndReports/December 2024 newsletter.pdf' },
-    { title: 'November 2024', file: '/newslettersAndReports/November 2024 newsletter.pdf' },
-    { title: 'October 2024', file: '/newslettersAndReports/October 2024 Newsletter.pdf' },
-    { title: 'September 2024', file: '/newslettersAndReports/Septemeber 2024 Newsletter.pdf' },
-    { title: 'August 2024', file: '/newslettersAndReports/August 2024 Newsletter.pdf' },
-    { title: 'July 2024', file: '/newslettersAndReports/July 2024 Newsletter.pdf' },
-    { title: 'June 2024', file: '/newslettersAndReports/June 2024 Newsletter.pdf' },
-    { title: 'May 2024', file: '/newslettersAndReports/May 2024 Newsletter.pdf' },
-    { title: 'April 2024', file: '/newslettersAndReports/April 2024 Newsletter.pdf' },
-    { title: 'March 2024', file: '/newslettersAndReports/March 2024 Newsletter (1).pdf' },
-  ]
+  const newsletters = getNewsletters()
 
   // Use generic symbol covers rather than generated previews
 
@@ -91,11 +122,8 @@ export default function ReportsPage() {
             <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
               Latest Newsletter
             </h2>
-            <Link
-              href="/newslettersAndReports/November 2025 Newsletter.pdf"
-              target="_blank"
-              className="group"
-            >
+            {newsletters.length > 0 ? (
+              <Link href={newsletters[0].file} target="_blank" className="group">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
                 {/* Generic symbol cover */}
                 <div className="bg-gray-100 flex items-center justify-center h-80 md:h-auto">
@@ -105,7 +133,7 @@ export default function ReportsPage() {
                   </div>
                 </div>
                 <div className="md:col-span-2 p-6">
-                  <p className="text-sm text-gray-600 mb-2">November 2025</p>
+                  <p className="text-sm text-gray-600 mb-2">{newsletters[0].title}</p>
                   <h3 className="text-2xl font-light text-gray-900 mb-4 group-hover:text-pace-red transition-colors">
                     Monthly Newsletter
                   </h3>
@@ -118,19 +146,32 @@ export default function ReportsPage() {
                   </div>
                 </div>
               </div>
-            </Link>
+              </Link>
+            ) : (
+              <div className="text-gray-600">No newsletters available yet.</div>
+            )}
           </div>
 
           {/* Email Signup Section */}
           <div className="mb-16">
             {(((companyData as any).contact?.newsletterMailchimpAction || '').trim()) ? (
-              <MailchimpEmbed
-                // Optional: track source if you mapped a merge tag like MMERGE9 in Mailchimp
-                sourceMergeTag="MMERGE9"
-                sourceValue="reports_page"
-              />
+              <MailchimpEmbed sourceMergeTag="MMERGE9" sourceValue="reports_page" />
+            ) : (((companyData as any).contact?.newsletterUrl || '').trim()) ? (
+              <a
+                href={(companyData as any).contact.newsletterUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary inline-flex items-center"
+              >
+                Subscribe to Newsletter
+              </a>
             ) : (
-              <NewsletterSignup />
+              <a
+                href={`mailto:${(companyData as any).contact?.email || 'info@forecastlab.org'}?subject=${encodeURIComponent('Subscribe to Newsletter')}`}
+                className="btn-secondary inline-flex items-center"
+              >
+                Subscribe via Email
+              </a>
             )}
           </div>
 
@@ -142,32 +183,29 @@ export default function ReportsPage() {
 
             {/* Group newsletters by year */}
             {(() => {
-              const newslettersByYear: { [year: string]: typeof newsletters } = {}
-              newsletters.slice(1).forEach(newsletter => {
-                const year = newsletter.title.split(' ')[1]
-                if (!newslettersByYear[year]) newslettersByYear[year] = []
-                newslettersByYear[year].push(newsletter)
+              const newslettersByYear: Record<string, NewsletterItem[]> = {}
+              newsletters.slice(1).forEach(n => {
+                const y = String(n.year)
+                if (!newslettersByYear[y]) newslettersByYear[y] = []
+                newslettersByYear[y].push(n)
               })
-
-              return Object.keys(newslettersByYear).sort((a, b) => Number(b) - Number(a)).map(year => (
-                <div key={year} className="mb-8">
-                  <h3 className="text-xl font-medium text-gray-900 mb-3">{year}</h3>
-                  <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
-                    {newslettersByYear[year].map((newsletter, index) => (
-                      <li key={index} className="p-0">
-                        <Link
-                          href={newsletter.file}
-                          target="_blank"
-                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                        >
-                          <FileText size={20} className="text-gray-400 flex-shrink-0" />
-                          <span className="text-gray-900 font-light">{newsletter.title}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
+              return Object.keys(newslettersByYear)
+                .sort((a, b) => Number(b) - Number(a))
+                .map(year => (
+                  <div key={year} className="mb-8">
+                    <h3 className="text-xl font-medium text-gray-900 mb-3">{year}</h3>
+                    <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
+                      {newslettersByYear[year].map((n, index) => (
+                        <li key={index} className="p-0">
+                          <Link href={n.file} target="_blank" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                            <FileText size={20} className="text-gray-400 flex-shrink-0" />
+                            <span className="text-gray-900 font-light">{n.title}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
             })()}
           </div>
 

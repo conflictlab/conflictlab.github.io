@@ -53,7 +53,7 @@ export default function About() {
               diplomatic documents, and satellite imagery.
             </p>
 
-            <h3 className="text-2xl font-light text-gray-900 mt-10 mb-3">Background to the Research</h3>
+            <h3 className="text-2xl font-light text-gray-900 mt-10 mb-3">Background</h3>
             <p>
               There have been more than 200 wars since the start of the 20th century, leading to 35 million battle deaths and
               countless more civilian casualties. Large-scale political violence still kills hundreds every day across the world.

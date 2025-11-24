@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://pace.com'
+  const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://forecastlab.org'
   const now = new Date()
 
   const routes = [
@@ -41,4 +41,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return items
 }
-

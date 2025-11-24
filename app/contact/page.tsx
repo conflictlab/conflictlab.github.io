@@ -3,7 +3,6 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { useState } from 'react'
 import { Send, CheckCircle } from 'lucide-react'
 import companyData from '@/content/company.json'
-import NewsletterSignup from '@/components/NewsletterSignup'
 import MailchimpEmbed from '@/components/MailchimpEmbed'
 
 export default function ContactPage() {
@@ -147,8 +146,6 @@ export default function ContactPage() {
             <p className="text-gray-600 mb-4">Get monthly updates on research, forecasts, and events.</p>
             {(((companyData as any).contact?.newsletterMailchimpAction || '').trim()) ? (
               <MailchimpEmbed compact sourceMergeTag="MMERGE9" sourceValue="contact_page" />
-            ) : (( (companyData as any).contact?.newsletterEndpoint || '').trim()) ? (
-              <NewsletterSignup compact />
             ) : (
               <>
                 {((companyData as any).contact?.newsletterUrl || '').trim() ? (
