@@ -25,6 +25,7 @@ export default async function Methodology() {
             Machine learning models that forecast geopolitical conflict, civil unrest and migration.
             Built for precision, transparency, and integration with existing systems.
           </p>
+          <p className="text-xs text-gray-500 mt-1"><Link href="/glossary" className="text-link">Glossary</Link></p>
           <Breadcrumbs />
         </div>
       </section>
