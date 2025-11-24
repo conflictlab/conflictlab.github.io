@@ -10,7 +10,7 @@ export interface Publication {
 export const publications: Publication[] = [
   {
     year: 2025,
-    authors: "Lu C, & Chadefaux T.",
+    authors: "Lu C & Chadefaux T",
     title: "Structured Pixels: Satellite Imagery as the Cause in Causal Effect Estimation",
     venue: "Hawaii International Conference on System Sciences",
     abstract: "We present Structured Pixels (SP), a causal inference model that positions satellite imagery as a cause/treatment in a causal graph, rather than merely a proxy for outcomes or confounders. Built on the generalized Robinson decomposition and a two-step, R-learner-inspired algorithm, SP uses learned latent representations to partial out confounding influences and isolate the causal effect. Its modular training pipeline supports integration with diverse machine learning models across domains. We evaluate SP using semi-synthesized datasets on two tasks: the impact of environmental conditions on mosquito populations and the influence of coastal characteristics on dark vessel prevalence. SP consistently outperforms baseline methods, and its learned representations capture meaningful environmental patterns. We further demonstrate SP's applicability by re-examining the relationship between deforestation and agricultural productivity with real-world data; the results align with prior work. These findings highlight SP's potential to advance GeoAI for environmental monitoring and resource management.",
@@ -21,12 +21,12 @@ export const publications: Publication[] = [
     authors: "Chadefaux T & Schincariol T",
     title: "Endogenous conflict and the limits of predictive optimization",
     venue: "EPJ Data Science",
-    abstract: "",
+    abstract: "Forecasting models in political violence research increasingly rely on high-dimensional covariates and machine learning. Yet in practice, the most reliable conflict forecasts often come from much simpler systems: autoregressive models that predict future events based solely on recent past outcomes. This paper argues that such models are not merely convenient baselines but theoretically appropriate tools for sparse, dynamic environments like armed conflict. We show that autoregressive models consistently outperform or match more complex alternatives across multiple countries and specifications, while structural covariates frequently add little or degrade performance. We explain this pattern both theoretically and empirically: conflict is driven by internal feedback, burstiness, and short-term adaptation—not by slow-changing structural conditions. By foregrounding the limits of causal modeling in high-entropy settings, we make a broader case for epistemic modesty in prediction. Autoregression, we argue, is not a shortcut, but a principled strategy in systems that resist control.",
     url: "https://doi.org/10.1140/epjds/s13688-025-00599-x"
   },
   {
     year: 2025,
-    authors: "Hegre H, et al (including Schincariol T, Frank H & Chadefaux T)",
+    authors: "Hegre H et al. (incl. Schincariol T, Frank H & Chadefaux T)",
     title: "The 2023/24 VIEWS Prediction challenge: Predicting the number of fatalities in armed conflict, with uncertainty",
     venue: "Journal of Peace Research",
     abstract: "Governmental and nongovernmental organizations have increasingly relied on early-warning systems of conflict to support their decisionmaking. Predictions of war intensity as probability distributions prove closer to what policymakers need than point estimates, as they encompass useful representations of both the most likely outcome and the lower-probability risk that conflicts escalate catastrophically. Point-estimate predictions, by contrast, fail to represent the inherent uncertainty in the distribution of conflict fatalities. Yet, current early warning systems are preponderantly focused on providing point estimates, while efforts to forecast conflict fatalities as a probability distribution remain sparse. Building on the predecessor VIEWS competition, we organize a prediction challenge to encourage endeavours in this direction. We invite researchers across multiple disciplinary fields, from conflict studies to computer science, to forecast the number of fatalities in state-based armed conflicts, in the form of the UCDP 'best' estimates aggregated to two units of analysis (country-months and PRIO-GRID-months), with estimates of uncertainty. This article introduces the goal and motivation behind the prediction challenge, presents a set of evaluation metrics to assess the performance of the forecasting models, describes the benchmark models which the contributions are evaluated against, and summarizes the salient features of the submitted contributions.",
@@ -42,7 +42,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2025,
-    authors: "Finkel M, et al (including Han J)",
+    authors: "Finkel M et al. (incl. Han J)",
     title: "Intersectional Hatred - An Application of Large Language Models to Detect Hate and Offensive Speech Targeted at Congressional Candidates in the 2024 U.S. Election",
     venue: "ACM Digital Library",
     abstract: "In this paper we take an intersectional approach to the problem of understanding hate and offensive speech targeted at all candidates who ran for Congress in the 2024 U.S. elections. We used a series of language models to analyze posts on X for instances of hate and offensive speech. This was based on a dataset of over 800,000 posts on X collected between May 20 and August 23, 2024. We found that, on average, more than 1 in 5 tweets targeted at Asian-American and African- American women candidates contained offensive speech, a higher proportion than other candidates. We also found that, on average, African- American women candidates were four times more likely than others to be targeted with hate speech, three times as likely as white women, and more than 18 times as likely as white men. These findings support prior research that women of color political candidates are more likely to be targeted with online abuse, a pattern which has important implications for the quality of American democracy.",
@@ -74,7 +74,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2024,
-    authors: "Schincariol T, & Chadefaux T.",
+    authors: "Schincariol T & Chadefaux T",
     title: "Temporal Patterns in Migration Flows: Evidence from South Sudan",
     venue: "Journal of Forecasting",
     abstract: "What explains the variation in migration flows over time and space? Existing work has contributed to a rich understanding of the factors that affect why and when people leave. What is less understood are the dynamics of migration flows over time. Existing work typically focuses on static variables at the country-year level and ignores the temporal dynamics. Are there recurring temporal patterns in migration flows? And can we use these patterns to improve our forecasts of the number of migrants? Here, we introduce new methods to uncover temporal sequences-motifs-in the number of migrants over time and use these motifs for forecasting. By developing a multivariable shape similarity-based model, we show that temporal patterns do exist. Moreover, using these patterns results in better out-of-sample forecasts than a benchmark of statistical and neural networks models. We apply the new method to the case of South Sudan.",
@@ -82,7 +82,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2024,
-    authors: "Jung Y. S. & Park, Y.",
+    authors: "Jung YS & Park Y",
     title: "Winners and Losers in U.S.-China Trade Disputes: A Dynamic Compositional Analysis of Multinational Corporations' Market Penetration",
     venue: "Social Science Quarterly",
     abstract: "The trade conflicts between the United States and China have significantly disrupted global trade and economic growth. In today's globalized economy where the production of goods and services spans across multiple nations, these disputes have far-reaching consequences that extend beyond the involved parties and impact the broader global economy. We examine the effects of the U.S.-China trade disputes on multinational investment patterns in China and Southeast Asia. Using a dynamic compositional approach, we analyze data on firm-level greenfield foreign direct investment. We observe European firms increasing their investments in China to enhance market penetration, while American firms are withdrawing, redirecting their focus toward Southeast Asia to mitigate dependence on the Chinese market. This shift highlights broader international business strategy trends amid geopolitical and economic changes. The results indicate significant transformations in global supply chains, shedding light on the extensive effects of U.S.-China trade tensions on global economic equilibrium and how these tensions are reshaping international investment and supply chain dynamics.",
@@ -90,7 +90,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2024,
-    authors: "Crisman-Cox, C., & Park, Y.",
+    authors: "Crisman-Cox C & Park Y",
     title: "Remittances, terrorism, and democracy",
     venue: "Conflict Management and Peace Science",
     abstract: "How do remittances affect domestic terrorism? Past work argues that remittances increase groups' resources and increase terrorism. However, we argue that the effect of remittances depends on political institutions. Within democracies, remittances can help groups overcome barriers to legitimate politics and reduce terrorism's allure. Within autocracies, however, fewer legitimate political opportunities exist, and remittances may lead to more terrorism as it remains an alternative and available political outlet. We find that remittances are associated with less (more) domestic terrorism within democracies (autocracies) and use additional mechanism tests to demonstrate that the competitive aspects of democracy help explain these trends.",
@@ -98,7 +98,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2024,
-    authors: "Cao J and Chadefaux T.",
+    authors: "Cao J & Chadefaux T",
     title: "Dynamic Synthetic Controls: Accounting for Varying Speeds in Comparative Case Studies",
     venue: "Political Analysis",
     abstract: "Synthetic controls are widely used to estimate the causal effect of a treatment. However, they do not account for the different speeds at which units respond to changes. Reactions may be inelastic or 'sticky' and thus slower due to varying regulatory, institutional, or political environments. We show that these different reaction speeds can lead to biased estimates of causal effects. We therefore introduce a dynamic synthetic control approach that accommodates varying speeds in time series, resulting in improved synthetic control estimates. We apply our method to re-estimate the effects of terrorism on income, tobacco laws on consumption, and German reunification on GDP. We also assess the method's performance using Monte-Carlo simulations. We find that it reduces errors in the estimates of true treatment effects by up to 70% compared to traditional synthetic controls, improving our ability to make robust inferences. An open-source R package, dsc, is made available for easy implementation.",
@@ -106,7 +106,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2023,
-    authors: "Chadefaux T.",
+    authors: "Chadefaux T",
     title: "An automated pattern recognition system for conflict",
     venue: "Journal of Computational Science",
     abstract: "This article introduces an automated pattern recognition system for conflict. The monitoring system aims to uncover, cluster, and classify temporal patterns of escalation to improve future forecasts and better understand the causes of escalation toward war. It identifies important temporal patterns in conflict data using novel pattern detection methods and new data. These patterns are used to forecast conflict, with live predictions released in real time. Finally, the discovery of recurring motifs-prototypes-can inform new or existing theoretical frameworks. In this article, I discuss the methodological innovations required to achieve these goals and the path to creating an autonomous conflict monitoring system. I also report on promising results obtained using these methods, which show that they perform well on true out-of- sample forecasts of the count of the number of fatalities per month from state-based conflict. The monitoring system has important implications for computational diplomacy, as it can alert diplomats of geopolitical risks.",
@@ -114,7 +114,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2022,
-    authors: "Boussalis C., Chadefaux T., Salvi A. and Decadri S.",
+    authors: "Boussalis C, Chadefaux T, Salvi A & Decadri S",
     title: "Public and Private Information in International Crises: Diplomatic Correspondence and Conflict Anticipation",
     venue: "International Studies Quarterly 66(4)",
     abstract: "Scholars of international conflicts have long emphasized the role of private information in the onset of interstate wars. Yet, the literature lacks direct and systematic evidence of its effect. This is largely due to challenges with accessing decision-makers' private and often confidential information and opinions. We compile a large corpus of declassified French diplomatic cables that span the period 1871-1914. Using these texts, we estimate a dynamic topic model to generate diplomatic thematic variables, which are then used to forecast the onset of French Militarized Interstate Disputes (MIDs). The inclusion of information from diplomatic correspondence greatly improves estimates of MID timing, compared to models that rely solely on public information such as structural determinants and revealed risk perceptions derived from financial markets or the press. These results emphasize the importance of private information in decisions to go to war and the limitations of empirical work that relies solely on publicly available data.",
@@ -122,7 +122,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2022,
-    authors: "Chadefaux T.",
+    authors: "Chadefaux T",
     title: "A shape-based approach to conflict forecasting",
     venue: "International Interactions 48(4)",
     abstract: "Do conflict processes exhibit repeating patterns over time? And if so, can we exploit the recurring shapes and structures of the time series to forecast the evolution of conflict? Theory has long focused on the sequence of events that precedes conflicts (e.g., escalation or brinkmanship). Yet, current empirical research is unable to represent these complex interactions unfolding over time because it attempts to match cases on the raw value of covariates, and not on their structure or shape. As a result, it cannot easily represent real-world relations which may, for example, follow a long alternation of escalation and détente, in various orders and at various speeds. Here, I aim to address these issues using recent machine-learning methods derived from pattern recognition in time series to study the dynamics of casualties in civil war processes. I find that the methods perform well on out-of-sample forecasts of the count of the number of fatalities per month from state-based conflict. In particular, our results yield Mean Squared Errors that are lower than the competition benchmark. We discuss the implication for conflict research and the importance of comparing entire sequences rather than isolated observations in time.",
@@ -130,7 +130,7 @@ export const publications: Publication[] = [
   },
   {
     year: 2022,
-    authors: "Turkoglu O., Chadefaux T.",
+    authors: "Turkoglu O & Chadefaux T",
     title: "The effect of terrorist attacks on attitudes and its duration",
     venue: "Political Science Research and Methods (First View)",
     abstract: "Is terrorism effective as a tool of political influence? In particular, do terrorists succeed in affecting their targets' attitudes, and how long does the effect last? Existing research unfortunately is either limited to small samples or does not address two main difficulties: issues of endogeneity and the inability to assess the duration of the effect. Here, we first exploit the exogeneity to the selection process of the success or failure of an attack as an identification mechanism. Second, we take advantage of the random allocation of survey respondents to interview times to estimate the duration of the impact of terrorist events on attitudes. Using survey data from 30 European democracies between 2002 and 2017, we find first that terrorism affects people's reported life satisfaction and happiness—a proxy for the cost of terrorism in terms of utility. However, we also find that terrorist attacks do not affect respondents' attitude toward their government, institutions, or immigrants. This suggests that terrorism is ineffective at translating discontent into political pressure. Importantly, we also find that all effects disappear within less than two weeks.",
