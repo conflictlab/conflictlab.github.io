@@ -161,7 +161,7 @@ export default async function ForecastsPage() {
       {/* Movers + Highlights (3-column layout) */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-16">
             {highlights.map((e) => {
               const months = getOrCalculateMonths(snapshot.period, e)
               return (
