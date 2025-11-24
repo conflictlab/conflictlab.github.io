@@ -406,6 +406,21 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
   const loading = !error && !data && !points
   const [showZoomHint, setShowZoomHint] = useState(true)
   const [mapInteractive, setMapInteractive] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect if device is mobile/tablet
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || (window.innerWidth <= 768)
+      setIsMobile(mobile)
+      // On desktop, enable controls by default
+      if (!mobile) setMapInteractive(true)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const t = setTimeout(() => setShowZoomHint(false), 7000)
@@ -434,14 +449,19 @@ export default function PrioGridMap({ period, activeView, countryName, hideViewT
             </div>
           </div>
         )}
-        {/* Months ahead slider overlay (bottom-left) */}
-        {!error && !loading && (
+        {/* Map controls toggle button - only show on mobile */}
+        {!error && !loading && isMobile && (
           <div className="absolute top-2 right-2 z-[1000]">
             <button
               type="button"
               onClick={() => setMapInteractive(v => !v)}
-              className="px-2.5 py-1 rounded-md border border-gray-200 bg-white/80 backdrop-blur-sm text-[11px] text-gray-700 shadow-sm hover:bg-white"
+              className={`px-3 py-1.5 rounded shadow-sm text-xs font-medium backdrop-blur border focus:outline-none ${
+                mapInteractive
+                  ? 'bg-pace-red/50 border-pace-red/60 text-white hover:bg-pace-red/65 opacity-65'
+                  : 'bg-white/50 border-gray-300/60 text-gray-600 hover:bg-white/65 opacity-65'
+              }`}
               aria-pressed={mapInteractive}
+              aria-label={mapInteractive ? 'Disable map controls' : 'Enable map controls'}
             >
               {mapInteractive ? 'Disable map controls' : 'Enable map controls'}
             </button>
