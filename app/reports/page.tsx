@@ -7,6 +7,7 @@ import companyData from '@/content/company.json'
 
 export default function ReportsPage() {
   const newsletters = [
+    { title: 'November 2025', file: '/newslettersAndReports/November 2025 Newsletter.pdf' },
     { title: 'August 2025', file: '/newslettersAndReports/August 2025 Newsletter.pdf' },
     { title: 'July 2025', file: '/newslettersAndReports/July 2025 Newsletter.pdf' },
     { title: 'June 2025', file: '/newslettersAndReports/June 2025 Newsletter.pdf' },
@@ -90,7 +91,7 @@ export default function ReportsPage() {
               Latest Newsletter
             </h2>
             <Link
-              href="/newslettersAndReports/August 2025 Newsletter.pdf"
+              href="/newslettersAndReports/November 2025 Newsletter.pdf"
               target="_blank"
               className="group"
             >
@@ -103,7 +104,7 @@ export default function ReportsPage() {
                   </div>
                 </div>
                 <div className="md:col-span-2 p-6">
-                  <p className="text-sm text-gray-600 mb-2">August 2025</p>
+                  <p className="text-sm text-gray-600 mb-2">November 2025</p>
                   <h3 className="text-2xl font-light text-gray-900 mb-4 group-hover:text-pace-red transition-colors">
                     Monthly Newsletter
                   </h3>
