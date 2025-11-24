@@ -65,7 +65,7 @@ export default function MailchimpEmbed({
 
         {status === 'success' ? (
           <div className="text-green-700 bg-green-50 border border-green-200 px-4 py-3 rounded max-w-md mx-auto">
-            You're subscribed! You'll receive the next newsletter when it's published.
+            You're subscribed! Watch your inbox for our next newsletter.
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-md mx-auto">
