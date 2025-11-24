@@ -357,12 +357,12 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         role="region"
         aria-label="World choropleth of predicted fatalities"
       >
-        {/* Enable/Disable map controls button - only show on mobile */}
+        {/* Enable/Disable map controls button - only show on mobile, bottom right, dimmed */}
         {isMobile && !mapControlsEnabled && (
-          <div className="absolute top-4 right-4 z-[1100] pointer-events-auto">
+          <div className="absolute bottom-20 right-2 z-[1000] pointer-events-auto">
             <button
               onClick={() => setMapControlsEnabled(true)}
-              className="px-4 py-2 bg-white/95 backdrop-blur border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pace-red"
+              className="px-3 py-1.5 bg-white/50 backdrop-blur border border-gray-300/60 rounded shadow-sm text-xs font-medium text-gray-600 hover:bg-white/65 focus:outline-none opacity-65"
               aria-label="Enable map controls"
             >
               Enable map controls
@@ -370,10 +370,10 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           </div>
         )}
         {isMobile && mapControlsEnabled && (
-          <div className="absolute top-4 right-4 z-[1100] pointer-events-auto">
+          <div className="absolute bottom-20 right-2 z-[1000] pointer-events-auto">
             <button
               onClick={() => setMapControlsEnabled(false)}
-              className="px-4 py-2 bg-pace-red/95 backdrop-blur border border-pace-red-dark rounded-md shadow-sm text-sm font-medium text-white hover:bg-pace-red-dark focus:outline-none focus:ring-2 focus:ring-pace-red"
+              className="px-3 py-1.5 bg-pace-red/50 backdrop-blur border border-pace-red/60 rounded shadow-sm text-xs font-medium text-white hover:bg-pace-red/65 focus:outline-none opacity-65"
               aria-label="Disable map controls"
             >
               Disable map controls
@@ -382,7 +382,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
         {/* Search overlay */}
         {!hideSearch && mapControlsEnabled && (
-          <div className={`absolute right-4 z-[1100] ${isMobile ? 'top-16' : 'top-4'}`}>
+          <div className="absolute top-4 right-4 z-[1100]">
             <div className="relative">
               <input
                 ref={inputRef}
@@ -694,7 +694,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           </div>
         )}
                 {!hideZoomHint && showZoomHint && mapControlsEnabled && (
-          <div className={`absolute right-4 z-[1000] pointer-events-auto ${isMobile ? 'top-16' : 'top-4'}`}>
+          <div className="absolute top-4 right-4 z-[1000] pointer-events-auto">
             <div className={`backdrop-blur-sm border border-gray-200 rounded-md px-3 py-2 text-xs shadow-sm flex items-center gap-2 ${dimZoomControls ? 'bg-white/60 text-gray-600' : 'bg-white/90 text-gray-700'}`}>
               <span>Zoom: Double-click or hold Cmd (⌘)/Ctrl + scroll</span>
               <button className="text-gray-400 hover:text-gray-600" onClick={() => setShowZoomHint(false)}>×</button>
