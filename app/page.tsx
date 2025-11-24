@@ -43,7 +43,9 @@ export default async function Home() {
             <div className="relative rounded-xl shadow-lg border-2 border-gray-200 overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300">
               {/* Red accent bar on left */}
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-pace-red via-pace-red-light to-pace-red"></div>
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-10 md:p-12 pl-12 md:pl-14">
+              {/* Black accent bar on right */}
+              <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gray-900 via-gray-700 to-gray-900"></div>
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-10 md:p-12 pl-12 md:pl-14 pr-12 md:pr-14">
                 <div className="flex-shrink-0">
                   <div className="relative">
                     <Image
