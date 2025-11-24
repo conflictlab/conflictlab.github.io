@@ -15,6 +15,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/methodology',
     '/research',
     '/dissemination',
+    '/reports',
+    '/contact',
+    '/glossary',
+    '/media-kit',
+    '/acknowledgements',
     '/about',
   ]
 

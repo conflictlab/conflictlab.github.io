@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     description: 'Intelligence technology company focused on forecasting geopolitical conflict, civil unrest, and political instability.',
     type: 'website',
     locale: 'en_US',
+    images: ['/logos/logo.png'],
   },
 }
 
