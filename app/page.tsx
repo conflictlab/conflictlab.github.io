@@ -39,7 +39,8 @@ export default async function Home() {
       {/* About Section */}
       <section className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto mb-16">
+          {/* Narrower card for a pleasing ratio (~2/3 of container) */}
+          <div className="max-w-3xl mx-auto mb-16">
             <div className="relative rounded-xl shadow-lg border-2 border-gray-200 overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300">
               {/* Red accent bar on left */}
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-pace-red via-pace-red-light to-pace-red"></div>
