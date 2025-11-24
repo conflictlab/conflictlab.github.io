@@ -96,9 +96,10 @@ interface Props {
   hideMonthSlider?: boolean
   hideZoomHint?: boolean
   lazyHotspots?: boolean
+  mobileControlsButtonPosition?: 'top-right' | 'bottom-right'
 }
 
-export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '590px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false, hideZoomHint = false, lazyHotspots = true }: Props) {
+export default function CountryChoropleth({ items, onSelect, hideDownloadButton = false, mapHeight = '590px', initialZoom = 3.0, hideControls = false, hideLegend = false, showHotspots = false, hideSearch = false, dimZoomControls = false, hideMonthSlider = false, hideZoomHint = false, lazyHotspots = true, mobileControlsButtonPosition = 'bottom-right' }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [world, setWorld] = useState<any | null>(null)
@@ -357,9 +358,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         role="region"
         aria-label="World choropleth of predicted fatalities"
       >
-        {/* Enable/Disable map controls button - only show on mobile, bottom right, dimmed */}
+        {/* Enable/Disable map controls button - only show on mobile, dimmed */}
         {isMobile && !mapControlsEnabled && (
-          <div className="absolute bottom-20 right-2 z-[1000] pointer-events-auto">
+          <div className={`absolute z-[1000] pointer-events-auto ${mobileControlsButtonPosition === 'top-right' ? 'top-4 right-4' : 'bottom-20 right-2'}`}>
             <button
               onClick={() => setMapControlsEnabled(true)}
               className="px-3 py-1.5 bg-white/50 backdrop-blur border border-gray-300/60 rounded shadow-sm text-xs font-medium text-gray-600 hover:bg-white/65 focus:outline-none opacity-65"
@@ -370,7 +371,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
           </div>
         )}
         {isMobile && mapControlsEnabled && (
-          <div className="absolute bottom-20 right-2 z-[1000] pointer-events-auto">
+          <div className={`absolute z-[1000] pointer-events-auto ${mobileControlsButtonPosition === 'top-right' ? 'top-4 right-4' : 'bottom-20 right-2'}`}>
             <button
               onClick={() => setMapControlsEnabled(false)}
               className="px-3 py-1.5 bg-pace-red/50 backdrop-blur border border-pace-red/60 rounded shadow-sm text-xs font-medium text-white hover:bg-pace-red/65 focus:outline-none opacity-65"
@@ -382,7 +383,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
         {/* Search overlay */}
         {!hideSearch && mapControlsEnabled && (
-          <div className="absolute top-4 right-4 z-[1100]">
+          <div className={`absolute z-[1100] ${mobileControlsButtonPosition === 'top-right' && isMobile ? 'top-16 right-4' : 'top-4 right-4'}`}>
             <div className="relative">
               <input
                 ref={inputRef}

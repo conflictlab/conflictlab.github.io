@@ -101,7 +101,7 @@ export default async function ForecastsPage() {
         {/* Full-width (bleed) wrapper */}
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
           <LazyVisible minHeight="300px">
-            <CountryChoropleth items={countryMapItems} showHotspots={true} hideDownloadButton={true} />
+            <CountryChoropleth items={countryMapItems} showHotspots={true} hideDownloadButton={true} mobileControlsButtonPosition="top-right" />
           </LazyVisible>
         </div>
         {/* Key takeaways below the map */}
