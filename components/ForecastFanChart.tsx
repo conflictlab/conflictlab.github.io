@@ -250,9 +250,6 @@ export default function ForecastFanChart({ title, horizons, months, countryName,
           </g>
         )}
       </svg>
-      <div className="mt-1 text-[11px] text-gray-500">
-        X‑axis shows months relative to forecast start (0). Past spans −10 to −1; future spans +1 to +6.
-      </div>
     </div>
   )
 }
