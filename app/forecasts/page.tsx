@@ -132,7 +132,7 @@ export default async function ForecastsPage() {
               <span className="text-gray-700"> · </span>
               Updated: {formatDMY(snapshot.generatedAt)}
             </p>
-            <p className="text-gray-700 text-sm">All values represent predicted <span className="font-medium text-gray-900">conflict fatalities</span> (deaths from state‑based, non‑state, and one‑sided violence) over the next 6 months. The table shows 1‑month ahead predictions and month‑over‑month changes.</p>
+            <p className="text-gray-700 text-sm">All values represent predicted <span className="font-medium text-gray-900">conflict fatalities</span> (deaths from state‑based, non‑state, and one‑sided violence) over the next 6 months. The table shows 1‑month ahead predictions and month‑over‑month changes. <Link href="/glossary" className="text-link">Glossary</Link></p>
           </div>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <SummaryCard
