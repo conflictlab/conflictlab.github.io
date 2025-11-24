@@ -139,21 +139,36 @@ export default function ReportsPage() {
             <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
               Newsletter Archive
             </h2>
-            {/* Switch from cards to a clean, chronological list */}
-            <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
-              {newsletters.slice(1).map((newsletter, index) => (
-                <li key={index} className="p-0">
-                  <Link
-                    href={newsletter.file}
-                    target="_blank"
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                  >
-                    <FileText size={20} className="text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-900 font-light">{newsletter.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+
+            {/* Group newsletters by year */}
+            {(() => {
+              const newslettersByYear: { [year: string]: typeof newsletters } = {}
+              newsletters.slice(1).forEach(newsletter => {
+                const year = newsletter.title.split(' ')[1]
+                if (!newslettersByYear[year]) newslettersByYear[year] = []
+                newslettersByYear[year].push(newsletter)
+              })
+
+              return Object.keys(newslettersByYear).sort((a, b) => Number(b) - Number(a)).map(year => (
+                <div key={year} className="mb-8">
+                  <h3 className="text-xl font-medium text-gray-900 mb-3">{year}</h3>
+                  <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
+                    {newslettersByYear[year].map((newsletter, index) => (
+                      <li key={index} className="p-0">
+                        <Link
+                          href={newsletter.file}
+                          target="_blank"
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                        >
+                          <FileText size={20} className="text-gray-400 flex-shrink-0" />
+                          <span className="text-gray-900 font-light">{newsletter.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            })()}
           </div>
 
           {/* Footer note */}
