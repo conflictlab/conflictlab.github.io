@@ -60,6 +60,21 @@ export default function PublicationsPage() {
 }`
   }
 
+  const generateAPACitation = (pub: Publication) => {
+    // Simple APA-like one-liner: Authors (Year). Title. Venue. URL
+    const authors = pub.authors
+      .replace(/\s{2,}/g, ' ')
+      .replace(/\s*&\s*/g, ' & ')
+      .replace(/\s*,\s*/g, ', ')
+    const parts = [
+      `${authors} (${pub.year}).`,
+      `${pub.title}.`,
+      pub.venue ? `${pub.venue}.` : undefined,
+      pub.url ? `${pub.url}` : undefined,
+    ].filter(Boolean)
+    return parts.join(' ')
+  }
+
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
@@ -207,8 +222,23 @@ export default function PublicationsPage() {
                         {/* Citation display */}
                         {showCitation === globalIndex && (
                           <div className="mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            {/* APA-like */}
                             <div className="flex justify-between items-start mb-2">
-                              <span className="text-sm font-medium text-gray-700">BibTeX Citation</span>
+                              <span className="text-sm font-medium text-gray-700">Citation (APA‑like)</span>
+                              <button
+                                onClick={() => copyToClipboard(generateAPACitation(pub))}
+                                className="text-xs px-2 py-1 bg-pace-red text-white rounded hover:bg-pace-red-dark transition-colors"
+                              >
+                                Copy
+                              </button>
+                            </div>
+                            <div className="text-xs text-gray-800 whitespace-pre-wrap mb-3">
+                              {generateAPACitation(pub)}
+                            </div>
+
+                            {/* BibTeX */}
+                            <div className="flex justify-between items-start mb-2">
+                              <span className="text-sm font-medium text-gray-700">BibTeX</span>
                               <button
                                 onClick={() => copyToClipboard(generateBibTeX(pub, globalIndex))}
                                 className="text-xs px-2 py-1 bg-pace-red text-white rounded hover:bg-pace-red-dark transition-colors"
@@ -216,9 +246,7 @@ export default function PublicationsPage() {
                                 Copy
                               </button>
                             </div>
-                            <pre className="text-xs text-gray-800 whitespace-pre-wrap font-mono">
-                              {generateBibTeX(pub, globalIndex)}
-                            </pre>
+                            <pre className="text-xs text-gray-800 whitespace-pre-wrap font-mono">{generateBibTeX(pub, globalIndex)}</pre>
                           </div>
                         )}
                       </div>
