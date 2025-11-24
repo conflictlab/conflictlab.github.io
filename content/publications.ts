@@ -148,11 +148,11 @@ export const nonPeerPublications: Publication[] = [
     abstract: 'Guidance on designing, validating, and operationalizing AI‑enabled forecasting systems for humanitarian anticipatory action, with an emphasis on risk communication, governance, and integration into decision workflows.',
   },
   {
-    year: 2024,
-    authors: 'Forecastlab',
-    title: 'DSC: Dynamic Synthetic Controls',
-    venue: 'R package',
-    abstract: 'Open‑source implementation of Dynamic Synthetic Controls to account for varying reaction speeds in comparative case studies and improve treatment effect estimation.',
+    year: 2023,
+    authors: 'Cao J',
+    title: 'dsc: Dynamic Synthetic Control Method for Comparative Case Studies',
+    venue: 'R package, version 0.1.0',
+    abstract: 'R package implementing Dynamic Synthetic Controls to account for varying reaction speeds in comparative case studies, improving treatment effect estimation.',
     url: 'https://github.com/conflictlab/dsc',
   },
 ]

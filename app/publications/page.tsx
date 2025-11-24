@@ -309,6 +309,12 @@ export default function PublicationsPage() {
                               )}
                               <span className="text-sm text-gray-600"> — {pub.authors}</span>
                               <span className="text-sm text-pace-red italic"> — {pub.venue}</span>
+                              {pub.url && pub.url.includes('github.com') && (
+                                <>
+                                  <span className="mx-1">·</span>
+                                  <a href={pub.url} target="_blank" rel="noopener noreferrer" className="text-link text-sm">GitHub</a>
+                                </>
+                              )}
                             </div>
                             {pub.abstract && (
                               <details className="group">
