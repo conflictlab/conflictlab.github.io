@@ -289,7 +289,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
     }
     const H = 6
     return matches.map((m) => {
-      const n = Math.max(1, m.series?.values?.length || 0)
+      const n = 10 // Always show last 10 months
       const src = histSeries.slice(-n)
       let future: number[] | undefined
       let futureRange: string | undefined
