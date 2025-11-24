@@ -137,3 +137,22 @@ export const publications: Publication[] = [
     url: "https://www.cambridge.org/core/journals/political-science-research-and-methods/article/effect-of-terrorist-attacks-on-attitudes-and-its-duration/79F97080265041F026C407844B983B3D"
   }
 ]
+
+// Non‑peer reviewed publications and research outputs
+export const nonPeerPublications: Publication[] = [
+  {
+    year: 2024,
+    authors: 'Humanitarian Forecast Working Group',
+    title: 'Harnessing AI: How to develop and integrate automated prediction systems for humanitarian anticipatory action',
+    venue: 'CEPR Policy Insight No. 135, CEPR Press (Paris & London)',
+    abstract: 'Guidance on designing, validating, and operationalizing AI‑enabled forecasting systems for humanitarian anticipatory action, with an emphasis on risk communication, governance, and integration into decision workflows.',
+  },
+  {
+    year: 2024,
+    authors: 'Forecastlab',
+    title: 'DSC: Dynamic Synthetic Controls',
+    venue: 'R package',
+    abstract: 'Open‑source implementation of Dynamic Synthetic Controls to account for varying reaction speeds in comparative case studies and improve treatment effect estimation.',
+    url: 'https://github.com/conflictlab/dsc',
+  },
+]
