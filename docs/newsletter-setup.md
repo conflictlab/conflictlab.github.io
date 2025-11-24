@@ -76,16 +76,18 @@ Notes and tips
 - Double opt-in: If you need double opt-in, you can add an Apps Script MailApp.sendEmail step to send a confirmation email and only add to a second sheet when confirmed.
 - Alternative services: You can also point `contact.newsletterUrl` to a Mailchimp/ConvertKit/Google Form. If both `newsletterEndpoint` and `newsletterUrl` are set, the endpoint-based form is used on the site.
 
-Option C — Mailchimp (recommended if you already use it)
-- Use Mailchimp’s embedded form but with site-native styling. We post directly to your audience “subscribe” URL.
-- Steps:
-  1) In Mailchimp: Audience → Signup forms → Embedded forms. Copy the form action URL from your embed code. It looks like:
-     https://<dc>.list-manage.com/subscribe/post?u=<u>&id=<id>&f_id=<fid>
-  2) From the embed snippet, copy the hidden anti-bot field name (it starts with b_... e.g. b_<u>_<id>).
-  3) Set these in content/company.json under contact:
-     - newsletterMailchimpAction: your form action URL
-     - newsletterMailchimpBotFieldName: the hidden b_... field name
-  4) Publish. The Reports and Contact pages will render the Mailchimp form automatically.
-- Tracking: We send an optional merge tag MMERGE9=reports_page or contact_page if that tag exists in your audience fields. You can change/remove it in the component props.
-- No external scripts/styles are required; the form uses the site’s CSS.
-- Required fields: If your audience requires first/last name, the embedded form includes FNAME/LNAME inputs. If you have other required fields (GDPR/marketing permissions, phone, etc.), either make them optional in Audience → Settings → Audience fields, or tell me the exact field names and I’ll add them to the form.
+Option C — Mailchimp (currently active)
+- The site now uses Mailchimp's embedded form with site-native styling. Form submissions post directly to your Mailchimp audience.
+- Current configuration:
+  - Form action URL: https://wixsite.us11.list-manage.com/subscribe/post?u=cb14170b980f1c1055469c89b&id=69ee166416&f_id=00323be0f0
+  - Bot prevention field: b_cb14170b980f1c1055469c89b_69ee166416
+  - Location: components/NewsletterSignup.tsx
+- The form includes Mailchimp's validation scripts for real-time error handling and success messages.
+- To update the Mailchimp form:
+  1) In Mailchimp: Audience → Signup forms → Embedded forms
+  2) Copy the new form action URL and bot prevention field name from the embed code
+  3) Update the values in components/NewsletterSignup.tsx (lines 57 and 78)
+- To add additional fields (FNAME, LNAME, etc.):
+  1) Add input elements with the correct Mailchimp field names
+  2) Make sure the fields are properly styled with Tailwind classes to match the site design
+  3) Update the validation script initialization if needed
