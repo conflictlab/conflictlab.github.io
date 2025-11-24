@@ -31,12 +31,28 @@ export default function MailchimpEmbed({
         <h2 className="text-2xl font-light text-gray-900 mb-4">{title}</h2>
         {description && <p className="text-gray-600 mb-6 leading-relaxed">{description}</p>}
 
-        <form action={action} method="post" target="_blank" noValidate className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <form action={action} method="post" target="_blank" noValidate className="max-w-md mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+          {/* Optional First and Last Name — include to satisfy audiences that require names */}
+          <input
+            type="text"
+            name="FNAME"
+            placeholder="First name"
+            autoComplete="given-name"
+            className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent sm:col-span-1"
+          />
+          <input
+            type="text"
+            name="LNAME"
+            placeholder="Last name"
+            autoComplete="family-name"
+            className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent sm:col-span-1"
+          />
           <input
             type="email"
             name="EMAIL"
-            placeholder="Enter your email here"
-            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent"
+            placeholder="Email address"
+            autoComplete="email"
+            className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent sm:col-span-1"
             required
           />
           {/* Optional source tracking to a Mailchimp merge tag */}
@@ -49,12 +65,14 @@ export default function MailchimpEmbed({
               <input type="text" name={botFieldName} tabIndex={-1} defaultValue="" />
             </div>
           )}
-          <button
-            type="submit"
-            className="px-6 py-3 bg-pace-red text-white rounded-lg hover:bg-pace-red-dark transition-colors font-medium whitespace-nowrap"
-          >
-            Subscribe
-          </button>
+          <div className="sm:col-span-3 flex justify-center">
+            <button
+              type="submit"
+              className="px-6 py-3 bg-pace-red text-white rounded-lg hover:bg-pace-red-dark transition-colors font-medium whitespace-nowrap"
+            >
+              Subscribe
+            </button>
+          </div>
         </form>
 
         <p className="text-xs text-gray-500 mt-3">We respect your privacy. Unsubscribe at any time.</p>
@@ -62,4 +80,3 @@ export default function MailchimpEmbed({
     </div>
   )
 }
-

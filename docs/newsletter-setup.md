@@ -88,3 +88,4 @@ Option C — Mailchimp (recommended if you already use it)
   4) Publish. The Reports and Contact pages will render the Mailchimp form automatically.
 - Tracking: We send an optional merge tag MMERGE9=reports_page or contact_page if that tag exists in your audience fields. You can change/remove it in the component props.
 - No external scripts/styles are required; the form uses the site’s CSS.
+- Required fields: If your audience requires first/last name, the embedded form includes FNAME/LNAME inputs. If you have other required fields (GDPR/marketing permissions, phone, etc.), either make them optional in Audience → Settings → Audience fields, or tell me the exact field names and I’ll add them to the form.
