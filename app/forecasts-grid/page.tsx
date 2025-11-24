@@ -84,7 +84,7 @@ export default async function ForecastsGridPage() {
             Updated: {formatDMY(snap.generatedAt)}
           </p>
           {/* Removed secondary view toggle below the map */}
-          <p className="text-gray-600 text-sm mb-4">All values represent predicted fatalities over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
+          <p className="text-gray-600 text-sm mb-4">All values represent predicted conflict fatalities (deaths from state‑based, non‑state, and one‑sided violence) over the next 6 months. The table shows 1‑month predictions and the change from the previous forecast.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg p-4">
               <div className="text-sm text-gray-500">Total predicted fatalities (1‑month)</div>

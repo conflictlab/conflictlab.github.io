@@ -109,7 +109,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             {entity.name}
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Predicted fatalities from state‑based armed conflict — forecast and analysis
+            Predicted fatalities from state‑based, non‑state, and one‑sided violence — forecast and analysis
           </p>
           {/* Key metrics (moved into hero) */}
           <div className="mt-4 grid grid-cols-2 md:grid-cols-5 gap-x-4 gap-y-1 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-lg p-3">
