@@ -40,27 +40,33 @@ export default async function Home() {
       <section className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto mb-16">
-            <div className="rounded-xl shadow-xl border overflow-hidden bg-railings border-gray-700">
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-10 md:p-12">
+            <div className="relative rounded-xl shadow-lg border-2 border-gray-200 overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300">
+              {/* Red accent bar on left */}
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-pace-red via-pace-red-light to-pace-red"></div>
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-10 md:p-12 pl-12 md:pl-14">
                 <div className="flex-shrink-0">
-                  <Image
-                    src="/logos/logo.png"
-                    alt="PaCE"
-                    width={140}
-                    height={140}
-                    className="w-32 h-32 md:w-35 md:h-35"
-                  />
+                  <div className="relative">
+                    <Image
+                      src="/logos/logo.png"
+                      alt="PaCE"
+                      width={140}
+                      height={140}
+                      className="w-32 h-32 md:w-35 md:h-35"
+                    />
+                    {/* Subtle decorative circle behind logo */}
+                    <div className="absolute -inset-2 bg-red-50 rounded-full -z-10 opacity-40"></div>
+                  </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl md:text-3xl font-semibold text-white mb-4">
-                    PaCE
-                    <span className="text-lg md:text-xl font-light text-gray-300 ml-2">Patterns of Conflict Escalation</span>
+                  <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
+                    <span className="text-pace-red">PaCE</span>
+                    <span className="text-lg md:text-xl font-light text-gray-600 ml-2">Patterns of Conflict Escalation</span>
                   </h3>
                   <div className="space-y-4">
-                    <p className="text-gray-100 text-lg leading-relaxed">
+                    <p className="text-gray-800 text-lg leading-relaxed font-medium">
                       A research lab at Trinity College Dublin using machine learning to forecast conflict fatalities at the country and sub‑national level.
                     </p>
-                    <p className="text-gray-300 text-base leading-relaxed">
+                    <p className="text-gray-600 text-base leading-relaxed">
                       We combine transparent methods, rich data, and clear communication to support early warning and decision‑making.
                     </p>
                   </div>
