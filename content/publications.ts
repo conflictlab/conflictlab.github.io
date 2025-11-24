@@ -18,6 +18,14 @@ export const publications: Publication[] = [
   },
   {
     year: 2025,
+    authors: "Chadefaux T & Schincariol T",
+    title: "Endogenous conflict and the limits of predictive optimization",
+    venue: "EPJ Data Science",
+    abstract: "",
+    url: "https://doi.org/10.1140/epjds/s13688-025-00599-x"
+  },
+  {
+    year: 2025,
     authors: "Hegre H, et al (including Schincariol T, Frank H & Chadefaux T)",
     title: "The 2023/24 VIEWS Prediction challenge: Predicting the number of fatalities in armed conflict, with uncertainty",
     venue: "Journal of Peace Research",
@@ -129,4 +137,3 @@ export const publications: Publication[] = [
     url: "https://www.cambridge.org/core/journals/political-science-research-and-methods/article/effect-of-terrorist-attacks-on-attitudes-and-its-duration/79F97080265041F026C407844B983B3D"
   }
 ]
-
