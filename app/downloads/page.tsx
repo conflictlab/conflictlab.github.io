@@ -135,7 +135,7 @@ export default async function DataPage() {
             Access our <span className="word-emphasis">conflict forecasts</span> as raw data.
             Country-level and grid-level predictions available in CSV and GeoJSON formats.
           </p>
-          <p className="text-xs text-gray-500 mt-1"><Link href="/acknowledgements" className="text-link">Acknowledgements</Link></p>
+          {/* Moved acknowledgements link to footer for consistency */}
           <p className="text-lg text-gray-600 font-light mt-4">
             Latest update: {formatDMY(snapshot.generatedAt)}
           </p>
@@ -234,6 +234,13 @@ export default async function DataPage() {
             <Link href="/forecasts" className="text-link">Country-level forecasts</Link>
             <span className="mx-2">·</span>
             <Link href="/forecasts-grid" className="text-link">Grid-level forecasts</Link>
+          </div>
+
+          {/* Acknowledgements footer */}
+          <div className="mt-12 pt-8 border-t border-gray-200 text-center">
+            <p className="text-sm text-gray-600">
+              <Link href="/acknowledgements" className="text-link">View full acknowledgements</Link>
+            </p>
           </div>
         </div>
       </section>
