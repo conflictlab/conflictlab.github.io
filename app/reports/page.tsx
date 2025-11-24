@@ -8,6 +8,7 @@ import companyData from '@/content/company.json'
 export default function ReportsPage() {
   const newsletters = [
     { title: 'November 2025', file: '/newslettersAndReports/November 2025 Newsletter.pdf' },
+    { title: 'October 2025', file: '/newslettersAndReports/October 2025 Newsletter.pdf' },
     { title: 'August 2025', file: '/newslettersAndReports/August 2025 Newsletter.pdf' },
     { title: 'July 2025', file: '/newslettersAndReports/July 2025 Newsletter.pdf' },
     { title: 'June 2025', file: '/newslettersAndReports/June 2025 Newsletter.pdf' },
