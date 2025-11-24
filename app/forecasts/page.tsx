@@ -170,6 +170,7 @@ export default async function ForecastsPage() {
                     <ForecastFanChart
                       title={`${e.name} — Predicted fatalities`}
                       months={months}
+                      countryName={e.name}
                     />
                   </Link>
                 </LazyVisible>
