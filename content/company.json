@@ -28,6 +28,9 @@
   "contact": {
     "email": "info@forecastlab.org",
     "formEndpoint": "",
-    "newsletterUrl": ""
+    "newsletterUrl": "",
+    "newsletterEndpoint": "",
+    "newsletterMailchimpAction": "https://wixsite.us11.list-manage.com/subscribe/post?u=cb14170b980f1c1055469c89b&id=69ee166416&f_id=00323be0f0",
+    "newsletterMailchimpBotFieldName": "b_cb14170b980f1c1055469c89b_69ee166416"
   }
 }

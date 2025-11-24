@@ -3,6 +3,8 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { useState } from 'react'
 import { Send, CheckCircle } from 'lucide-react'
 import companyData from '@/content/company.json'
+import NewsletterSignup from '@/components/NewsletterSignup'
+import MailchimpEmbed from '@/components/MailchimpEmbed'
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -143,24 +145,32 @@ export default function ContactPage() {
           <div className="max-w-2xl mt-16">
             <h3 className="text-2xl font-light mb-4">Newsletter</h3>
             <p className="text-gray-600 mb-4">Get monthly updates on research, forecasts, and events.</p>
-            {((companyData as any).contact?.newsletterUrl || '').trim() ? (
-              <a
-                href={(companyData as any).contact.newsletterUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary inline-flex items-center"
-              >
-                Subscribe to Newsletter
-              </a>
+            {(((companyData as any).contact?.newsletterMailchimpAction || '').trim()) ? (
+              <MailchimpEmbed compact sourceMergeTag="MMERGE9" sourceValue="contact_page" />
+            ) : (( (companyData as any).contact?.newsletterEndpoint || '').trim()) ? (
+              <NewsletterSignup compact />
             ) : (
-              <a
-                href={`mailto:${companyData.contact.email}?subject=${encodeURIComponent('Subscribe to Newsletter')}`}
-                className="btn-secondary inline-flex items-center"
-              >
-                Subscribe via Email
-              </a>
+              <>
+                {((companyData as any).contact?.newsletterUrl || '').trim() ? (
+                  <a
+                    href={(companyData as any).contact.newsletterUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-secondary inline-flex items-center"
+                  >
+                    Subscribe to Newsletter
+                  </a>
+                ) : (
+                  <a
+                    href={`mailto:${companyData.contact.email}?subject=${encodeURIComponent('Subscribe to Newsletter')}`}
+                    className="btn-secondary inline-flex items-center"
+                  >
+                    Subscribe via Email
+                  </a>
+                )}
+                <p className="text-xs text-gray-500 mt-2">We send at most one email per month.</p>
+              </>
             )}
-            <p className="text-xs text-gray-500 mt-2">We send at most one email per month.</p>
           </div>
         </div>
       </section>

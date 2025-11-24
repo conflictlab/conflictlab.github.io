@@ -1,6 +1,9 @@
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
 import { FileText } from 'lucide-react'
+import NewsletterSignup from '@/components/NewsletterSignup'
+import MailchimpEmbed from '@/components/MailchimpEmbed'
+import companyData from '@/content/company.json'
 
 export default function ReportsPage() {
   const newsletters = [
@@ -118,33 +121,15 @@ export default function ReportsPage() {
 
           {/* Email Signup Section */}
           <div className="mb-16">
-            <div className="border border-gray-200 rounded-lg p-8 bg-white">
-              <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-2xl font-light text-gray-900 mb-4">
-                  PaCE's Monthly Risk Prediction Report
-                </h2>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Every month the PaCE Project publishes a risk prediction report. Sign up here to receive it in your inbox!
-                </p>
-                <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                  <input
-                    type="email"
-                    placeholder="Enter your email here"
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pace-red focus:border-transparent"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="px-6 py-3 bg-pace-red text-white rounded-lg hover:bg-pace-red-dark transition-colors font-medium whitespace-nowrap"
-                  >
-                    Subscribe
-                  </button>
-                </form>
-                <p className="text-xs text-gray-500 mt-3">
-                  We respect your privacy. Unsubscribe at any time.
-                </p>
-              </div>
-            </div>
+            {(((companyData as any).contact?.newsletterMailchimpAction || '').trim()) ? (
+              <MailchimpEmbed
+                // Optional: track source if you mapped a merge tag like MMERGE9 in Mailchimp
+                sourceMergeTag="MMERGE9"
+                sourceValue="reports_page"
+              />
+            ) : (
+              <NewsletterSignup />
+            )}
           </div>
 
           {/* Past Newsletters Archive */}
