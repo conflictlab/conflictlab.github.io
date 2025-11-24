@@ -38,6 +38,23 @@ export default async function Methodology() {
             </h2>
           </div>
           <MethodologyFlowchart />
+
+          {/* Key Advantages */}
+          <div className="mt-8 bg-white p-6 rounded-lg border border-gray-200 max-w-4xl mx-auto">
+            <h4 className="text-lg font-medium text-gray-900 mb-4">Key Advantages</h4>
+            <div className="grid md:grid-cols-2 gap-4">
+              <ul className="space-y-2 text-gray-600">
+                <li>✓ <strong>Interpretable:</strong> Can cite specific historical analogues</li>
+                <li>✓ <strong>Fast:</strong> Minutes, not hours</li>
+                <li>✓ <strong>No covariates needed:</strong> Only past fatalities required</li>
+              </ul>
+              <ul className="space-y-2 text-gray-600">
+                <li>✓ <strong>Captures variability:</strong> Predicts surges and declines</li>
+                <li>✓ <strong>Always available:</strong> No lag for data updates</li>
+                <li>✓ <strong>Flexible:</strong> Handles varying speeds via DTW</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -103,60 +120,6 @@ export default async function Methodology() {
                 />
               </div>
             </div>
-
-            <div className="grid md:grid-cols-5 gap-4 mb-8">
-              <div className="bg-blue-50 p-4 rounded-lg text-center">
-                <div className="text-3xl mb-2">📊</div>
-                <h4 className="font-medium text-gray-900 mb-2">Current Trajectory</h4>
-                <p className="text-sm text-gray-600">Last 10 months of fatalities</p>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="text-2xl text-gray-400">→</div>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg text-center">
-                <div className="text-3xl mb-2">🗄️</div>
-                <h4 className="font-medium text-gray-900 mb-2">Historical Repository</h4>
-                <p className="text-sm text-gray-600">All patterns 1989-2020</p>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="text-2xl text-gray-400">→</div>
-              </div>
-              <div className="bg-orange-50 p-4 rounded-lg text-center">
-                <div className="text-3xl mb-2">🎯</div>
-                <h4 className="font-medium text-gray-900 mb-2">Similar Patterns</h4>
-                <p className="text-sm text-gray-600">~20 DTW matches</p>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-purple-50 p-4 rounded-lg text-center">
-                <div className="text-3xl mb-2">🔍</div>
-                <h4 className="font-medium text-gray-900 mb-2">Cluster Futures</h4>
-                <p className="text-sm text-gray-600">Group similar outcomes</p>
-              </div>
-              <div className="bg-red-50 p-4 rounded-lg text-center">
-                <div className="text-3xl mb-2">📈</div>
-                <h4 className="font-medium text-gray-900 mb-2">Forecast</h4>
-                <p className="text-sm text-gray-600">Centroid of largest cluster</p>
-              </div>
-            </div>
-
-            <div className="mt-8 bg-white p-6 rounded-lg border border-gray-200">
-              <h4 className="text-lg font-medium text-gray-900 mb-4">Key Advantages</h4>
-              <div className="grid md:grid-cols-2 gap-4">
-                <ul className="space-y-2 text-gray-600">
-                  <li>✓ <strong>Interpretable:</strong> Can cite specific historical analogues</li>
-                  <li>✓ <strong>Fast:</strong> Minutes, not hours</li>
-                  <li>✓ <strong>No covariates needed:</strong> Only past fatalities required</li>
-                </ul>
-                <ul className="space-y-2 text-gray-600">
-                  <li>✓ <strong>Captures variability:</strong> Predicts surges and declines</li>
-                  <li>✓ <strong>Always available:</strong> No lag for data updates</li>
-                  <li>✓ <strong>Flexible:</strong> Handles varying speeds via DTW</li>
-                </ul>
-              </div>
-            </div>
-
                       </div>
 
           {/* 3D Spatial-Temporal Visualization */}
