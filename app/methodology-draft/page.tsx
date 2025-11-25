@@ -28,6 +28,20 @@ export default function MethodologyDraftPage() {
         </div>
       </section>
 
+      {/* Design principles */}
+      <section id="principles" className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-light text-gray-900 mb-4">Design Principles</h3>
+          <ul className="list-disc pl-6 text-gray-700 space-y-2">
+            <li><span className="font-medium">Transparent by construction:</span> forecasts backed by explicit historical analogs you can inspect.</li>
+            <li><span className="font-medium">Short‑horizon strength:</span> prioritize near‑term accuracy where policy relevance is highest.</li>
+            <li><span className="font-medium">Data‑lean defaults:</span> equal‑weight analogs with purely autoregressive inputs; covariates optional.</li>
+            <li><span className="font-medium">Spatiotemporal fidelity:</span> handle differing speeds (DTW) and subnational diffusion (PRIO‑GRID).</li>
+            <li><span className="font-medium">Calibrated uncertainty:</span> empirical bands and exceedances derived from matched futures.</li>
+          </ul>
+        </div>
+      </section>
+
       {/* Executive Summary + On‑page nav */}
       <section id="summary" className="pt-6 pb-6 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,10 +68,12 @@ export default function MethodologyDraftPage() {
               <div className="grid grid-cols-2 gap-x-6 gap-y-1">
                 <a href="#scope" className="text-link">Forecast scope</a>
                 <a href="#data" className="text-link">Data</a>
+                <a href="#principles" className="text-link">Design principles</a>
                 <a href="#why-analog" className="text-link">Why analog</a>
                 <a href="#algorithm" className="text-link">Core algorithm</a>
+                <a href="#demos" className="text-link">Examples & demos</a>
                 <a href="#subnational" className="text-link">Subnational</a>
-                <a href="#validation" className="text-link">Validation</a>
+                <a href="#evidence" className="text-link">Evidence</a>
                 <a href="#faq" className="text-link">FAQ</a>
                 <a href="#limits" className="text-link">Limitations</a>
                 <a href="#usage" className="text-link">How to use</a>
@@ -127,8 +143,14 @@ export default function MethodologyDraftPage() {
         </div>
       </section>
 
-      {/* Interactive DTW intuition */
-      }
+      {/* Examples & demos */}
+      <section id="demos" className="py-10 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-light text-gray-900 mb-6 text-center">Examples & Demos</h3>
+        </div>
+      </section>
+
+      {/* Interactive DTW intuition */}
       <section className="py-10 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-light text-gray-900 mb-4 text-center">How alignment works (DTW)</h3>
@@ -212,15 +234,12 @@ export default function MethodologyDraftPage() {
 
       {/* (Data section moved up) */}
 
-      {/* Validation & key findings */}
-      <section id="validation" className="py-12 bg-white">
+      {/* Evidence & results */}
+      <section id="evidence" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-light text-gray-900 mb-3">Validation and Key Findings</h3>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
-              We backtest across countries, regions, and time to assess generalization and robustness. Results below
-              synthesize our findings across conflict, unrest, and migration applications.
-            </p>
+            <h3 className="text-3xl font-light text-gray-900 mb-3">Evidence & Results</h3>
+            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">Out‑of‑sample tests across space and time, plus cross‑domain applications.</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-4 text-gray-700 leading-relaxed">
@@ -240,6 +259,11 @@ export default function MethodologyDraftPage() {
             <p>
               <span className="font-medium">Subnational fidelity:</span> At grid level, diffusion and hotspot dynamics are recovered, improving early warnings and
               resource allocation compared to country‑only models.
+            </p>
+            <p className="text-sm text-gray-600">
+              Details in <a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">EPJ Data Science</a>,
+              {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">JPR (variability)</a>, and the{' '}
+              <a href="/academicPapers/working-papers/predictability-29.pdf" target="_blank" rel="noopener noreferrer" className="text-link">Predictability working paper</a>.
             </p>
           </div>
         </div>
