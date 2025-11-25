@@ -130,10 +130,10 @@ export default function PublicationsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-24 hero-background-network-image">
+      <section className="py-16 hero-background-network-image">
         <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]"><Breadcrumbs /></div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-12 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
             Publications
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
