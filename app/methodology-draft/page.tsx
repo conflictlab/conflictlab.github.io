@@ -233,10 +233,12 @@ export default function MethodologyDraftPage() {
             </div>
 
             <div>
-              <h4 className="text-lg font-medium text-gray-900">What do you explain particularly well?</h4>
+              <h4 className="text-lg font-medium text-gray-900">What do we explain particularly well?</h4>
               <p className="text-gray-700 mt-2">
                 Variation over time — especially the onset, escalation, and decay of episodes. By borrowing futures from
                 the closest analogs, the model captures bursts and plateaus that standard linear baselines often smooth out.
+                See our{' '}
+                <a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">Journal of Peace Research paper on accounting for variability</a>.
               </p>
             </div>
 
