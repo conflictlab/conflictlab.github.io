@@ -292,14 +292,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
           </div>
         </section>
       )}
-      {/* Page-level acknowledgement (subtle, bottom of page) */}
-      <section className="py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs text-gray-500">
-            <Link href="/acknowledgements" className="text-link">Acknowledgements</Link>
-          </p>
-        </div>
-      </section>
+      {/* Acknowledgements link removed per request */}
     </div>
   )
 }
