@@ -312,7 +312,7 @@ export default function MethodologyDraftPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-light text-gray-900 mb-4">Operational Considerations</h3>
           <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li><span className="font-medium">Speed and availability:</span> Minutes end‑to‑end; runs with or without covariates.</li>
+            <li><span className="font-medium">Speed and availability:</span> Runs with or without covariates.</li>
             <li><span className="font-medium">Transparency:</span> Forecaster can cite the exact analog episodes behind each prediction.</li>
             <li><span className="font-medium">Monitoring:</span> Rolling backtests, calibration checks, and drift diagnostics.</li>
             <li><span className="font-medium">Ethics & safeguards:</span> Human review, clear uncertainty communication, and context‑aware use.</li>
