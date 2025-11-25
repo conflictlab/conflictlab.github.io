@@ -274,21 +274,17 @@ export default function MethodologyDraftPage() {
             <div>
               <h4 className="text-lg font-medium text-gray-900">How do you quantify uncertainty?</h4>
               <p className="text-gray-700 mt-2">
-                We form a similarity‑weighted mixture of futures from the top historical analogs.
-                Concretely: (1) select the K nearest analog windows by DTW (or related) distance; (2) assign
-                weights w proportional to a decaying kernel of the distance or rank; (3) for each horizon h,
-                collect the realized outcomes from those analogs and treat the predictive distribution as the
-                empirical mixture <span className="font-mono">p<sub>h</sub>(y) = ∑<sub>k</sub> w<sub>k</sub> · δ(y − y<sub>k,h</sub>)</span>. From this distribution we compute point
-                forecasts (mean/median), prediction intervals (50/80/95%), similarity‑weighted quantiles, and
-                exceedance probabilities (e.g., P[y ≥ threshold]).
+                Following the papers, we take the <span className="font-medium">K</span> most similar historical windows (via DTW shape matching).
+                For each forecast horizon <span className="font-mono">h</span>, we use the matched windows’ subsequent outcomes to form an
+                empirical predictive distribution, and we take the <span className="font-medium">average (centroid)</span> of those futures as the
+                point forecast. Equivalently, with equal weights <span className="font-mono">1/K</span>, the mixture is
+                <span className="font-mono"> p<sub>h</sub>(y) = (1/K) · ∑<sub>k=1..K</sub> δ(y − y<sub>k,h</sub>)</span>.
+                From this distribution we report prediction intervals (e.g., 50/80/95%) and exceedance probabilities.
               </p>
               <p className="text-gray-700 mt-2">
-                Calibration is checked with rolling backtests: coverage of nominal bands, sharpness vs. calibration,
-                probability integral transform (PIT) diagnostics, and CRPS. When needed, we apply simple post‑hoc
-                recalibration (e.g., quantile adjustment using rolling residuals) so reported 50/80/95% intervals
-                achieve their intended coverage out‑of‑sample. For count outcomes, we keep distributions discrete
-                (empirical mixture) and optionally report smoothed summaries. In maps and dashboards we also expose
-                exceedance risk surfaces and scenario draws to communicate tail risk.
+                We evaluate forecasts out‑of‑sample against baseline models and monitor interval coverage. In deployment,
+                we may optionally apply similarity weighting and distributional diagnostics (e.g., PIT/CRPS) for ongoing
+                calibration monitoring.
               </p>
             </div>
 
