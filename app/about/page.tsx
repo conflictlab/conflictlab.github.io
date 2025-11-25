@@ -34,6 +34,7 @@ export default function About() {
             <Link href="/about#pace" className="btn-secondary inline-flex items-center justify-center">About Pace</Link>
             <Link href="/about/team" className="btn-secondary inline-flex items-center justify-center">Team</Link>
             <Link href="/contact" className="btn-secondary inline-flex items-center justify-center">Contact</Link>
+            <Link href="/faq" className="btn-secondary inline-flex items-center justify-center">FAQ</Link>
           </div>
         </div>
       </section>
@@ -98,6 +99,7 @@ export default function About() {
             <Link href="/about/team" className="btn-secondary inline-flex items-center justify-center">Meet the Team</Link>
             <Link href="/contact" className="btn-secondary inline-flex items-center justify-center">Contact Us</Link>
             <Link href="/acknowledgements" className="btn-secondary inline-flex items-center justify-center">Acknowledgements</Link>
+            <Link href="/faq" className="btn-secondary inline-flex items-center justify-center">FAQ</Link>
           </div>
 
           {/* Resources subsection */}

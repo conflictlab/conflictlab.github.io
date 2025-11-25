@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/forecasts-grid',
     '/downloads',
     '/publications',
+    '/faq',
     '/methodology',
     '/research',
     '/dissemination',
