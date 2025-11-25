@@ -197,7 +197,7 @@ export default function PublicationsPage() {
           </div>
 
           <h2 id="peer-reviewed" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
-            Academic Publications
+            Peer‑reviewed Publications
           </h2>
 
           {filteredPublications.length === 0 ? (
