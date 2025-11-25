@@ -254,9 +254,21 @@ export default function MethodologyDraftPage() {
             <div>
               <h4 className="text-lg font-medium text-gray-900">How do you quantify uncertainty?</h4>
               <p className="text-gray-700 mt-2">
-                Each analog yields a realized future; aggregating across analogs gives an empirical distribution. We report
-                prediction intervals (e.g., 50/80/95%) and similarity‑weighted quantiles. Interval coverage is monitored in
-                backtests and in live operation.
+                We form a similarity‑weighted mixture of futures from the top historical analogs.
+                Concretely: (1) select the K nearest analog windows by DTW (or related) distance; (2) assign
+                weights w proportional to a decaying kernel of the distance or rank; (3) for each horizon h,
+                collect the realized outcomes from those analogs and treat the predictive distribution as the
+                empirical mixture p_h(y) = ∑_k w_k · δ(y − y_{k,h}). From this distribution we compute point
+                forecasts (mean/median), prediction intervals (50/80/95%), similarity‑weighted quantiles, and
+                exceedance probabilities (e.g., P[y ≥ threshold]).
+              </p>
+              <p className="text-gray-700 mt-2">
+                Calibration is checked with rolling backtests: coverage of nominal bands, sharpness vs. calibration,
+                probability integral transform (PIT) diagnostics, and CRPS. When needed, we apply simple post‑hoc
+                recalibration (e.g., quantile adjustment using rolling residuals) so reported 50/80/95% intervals
+                achieve their intended coverage out‑of‑sample. For count outcomes, we keep distributions discrete
+                (empirical mixture) and optionally report smoothed summaries. In maps and dashboards we also expose
+                exceedance risk surfaces and scenario draws to communicate tail risk.
               </p>
             </div>
 
