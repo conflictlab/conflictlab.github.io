@@ -20,8 +20,10 @@ export default function MethodologyDraftPage() {
             How we forecast geopolitical conflict, civil unrest, and migration.
           </p>
           <p className="text-xs text-gray-500 mt-2">This is a working page for internal review. Not linked site‑wide.</p>
-          <div className="mt-3">
-            <a href="#faq" className="text-sm text-pace-red hover:text-pace-red-dark">Jump to FAQ ↴</a>
+          <div className="mt-3 text-sm text-gray-700 flex items-center gap-3">
+            <a href="#faq" className="text-pace-red hover:text-pace-red-dark">Jump to FAQ ↴</a>
+            <span className="text-gray-300">·</span>
+            <a href="/faq" className="text-link">Full FAQ</a>
           </div>
         </div>
       </section>
