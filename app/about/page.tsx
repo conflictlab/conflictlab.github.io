@@ -105,15 +105,24 @@ export default function About() {
             <h3 className="text-2xl font-light text-gray-900 mb-3">Resources</h3>
             <p className="text-gray-700 mb-4">Press info and brand assets for PaCE.</p>
             <Link href="/media-kit" className="btn-secondary inline-flex items-center justify-center">Media Kit</Link>
-            <div className="mt-4">
-              <a
-                href="https://www.sciencedirect.com/science/article/pii/S1877750323001345"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-link"
-              >
-                An automated pattern recognition system for conflict
-              </a>
+
+            <div className="mt-6">
+              <h4 className="text-lg font-light text-gray-900 mb-2">Publications</h4>
+              <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                <li>
+                  <a
+                    href="https://www.sciencedirect.com/science/article/pii/S1877750323001345"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-link"
+                  >
+                    An automated pattern recognition system for conflict
+                  </a>
+                </li>
+                <li>
+                  <Link href="/publications" className="text-link">All publications</Link>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
