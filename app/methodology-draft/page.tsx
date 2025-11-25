@@ -17,8 +17,7 @@ export default function MethodologyDraftPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-3 leading-tight">Methodology (Draft)</h1>
           <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-3xl">
-            How we forecast geopolitical conflict, civil unrest, and migration — clearly explained, with
-            concrete examples and visual intuition.
+            How we forecast geopolitical conflict, civil unrest, and migration.
           </p>
           <p className="text-xs text-gray-500 mt-2">This is a working page for internal review. Not linked site‑wide.</p>
         </div>
