@@ -140,12 +140,14 @@ export default function PublicationsPage() {
             Research publications from the <span className="word-emphasis">PaCE Conflict Research Lab</span>.
             Peer-reviewed papers on conflict forecasting, pattern recognition, and computational methods.
           </p>
-          <div className="mt-4 text-sm text-gray-600">
-            Quick filters:
-            <Link href={{ pathname: '/publications', query: { author: 'Schincariol' } }} className="ml-2 text-link">Schincariol</Link>
-            <span className="mx-1 text-gray-400">·</span>
-            <Link href={{ pathname: '/publications', query: { author: 'Frank' } }} className="text-link">Frank</Link>
-          </div>
+          <nav className="mt-6 text-sm text-gray-700 flex flex-wrap items-center gap-3">
+            <span className="text-gray-500">Jump to:</span>
+            <a href="#peer-reviewed" className="text-link">Peer‑reviewed</a>
+            <span className="text-gray-300">·</span>
+            <a href="#working-papers" className="text-link">Working papers</a>
+            <span className="text-gray-300">·</span>
+            <a href="#non-peer" className="text-link">Non‑peer reviewed</a>
+          </nav>
         </div>
       </section>
 
@@ -194,7 +196,7 @@ export default function PublicationsPage() {
             </div>
           </div>
 
-          <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
+          <h2 id="peer-reviewed" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
             Academic Publications
           </h2>
 
@@ -350,7 +352,7 @@ export default function PublicationsPage() {
           )}
 
           {/* Non‑peer reviewed publications */}
-          <h2 className="text-3xl font-light text-gray-900 mt-16 mb-8 border-b border-gray-200 pb-2">
+          <h2 id="non-peer" className="text-3xl font-light text-gray-900 mt-16 mb-8 border-b border-gray-200 pb-2">
             Non‑Peer Reviewed Publications
           </h2>
           {filteredNonPeer.length === 0 ? (
