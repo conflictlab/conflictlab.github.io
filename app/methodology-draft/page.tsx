@@ -205,7 +205,8 @@ export default function MethodologyDraftPage() {
               <p className="text-gray-700 mt-2">
                 No. We explicitly test out‑of‑country, out‑of‑region, and out‑of‑period generalization and find that core
                 shapes recur across contexts. Because alignment handles speed differences, the model recognizes the same
-                dynamics when they unfold faster or slower, or in different decades.
+                dynamics when they unfold faster or slower, or in different decades. See our
+                {' '}<a href="/academicPapers/working-papers/predictability-29.pdf" target="_blank" rel="noopener noreferrer" className="text-link">Predictability working paper</a>.
               </p>
             </div>
 
@@ -286,4 +287,3 @@ export default function MethodologyDraftPage() {
     </>
   )
 }
-
