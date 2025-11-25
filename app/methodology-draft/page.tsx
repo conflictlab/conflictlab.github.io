@@ -215,6 +215,8 @@ export default function MethodologyDraftPage() {
               <p className="text-gray-700 mt-2">
                 Yes. We produce PRIO‑GRID (0.5°) forecasts alongside country‑level outputs. The grid approach captures
                 local persistence and spillovers, and is visualized via 3D space–time shapes and diffusion animations.
+                See the 3D shapes working paper in our{' '}
+                <a href="/publications#working-papers" className="text-link">Working Papers</a>.
               </p>
             </div>
 

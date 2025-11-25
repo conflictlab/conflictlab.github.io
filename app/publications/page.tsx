@@ -301,7 +301,7 @@ export default function PublicationsPage() {
           )}
 
           {/* Working papers */}
-          <h2 className="text-3xl font-light text-gray-900 mt-16 mb-8 border-b border-gray-200 pb-2">
+          <h2 id="working-papers" className="text-3xl font-light text-gray-900 mt-16 mb-8 border-b border-gray-200 pb-2">
             Working Papers
           </h2>
           {filteredWorking.length === 0 ? (
