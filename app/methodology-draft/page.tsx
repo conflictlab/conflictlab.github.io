@@ -225,7 +225,10 @@ export default function MethodologyDraftPage() {
               <p className="text-gray-700 mt-2">
                 For short horizons, a purely autoregressive, shape‑matching approach performs on par with covariate‑augmented
                 versions. This makes the baseline attractive when exogenous data are delayed or noisy, and provides a strong,
-                transparent reference for practitioners.
+                transparent reference for practitioners. See
+                {' '}<a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">EPJ Data Science</a>
+                {' '}and the
+                {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">Journal of Peace Research paper on accounting for variability</a>.
               </p>
             </div>
 
