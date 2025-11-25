@@ -14,7 +14,7 @@ export default function MethodologyDraftPage() {
     <>
       {/* Hero */}
       <section className="pt-14 pb-10 md:pt-16 md:pb-12 hero-background-network-image">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-3 leading-tight">Methodology (Draft)</h1>
           <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-3xl">
             How we forecast geopolitical conflict, civil unrest, and migration.
@@ -86,7 +86,7 @@ export default function MethodologyDraftPage() {
 
       {/* Forecast scope */}
       <section id="scope" className="py-12 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-light text-gray-900 mb-4">Forecast Scope</h3>
           <p className="text-gray-700 leading-relaxed mb-4">
             We forecast conflict fatalities and unrest intensity over short to medium horizons. Typical horizons are
@@ -134,7 +134,7 @@ export default function MethodologyDraftPage() {
       {/* Why shape‑based analog forecasting */}
       <section id="why-analog" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
+          <div className="mb-10">
             <h3 className="text-3xl font-light text-gray-900 mb-3">Why Shape‑Based Analog Forecasting</h3>
             <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
               We treat each evolving trajectory (country or grid cell) as a <em>shape in time</em> and search the historical
@@ -177,15 +177,15 @@ export default function MethodologyDraftPage() {
       {/* Examples & demos */}
       <section id="demos" className="py-10 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-light text-gray-900 mb-6 text-center">Examples & Demos</h3>
+          <h3 className="text-2xl font-light text-gray-900 mb-6">Examples & Demos</h3>
         </div>
       </section>
 
       {/* Interactive DTW intuition */}
       <section className="py-10 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-light text-gray-900 mb-4 text-center">How alignment works (DTW)</h3>
-          <p className="text-gray-700 text-center max-w-3xl mx-auto mb-6">
+          <h3 className="text-2xl font-light text-gray-900 mb-4">How alignment works (DTW)</h3>
+          <p className="text-gray-700 max-w-3xl mb-6">
             Similar dynamics can unfold at different speeds. DTW aligns sequences to reveal common structure even when
             one pattern accelerates or lags relative to another.
           </p>
@@ -198,9 +198,9 @@ export default function MethodologyDraftPage() {
       {/* Subnational dynamics and diffusion */}
       <section id="subnational" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
+          <div className="mb-8">
             <h3 className="text-3xl font-light text-gray-900 mb-3">Subnational Dynamics and Diffusion</h3>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 font-light max-w-3xl">
               We model how risk appears, persists, and spreads across adjacent PRIO‑GRID (0.5°) cells. The method combines
               local history with neighborhood exposure to recover waves of escalation and hotspot formation that national
               aggregates can hide.
@@ -227,7 +227,7 @@ export default function MethodologyDraftPage() {
           <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow">
             <Image src="/academicPapers/methods/Figs/3dShapes.jpg" alt="3D spatiotemporal shapes of conflict trajectories" width={1400} height={900} className="w-full h-auto" />
           </div>
-          <p className="text-center text-sm text-gray-600 mt-3 max-w-3xl mx-auto">
+          <p className="text-sm text-gray-600 mt-3 max-w-3xl">
             Space–time trajectories represented as 3D shapes (latitude, longitude, time). Similar shapes indicate comparable
             dynamics even when they occur in different countries or decades.
           </p>
@@ -239,9 +239,9 @@ export default function MethodologyDraftPage() {
       {/* Evidence & results */}
       <section id="evidence" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
+          <div className="mb-8">
             <h3 className="text-3xl font-light text-gray-900 mb-3">Evidence & Results</h3>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">Out‑of‑sample tests across space and time, plus cross‑domain applications.</p>
+            <p className="text-lg text-gray-600 font-light max-w-3xl">Out‑of‑sample tests across space and time, plus cross‑domain applications.</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-4 text-gray-700 leading-relaxed">
@@ -271,7 +271,7 @@ export default function MethodologyDraftPage() {
 
           {/* Performance highlights from internal report */}
           <div className="mt-10">
-            <h4 className="text-xl font-medium text-gray-900 mb-4 text-center">Performance highlights</h4>
+            <h4 className="text-xl font-medium text-gray-900 mb-4">Performance highlights</h4>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="text-sm text-gray-600 mb-2">Forecasts vs actuals (Feb–Jul 2024)</div>
