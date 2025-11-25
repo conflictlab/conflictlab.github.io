@@ -120,9 +120,25 @@ export default function MethodologyDraftPage() {
           <div className="text-center mb-8">
             <h3 className="text-3xl font-light text-gray-900 mb-3">Subnational Dynamics and Diffusion</h3>
             <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
-              At PRIO‑GRID resolution, we model the appearance, persistence, and spread of conflict risk across neighboring
-              cells. This captures waves of escalation and hotspots that country‑level aggregates can hide.
+              We model how risk appears, persists, and spreads across adjacent PRIO‑GRID (0.5°) cells. The method combines
+              local history with neighborhood exposure to recover waves of escalation and hotspot formation that national
+              aggregates can hide.
             </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto text-gray-700 leading-relaxed mb-8">
+            <h4 className="text-lg font-medium text-gray-900 mb-2">How the diffusion mechanism is captured</h4>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><span className="font-medium">Units:</span> Each PRIO‑GRID cell has a monthly outcome (e.g., fatalities) and lagged local history.</li>
+              <li><span className="font-medium">Neighborhood exposure:</span> For every month, we compute distance‑decayed exposure to nearby activity (e.g., within 1–3 cell radii) using
+                rook/queen contiguity and optional road/travel‑time weights to reflect corridors.</li>
+              <li><span className="font-medium">Front dynamics:</span> Features track the distance to the most recent events (“how far is the front?”) and whether the front is advancing or receding.</li>
+              <li><span className="font-medium">Persistence vs. activation:</span> We separate the chance that an active cell stays active (persistence) from the chance that an inactive cell turns on (activation),
+                given its neighborhood exposure and recent local history.</li>
+              <li><span className="font-medium">Analog matching at grid level:</span> For a target cell/time window, we find historical cell‑windows with similar local+neighbor patterns and follow their
+                realized futures to form a predictive mixture for the target cell.</li>
+              <li><span className="font-medium">3D shapes:</span> We also embed trajectories as space–time shapes (lat, lon, t). Similar shapes correspond to comparable diffusion paths and hotspot evolution.</li>
+            </ul>
           </div>
 
           <div className="mb-8"><PrioGridAnimation /></div>
