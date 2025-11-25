@@ -20,6 +20,9 @@ export default function MethodologyDraftPage() {
             How we forecast geopolitical conflict, civil unrest, and migration.
           </p>
           <p className="text-xs text-gray-500 mt-2">This is a working page for internal review. Not linked site‑wide.</p>
+          <div className="mt-3">
+            <a href="#faq" className="text-sm text-pace-red hover:text-pace-red-dark">Jump to FAQ ↴</a>
+          </div>
         </div>
       </section>
 
@@ -213,7 +216,7 @@ export default function MethodologyDraftPage() {
       {/* Q&A */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-light text-gray-900 mb-6">Questions & Answers</h3>
+          <h3 id="faq" className="text-2xl font-light text-gray-900 mb-6">Questions & Answers</h3>
           <div className="space-y-8">
             <div>
               <h4 className="text-lg font-medium text-gray-900">Are the patterns specific to a country, region, or epoch?</h4>
