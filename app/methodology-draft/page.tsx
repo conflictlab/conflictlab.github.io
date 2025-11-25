@@ -100,6 +100,37 @@ export default function MethodologyDraftPage() {
         </div>
       </section>
 
+      {/* Core algorithm (moved up) */}
+      <section id="algorithm" className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <h3 className="text-3xl font-light text-gray-900">Core Algorithm</h3>
+            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">End‑to‑end flow and the analog forecast recipe.</p>
+          </div>
+          <div className="mb-8"><MethodologyFlowchart /></div>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-3 text-gray-700 leading-relaxed">
+              <ol className="list-decimal pl-5 space-y-2">
+                <li>Window the recent trajectory (normalize as needed).</li>
+                <li>Measure similarity with DTW; select the K nearest historical windows.</li>
+                <li>Borrow futures: take the subsequent outcomes for each match at horizons 1–6 months.</li>
+                <li>Aggregate: average (centroid) across matched futures for the point forecast.</li>
+                <li>Uncertainty: the matched futures form an empirical distribution for intervals and exceedances.</li>
+              </ol>
+              <p>
+                Predictive mixture (equal weights):
+                <span className="font-mono"> p<sub>h</sub>(y) = (1/K) · ∑<sub>k=1..K</sub> δ(y − y<sub>k,h</sub>)</span>
+              </p>
+            </div>
+            <div className="grid gap-4">
+              <Image src="/academicPapers/methods/Figs/method1.png" alt="Analog matching step" width={1000} height={700} className="rounded-lg border border-gray-200 w-full h-auto" />
+              <Image src="/academicPapers/methods/Figs/method2.png" alt="Forecast aggregation step" width={1000} height={700} className="rounded-lg border border-gray-200 w-full h-auto" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why shape‑based analog forecasting */}
       <section id="why-analog" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -162,36 +193,7 @@ export default function MethodologyDraftPage() {
         </div>
       </section>
 
-      {/* Core algorithm */}
-      <section id="algorithm" className="py-12 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-6">
-            <h3 className="text-3xl font-light text-gray-900">Core Algorithm</h3>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">End‑to‑end flow and the analog forecast recipe.</p>
-          </div>
-          <div className="mb-8"><MethodologyFlowchart /></div>
-
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-3 text-gray-700 leading-relaxed">
-              <ol className="list-decimal pl-5 space-y-2">
-                <li>Window the recent trajectory (normalize as needed).</li>
-                <li>Measure similarity with DTW; select the K nearest historical windows.</li>
-                <li>Borrow futures: take the subsequent outcomes for each match at horizons 1–6 months.</li>
-                <li>Aggregate: average (centroid) across matched futures for the point forecast.</li>
-                <li>Uncertainty: the matched futures form an empirical distribution for intervals and exceedances.</li>
-              </ol>
-              <p>
-                Predictive mixture (equal weights):
-                <span className="font-mono"> p<sub>h</sub>(y) = (1/K) · ∑<sub>k=1..K</sub> δ(y − y<sub>k,h</sub>)</span>
-              </p>
-            </div>
-            <div className="grid gap-4">
-              <Image src="/academicPapers/methods/Figs/method1.png" alt="Analog matching step" width={1000} height={700} className="rounded-lg border border-gray-200 w-full h-auto" />
-              <Image src="/academicPapers/methods/Figs/method2.png" alt="Forecast aggregation step" width={1000} height={700} className="rounded-lg border border-gray-200 w-full h-auto" />
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Subnational dynamics and diffusion */}
       <section id="subnational" className="py-12 bg-white">
