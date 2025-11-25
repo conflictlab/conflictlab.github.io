@@ -145,7 +145,8 @@ export const nonPeerPublications: Publication[] = [
     authors: 'Humanitarian Forecast Working Group',
     title: 'Harnessing AI: How to develop and integrate automated prediction systems for humanitarian anticipatory action',
     venue: 'CEPR Policy Insight No. 135, CEPR Press (Paris & London)',
-    abstract: 'Guidance on designing, validating, and operationalizing AI‑enabled forecasting systems for humanitarian anticipatory action, with an emphasis on risk communication, governance, and integration into decision workflows.',
+    abstract: 'Despite unprecedented access to data, resources, and wealth, the world faces an escalating wave of humanitarian crises. Armed conflict, climate-induced disasters, and political instability are displacing millions and devastating communities. Nearly one in every five children are living in or fleeing conflict zones (OCHA, 2024). Often the impacts of conflict and climatic hazards – such as droughts and flood – exacerbate each other, leading to even greater suffering. As crises unfold and escalate, the need for timely and effective humanitarian action becomes paramount. Sophisticated systems for forecasting and monitoring natural and man-made hazards have emerged as critical tools to help inform and prompt action. The full potential for the use of such automated forecasting systems to inform anticipatory action (AA) is immense but is still to be realised. By providing early warnings and predictive insights, these systems could help organisations allocate resources more efficiently, plan interventions more effectively, and ultimately save lives and prevent or reduce humanitarian impact. This Policy Insight provides an account of the significant technical, ethical, and organisational difficulties involved in such systems, and the current solutions in place.',
+    url: 'https://cepr.org/publications/policy-insight-135-harnessing-ai-how-develop-and-integrate-automated-prediction',
   },
   {
     year: 2023,
@@ -154,5 +155,25 @@ export const nonPeerPublications: Publication[] = [
     venue: 'R package, version 0.1.0',
     abstract: 'R package implementing Dynamic Synthetic Controls to account for varying reaction speeds in comparative case studies, improving treatment effect estimation.',
     url: 'https://github.com/conflictlab/dsc',
+  },
+]
+
+// Working papers (preprints, in progress manuscripts)
+export const workingPapers: Publication[] = [
+  {
+    year: 2025,
+    authors: 'PaCE Conflict Research Lab',
+    title: 'Predictability of Conflict Patterns',
+    venue: 'Working paper',
+    abstract: 'We examine the extent to which conflict dynamics exhibit recurrent shapes that generalize across countries, regions, and periods, and evaluate out‑of‑sample predictability using shape‑based analog forecasting.',
+    url: '/academicPapers/working-papers/predictability-29.pdf',
+  },
+  {
+    year: 2025,
+    authors: 'PaCE Conflict Research Lab',
+    title: 'Subnational Forecasting with 3D Spatiotemporal Shapes',
+    venue: 'Working paper',
+    abstract: 'We represent country‑ and grid‑level trajectories as 3D shapes (latitude, longitude, time) to capture diffusion and hotspot dynamics and generate subnational forecasts. Draft available on request.',
+    // No URL for now per request
   },
 ]

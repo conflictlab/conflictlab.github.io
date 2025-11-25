@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Search, X } from 'lucide-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-import { publications, nonPeerPublications, Publication } from '@/content/publications'
+import { publications, nonPeerPublications, workingPapers, Publication } from '@/content/publications'
 
 export default function PublicationsPage() {
   const searchParams = useSearchParams()
@@ -39,6 +39,17 @@ export default function PublicationsPage() {
     })
   }, [searchQuery])
 
+  const filteredWorking = useMemo(() => {
+    return workingPapers.filter(pub => {
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase()
+        const searchableText = `${pub.title} ${pub.authors} ${pub.venue} ${pub.abstract}`.toLowerCase()
+        if (!searchableText.includes(query)) return false
+      }
+      return true
+    })
+  }, [searchQuery])
+
   // Group filtered publications by year
   const publicationsByYear = filteredPublications.reduce((acc, pub) => {
     if (!acc[pub.year]) {
@@ -59,6 +70,16 @@ export default function PublicationsPage() {
   }, {} as Record<number, Publication[]>)
 
   const nonPeerYears = Object.keys(nonPeerByYear)
+    .map(Number)
+    .sort((a, b) => b - a)
+
+  const workingByYear = filteredWorking.reduce((acc, pub) => {
+    if (!acc[pub.year]) acc[pub.year] = []
+    acc[pub.year].push(pub)
+    return acc
+  }, {} as Record<number, Publication[]>)
+
+  const workingYears = Object.keys(workingByYear)
     .map(Number)
     .sort((a, b) => b - a)
 
@@ -169,7 +190,7 @@ export default function PublicationsPage() {
 
             {/* Results count */}
             <div className="text-sm text-gray-600">
-              Academic: showing {filteredPublications.length} of {publications.length}. Non‑peer reviewed: showing {filteredNonPeer.length} of {nonPeerPublications.length}.
+              Academic: {filteredPublications.length}/{publications.length} · Working papers: {filteredWorking.length}/{workingPapers.length} · Non‑peer reviewed: {filteredNonPeer.length}/{nonPeerPublications.length}
             </div>
           </div>
 
@@ -276,6 +297,55 @@ export default function PublicationsPage() {
                 })}
               </div>
             ))}
+            </div>
+          )}
+
+          {/* Working papers */}
+          <h2 className="text-3xl font-light text-gray-900 mt-16 mb-8 border-b border-gray-200 pb-2">
+            Working Papers
+          </h2>
+          {filteredWorking.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-600">No working papers match your search.</p>
+            </div>
+          ) : (
+            <div className="space-y-8">
+              {workingYears.map((year) => (
+                <div key={`wp-${year}`}>
+                  <span className="text-2xl font-light text-gray-900">{year}</span>
+                  <div className="mt-4 space-y-6">
+                    {workingByYear[year].map((pub, pubIndex) => (
+                      <div key={`wp-${year}-${pubIndex}`} className="grid grid-cols-[100px_1fr] gap-6">
+                        <div className="text-right"></div>
+                        <div>
+                          <div className="mb-2">
+                            {pub.url ? (
+                              <a href={pub.url} target="_blank" rel="noopener noreferrer" className="text-base font-light text-gray-900 hover:text-pace-red transition-colors">
+                                {pub.title}
+                              </a>
+                            ) : (
+                              <span className="text-base font-light text-gray-900">{pub.title}</span>
+                            )}
+                            <span className="text-sm text-gray-600"> — {pub.authors}</span>
+                            <span className="text-sm text-pace-red italic"> — {pub.venue}</span>
+                          </div>
+                          {pub.abstract && (
+                            <details className="group">
+                              <summary className="cursor-pointer text-sm text-gray-600 hover:text-gray-900 transition-colors list-none">
+                                <span className="inline-flex items-center">
+                                  <span className="mr-2 group-open:rotate-90 transition-transform">▶</span>
+                                  Summary
+                                </span>
+                              </summary>
+                              <p className="mt-2 text-sm text-gray-600 leading-relaxed pl-6">{pub.abstract}</p>
+                            </details>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
