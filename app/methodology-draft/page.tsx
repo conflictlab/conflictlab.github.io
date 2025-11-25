@@ -273,7 +273,7 @@ export default function MethodologyDraftPage() {
                 Concretely: (1) select the K nearest analog windows by DTW (or related) distance; (2) assign
                 weights w proportional to a decaying kernel of the distance or rank; (3) for each horizon h,
                 collect the realized outcomes from those analogs and treat the predictive distribution as the
-                empirical mixture p_h(y) = ∑_k w_k · δ(y − y_{k,h}). From this distribution we compute point
+                empirical mixture <span className="font-mono">p<sub>h</sub>(y) = ∑<sub>k</sub> w<sub>k</sub> · δ(y − y<sub>k,h</sub>)</span>. From this distribution we compute point
                 forecasts (mean/median), prediction intervals (50/80/95%), similarity‑weighted quantiles, and
                 exceedance probabilities (e.g., P[y ≥ threshold]).
               </p>
