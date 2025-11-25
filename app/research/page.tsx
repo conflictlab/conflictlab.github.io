@@ -49,7 +49,7 @@ export default function ResearchPage() {
           <div className="border border-gray-200 rounded-lg p-6 max-w-3xl">
             <h3 className="text-xl font-light text-gray-900 mb-2">Methods at a glance</h3>
             <p className="text-gray-700 leading-relaxed">
-              We combine transparent statistical models with event, financial, and geospatial data to forecast conflict fatalities
+              We combine transparent statistical models with event and geospatial data to forecast conflict fatalities
               over 1–6 month horizons.
               <Link href="/methodology" className="text-pace-red hover:text-pace-red-dark ml-2">Read more</Link>
             </p>
