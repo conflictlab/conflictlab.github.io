@@ -190,10 +190,7 @@ export default function PublicationsPage() {
               </div>
             )}
 
-            {/* Results count */}
-            <div className="text-sm text-gray-600">
-              Academic: {filteredPublications.length}/{publications.length} · Working papers: {filteredWorking.length}/{workingPapers.length} · Non‑peer reviewed: {filteredNonPeer.length}/{nonPeerPublications.length}
-            </div>
+            {/* Results count removed per request */}
           </div>
 
           <h2 id="peer-reviewed" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
