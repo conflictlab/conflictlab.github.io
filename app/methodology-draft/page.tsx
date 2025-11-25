@@ -266,6 +266,49 @@ export default function MethodologyDraftPage() {
               <a href="/academicPapers/working-papers/predictability-29.pdf" target="_blank" rel="noopener noreferrer" className="text-link">Predictability working paper</a>.
             </p>
           </div>
+
+          {/* Performance highlights from internal report */}
+          <div className="mt-10">
+            <h4 className="text-xl font-medium text-gray-900 mb-4 text-center">Performance highlights</h4>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="text-sm text-gray-600 mb-2">Forecasts vs actuals (Feb–Jul 2024)</div>
+                <div className="grid grid-cols-2 gap-2 mb-2">
+                  <Image src="/performance/pred_map.png" alt="Predicted fatalities map" width={600} height={400} className="w-full h-auto rounded" />
+                  <Image src="/performance/true_map.png" alt="Observed fatalities map" width={600} height={400} className="w-full h-auto rounded" />
+                </div>
+                <Image src="/performance/Fore_map.png" alt="Percentage error map" width={1200} height={700} className="w-full h-auto rounded" />
+                <p className="text-xs text-gray-600 mt-2">Top: predictions vs observed. Bottom: percentage error map (blue=over, red=under) for countries with ≥15 observed fatalities.</p>
+              </div>
+
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="text-sm text-gray-600 mb-2">Top‑30 high‑fatality countries</div>
+                <Image src="/performance/Fore_all.png" alt="Predicted vs observed for top-30 countries (log scale)" width={900} height={600} className="w-full h-auto rounded" />
+                <p className="text-xs text-gray-600 mt-2">Log‑scale comparison of predicted vs observed fatalities across highest‑fatality cases.</p>
+                <div className="mt-3">
+                  <div className="text-sm text-gray-800">Trend classification</div>
+                  <Image src="/performance/Heatmap.png" alt="Confusion matrix for trend classification" width={900} height={600} className="w-full h-auto rounded" />
+                  <p className="text-xs text-gray-600 mt-1">Observed: 65% decrease, 25% increase, 10% stable. Accuracy: 72%; 12% adjacent; 16% opposite.</p>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="text-sm text-gray-600 mb-2">Benchmark comparisons</div>
+                <Image src="/performance/Views.png" alt="MSE log ratio vs VIEWS" width={900} height={600} className="w-full h-auto rounded mb-3" />
+                <div className="grid grid-cols-2 gap-2">
+                  <Image src="/performance/ConflictForecast_1.png" alt="Error log ratio vs ConflictForecast (Feb–Apr)" width={600} height={400} className="w-full h-auto rounded" />
+                  <Image src="/performance/ConflictForecast_2.png" alt="Error log ratio vs ConflictForecast (May–Jul)" width={600} height={400} className="w-full h-auto rounded" />
+                </div>
+                <p className="text-xs text-gray-600 mt-2">Per‑country log MSE ratios: red = our model closer to observed; blue = benchmark closer.</p>
+              </div>
+            </div>
+
+            <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="text-sm text-gray-800 mb-2">Trajectory alignment examples</div>
+              <Image src="/performance/dtw_best.png" alt="DTW: best matched trajectories" width={1200} height={700} className="w-full h-auto rounded" />
+              <p className="text-xs text-gray-600 mt-2">Representative cases where predicted dynamics align closely with observed (allowing for small timing lags via DTW alignment).</p>
+            </div>
+          </div>
         </div>
       </section>
 
