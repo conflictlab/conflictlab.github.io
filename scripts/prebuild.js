@@ -22,6 +22,11 @@ async function main() {
   console.log('Prebuild: syncing forecasts from GitHub…')
   run('node scripts/sync-forecasts-from-github.js --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv')
 
+  // Ensure recent raw CSVs are mirrored to public for downloads
+  console.log('Prebuild: mirroring full raw CSV history to public/data/csv …')
+  // --limit 0 means copy all
+  run('node scripts/mirror-raw-csvs.js --limit 0')
+
   // Determine current period from latest snapshot to allow caching checks
   let period = null
   try {
