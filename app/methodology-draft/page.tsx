@@ -289,7 +289,7 @@ export default function MethodologyDraftPage() {
             <h4 className="text-xl font-medium text-gray-900 mb-4">Performance highlights</h4>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <div className="text-sm text-gray-600 mb-2">Forecasts vs actuals (Feb–Jul 2024)</div>
+                <div className="text-sm text-gray-600 mb-2">Forecasts vs observed (latest 6 months)</div>
                 <div className="grid grid-cols-2 gap-2 mb-2">
                   <Image src="/performance/pred_map.png" alt="Predicted fatalities map" width={600} height={400} className="w-full h-auto rounded" />
                   <Image src="/performance/true_map.png" alt="Observed fatalities map" width={600} height={400} className="w-full h-auto rounded" />
