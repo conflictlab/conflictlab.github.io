@@ -280,6 +280,8 @@ draw_map_numeric(world_features, vals, plt.get_cmap('coolwarm'), mpl.colors.Norm
 try:
     vals = df_pred.sum().dropna().to_dict()
     draw_map_numeric(world_features, vals, plt.get_cmap('Reds'), mpl.colors.LogNorm(vmin=1, vmax=10000), os.path.join(OUTPUT_DIR, 'pred_map.pdf'), hatch_missing=False)
+    # Also export a PNG for site usage
+    draw_map_numeric(world_features, vals, plt.get_cmap('Reds'), mpl.colors.LogNorm(vmin=1, vmax=10000), os.path.join(OUTPUT_DIR, 'pred_map.png'), hatch_missing=False)
 except Exception:
     # fallback to overlap if needed
     vals = df_pred_overlap.sum().dropna().to_dict()
@@ -292,6 +294,8 @@ if len(df_true) == 0:
 else:
     vals = true_sums.dropna().to_dict()
     draw_map_numeric(world_features, vals, plt.get_cmap('Reds'), mpl.colors.LogNorm(vmin=1, vmax=10000), os.path.join(OUTPUT_DIR, 'true_map.pdf'), hatch_missing=False)
+    # Also export a PNG for site usage
+    draw_map_numeric(world_features, vals, plt.get_cmap('Reds'), mpl.colors.LogNorm(vmin=1, vmax=10000), os.path.join(OUTPUT_DIR, 'true_map.png'), hatch_missing=False)
 
 
 # =============================================================================

@@ -28,6 +28,27 @@ export default function MethodologyDraftPage() {
         </div>
       </section>
 
+      {/* Data */}
+      <section id="data" className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-light text-gray-900 mb-4">Data</h3>
+          <div className="text-gray-700 leading-relaxed space-y-3 max-w-4xl">
+            <p>
+              Our primary outcome is the monthly number of conflict fatalities. We use the UCDP Georeferenced Event Dataset
+              ("best" estimates), aggregated to country–month and PRIO‑GRID (0.5°) cell–month units, 1989–present.
+            </p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li><span className="font-medium">Processing:</span> standard cleaning, harmonization, and aggregation to consistent spatial units and monthly periods.</li>
+              <li><span className="font-medium">Refresh cadence:</span> updated as source data refresh; forecasts regenerate on new snapshots.</li>
+              <li><span className="font-medium">Optional covariates:</span> population and accessibility, climate anomalies, night‑lights, governance and economic indicators, and spatial lags.</li>
+            </ul>
+            <p className="text-sm text-gray-600">
+              Country‑level and grid‑level datasets are available on the <a href="/downloads" className="text-link">Downloads</a> page.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Design principles */}
       <section id="principles" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,7 +92,6 @@ export default function MethodologyDraftPage() {
                 <a href="#principles" className="text-link">Design principles</a>
                 <a href="#why-analog" className="text-link">Why analog</a>
                 <a href="#algorithm" className="text-link">Core algorithm</a>
-                <a href="#demos" className="text-link">Examples & demos</a>
                 <a href="#subnational" className="text-link">Subnational</a>
                 <a href="#evidence" className="text-link">Evidence</a>
                 <a href="#faq" className="text-link">FAQ</a>
@@ -174,12 +194,7 @@ export default function MethodologyDraftPage() {
         </div>
       </section>
 
-      {/* Examples & demos */}
-      <section id="demos" className="py-10 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-light text-gray-900 mb-6">Examples & Demos</h3>
-        </div>
-      </section>
+      
 
       {/* Interactive DTW intuition */}
       <section className="py-10 bg-gray-50">
@@ -272,7 +287,7 @@ export default function MethodologyDraftPage() {
           {/* Performance highlights from internal report */}
           <div className="mt-10">
             <h4 className="text-xl font-medium text-gray-900 mb-4">Performance highlights</h4>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="text-sm text-gray-600 mb-2">Forecasts vs actuals (Feb–Jul 2024)</div>
                 <div className="grid grid-cols-2 gap-2 mb-2">
@@ -294,15 +309,7 @@ export default function MethodologyDraftPage() {
                 </div>
               </div>
 
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <div className="text-sm text-gray-600 mb-2">Benchmark comparisons</div>
-                <Image src="/performance/Views.png" alt="MSE log ratio vs VIEWS" width={900} height={600} className="w-full h-auto rounded mb-3" />
-                <div className="grid grid-cols-2 gap-2">
-                  <Image src="/performance/ConflictForecast_1.png" alt="Error log ratio vs ConflictForecast (Feb–Apr)" width={600} height={400} className="w-full h-auto rounded" />
-                  <Image src="/performance/ConflictForecast_2.png" alt="Error log ratio vs ConflictForecast (May–Jul)" width={600} height={400} className="w-full h-auto rounded" />
-                </div>
-                <p className="text-xs text-gray-600 mt-2">Per‑country log MSE ratios: red = our model closer to observed; blue = benchmark closer.</p>
-              </div>
+              {/* Benchmark comparisons intentionally omitted on this page */}
             </div>
 
             <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
