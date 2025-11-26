@@ -97,6 +97,7 @@ export default function MethodologyDraftPage() {
                 <a href="#faq" className="text-link">FAQ</a>
                 <a href="#limits" className="text-link">Limitations</a>
                 <a href="#usage" className="text-link">How to use</a>
+                <a href="#cite" className="text-link">How to cite</a>
                 <a href="#refs" className="text-link">References</a>
               </div>
             </nav>
@@ -117,6 +118,26 @@ export default function MethodologyDraftPage() {
             <li><span className="font-medium">Country:</span> National aggregates for cross‑country comparison and strategic planning.</li>
             <li><span className="font-medium">Subnational (PRIO‑GRID 0.5°):</span> Gridded forecasts that capture spatial diffusion, hotspots, and heterogeneity within countries.</li>
           </ul>
+        </div>
+      </section>
+
+      {/* How to Cite */}
+      <section id="cite" className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-light text-gray-900 mb-4">How to Cite</h3>
+          <div className="text-gray-700 leading-relaxed space-y-3 max-w-4xl">
+            <p>If you use PaCE forecasts, methods, or figures in your work, please cite:</p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                Chadefaux, T. (2023). <span className="italic">An automated pattern recognition system for conflict</span>. Journal of Computational Science.
+                {' '}<a href="https://www.sciencedirect.com/science/article/pii/S1877750323001345" target="_blank" rel="noopener noreferrer" className="text-link">Publisher link</a>
+              </li>
+            </ul>
+            <div className="text-sm bg-gray-50 border border-gray-200 rounded p-3">
+              <div className="font-medium text-gray-800 mb-1">Copy citation</div>
+              <pre className="whitespace-pre-wrap">Chadefaux, T. (2023). An automated pattern recognition system for conflict. Journal of Computational Science. https://www.sciencedirect.com/science/article/pii/S1877750323001345</pre>
+            </div>
+          </div>
         </div>
       </section>
 
