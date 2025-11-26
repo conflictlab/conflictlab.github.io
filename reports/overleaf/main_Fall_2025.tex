@@ -1,0 +1,295 @@
+\documentclass[twocolumn]{erdc}
+\usepackage{lipsum,url,multicol, wrapfig,lipsum}
+\usepackage{natbib}
+\usepackage{subcaption} 
+\usepackage[utf8]{inputenc}
+
+\usepackage{geometry}
+\usepackage{subcaption}
+\usepackage[justification=justified,singlelinecheck=false]{caption}
+
+%\geometry{margin=1in}
+\usepackage[]{ragged2e}
+\usepackage{graphicx, comment}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{float}
+\usepackage{stfloats}
+\usepackage{setspace, hyperref}  \newcommand{\HRule}{\rule{\textwidth}{0.5mm}}
+
+
+\begin{document}
+\onecolumn
+\frontmatter
+
+\reportnum{PaCE/2025/02/sb}
+
+\program{}
+
+\title{Forecasting Report}
+
+% Dynamic subtitle injected by generator
+\input{meta}
+\subtitle{\ReportSubtitle}
+
+% Date provided by generator (ReportDate)
+\date{\ReportDate}
+\author{}
+
+\affiliation{PaCE \\Trinity College Dublin, The University of Dublin\\
+College Green\\
+Dublin 2, Ireland\\
+\url{https://www.forecastlab.org/}
+}
+
+
+
+
+
+\affiliation{}
+
+\coverart{Fig/slide1}
+
+\reporttype{}
+
+\additionalinfo{}
+
+%\begin{abstract}%
+%We find that .....
+%\end{abstract}
+
+%\disclaimer{Some other disclaimer}
+
+\preparedfor{Thomas Schincariol \& Thomas Chadefaux} 
+
+\contractnum{This project has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (grant agreement No 101002240).}
+
+
+
+
+\monitoredby{The contents of this report are not to be used for
+advertising, publication, or promotional purposes. Citation of trade
+names does not constitute an official endorsement or approval of the
+use of such commercial products. All product names and trademarks
+cited are the property of their respective owners. The findings of
+this report are not to be construed as an official position of Trinity College Dublin unless so designated by other authorized documents.}
+
+%\preparedfor{}
+
+\maketitle
+
+\twocolumn
+\newgeometry{left=1.45cm,right=1.45cm, bottom=2cm, top=2cm}
+\justifying
+
+\begin{onecolumn} 
+\noindent 
+\HRule \\
+This report presents conflict fatalities forecasts for the period from \PredictedPeriod. Using data from the Uppsala Conflict Data Program (UCDP), we generated country-month predictions for the next six months.
+
+In this report, we compare our forecasts with actual observed fatalities and assess the accuracy of our model across various regions. This analysis helps identify areas where the model performed well and where it can be improved, offering insights that could inform strategic decision-making in conflict prevention and resource allocation.
+Key findings include:
+
+\begin{itemize} 
+\item \textbf{High-accuracy regions}: The model performed well in high-intensity conflict zones such as Ukraine and the Sudan, with predictions closely matching actual outcomes. 
+\item \textbf{Over/underpredictions}: Underpredictions were seen in regions like Russia and Lebanon, while overpredictions occurred in Burkina Faso and Venezuela. 
+\item \textbf{Benchmark comparison}: Our model showed strong performance, achieving higher accuracy in approximately 60\% of cases compared to other forecasting models, highlighting different strengths across models depending on the region and conflict intensity.
+\end{itemize}
+ \HRule 
+%\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+
+\section*{Forecasts vs. Actual Outcomes.}
+
+%\renewcommand{\thefigure}{5}
+\begin{figure*}[!ht]
+    \centering
+\includegraphics[width=\textwidth]{Fig_2025/dtw_best.png}
+\caption{\ReportStatus Comparison of observed conflict fatalities (grey) and predicted fatalities (red) in selected countries for the observed period \ObservedPeriod.}
+    \label{fig:best_dtw}
+\end{figure*}
+
+\begin{figure}[H]
+    \centering
+    % Top map: predictions
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Fig_2025/pred_map}
+        \caption{Predicted Fatalities}
+        \label{fig:predictions}
+    \end{subfigure}
+
+    \vspace{0.5cm} % Adjust vertical space between images
+
+    % Middle map: truth (observed)
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Fig_2025/true_map}
+        \caption{Observed Fatalities (Truth)}
+        \label{fig:truth}
+    \end{subfigure}
+%
+    \vspace{0.5cm} % Adjust vertical space between images
+%
+    % Bottom map: difference
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Fig_2025/Fore_map}
+        \caption{Percentage error.}
+        \label{fig:difference}
+    \end{subfigure}
+
+\caption{(a) Predicted conflict fatalities, (b) observed conflict fatalities (truth), and (c) percentage error between predictions and observed outcomes. Red indicates underprediction; blue indicates overprediction.}
+    \label{fig:comparison_maps}
+\end{figure}
+
+
+
+
+\end{onecolumn}
+%
+%\
+\section*{Forecasting Performance}
+
+% \begin{multicols*}{2}
+%
+\begin{figure}[H]
+    \centering    \includegraphics[width=1\linewidth]{Fig_2025/Fore_all}
+    \caption{Logarithmic scale comparison of predicted conflict fatalities (grey) and observed fatalities for the 30 countries with the highest fatality counts. Red indicates regions where the model underpredicted fatalities, while blue highlights regions where the model overpredicted fatalities. The log scale emphasizes discrepancies in regions with extreme values.}
+    \label{fig:Fore_all}
+\end{figure}
+\noindent\textbf{Summary metrics} \quad
+% \input{tables/metrics}
+
+\medskip
+\noindent\textbf{Top absolute errors (six-month sums)} \quad
+% \input{tables/top_errors}
+\par Our model performed well overall in forecasting major conflicts like in Ukraine, Sudan, and Nigeria though we tend to underpredict---a common issue in conflict forecasting due to skewed data with many zero values. Notable discrepancies include underpredictions in Russia, Lebanon and DR Congo. The number of fatalities in those countries exploded compared to the previous period (x16 for Russia and x17 for Lebanon).   
+
+\par The percentage error (Mean Absolute Percentage Error, MAPE) for countries with more than 15 observed fatalities shows larger underpredictions in Russia and Lebanon, while South Africa and Israel/Palestine saw the largest overpredictions. More accurate predictions were seen in sub-Saharan Africa, Central and South America, and Asia, with Ukraine and most of the Middle East also showing low error rates, except for Israel/Palestine and Lebanon.
+
+%
+\begin{comment}
+\begin{figure*}[t!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Fig/Fore_map.png}
+    \caption{Map of the percentage of error. If the color is red, our model underpredicts and blue overpredicts. Only countries with more than 15 fatalities observed are included, while others are hatched in grey.}
+    \label{fig:Fore_map}
+\end{figure*}
+\end{comment}
+
+\section*{Classification}
+
+We grouped countries according to how the number of conflict-related fatalities changed during the six-month forecast period compared to the previous six months. The change is measured using a ratio between fatalities during the forecast period and those from the prior six months:
+
+This approach helps us understand whether violence in each country is rising, staying the same, or declining over time (see methodological appendix for details). 
+\vspace{1em}
+%\begin{wrapfigure}{l}{8cm}
+
+Figure \ref{heatmap} presents the confusion matrix for our predictions. Observed outcomes were: 64\% decrease, 26\% increase, and 10\% stable. The model achieved 69\% accuracy, with 17\% adjacent class predictions and 14\% opposite class predictions.
+%\par Figure \ref{heatmap_continu} shows the observed ratios on the x-axis and the predicted ratios on the y-axis. The grey dotted line represents a perfect prediction. The regression line falls slightly below the perfect line, consistent with our earlier finding that most predictions tend to underestimate actual values. However, overall, the two histograms of the ratio distributions—observed and predicted—are fairly similar.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{Fig_2025/Heatmap}
+\caption{Confusion matrix displaying the performance of the model in classifying countries based on conflict fatality trends (decrease, stable, increase). The x-axis shows predicted classifications, while the y-axis shows actual outcomes. Accurate predictions are along the diagonal, while errors are off-diagonal. This matrix helps evaluate the model’s accuracy in predicting changes in conflict dynamics.}\label{heatmap}
+\end{figure} 
+
+
+\section*{Benchmark comparison}
+%
+We compare our model's performance to two other leading open-source monthly fatality forecasts:  the \href{https://viewsforecasting.org/}{Violence \& Impacts Early-Warning System (VIEWS)} \citep{Hegre2021JPR} and \href{https://conflictforecast.org/}{Conflict Forecast} (CF) \cite{Mueller2024}. These models have different primary objectives and features. VIEWS provides forecasts for up to 36 months and offers both country-level and more detailed predictions.\footnote{Here, we rely on Views' Fatalities002 forecasts \citep{Hegre2022FCDO}. For this comparison, we adapted our model to consider only state-based fatalities, as Views provides forecasts exclusively for state-based events. This may explain differences observed when comparing the benchmarks for the same country.} We only compare its first six months of forecasts to match our model's timeframe.  ConflictForecast predicts total fatalities for the next three months, assesses armed conflict risk, and estimates the likelihood of violence. Fatality prediction is just one aspect of their model. Our comparison focuses solely on fatality predictions for the first six months. This is not a competition to determine the best model, but rather an effort to understand how our approach fits within the broader landscape of conflict forecasting.
+%
+\IfFileExists{Fig_2025/Views.png}{
+\begin{figure}[H]
+\includegraphics[width=0.9\linewidth]{Fig_2025/Views.png}
+\caption{Log ratio of the Mean Squared Error (MSE) comparing our model’s predictions to the VIEWS model’s predictions. Positive values indicate that our model performed better; negative values indicate VIEWS performed better.}\label{Views}
+\end{figure}
+}{}
+%
+\IfFileExists{Fig_2025/ConflictForecast_1.png}{
+\begin{figure*}[!b]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Fig_2025/ConflictForecast_1.png}
+        \caption{First three months}
+        \label{CF1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{Fig_2025/ConflictForecast_2.png}
+        \caption{Next three months}
+        \label{CF2}
+    \end{subfigure}
+    \caption{Comparison of absolute error (log ratio) between our model and ConflictForecast where available.}
+    \label{fig:CF_comparison}
+\end{figure*}
+}{}
+%
+%
+\IfFileExists{Fig_2025/Views.png}{
+\par We use the log ratio of the mean squared error (MSE) to measure each model's accuracy. This approach shows how much each model's predictions deviate from the actual fatalities. A positive log ratio (shown in red) means our model's predictions were closer to reality, while a negative ratio (in blue) indicates that the other model was more accurate.  
+\par Our model outperforms VIEWS in 73\% of cases and CF in 51\% and 50\% of cases for the first and second periods, respectively. We perform particularly well in mid-intensity conflicts like Somalia, Mexico, and Mali. However, VIEWS shows better accuracy in some mid-intensity cases (e.g., Pakistan, Sudan) and low-intensity conflicts (e.g., Colombia). CF excels in Israel/Palestine for both periods and outperforms our model in several high-intensity zones (e.g., Ukraine, Nigeria) during both periods, possibly due to the significance of the news-based predictors in those conflicts, compared to more autoregressive models. In the cases of Russia and Lebanon, who know the biggest rise, the regional context (Ukraine and Israel/Palestine, respectively) could help the prediction.
+}{}
+
+% \end{multicols*}
+
+\clearpage
+\newpage
+\section*{Appendix: Methodology}
+
+This section provides an overview of the methodology used to generate conflict fatalities forecasts for the period from August 2024 to January 2025. The forecasts were produced using data from the Uppsala Conflict Data Program (UCDP) up to July 2024. The goal of our approach is to forecast fatalities on a country-month level by applying advanced predictive models that capture both static and dynamic aspects of conflict patterns. The full methodology and additional technical details can be found in \cite{chadefaux2022shape,chadefaux2023automated,schincariol2024temporal,Schincariol2024,Schincariol_JoF}. %\href{https://21024c1e-d73a-4ff3-9f63-41c5a94563f5.usrfiles.com/ugd/21024c_18c99c39372b45d7858c2ce35f8b15f6.pdf}{here}.
+
+\subsection*{Data Sources}
+
+The primary source for conflict event data is the UCDP Georeferenced Event Dataset (GED). This dataset provides a detailed and comprehensive account of conflict events involving government forces, non-state actors, and organized armed groups, including fatality counts. The dataset is updated regularly and includes information on event locations, time periods, and actors involved.  For our forecast model, we use UCDP-GED data available through July 2024. The data was aggregated to the country-month level. 
+
+\subsection*{Forecasting Models}
+
+Our forecasting methodology involves two core models: a \textbf{Baseline Model} and a \textbf{Dynamic Temporal Patterns (DTP) Model}. Both models were designed to forecast conflict fatalities over a six-month period, but they use different techniques to capture conflict trends.
+%
+\paragraph*{\underline{Baseline Model}.} The Baseline Model employs the ViEWS early-warning system, a well-established and leading approach for forecasting conflict. Key features of ViEWS include:
+\begin{itemize}
+\item \textbf{Lagged conflict variables:} Fatalities from prior months are included as lagged variables to account for continuity in conflict behavior. This allows the model to leverage historical patterns of conflict for prediction.
+\item \textbf{Geopolitical and economic features:} Variables such as proximity to ongoing conflicts in neighboring countries, GDP per capita, oil rents, and political instability (e.g., regime change, exclusion of political groups) are incorporated to assess the broader conflict risk.
+\item \textbf{Demographic factors:} Population size, urbanization, and the proportion of young males are used as predictors, as these have been shown to correlate with conflict intensity.
+\end{itemize}
+    
+\paragraph*{\underline{Dynamic Temporal Patterns (DTP) Model.}} The DTP Model introduces a dynamic aspect to forecasting by focusing on the variability and sequence alignment of conflict patterns. Unlike the Baseline Model, which relies on static relationships, the DTP Model uses Dynamic Time Warping (DTW) to align sequences of conflict fatalities across different timeframes. This technique is useful for identifying and predicting shifts in conflict intensity, as it allows for flexibility in the timing of events.
+
+Key components of the DTP Model:
+\begin{itemize}
+\item \textbf{Dynamic Time Warping (DTW)}: DTW compares the predicted sequence of fatalities with the observed sequence, aligning them even if there is a lag or shift in the occurrence of peaks in fatalities. This reduces penalization for short-term misalignment in predictions.
+\item \textbf{Non-linear Time Dependency}: The model accounts for non-linear relationships between conflict events and fatalities over time. It is particularly suited for regions with rapidly changing conflict dynamics, such as escalating or de-escalating conflicts.
+\item \textbf{Pattern Recognition}: By analyzing historical conflict trajectories, the model identifies similar patterns of conflict evolution and uses these to forecast the next phase of the conflict.
+\end{itemize}
+
+\subsection*{Model Training and Validation}
+
+Both models were trained on historical UCDP data spanning several years, up to July 2024. To ensure robustness, the models were cross-validated using k-fold validation, and performance metrics were calculated for each fold to evaluate the predictive accuracy across different conflict regions and time periods. The models were then tested on the forecasting period (August 2024 to January 2025), comparing predicted fatalities with the actual observed fatalities during this time. Key metrics used for validation included:
+\begin{itemize}
+    \item \textbf{Mean Squared Error (MSE)}: A standard measure to evaluate the difference between predicted and actual fatality counts.
+    \item \textbf{Mean Absolute Percentage Error (MAPE)}: Used to measure the percentage error between predicted and observed values, providing a normalized metric for comparison across countries with different fatality scales.
+    \item \textbf{Dynamic Time Warping Distance}: For the DTP model, we used DTW distance as a performance metric, which measures how well the predicted fatality sequence matches the observed sequence in terms of timing and pattern.
+\end{itemize}
+
+\subsection*{Classification of Conflict Trends}
+
+Countries were classified into three distinct groups based on the ratio of fatalities observed during the forecast period (August 2024 to January 2025) to those in the previous six months (January to July 2024). We use classification instead of relying solely on MSE because classification provides clearer insights into conflict trends. While MSE measures prediction error, it can reward overly conservative predictions that minimize error without capturing real shifts in conflict dynamics. Classification, by contrast, groups countries based on whether fatalities are increasing, stable, or decreasing. This approach highlights broader trends and helps decision-makers prioritize responses where conflict is intensifying, offering a more actionable framework than MSE alone.
+
+\begin{itemize}
+    \item \textbf{Decreasing Conflict}: Countries with a ratio of fatalities less than 0.8, indicating that fatalities decreased during the forecast period.
+    \item \textbf{Stable Conflict}: Countries with a ratio between 0.8 and 1.2, signifying that fatalities remained relatively stable.
+    \item \textbf{Increasing Conflict}: Countries with a ratio greater than 1.2, indicating an increase in fatalities during the forecast period.
+\end{itemize}
+
+\subsection*{Evaluation and Benchmarking}
+
+Our models were evaluated not only against observed data but also through benchmarking with other conflict forecasting models, such as ViEWS and ConflictForecast. Performance was assessed based on both overall accuracy and the ability to capture dynamic shifts in conflict intensity. In particular, the DTP model demonstrated advantages in regions where conflicts experienced sudden escalations or de-escalations, while the Baseline Model performed well in regions with consistent conflict patterns. 
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+\end{document}

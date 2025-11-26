@@ -60,6 +60,56 @@ function getNewsletters(): NewsletterItem[] {
 export default function ReportsPage() {
   const newsletters = getNewsletters()
 
+  // Discover the latest Forecasting Report dynamically by filename
+  function getLatestForecastReport(): { href: string, label: string } | null {
+    try {
+      const dir = path.join(process.cwd(), 'public', 'newslettersAndReports')
+      const files = fs.readdirSync(dir)
+      const reports = files
+        .filter(f => f.toLowerCase().endsWith('.pdf') && /^forecastingreport_/i.test(f))
+        .map(f => ({ file: f, ts: parseMonthYearFromName(f) }))
+        .filter(r => r.ts > 0)
+        .sort((a, b) => b.ts - a.ts)
+      if (!reports.length) return null
+      const top = reports[0]
+      const label = extractLabel(top.file)
+      return { href: `/newslettersAndReports/${top.file}`, label }
+    } catch {
+      return null
+    }
+  }
+
+  function extractLabel(file: string): string {
+    const m = file.match(/^ForecastingReport_(.*)\.pdf$/)
+    return m ? m[1] : file
+  }
+
+  function parseMonthYearFromName(file: string): number {
+    // Expect: ForecastingReport_<Month> <Year>.pdf
+    const monthMap: Record<string, number> = {
+      january: 0, jan: 0,
+      february: 1, feb: 1,
+      march: 2, mar: 2,
+      april: 3, apr: 3,
+      may: 4,
+      june: 5, jun: 5,
+      july: 6, jul: 6,
+      august: 7, aug: 7,
+      september: 8, sept: 8, sep: 8,
+      october: 9, oct: 9,
+      november: 10, nov: 10,
+      december: 11, dec: 11,
+    }
+    const m = file.toLowerCase().match(/forecastingreport_([a-z]+)\s+(\d{4})/) 
+    if (!m) return 0
+    const month = monthMap[m[1]]
+    const year = parseInt(m[2], 10)
+    if (month === undefined || !Number.isFinite(year)) return 0
+    return Date.UTC(year, month, 1)
+  }
+
+  const latestReport = getLatestForecastReport()
+
   // Use generic symbol covers rather than generated previews
 
   return (
@@ -87,7 +137,7 @@ export default function ReportsPage() {
               Latest Report
             </h2>
             <Link
-              href="/newslettersAndReports/ForecastingReport_March 2025.pdf"
+              href={latestReport ? latestReport.href : "/newslettersAndReports/ForecastingReport_March 2025.pdf"}
               target="_blank"
               className="group"
             >
@@ -100,7 +150,7 @@ export default function ReportsPage() {
                   </div>
                 </div>
                 <div className="md:col-span-2 p-6">
-                  <p className="text-sm text-gray-600 mb-2">March 2025</p>
+                  <p className="text-sm text-gray-600 mb-2">{latestReport ? latestReport.label : 'March 2025'}</p>
                   <h3 className="text-2xl font-light text-gray-900 mb-4 group-hover:text-pace-red transition-colors">
                     Conflict Forecasting Report
                   </h3>

@@ -1,0 +1,53 @@
+\begin{thebibliography}{1}
+
+\bibitem{chadefaux2022shape}
+Thomas Chadefaux.
+\newblock A shape-based approach to conflict forecasting.
+\newblock {\em International Interactions}, 48(4):633--648, 2022.
+
+\bibitem{chadefaux2023automated}
+Thomas Chadefaux.
+\newblock An automated pattern recognition system for conflict.
+\newblock {\em Journal of Computational Science}, 72:102074, 2023.
+
+\bibitem{Hegre2021JPR}
+H{\aa }vard Hegre, Curtis Bell, Michael Colaresi, Mihai Croicu, Frederick
+  Hoyles, Remco Jansen, Maxine~Ria Leis, Angelica Lindqvist-McGowan, David
+  Randahl, Espen~Geelmuyden Rød, and Paola Vesco.
+\newblock Views$_{2020}$: Revising and evaluating the views political violence
+  early-warning system.
+\newblock {\em Journal of Peace Research}, 58(3):599--611, 2021.
+
+\bibitem{Hegre2022FCDO}
+Håvard Hegre, James Dale, David Randahl, Mihai Croicu, Remco Jansen, Paola
+  Vesco, Angelica Lindqvist-McGowan, Peder Landsverk, Maxine Leis, Hannes
+  Mueller, Christopher Rauh, Espen Geelmuyden~Rød, Forogh Akbari, Tim Gåsste,
+  and Malika Rakhmankulova.
+\newblock Forecasting fatalities.
+\newblock Uppsala: working paper,
+  \url{https://www.diva-portal.org/smash/get/diva2:1667048/FULLTEXT01.pdf},
+  2022.
+
+\bibitem{Mueller2024}
+Hannes Mueller, Christopher Rauh, and Ben Seimon.
+\newblock Introducing a global dataset on conflict forecasts and news topics.
+\newblock {\em Data \& Policy}, 6, 2024.
+
+\bibitem{Schincariol_JoF}
+Thomas Schincariol and Thomas Chadefaux.
+\newblock Temporal patterns in migration flows: Evidence from south sudan.
+\newblock {\em Journal of Forecasting}.
+\newblock Forthcoming.
+
+\bibitem{Schincariol2024}
+Thomas Schincariol, Hannah Frank, and Thomas Chadefaux.
+\newblock Leveraging temporal patterns in forecasting.
+\newblock Unpublished manuscript, 2024.
+
+\bibitem{schincariol2024temporal}
+Thomas Schincariol, Hannah Frank, and Thomas Chadefaux.
+\newblock Temporal patterns in conflict prediction: An improved shape-based
+  approach.
+\newblock 2024.
+
+\end{thebibliography}

@@ -1,0 +1,195 @@
+\documentclass[]{erdcClassForVC}
+\usepackage{lipsum,url,multicol, wrapfig,lipsum}
+\usepackage{natbib}
+\usepackage{subcaption} 
+
+\usepackage{geometry}
+\usepackage{subcaption}
+\usepackage[justification=justified,singlelinecheck=false]{caption}
+
+%\geometry{margin=1in}
+\usepackage[]{ragged2e}
+\usepackage{graphicx, comment}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{float}
+\usepackage{stfloats}
+\usepackage{setspace, hyperref}  \newcommand{\HRule}{\rule{\textwidth}{0.5mm}}
+
+
+\begin{document}
+\onecolumn
+\frontmatter
+
+\reportnum{}
+
+\program{}
+
+\title{AICAP: Artificial Intelligence for Conflict Analysis and Prediction}
+
+\subtitle{}
+
+\date{{}}
+\author{}
+
+\affiliation{PaCE \\Trinity College Dublin, The University of Dublin\\
+College Green\\
+Dublin 2, Ireland\\
+\url{https://www.forecastlab.org/}\\
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Fig/LOGO_ERC-FLAG_FP.png}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Fig/Trinity_Main_Logo.jpg}\end{subfigure}\\
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering        \includegraphics[width=\textwidth]{Fig/IRC LOGO_RGB.jpg}
+    \end{subfigure}
+\end{figure}
+}
+
+
+
+
+
+\affiliation{}
+
+\coverart{Fig/slide1}
+
+\reporttype{}
+
+\additionalinfo{}
+
+%\begin{abstract}%
+%We find that .....
+%\end{abstract}
+
+%\disclaimer{Some other disclaimer}
+
+\preparedfor{Thomas Schincariol \& Thomas Chadefaux} 
+
+\contractnum{This project has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (grant agreement No 101002240).}
+
+\laboratory{AICAP}
+
+
+\monitoredby{The contents of this report are not to be used for
+advertising, publication, or promotional purposes. Citation of trade
+names does not constitute an official endorsement or approval of the
+use of such commercial products. All product names and trademarks
+cited are the property of their respective owners. The findings of
+this report are not to be construed as an official position of Trinity College Dublin unless so designated by other authorized documents.}
+
+%\preparedfor{}
+
+\maketitle
+\begin{onecolumn} 
+\noindent 
+
+\section*{The Problem: The Need for Conflict Forecasting}
+
+Global conflicts contribute to humanitarian crises, economic instability, and displacement. Policymakers, humanitarian organizations, and military strategists require early-warning tools. Current limitations in conflict forecasting include the lack of real-time updates, granular predictions, and difficulty in anticipating rapid shifts in conflict intensity.
+
+ 
+%\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{What We Forecast}
+\begin{itemize}
+\item Conflict Fatalities
+\item Protests
+\item Rocket launches
+\item Migration
+\end{itemize}
+
+\section*{How? Data-Driven Conflict Forecasting}
+
+We use advanced machine learning algorithms trained on historical conflict data, integrating economic, geopolitical, and demographic indicators to provide accurate early warnings. We use stock market, satellite, news and event data.
+
+\begin{figure}[!h]
+    \centering
+\includegraphics[width=1\linewidth]{Fig/how.png}
+    \caption*{ }
+\end{figure}
+
+\clearpage
+\section*{Performance}
+
+%\renewcommand{\thefigure}{5}
+\begin{figure*}[!h]
+    \centering
+\includegraphics[width=\textwidth]{Fig/dtw_best.png}
+    \caption{Comparison of observed conflict fatalities (grey) and predicted fatalities (red) in selected countries for the forecast period from February to July 2024. This figure highlights where the model’s predictions closely aligned with actual outcomes and where discrepancies occurred.}
+    \label{fig:best_dtw}
+\end{figure*}
+
+\begin{figure}[H]
+    \centering
+    % Top map: predictions
+    \begin{subfigure}[t]{\textwidth}
+        \centering        \includegraphics[width=0.8\textwidth]{Fig/pred_map.pdf}
+        \caption{Predicted Fatalities}
+        \label{fig:predictions}
+    \end{subfigure}
+
+    \vspace{0.5cm} % Adjust vertical space between images
+
+    % Middle map: truth (observed)
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Fig/true_map.pdf}
+        \caption{Observed Fatalities (Truth)}
+        \label{fig:truth}
+    \end{subfigure}
+%
+    \vspace{0.5cm} % Adjust vertical space between images
+%
+    % Bottom map: difference
+    
+    \caption{(a) Predicted conflict fatalities, (b) observed conflict fatalities (truth), and (c) percentage error between predictions and observed outcomes for the period from February to July 2024.}
+    \label{fig:comparison_maps}
+\end{figure}
+
+
+
+
+\end{onecolumn}
+%
+%\
+\section*{Forecasting Performance}
+
+
+%
+\begin{figure}[H]
+    \centering    \includegraphics[height=0.33\textheight]{Fig/Fore_all.png}
+    \caption{Logarithmic scale comparison of predicted conflict fatalities (grey) and observed fatalities for the 30 countries with the highest fatality counts. Red indicates regions where the model underpredicted fatalities, while blue highlights regions where the model overpredicted fatalities. The log scale emphasizes discrepancies in regions with extreme values.}
+    \label{fig:Fore_all}
+\end{figure}
+%
+
+\section*{Benchmark comparison}
+%
+\begin{figure}[H]
+\includegraphics[height=0.33\textheight]{Fig/Views.png}
+\caption{Log ratio of the Mean Squared Error (MSE) comparing our model’s predictions to the VIEWS model’s predictions. Positive values (in red) indicate that our model performed better, while negative values (in blue) show that VIEWS performed better in predicting conflict fatalities.}\label{Views}
+\end{figure} 
+%
+%
+\newpage
+\section*{Who we are}
+\begin{figure}[!h]
+    \centering
+\includegraphics[width=0.75\linewidth]{Fig/team.png}
+    \caption*{}
+    \label{fig:enter-label}
+\end{figure}
+Specialists in
+\begin{itemize}
+    \item Machine Learning
+    \item Statistics
+    \item Political Science
+    \item International Relations
+\end{itemize}
+\end{document}
