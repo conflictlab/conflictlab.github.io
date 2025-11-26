@@ -312,11 +312,7 @@ export default function MethodologyDraftPage() {
               {/* Benchmark comparisons intentionally omitted on this page */}
             </div>
 
-            <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
-              <div className="text-sm text-gray-800 mb-2">Trajectory alignment examples</div>
-              <Image src="/performance/dtw_best.png" alt="DTW: best matched trajectories" width={1200} height={700} className="w-full h-auto rounded" />
-              <p className="text-xs text-gray-600 mt-2">Representative cases where predicted dynamics align closely with observed (allowing for small timing lags via DTW alignment).</p>
-            </div>
+            {/* Trajectory alignment examples intentionally omitted on this page */}
           </div>
         </div>
       </section>
