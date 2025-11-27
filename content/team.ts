@@ -21,13 +21,6 @@ export const currentTeam: TeamMember[] = [
     email: "thomas.chadefaux@tcd.ie"
   },
   {
-    name: "Emmanuel Akeweje",
-    role: "PhD Student",
-    photo: "/team/Emmanuel photo_edited.jpg",
-    bio: "Emmanuel is a PhD candidate at Trinity College Dublin, where he conducts research on developing algorithms for clustering functional and longitudinal data. He has a strong mathematical background, having obtained two master's degrees in Mathematical Sciences and Data Science from the African Institute of Mathematical Sciences in Ghana and the Skolkovo Institute of Science and Technology in Moscow, respectively. His research interests span across Applied Mathematics, Statistics, and Machine Learning.",
-    email: "eakeweje@tcd.ie"
-  },
-  {
     name: "Dr Jemimah Bailey",
     role: "Project Manager",
     photo: "/team/Jemimah Bailey photo 2022.jpg",
@@ -42,25 +35,11 @@ export const currentTeam: TeamMember[] = [
     email: "jhan@tcd.ie"
   },
   {
-    name: "Junjie Liu",
-    role: "PhD Student",
-    photo: "/team/Junjie photo_edited_edited.jpg",
-    bio: "Junjie holds an MPhil degree in Probability and Mathematical Statistics from Hong Kong Baptist University, and his research interests include statistical inference, spatio-temporal model, and text analysis. He is currently a PhD student at Trinity College Dublin and investigating conflict forecasting.",
-    email: "liuj13@tcd.ie"
-  },
-  {
     name: "Dr Chien Lu",
     role: "Research Fellow",
     photo: "/team/Chien Lu profile photo_edited_edited_edi.jpg",
     bio: "Chien Lu is currently a research fellow in the PaCE project. He obtained his Ph.D. from Tampere University in Finland. His dissertation explored the intersection of machine learning with a focus on probabilistic representation learning methods and game culture studies. His research interests are centered on developing computational methods to study social phenomena, with an emphasis on probabilistic machine learning, and Bayesian data analysis.",
     email: "luc4@tcd.ie"
-  },
-  {
-    name: "Dr Yohan Park",
-    role: "Research Fellow",
-    photo: "/team/YohanPark_edited_edited.jpg",
-    bio: "Yohan is currently working in the PaCE project team at Trinity College Dublin as a research fellow. He received a Ph.D. in Political Science at Texas A&M University. His research focuses on the study of conflict processes and political economy, with a particular interest in the use of machine learning and statistical methods to analyse these topics.",
-    email: "yohan.park@tcd.ie"
   },
   {
     name: "Dr Guoxin Wang",
@@ -70,11 +49,32 @@ export const currentTeam: TeamMember[] = [
     email: ""
   },
   {
+    name: "Dr Yohan Park",
+    role: "Research Fellow",
+    photo: "/team/YohanPark_edited_edited.jpg",
+    bio: "Yohan is currently working in the PaCE project team at Trinity College Dublin as a research fellow. He received a Ph.D. in Political Science at Texas A&M University. His research focuses on the study of conflict processes and political economy, with a particular interest in the use of machine learning and statistical methods to analyse these topics.",
+    email: "yohan.park@tcd.ie"
+  },
+  {
+    name: "Emmanuel Akeweje",
+    role: "PhD Student",
+    photo: "/team/Emmanuel photo_edited.jpg",
+    bio: "Emmanuel is a PhD candidate at Trinity College Dublin, where he conducts research on developing algorithms for clustering functional and longitudinal data. He has a strong mathematical background, having obtained two master's degrees in Mathematical Sciences and Data Science from the African Institute of Mathematical Sciences in Ghana and the Skolkovo Institute of Science and Technology in Moscow, respectively. His research interests span across Applied Mathematics, Statistics, and Machine Learning.",
+    email: "eakeweje@tcd.ie"
+  },
+  {
     name: "Joshua Murphy",
     role: "Postdoctoral Researcher",
     photo: "/team/joshuaMurphy.jpg",
     bio: "Josh is a postdoctoral researcher at Trinity College Dublin in the PaCE project team. He did a PhD in Electrical Engineering and Electronics at the University of Liverpool as part of the Distributed Algorithms Centre for Doctoral Training. His thesis was on batch Bayesian parameter estimation under concept drift. His research interests include uncertainty quantification, time series analysis in changing environments, graph neural networks and sequential Monte Carlo methods. He has a particular interest in using these methods for epidemiological applications and drawing parallels between epidemiology and conflict prediction.",
     email: ""
+  },
+  {
+    name: "Junjie Liu",
+    role: "PhD Student",
+    photo: "/team/Junjie photo_edited_edited.jpg",
+    bio: "Junjie holds an MPhil degree in Probability and Mathematical Statistics from Hong Kong Baptist University, and his research interests include statistical inference, spatio-temporal model, and text analysis. He is currently a PhD student at Trinity College Dublin and investigating conflict forecasting.",
+    email: "liuj13@tcd.ie"
   }
 ]
 
