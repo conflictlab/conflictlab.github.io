@@ -68,6 +68,13 @@ export const currentTeam: TeamMember[] = [
     photo: "/team/G Wang.jpg",
     bio: "Guoxin was awarded a PhD from University College Dublin in 2024. He developed an MAE-based pretraining framework for ECG analysis and an ECG biometric authentication approach using self-supervised learning for IoT edge sensors. Earlier, he worked on continuous user authentication using a genuine wearable chest-strap ECG device. He is currently a research fellow in the PaCE project team at Trinity College Dublin. His research interests include self- and unsupervised learning for physiological time-series (ECG), wearable sensing and edge AI, efficient deployment (quantization, pruning), and dynamic neural networks.",
     email: ""
+  },
+  {
+    name: "Joshua Murphy",
+    role: "Postdoctoral Researcher",
+    photo: "/team/joshuaMurphy.jpg",
+    bio: "Josh is a postdoctoral researcher at Trinity College Dublin in the PaCE project team. He did a PhD in Electrical Engineering and Electronics at the University of Liverpool as part of the Distributed Algorithms Centre for Doctoral Training. His thesis was on batch Bayesian parameter estimation under concept drift. His research interests include uncertainty quantification, time series analysis in changing environments, graph neural networks and sequential Monte Carlo methods. He has a particular interest in using these methods for epidemiological applications and drawing parallels between epidemiology and conflict prediction.",
+    email: ""
   }
 ]
 
