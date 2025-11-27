@@ -21,6 +21,13 @@ export const currentTeam: TeamMember[] = [
     email: "thomas.chadefaux@tcd.ie"
   },
   {
+    name: "Emmanuel Akeweje",
+    role: "PhD Student",
+    photo: "/team/Emmanuel photo_edited.jpg",
+    bio: "Emmanuel is a PhD candidate at Trinity College Dublin, where he conducts research on developing algorithms for clustering functional and longitudinal data. He has a strong mathematical background, having obtained two master's degrees in Mathematical Sciences and Data Science from the African Institute of Mathematical Sciences in Ghana and the Skolkovo Institute of Science and Technology in Moscow, respectively. His research interests span across Applied Mathematics, Statistics, and Machine Learning.",
+    email: "eakeweje@tcd.ie"
+  },
+  {
     name: "Dr Jemimah Bailey",
     role: "Project Manager",
     photo: "/team/Jemimah Bailey photo 2022.jpg",
@@ -35,6 +42,13 @@ export const currentTeam: TeamMember[] = [
     email: "jhan@tcd.ie"
   },
   {
+    name: "Junjie Liu",
+    role: "PhD Student",
+    photo: "/team/Junjie photo_edited_edited.jpg",
+    bio: "Junjie holds an MPhil degree in Probability and Mathematical Statistics from Hong Kong Baptist University, and his research interests include statistical inference, spatio-temporal model, and text analysis. He is currently a PhD student at Trinity College Dublin and investigating conflict forecasting.",
+    email: "liuj13@tcd.ie"
+  },
+  {
     name: "Dr Chien Lu",
     role: "Research Fellow",
     photo: "/team/Chien Lu profile photo_edited_edited_edi.jpg",
@@ -42,10 +56,10 @@ export const currentTeam: TeamMember[] = [
     email: "luc4@tcd.ie"
   },
   {
-    name: "Dr Guoxin Wang",
-    role: "Research Fellow",
-    photo: "/team/G Wang.jpg",
-    bio: "Guoxin was awarded a PhD from University College Dublin in 2024. He developed an MAE-based pretraining framework for ECG analysis and an ECG biometric authentication approach using self-supervised learning for IoT edge sensors. Earlier, he worked on continuous user authentication using a genuine wearable chest-strap ECG device. He is currently a research fellow in the PaCE project team at Trinity College Dublin. His research interests include self- and unsupervised learning for physiological time-series (ECG), wearable sensing and edge AI, efficient deployment (quantization, pruning), and dynamic neural networks.",
+    name: "Joshua Murphy",
+    role: "Postdoctoral Researcher",
+    photo: "/team/joshuaMurphy.jpg",
+    bio: "Josh is a postdoctoral researcher at Trinity College Dublin in the PaCE project team. He did a PhD in Electrical Engineering and Electronics at the University of Liverpool as part of the Distributed Algorithms Centre for Doctoral Training. His thesis was on batch Bayesian parameter estimation under concept drift. His research interests include uncertainty quantification, time series analysis in changing environments, graph neural networks and sequential Monte Carlo methods. He has a particular interest in using these methods for epidemiological applications and drawing parallels between epidemiology and conflict prediction.",
     email: ""
   },
   {
@@ -56,25 +70,11 @@ export const currentTeam: TeamMember[] = [
     email: "yohan.park@tcd.ie"
   },
   {
-    name: "Emmanuel Akeweje",
-    role: "PhD Student",
-    photo: "/team/Emmanuel photo_edited.jpg",
-    bio: "Emmanuel is a PhD candidate at Trinity College Dublin, where he conducts research on developing algorithms for clustering functional and longitudinal data. He has a strong mathematical background, having obtained two master's degrees in Mathematical Sciences and Data Science from the African Institute of Mathematical Sciences in Ghana and the Skolkovo Institute of Science and Technology in Moscow, respectively. His research interests span across Applied Mathematics, Statistics, and Machine Learning.",
-    email: "eakeweje@tcd.ie"
-  },
-  {
-    name: "Joshua Murphy",
-    role: "Postdoctoral Researcher",
-    photo: "/team/joshuaMurphy.jpg",
-    bio: "Josh is a postdoctoral researcher at Trinity College Dublin in the PaCE project team. He did a PhD in Electrical Engineering and Electronics at the University of Liverpool as part of the Distributed Algorithms Centre for Doctoral Training. His thesis was on batch Bayesian parameter estimation under concept drift. His research interests include uncertainty quantification, time series analysis in changing environments, graph neural networks and sequential Monte Carlo methods. He has a particular interest in using these methods for epidemiological applications and drawing parallels between epidemiology and conflict prediction.",
+    name: "Dr Guoxin Wang",
+    role: "Research Fellow",
+    photo: "/team/G Wang.jpg",
+    bio: "Guoxin was awarded a PhD from University College Dublin in 2024. He developed an MAE-based pretraining framework for ECG analysis and an ECG biometric authentication approach using self-supervised learning for IoT edge sensors. Earlier, he worked on continuous user authentication using a genuine wearable chest-strap ECG device. He is currently a research fellow in the PaCE project team at Trinity College Dublin. His research interests include self- and unsupervised learning for physiological time-series (ECG), wearable sensing and edge AI, efficient deployment (quantization, pruning), and dynamic neural networks.",
     email: ""
-  },
-  {
-    name: "Junjie Liu",
-    role: "PhD Student",
-    photo: "/team/Junjie photo_edited_edited.jpg",
-    bio: "Junjie holds an MPhil degree in Probability and Mathematical Statistics from Hong Kong Baptist University, and his research interests include statistical inference, spatio-temporal model, and text analysis. He is currently a PhD student at Trinity College Dublin and investigating conflict forecasting.",
-    email: "liuj13@tcd.ie"
   }
 ]
 
