@@ -17,7 +17,7 @@ export const currentTeam: TeamMember[] = [
     name: "Professor Thomas Chadefaux",
     role: "Principal Investigator",
     photo: "/team/chadefaux.jpg",
-    bio: "Thomas studied Public Administration in Strasbourg, International Politics in Geneva, and received a PhD in Political Science from the University of Michigan in 2009. His research interests include the causes of war, conflict forecasting, and political methodology. He is currently the principal investigator of ERC grant PaCE: Patterns of Conflict Escalation (2022-26).",
+    bio: "Thomas holds a PhD in Political Science from the University of Michigan. His research explores the causes of war, conflict forecasting, and political methodology. He is the principal investigator of ERC grant PaCE: Patterns of Conflict Escalation (2022-26).",
     email: "thomas.chadefaux@tcd.ie"
   },
   {
