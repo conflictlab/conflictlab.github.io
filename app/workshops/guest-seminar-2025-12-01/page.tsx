@@ -33,7 +33,7 @@ export default function GuestSeminar2025Dec01() {
                 <tr>
                   <th scope="col" className="px-4 py-3 text-left text-sm font-medium text-gray-700">Time</th>
                   <th scope="col" className="px-4 py-3 text-left text-sm font-medium text-gray-700">Speaker</th>
-                  <th scope="col" className="px-4 py-3 text-left text-sm font-medium text-gray-700">Role</th>
+                  <th scope="col" className="px-4 py-3 text-left text-sm font-medium text-gray-700"></th>
                   <th scope="col" className="px-4 py-3 text-left text-sm font-medium text-gray-700">Notes</th>
                 </tr>
               </thead>
@@ -41,13 +41,13 @@ export default function GuestSeminar2025Dec01() {
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">14:00–14:30</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Yohan Park</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">Research Fellow</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">14:30–15:00</td>
-                  <td className="px-4 py-3 text-sm text-gray-900">Jungmin Han</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">Research Fellow</td>
+                  <td className="px-4 py-3 text-sm text-gray-900">Simon Polichinel von der maase</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
@@ -59,18 +59,18 @@ export default function GuestSeminar2025Dec01() {
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">15:30–16:00</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Chien Lu</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">Research Fellow</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">16:00–16:30</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Junjie Liu</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">PhD Student</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">16:30–17:00</td>
-                  <td className="px-4 py-3 text-sm text-gray-900">Simon Polichinel von der maase</td>
+                  <td className="px-4 py-3 text-sm text-gray-900">Jungmin Han</td>
                   <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
