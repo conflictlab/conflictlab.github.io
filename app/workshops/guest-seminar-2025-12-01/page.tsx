@@ -25,7 +25,8 @@ export default function GuestSeminar2025Dec01() {
       <section className="py-12 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-light text-gray-900 mb-6 border-b border-gray-200 pb-2">Presentation Schedule</h2>
-          <p className="text-gray-600 mb-6">Afternoon session starting at 14:00 (30-minute slots, including Q&amp;A and break). \n 2 Clare St., 3rd floor conference room</p>
+          <p className="text-gray-600 mb-6">Afternoon session starting at 14:00 (30-minute slots, including Q&amp;A and break).</p>
+            <p>2 Clare St., 3rd floor conference room</p>
 
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
