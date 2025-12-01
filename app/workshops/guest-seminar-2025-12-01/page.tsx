@@ -41,13 +41,13 @@ export default function GuestSeminar2025Dec01() {
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">14:00–14:30</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Yohan Park</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">A Difference-in-Differences Estimator for Dynamic Treatment Effects in Time-Series Cross-Sectional Data</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">14:30–15:00</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Simon Polichinel von der maase</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">Estimating LAtent conflict Risk fields: and then what? A decision analysis perspective</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
@@ -59,19 +59,19 @@ export default function GuestSeminar2025Dec01() {
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">15:30–16:00</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Chien Lu</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">Hospitals Under Fire? Causal Evidence from Satellite Imagery in Ukraine</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">16:00–16:30</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Junjie Liu</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">A Foundation Model For Political News Analysis</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">16:30–17:00</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Jungmin Han</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">Patterns of Cooperative Signals and\\Public Opinion on Rapprochement</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
               </tbody>
