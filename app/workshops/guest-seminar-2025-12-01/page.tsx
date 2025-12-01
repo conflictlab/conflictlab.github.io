@@ -48,7 +48,7 @@ export default function GuestSeminar2025Dec01() {
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">14:30–15:00</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Dr. Simon Polichinel von der maase (Senior Researcher - Peace Research Institute Oslo (PRIO))</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">Estimating LAtent conflict Risk fields: and then what? A decision analysis perspective</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">Estimating Latent conflict Risk fields: and then what? A decision analysis perspective</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
                 <tr>
