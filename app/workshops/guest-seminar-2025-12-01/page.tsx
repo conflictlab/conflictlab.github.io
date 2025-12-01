@@ -53,15 +53,15 @@ export default function GuestSeminar2025Dec01() {
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">15:00–15:30</td>
-                  <td className="px-4 py-3 text-sm text-gray-900">Break</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">Coffee and informal discussion</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-gray-900">15:30–16:00</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Dr. Chien Lu (Research Fellow, PaCE)</td>
                   <td className="px-4 py-3 text-sm text-gray-600">Hospitals Under Fire? Causal Evidence from Satellite Imagery in Ukraine</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-gray-900">15:30–16:00</td>
+                  <td className="px-4 py-3 text-sm text-gray-900">Break</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">&nbsp;</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">Coffee and informal discussion</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">16:00–16:30</td>
