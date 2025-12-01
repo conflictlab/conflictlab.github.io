@@ -13,7 +13,7 @@ export default function GuestSeminar2025Dec01() {
           </p>
           <p className="text-sm text-gray-600 mb-2">2025</p>
           <h1 className="text-2xl md:text-3xl font-light text-gray-900 mb-3 leading-snug">
-            Guest seminar, Monday 1 december 2025, Dr Simon Polichinel von der Maase, Senior Researcher - peace research institute Oslo (PRIO).
+            Guest seminar, Monday 1 december 2025 \n Dr Simon Polichinel von der Maase, Senior Researcher - Peace Research Institute Oslo (PRIO).
           </h1>
           <p className="text-lg text-gray-700">
             <span className="italic"></span>
