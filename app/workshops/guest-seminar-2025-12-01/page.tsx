@@ -16,7 +16,7 @@ export default function GuestSeminar2025Dec01() {
             Guest seminar, Monday 1 december 2025, Dr Simon Polichinel von der Maase, Senior Researcher - peace research institute Oslo (PRIO).
           </h1>
           <p className="text-lg text-gray-700">
-            <span className="italic">Estimating LAtent conflict Risk fields: and then what? A decision analysis perspective</span>
+            <span className="italic"></span>
           </p>
         </div>
       </section>
