@@ -71,7 +71,7 @@ export default function GuestSeminar2025Dec01() {
                 <tr>
                   <td className="px-4 py-3 text-sm text-gray-900">16:30–17:00</td>
                   <td className="px-4 py-3 text-sm text-gray-900">Dr. Jungmin Han (Research Fellow, PaCE)</td>
-                  <td className="px-4 py-3 text-sm text-gray-600">Patterns of Cooperative Signals and\\Public Opinion on Rapprochement</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">Patterns of Cooperative Signals and Public Opinion on Rapprochement</td>
                   <td className="px-4 py-3 text-sm text-gray-600">20 min talk + 10 min Q&amp;A</td>
                 </tr>
               </tbody>
