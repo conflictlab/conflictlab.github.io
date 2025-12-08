@@ -35,7 +35,7 @@ jobs:
           set -e
           REPO="${{ vars.MATCHES_REPO }}"; REPO="${REPO:-ThomasSchinca/Pace-map-risk}"
           BRANCH="${{ vars.MATCHES_BRANCH }}"; BRANCH="${BRANCH:-main}"
-          PATH_IN_REPO="${{ vars.MATCHES_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-matches.pkl}"
+          PATH_IN_REPO="${{ vars.MATCHES_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-saved_dictionary.pkl}"
           URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
           echo "Downloading $URL"
           curl -fsSL "$URL" -o matches.pkl

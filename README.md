@@ -91,7 +91,7 @@ CI monthly refresh
 - Configure via repository variables: `SCE_REPO` (owner/repo), `SCE_BRANCH` (branch), `SCE_PATH` (path to pickle). Defaults are `ThomasSchinca/Pace-map-risk`, `main`, and `sce_dictionary.pkl`.
 
 - The workflow `.github/workflows/update-matches.yml` downloads the DTW matches pickle monthly and converts it to `public/data/matches.json` for country pages.
-  - Configure via repository variables: `MATCHES_REPO` (owner/repo), `MATCHES_BRANCH` (branch), `MATCHES_PATH` (path to pickle in repo). Defaults are `ThomasSchinca/Pace-map-risk`, `main`, and `matches.pkl`.
+  - Configure via repository variables: `MATCHES_REPO` (owner/repo), `MATCHES_BRANCH` (branch), `MATCHES_PATH` (path to pickle in repo). Defaults are `ThomasSchinca/Pace-map-risk`, `main`, and `saved_dictionary.pkl`.
   - The pickle is expected to map `country_name -> [Series, distance, Series, distance, ...]`. The converter normalizes to
     `country_name -> [{ series: { values: [...], index?: [...] }, distance: <number> }, ...]`.
   - Optional: provide a full historical monthly CSV to enable matched-future overlays by setting:
