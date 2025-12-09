@@ -25,14 +25,14 @@ export default function MethodologyStructuredDraftPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-[1fr_280px] gap-8">
           {/* Main content */}
           <article className="space-y-10 text-gray-800 leading-relaxed">
-            {/* Abstract */}
-            <section id="abstract">
-              <h2 className="text-2xl font-light text-gray-900 mb-2">Abstract</h2>
+            {/* Overview */}
+            <section id="overview">
+              <h2 className="text-2xl font-light text-gray-900 mb-2">Overview</h2>
               <p>
                 We forecast conflict fatalities at 1–6 month horizons using shape‑based analog forecasting: we identify historical
-                trajectories that resemble the present (via dynamic time warping, DTW), borrow their realized futures, and average
-                those futures to produce point forecasts and calibrated uncertainty. The same design extends to subnational
-                PRIO‑GRID (0.5°) for diffusion and hotspots.
+                trajectories that resemble the present (via dynamic time warping, DTW), propagate them forward to retrieve their
+                realized futures, and average those futures to produce point forecasts with calibrated uncertainty. The same design
+                extends to subnational PRIO‑GRID (0.5°) for diffusion and hotspots.
               </p>
             </section>
 
@@ -50,17 +50,29 @@ export default function MethodologyStructuredDraftPage() {
             {/* Methods */}
             <section id="methods">
               <h2 className="text-2xl font-light text-gray-900 mb-2">Methods</h2>
+              <p className="mb-3">
+                Given a recent window of outcomes for a country or grid cell, we measure similarity to all historical windows using
+                dynamic time warping (DTW), which aligns sequences that evolve at different speeds. We then select the K nearest
+                analog windows and follow each one forward in time to obtain its realized outcomes at horizons h = 1…6 months.
+                These horizon‑specific sets of analog outcomes constitute an empirical predictive distribution from which we derive
+                point forecasts (centroids) and uncertainty summaries (medians, 50/80/95% intervals, exceedance risks).
+              </p>
+              <p className="mb-4">
+                When covariates are available (e.g., demography, access, climate, economy), they can be incorporated into the
+                similarity search, but purely autoregressive matching performs competitively at short horizons. Calibration is
+                monitored via coverage, PIT histograms, and CRPS, with optional similarity weighting as a deployment refinement.
+              </p>
               <ol className="list-decimal pl-5 space-y-1">
                 <li>Window the recent trajectory (normalize as appropriate).</li>
                 <li>Measure similarity with DTW; select the K nearest historical windows.</li>
-                <li>Borrow futures for horizons h = 1..6 months from each matched window.</li>
+                <li>Propagate each matched window forward to collect outcomes for horizons h = 1..6 months.</li>
                 <li>Aggregate across matched futures (centroid) for the point forecast.</li>
                 <li>Use the set of matched futures as an empirical distribution for uncertainty.</li>
               </ol>
               <div className="my-6">
                 <figure className="bg-white border border-gray-200 rounded-lg p-4">
                   <div className="mb-4"><MethodologyFlowchart /></div>
-                  <figcaption className="text-sm text-gray-600">Figure 1. Forecasting workflow: similarity search → analog futures → aggregation and uncertainty.</figcaption>
+                  <figcaption className="text-sm text-gray-600">Figure 1. Workflow: (i) similarity search via DTW; (ii) collect analog futures; (iii) aggregate and derive uncertainty.</figcaption>
                 </figure>
               </div>
 
@@ -88,7 +100,7 @@ export default function MethodologyStructuredDraftPage() {
                 <li><span className="font-medium">Units:</span> PRIO‑GRID 0.5° cell‑months with local lag history.</li>
                 <li><span className="font-medium">Neighborhood exposure:</span> Distance‑decayed activity within 1–3 cells, optionally weighted by roads/travel time.</li>
                 <li><span className="font-medium">Front dynamics:</span> Distance to most recent events; advancing vs receding fronts.</li>
-                <li><span className="font-medium">Grid‑level analogs:</span> Match cell‑windows on local+neighbor patterns; borrow futures to form a predictive mixture.</li>
+                <li><span className="font-medium">Grid‑level analogs:</span> Match cell‑windows on local+neighbor patterns; use their subsequent outcomes to form a predictive mixture.</li>
               </ul>
               <div className="my-6">
                 <figure className="bg-white border border-gray-200 rounded-lg p-4">
@@ -146,7 +158,7 @@ export default function MethodologyStructuredDraftPage() {
             <nav className="sticky top-20 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm">
               <div className="text-gray-900 font-medium mb-2">Contents</div>
               <ul className="space-y-2 text-gray-700">
-                <li><a className="text-link" href="#abstract">Abstract</a></li>
+                <li><a className="text-link" href="#overview">Overview</a></li>
                 <li><a className="text-link" href="#data">Data</a></li>
                 <li><a className="text-link" href="#methods">Methods</a></li>
                 <li><a className="text-link" href="#uncertainty">Uncertainty</a></li>
@@ -163,4 +175,3 @@ export default function MethodologyStructuredDraftPage() {
     </>
   )
 }
-
