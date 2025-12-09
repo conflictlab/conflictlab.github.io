@@ -1,464 +1,380 @@
-import Link from 'next/link'
+import type { Metadata } from 'next'
 import Image from 'next/image'
-import PrioGridAnimation from '@/components/PrioGridAnimation'
 import MethodologyFlowchart from '@/components/MethodologyFlowchart'
-import dynamic from 'next/dynamic'
-import { readSnapshot } from '@/lib/forecasts'
-import { Activity, Users, TrendingUp, Vote, CloudSun, Map, Move, Shield, ShoppingBag } from 'lucide-react'
-import Breadcrumbs from '@/components/Breadcrumbs'
+import PrioGridAnimation from '@/components/PrioGridAnimation'
+import DTWTrajShowcase from '@/components/DTWTrajShowcase'
 
-const PrioGridMap = dynamic(() => import('@/components/PrioGridMap'), { ssr: false })
-const DTWTrajShowcase = dynamic(() => import('@/components/DTWTrajShowcase'), { ssr: false })
+export const metadata: Metadata = {
+  title: 'Methodology — PaCE',
+  description: 'Detailed, transparent description of PaCE’s forecasting methodology with animations and Q&A.',
+}
 
-export default async function Methodology() {
-  const snap = readSnapshot('latest')
+export default function MethodologyPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="pt-12 pb-8 md:pt-16 md:pb-10 hero-background-network-image">
-        <div className="absolute top-2 left-2 md:top-3 md:left-3 z-[1000]"><Breadcrumbs /></div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4 leading-tight">
-            Methodology
-          </h1>
-          <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Machine learning models that forecast geopolitical conflict, civil unrest and migration.
-            Built for precision, transparency, and integration with existing systems.
+      {/* Hero */}
+      <section className="pt-14 pb-10 md:pt-16 md:pb-12 hero-background-network-image">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-3 leading-tight">Methodology</h1>
+          <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed max-w-3xl">
+            How we forecast geopolitical conflict, civil unrest, and migration.
           </p>
-          <p className="text-xs text-gray-500 mt-1"><Link href="/glossary" className="text-link">Glossary</Link></p>
-          <Breadcrumbs />
+          <div className="mt-3 text-sm text-gray-700 flex items-center gap-3">
+            <a href="#faq" className="text-pace-red hover:text-pace-red-dark">Jump to FAQ ↴</a>
+            <span className="text-gray-300">·</span>
+            <a href="/faq" className="text-link">Full FAQ</a>
+          </div>
         </div>
       </section>
 
-      {/* Methodology Overview Flowchart */}
-      <section className="pt-8 pb-16 bg-gradient-to-b from-gray-50 to-white">
+      {/* Data */}
+      <section id="data" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-4">
-            <h2 className="text-3xl font-light text-gray-900">
-              How Our Forecasting System Works
-            </h2>
+          <h3 className="text-2xl font-light text-gray-900 mb-4">Data</h3>
+          <div className="text-gray-700 leading-relaxed space-y-3 max-w-4xl">
+            <p>
+              Our primary outcome is the monthly number of conflict fatalities. We use the UCDP Georeferenced Event Dataset
+              ("best" estimates), aggregated to country–month and PRIO‑GRID (0.5°) cell–month units, 1989–present.
+            </p>
+            <ul className="list-disc pl-6 space-y-1">
+              <li><span className="font-medium">Processing:</span> standard cleaning, harmonization, and aggregation to consistent spatial units and monthly periods.</li>
+              <li><span className="font-medium">Refresh cadence:</span> updated as source data refresh; forecasts regenerate on new snapshots.</li>
+              <li><span className="font-medium">Optional covariates:</span> population and accessibility, climate anomalies, night‑lights, governance and economic indicators, and spatial lags.</li>
+            </ul>
+            <p className="text-sm text-gray-600">
+              Country‑level and grid‑level datasets are available on the <a href="/downloads" className="text-link">Downloads</a> page.
+            </p>
           </div>
-          <MethodologyFlowchart />
+        </div>
+      </section>
 
-          {/* Key Advantages */}
-          <div className="mt-8 bg-white p-6 rounded-lg border border-gray-200 max-w-4xl mx-auto">
-            <h4 className="text-lg font-medium text-gray-900 mb-4">Key Advantages</h4>
-            <div className="grid md:grid-cols-2 gap-4">
-              <ul className="space-y-2 text-gray-600">
-                <li>✓ <strong>Interpretable:</strong> Can cite specific historical analogues</li>
-                <li>✓ <strong>Fast:</strong> Minutes, not hours</li>
-                <li>✓ <strong>No covariates needed:</strong> Only past fatalities required</li>
-              </ul>
-              <ul className="space-y-2 text-gray-600">
-                <li>✓ <strong>Captures variability:</strong> Predicts surges and declines</li>
-                <li>✓ <strong>Always available:</strong> No lag for data updates</li>
-                <li>✓ <strong>Flexible:</strong> Handles varying speeds via DTW</li>
-              </ul>
+      {/* Design principles */}
+      <section id="principles" className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-light text-gray-900 mb-4">Design Principles</h3>
+          <ul className="list-disc pl-6 text-gray-700 space-y-2">
+            <li><span className="font-medium">Transparent by construction:</span> forecasts backed by explicit historical analogs you can inspect.</li>
+            <li><span className="font-medium">Short‑horizon strength:</span> prioritize near‑term accuracy where policy relevance is highest.</li>
+            <li><span className="font-medium">Data‑lean defaults:</span> equal‑weight analogs with purely autoregressive inputs; covariates optional.</li>
+            <li><span className="font-medium">Spatiotemporal fidelity:</span> handle differing speeds (DTW) and subnational diffusion (PRIO‑GRID).</li>
+            <li><span className="font-medium">Calibrated uncertainty:</span> empirical bands and exceedances derived from matched futures.</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Executive Summary + On‑page nav */}
+      <section id="summary" className="pt-6 pb-6 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-[1fr_320px] gap-6 items-start">
+            <div>
+              <h2 className="text-3xl font-light text-gray-900 mb-2">Executive Summary</h2>
+              <p className="text-gray-700 leading-relaxed">
+                We forecast conflict fatalities (1–6 month horizons) using shape‑based analog forecasting: find recent
+                trajectories that resemble the present (via DTW), borrow their realized futures, and aggregate those
+                futures into point forecasts and calibrated intervals. The same approach extends to subnational PRIO‑GRID
+                (0.5°) for diffusion and hotspots.
+              </p>
+              <div className="mt-3 text-sm text-gray-700">
+                <span className="mr-2">Key results:</span>
+                <ul className="list-disc pl-5 space-y-1 mt-1">
+                  <li>Short‑horizon forecasts perform on par with covariate‑rich variants.</li>
+                  <li>Patterns generalize across countries, regions, and epochs.</li>
+                  <li>Subnational diffusion captured via PRIO‑GRID with neighborhood exposure.</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* PRIO-GRID Diffusion Model */}
-      <section className="py-12 bg-white">
+      {/* Core algorithm (moved up) */}
+      <section id="algorithm" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">
-              Conflict Diffusion Modeling
-            </h2>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
-              Our machine learning models predict how conflict spreads across space and time using 
-              PRIO-GRID cellular analysis at 0.5° resolution.
-            </p>
+          <div className="text-center mb-6">
+            <h3 className="text-3xl font-light text-gray-900">Core Algorithm</h3>
+            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">End‑to‑end flow and the analog forecast recipe.</p>
           </div>
-          
-          <div className="mb-12">
-            <PrioGridAnimation />
+          <div className="mb-8"><MethodologyFlowchart /></div>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-3 text-gray-700 leading-relaxed">
+              <ol className="list-decimal pl-5 space-y-2">
+                <li>Window the recent trajectory (normalize as needed).</li>
+                <li>Measure similarity with DTW; select the K nearest historical windows.</li>
+                <li>Borrow futures: take the subsequent outcomes for each match at horizons 1–6 months.</li>
+                <li>Aggregate: average (centroid) across matched futures for the point forecast.</li>
+                <li>Uncertainty: the matched futures form an empirical distribution for intervals and exceedances.</li>
+              </ol>
+              <p>
+                Predictive mixture (equal weights):
+                <span className="font-mono"> p<sub>h</sub>(y) = (1/K) · ∑<sub>k=1..K</sub> δ(y − y<sub>k,h</sub>)</span>
+              </p>
+            </div>
+            <div className="grid gap-4">
+              <Image src="/academicPapers/methods/Figs/method1.png" alt="Analog matching step" width={1000} height={700} className="rounded-lg border border-gray-200 w-full h-auto" />
+              <Image src="/academicPapers/methods/Figs/method2.png" alt="Forecast aggregation step" width={1000} height={700} className="rounded-lg border border-gray-200 w-full h-auto" />
+            </div>
           </div>
-                  </div>
+        </div>
       </section>
 
-      {/* Pattern Discovery & Time‑Series AI */}
-      <section className="py-12 bg-white">
+      {/* Why shape‑based analog forecasting */}
+      <section id="why-analog" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">Pattern Discovery & Time‑Series AI</h2>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto mb-8">
-              We mine sequences for structure — motifs, anomalies, regime shifts — and learn compact embeddings that capture
-              the shape and momentum of real‑world dynamics. Clustering similar trajectories and aligning asynchronous signals
-              lets us surface recurring signatures, spot emerging look‑alikes, and rank what matters most — fast.
+          <div className="mb-10">
+            <h3 className="text-3xl font-light text-gray-900 mb-3">Why Shape‑Based Analog Forecasting</h3>
+            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
+              We treat each evolving trajectory (country or grid cell) as a <em>shape in time</em> and search the historical
+              record for similar shapes. Those closest historical analogs provide plausible futures that we aggregate
+              into a forecast with uncertainty.
             </p>
           </div>
 
-          {/* Interactive DTW Showcase */}
+          <div className="max-w-4xl mx-auto space-y-4 text-gray-700 leading-relaxed mb-8">
+            <p>
+              Concretely, given a recent window of outcomes, we use dynamic time warping (DTW) to align sequences at different
+              speeds and identify nearest analogs in the archive. We then follow each analog forward to obtain a set of
+              candidate futures. Averaging these futures yields a strong, transparent short‑horizon forecast; the spread gives
+              intervals and exceedances.
+            </p>
+            <p className="text-sm text-gray-600">
+              See <a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">EPJ Data Science</a>
+              {' '}and the{' '}
+              <a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">JPR paper on variability</a>.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="order-2 md:order-1 w-full max-w-xl mx-auto">
+              <Image src="/academicPapers/methods/Figs/method2.png" alt="Shape‑based forecasting step 2" width={1000} height={700} className="rounded-lg border border-gray-200 w-full h-auto" />
+            </div>
+            <div className="order-1 md:order-2 space-y-4 text-gray-700 leading-relaxed">
+              <p>
+                When covariates are available (e.g., population, access, economics, climate), we can enrich the similarity
+                search. But a key result across our studies is that <span className="font-medium">purely autoregressive</span>
+                shape‑matching — using only past fatalities or event intensity — performs on par with richer feature sets for
+                short‑horizon forecasts.
+              </p>
+              <p className="text-sm text-gray-600">See also our unrest and migration applications using the same pattern‑based strategy.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive DTW intuition */}
+      <section className="py-10 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-light text-gray-900 mb-4">How alignment works (DTW)</h3>
+          <p className="text-gray-700 max-w-3xl mb-6">
+            Similar dynamics can unfold at different speeds. DTW aligns sequences to reveal common structure even when
+            one pattern accelerates or lags relative to another.
+          </p>
           <DTWTrajShowcase />
-
-          {/* Shape Finder Algorithm */}
-          <div className="max-w-5xl mx-auto mt-16">
-            <h3 className="text-2xl font-light text-gray-900 mb-6 text-center">The Shape Finder Algorithm</h3>
-            <p className="text-gray-600 mb-8 text-center max-w-3xl mx-auto">
-              Our forecasting approach finds historical patterns similar to the current trajectory and uses their outcomes
-              to predict the future. This method is purely autoregressive — it uses only past fatalities, no covariates needed.
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="relative w-full rounded-lg overflow-hidden shadow-md">
-                <Image
-                  src="/academicPapers/methods/Figs/method1.png"
-                  alt="Shape Finder methodology step 1"
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
-                />
-              </div>
-              <div className="relative w-full rounded-lg overflow-hidden shadow-md">
-                <Image
-                  src="/academicPapers/methods/Figs/method2.png"
-                  alt="Shape Finder methodology step 2"
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-                      </div>
-
-          {/* 3D Spatial-Temporal Visualization */}
-          <div className="max-w-5xl mx-auto mt-16">
-            <h3 className="text-2xl font-light text-gray-900 mb-6 text-center">Spatial-Temporal Pattern Recognition</h3>
-            <p className="text-gray-600 mb-8 text-center max-w-3xl mx-auto">
-              Each trajectory in this 3D space represents a conflict evolving over time and across geographic coordinates.
-              By analyzing these patterns, we can identify when current conflicts follow trajectories similar to historical ones,
-              allowing us to forecast likely outcomes based on how similar past patterns unfolded.
-            </p>
-            <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
-              <Image
-                src="/academicPapers/methods/Figs/3dShapes.jpg"
-                alt="3D visualization of conflict patterns across space and time"
-                width={1200}
-                height={800}
-                className="w-full h-auto"
-              />
-            </div>
-            <p className="text-center text-sm text-gray-600 mt-4 max-w-3xl mx-auto">
-              Conflict trajectories visualized across latitude, longitude, and time dimensions. Similar shapes in this space
-              indicate conflicts with comparable spatial-temporal dynamics, regardless of when or where they occurred.
-            </p>
-                      </div>
         </div>
       </section>
 
-      {/* Data Sources & Processing */}
+      {/* Subnational dynamics and diffusion */}
+      <section id="subnational" className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <h3 className="text-3xl font-light text-gray-900 mb-3">Subnational Dynamics and Diffusion</h3>
+            <p className="text-lg text-gray-600 font-light max-w-3xl">
+              We model how risk appears, persists, and spreads across adjacent PRIO‑GRID (0.5°) cells. The method combines
+              local history with neighborhood exposure to recover waves of escalation and hotspot formation that national
+              aggregates can hide.
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto text-gray-700 leading-relaxed mb-8">
+            <h4 className="text-lg font-medium text-gray-900 mb-2">How the diffusion mechanism is captured</h4>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><span className="font-medium">Units:</span> Each PRIO‑GRID cell has a monthly outcome (e.g., fatalities) and lagged local history.</li>
+              <li><span className="font-medium">Neighborhood exposure:</span> For every month, we compute distance‑decayed exposure to nearby activity (e.g., within 1–3 cell radii) using
+                rook/queen contiguity and optional road/travel‑time weights to reflect corridors.</li>
+              <li><span className="font-medium">Front dynamics:</span> Features track the distance to the most recent events (“how far is the front?”) and whether the front is advancing or receding.</li>
+              <li><span className="font-medium">Persistence vs. activation:</span> We separate the chance that an active cell stays active (persistence) from the chance that an inactive cell turns on (activation),
+                given its neighborhood exposure and recent local history.</li>
+              <li><span className="font-medium">Analog matching at grid level:</span> For a target cell/time window, we find historical cell‑windows with similar local+neighbor patterns and follow their
+                realized futures to form a predictive mixture for the target cell.</li>
+              <li><span className="font-medium">3D shapes:</span> We also embed trajectories as space–time shapes (lat, lon, t). Similar shapes correspond to comparable diffusion paths and hotspot evolution.</li>
+            </ul>
+          </div>
+
+          <div className="mb-8"><PrioGridAnimation /></div>
+
+          <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow">
+            <Image src="/academicPapers/methods/Figs/3dShapes.jpg" alt="3D spatiotemporal shapes of conflict trajectories" width={1400} height={900} className="w-full h-auto" />
+          </div>
+          <p className="text-sm text-gray-600 mt-3 max-w-3xl">
+            Space–time trajectories represented as 3D shapes (latitude, longitude, time). Similar shapes indicate comparable
+            dynamics even when they occur in different countries or decades.
+          </p>
+        </div>
+      </section>
+
+      {/* Evidence & results */}
+      <section id="evidence" className="py-12 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <h3 className="text-3xl font-light text-gray-900 mb-3">Evidence & Results</h3>
+            <p className="text-lg text-gray-600 font-light max-w-3xl">Out‑of‑sample tests across space and time, plus cross‑domain applications.</p>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-4 text-gray-700 leading-relaxed">
+            <p>
+              <span className="font-medium">Generalization across contexts:</span> Similar shapes recur across geographies and epochs. Training on one
+              set of countries, regions, or decades retains accuracy when tested on others, indicating that patterns are not
+              tied to a specific country or era.
+            </p>
+            <p>
+              <span className="font-medium">Autoregressive strength:</span> Purely autoregressive, shape‑based forecasts (no covariates) perform comparably to
+              covariate‑rich variants at short horizons, offering a simple, transparent baseline that travels well.
+            </p>
+            <p>
+              <span className="font-medium">Explaining variation:</span> The approach excels at capturing the timing and magnitude of surges and lulls — explaining
+              variability that standard linear models often smooth.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Q&A */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">Data Sources & Processing</h2>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto mb-8">
-              Our forecasts are built on high-quality, georeferenced conflict data with careful preprocessing to handle
-              the unique challenges of violence data.
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-white p-6 rounded-lg border border-gray-200">
-                <h3 className="text-xl font-medium text-gray-900 mb-4">Primary Data Source</h3>
-                <div className="space-y-3 text-gray-600">
-                  <p><strong>Uppsala Conflict Data Program (UCDP)</strong></p>
-                  <ul className="space-y-1 ml-4">
-                    <li>• 1989–2025 (36 years)</li>
-                    <li>• Global coverage</li>
-                    <li>• Georeferenced incidents</li>
-                    <li>• Daily/monthly aggregation</li>
-                    <li>• Updated monthly</li>
-                  </ul>
-                  <p className="text-sm mt-4">
-                <a href="https://ucdp.uu.se/" target="_blank" rel="noopener noreferrer" className="text-pace-red hover:underline">Learn more about UCDP →</a>
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg border border-gray-200">
-                <h3 className="text-xl font-medium text-gray-900 mb-4">Aggregation Levels</h3>
-                <div className="space-y-3 text-gray-600">
-                  <p><strong>Country-level:</strong> National aggregates</p>
-                  <p><strong>Grid-level:</strong> PRIO-GRID cells at 0.5° resolution (~55 km × 55 km at the equator)</p>
-                  <p className="text-sm pt-2">
-                    The grid-level approach captures sub-national heterogeneity and spatial diffusion patterns
-                    that country-level data misses.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-                      </div>
-        </div>
-      </section>
-
-      {/* Rich Covariates for Forecasting */}
-      <section className="py-12 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">What We Feed The Models</h2>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
-              Beyond past violence, our models ingest diverse signals on population, economy, politics, climate, access, and contagion. Below are examples of the kinds of covariates we use (non‑exhaustive).
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><Activity size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Conflict history & contagion</h3>
-              </div>
-              <p className="text-sm text-gray-600">Lagged local fatalities; spatial lags from neighboring cells; distance to most recent events.</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><Users size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Demography & exposure</h3>
-              </div>
-              <p className="text-sm text-gray-600">Population density; urban–rural share; distance to capital or major city; settlement proximity.</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><TrendingUp size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Economy & prices</h3>
-              </div>
-              <p className="text-sm text-gray-600">Night‑time lights; food & commodity prices; inflation; GDP per capita; local market activity.</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><Vote size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Governance & politics</h3>
-              </div>
-              <p className="text-sm text-gray-600">Election calendar; regime type & constraints; emergency measures; protest restrictions.</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><CloudSun size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Climate & environment</h3>
-              </div>
-              <p className="text-sm text-gray-600">Rainfall anomalies; temperature anomalies; drought indices (e.g., SPEI); vegetation (NDVI).</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><Map size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Infrastructure & access</h3>
-              </div>
-              <p className="text-sm text-gray-600">Road network & travel time; border proximity; remoteness; mobile & internet coverage.</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><Move size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Displacement & flows</h3>
-              </div>
-              <p className="text-sm text-gray-600">Refugee/IDP stocks & flows; cross‑border mobility; reception capacity and pressures.</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><Shield size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Security & armed actors</h3>
-              </div>
-              <p className="text-sm text-gray-600">Presence of organized groups; known corridors & operating areas; arms trafficking routes.</p>
-            </div>
-            <div className="border border-gray-200 rounded-lg p-4 bg-white">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="inline-flex items-center justify-center w-14 h-14 rounded bg-blue-50 text-clairient-blue"><ShoppingBag size={30} /></span>
-                <h3 className="text-lg font-light text-gray-900">Market & livelihoods</h3>
-              </div>
-              <p className="text-sm text-gray-600">Local food prices; crop/harvest proxies; shocks to household purchasing power.</p>
-            </div>
-          </div>
-                  </div>
-      </section>
-
-      {/* Performance & Validation */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">Performance & Validation</h2>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto mb-8">
-              Our models undergo rigorous out-of-sample testing and real-world validation against leading forecasting systems.
-            </p>
-          </div>
-
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-white p-6 rounded-lg border border-gray-200 mb-6">
-              <h3 className="text-xl font-medium text-gray-900 mb-4">Key Findings</h3>
-              <div className="space-y-4 text-gray-600">
-                <div className="flex items-start gap-3">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <div>
-                    <p className="font-medium text-gray-900">Pattern Repetition</p>
-                    <p className="text-sm">Conflict sequences repeat significantly more than random processes (earthquakes, stock markets, white noise)</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <div>
-                    <p className="font-medium text-gray-900">Cross-Context Generalization</p>
-                    <p className="text-sm">Patterns generalize across regions and decades — similar dynamics emerge in different places and times</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <div>
-                    <p className="font-medium text-gray-900">Predictive Power</p>
-                    <p className="text-sm">Similar patterns predict similar futures — historical analogues provide actionable forecasts</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <div>
-                    <p className="font-medium text-gray-900">Temporal Information Dominates</p>
-                    <p className="text-sm">Autoregressive models (AR) ≈ AR + Covariates {'>>'} Covariates alone — past patterns matter more than structural variables</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg border border-gray-200 mb-6">
-              <h3 className="text-xl font-medium text-gray-900 mb-4">Where Our Approach Excels</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <ul className="space-y-2 text-gray-600">
-                  <li>✓ High-intensity conflicts with complex dynamics</li>
-                  <li>✓ Situations with substantial trajectory variability</li>
-                  <li>✓ Short to medium-term horizons (1-6 months)</li>
-                </ul>
-                <ul className="space-y-2 text-gray-600">
-                  <li>✓ Capturing escalation and de-escalation patterns</li>
-                  <li>✓ Identifying turning points and regime shifts</li>
-                  <li>✓ Providing interpretable historical analogues</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-xl font-medium text-gray-900 mb-4">Limitations & Forecast Ceiling</h3>
-              <p className="text-gray-600 mb-4">
-                No forecasting system is perfect. Research across multiple projects suggests an <strong>80-85% accuracy ceiling</strong> for conflict forecasting due to:
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
-                <ul className="space-y-1">
-                  <li>• Data measurement error and reporting bias</li>
-                  <li>• Quasi-random structural error (complex systems)</li>
-                  <li>• Rational randomness (strategic unpredictability)</li>
-                </ul>
-                <ul className="space-y-1">
-                  <li>• Arational randomness (free will, idiosyncratic factors)</li>
-                  <li>• Effective policy response (successful prevention)</li>
-                  <li>• Unpredictable exogenous shocks</li>
-                </ul>
-              </div>
-              <p className="text-sm text-gray-500 mt-4">
-                See: <a href="https://doi.org/10.1080/03050629.2018.1441003" target="_blank" rel="noopener noreferrer" className="text-clairient-blue hover:underline">Schrodt (2018)</a> on irreducible sources of error
+          <h3 id="faq" className="text-2xl font-light text-gray-900 mb-6">Questions & Answers</h3>
+          <div className="space-y-8">
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">Are the patterns specific to a country, region, or epoch?</h4>
+              <p className="text-gray-700 mt-2">
+                No. We explicitly test out‑of‑country, out‑of‑region, and out‑of‑period generalization and find that core
+                shapes recur across contexts. Because alignment handles speed differences, the model recognizes the same
+                dynamics when they unfold faster or slower, or in different decades. See our
+                {' '}<a href="/academicPapers/working-papers/predictability-29.pdf" target="_blank" rel="noopener noreferrer" className="text-link">Predictability working paper</a>.
               </p>
             </div>
 
-            <div className="mt-8 text-center">
-              <p className="text-sm text-gray-500">
-                Validation results from: <a href="https://doi.org/10.1177/00223433231206836" target="_blank" rel="noopener noreferrer" className="text-clairient-blue hover:underline">Hegre et al. (2024)</a> |
-                <a href="https://doi.org/10.1177/00223433241234567" target="_blank" rel="noopener noreferrer" className="text-clairient-blue hover:underline ml-2">Schincariol, Frank & Chadefaux (2025)</a>
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">Do you make subnational predictions?</h4>
+              <p className="text-gray-700 mt-2">
+                Yes. We produce PRIO‑GRID (0.5°) forecasts alongside country‑level outputs. The grid approach captures
+                local persistence and spillovers, and is visualized via 3D space–time shapes and diffusion animations.
+                See the 3D shapes working paper in our{' '}
+                <a href="/publications#working-papers" className="text-link">Working Papers</a>.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">How does the autoregressive baseline compare?</h4>
+              <p className="text-gray-700 mt-2">
+                For short horizons, a purely autoregressive, shape‑matching approach performs on par with covariate‑augmented
+                versions. This makes the baseline attractive when exogenous data are delayed or noisy, and provides a strong,
+                transparent reference for practitioners. See
+                {' '}<a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">EPJ Data Science</a>
+                {' '}and the
+                {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">Journal of Peace Research paper on accounting for variability</a>.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">What do we explain particularly well?</h4>
+              <p className="text-gray-700 mt-2">
+                Variation over time — especially the onset, escalation, and decay of episodes. By borrowing futures from
+                the closest analogs, the model captures bursts and plateaus that standard linear baselines often smooth out.
+                See our{' '}
+                <a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">Journal of Peace Research paper on accounting for variability</a>.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">Is this causal or predictive?</h4>
+              <p className="text-gray-700 mt-2">
+                Predictive. We focus on anticipating outcomes given current trajectories and historical regularities.
+                That said, the analog set provides interpretable <em>narratives</em> — “this looks like these past episodes” — that
+                support diagnostic and scenario discussions.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">How do you quantify uncertainty?</h4>
+              <p className="text-gray-700 mt-2">
+                Following the papers, we take the <span className="font-medium">K</span> most similar historical windows (via DTW shape matching).
+                For each forecast horizon <span className="font-mono">h</span>, we use the matched windows’ subsequent outcomes to form an
+                empirical predictive distribution, and we take the <span className="font-medium">average (centroid)</span> of those futures as the
+                point forecast. Equivalently, with equal weights <span className="font-mono">1/K</span>, the mixture is
+                <span className="font-mono"> p<sub>h</sub>(y) = (1/K) · ∑<sub>k=1..K</sub> δ(y − y<sub>k,h</sub>)</span>.
+                From this distribution we report prediction intervals (e.g., 50/80/95%) and exceedance probabilities.
+              </p>
+              <p className="text-gray-700 mt-2">
+                We evaluate forecasts out‑of‑sample against baseline models and monitor interval coverage. In deployment,
+                we may optionally apply similarity weighting and distributional diagnostics (e.g., PIT/CRPS) for ongoing
+                calibration monitoring.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">What horizons do you support?</h4>
+              <p className="text-gray-700 mt-2">
+                Commonly 1–6 months, but the same design extends to weekly or quarterly horizons. We choose horizons based on
+                stakeholder needs and data refresh cycles.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">Does this work beyond conflict fatalities?</h4>
+              <p className="text-gray-700 mt-2">
+                Yes. We use similar shape‑based methods for protest intensity and migration flows. The approach is generic to
+                time‑series with recurring motifs and regime shifts.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Applications & Use Cases */}
-      <section className="py-12 bg-gray-50">
+      {/* Limitations & responsible use */}
+      <section id="limits" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">Applications Beyond Conflict</h2>
-            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
-              Our pattern recognition methods extend to other domains with temporal dynamics.
-            </p>
-          </div>
+          <h3 className="text-2xl font-light text-gray-900 mb-4">Limitations & Responsible Use</h3>
+          <ul className="list-disc pl-6 text-gray-700 space-y-2">
+            <li><span className="font-medium">Novelty risk:</span> Rare, unprecedented dynamics may lack close analogs, degrading accuracy.</li>
+            <li><span className="font-medium">Data latency/quality:</span> Forecasts reflect input lags and reporting noise; intervals communicate uncertainty.</li>
+            <li><span className="font-medium">Predictive, not causal:</span> Explanations are analog‑based narratives, not causal attributions.</li>
+            <li><span className="font-medium">Safeguards:</span> Human review, uncertainty communication, and context‑aware application are required.</li>
+          </ul>
+        </div>
+      </section>
 
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Protest Dynamics</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Pattern-based forecasting of protest escalation and transitions to violence. Patterns generalize across contexts.
-              </p>
-              <p className="text-xs text-gray-500">Schincariol & Chadefaux (2025)</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Migration Flows</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Time-series forecasting of displacement and refugee movements using historical pattern matching.
-              </p>
-              <p className="text-xs text-gray-500">Schincariol & Chadefaux (2024)</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Humanitarian Early Warning</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Anticipate humanitarian needs based on predicted conflict trajectories and displacement patterns.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Diplomatic Planning</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Identify windows of opportunity for intervention based on pattern-informed forecasts of escalation.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Resource Allocation</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Deploy peacekeeping forces, humanitarian resources, and preventive diplomacy where and when most needed.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-3">Risk Assessment</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Provide business, NGO, and government stakeholders with actionable forecasts for operational planning.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link href="/forecasts" className="inline-flex items-center gap-2 px-6 py-3 bg-clairient-blue text-white rounded-lg hover:bg-blue-700 transition-colors">
-              Explore Our Forecasts
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+      {/* How to use */}
+      <section id="usage" className="py-12 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-light text-gray-900 mb-4">How To Use Our Forecasts</h3>
+          <ul className="list-disc pl-6 text-gray-700 space-y-2">
+            <li>Use median and 50/80/95% bands for planning; monitor exceedance risks for tail events.</li>
+            <li>Combine country and PRIO‑GRID views to align strategic and operational decisions.</li>
+            <li>Use analog matches to communicate context: “this resembles episodes X, Y, Z”.</li>
+            <li>Download data for portfolio‑level analysis and integration.</li>
+          </ul>
+          <div className="mt-3 text-sm">
+            <a href="/forecasts" className="text-link">Live forecasts</a>
+            <span className="mx-1 text-gray-300">·</span>
+            <a href="/downloads" className="text-link">Downloads</a>
           </div>
         </div>
       </section>
 
-      {/* Live Forecast Demo (Grid-level map) */}
-      <section className="py-12 bg-white">
+      {/* References & versioning */}
+      <section id="refs" className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-6">
-              Live Global Risk Intelligence
-            </h2>
-            <p className="text-lg text-gray-600 font-light">
-              Real-time conflict forecasts powered by our machine learning models
-            </p>
-          </div>
-          
-          <div className="mb-12">
-            <PrioGridMap period={snap.period} activeView="grid" />
-          </div>
-          
-          <div className="text-center space-x-6">
-            <Link href="/forecasts" className="text-link">
-              View our forecasts
-            </Link>
-            <Link href="/publications" className="text-link">
-              View our publications
-            </Link>
-          </div>
+          <h3 className="text-2xl font-light text-gray-900 mb-4">References & Versioning</h3>
+          <ul className="list-disc pl-6 text-gray-700 space-y-2">
+            <li><a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">EPJ Data Science: Endogenous conflict and the limits of predictive optimization</a></li>
+            <li><a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">Journal of Peace Research: Accounting for variability in conflict dynamics</a></li>
+            <li><a href="/academicPapers/working-papers/predictability-29.pdf" target="_blank" rel="noopener noreferrer" className="text-link">Working paper: Predictability of Conflict Patterns</a></li>
+            <li><a href="/publications#working-papers" className="text-link">Working paper: 3D spatiotemporal shapes (subnational forecasting)</a></li>
+            <li><a href="/publications" className="text-link">All publications</a></li>
+          </ul>
         </div>
       </section>
-
     </>
   )
 }
+
