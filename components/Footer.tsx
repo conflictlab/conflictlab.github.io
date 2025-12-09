@@ -14,8 +14,12 @@ export default function Footer() {
           <div className="justify-self-start">
             <p className="max-w-md text-xs flex items-center gap-2">
               <span className="inline-flex items-center gap-2">
-                <img src="/logos/paceWhite.svg" alt="PaCE" width={20} height={20} className="drop-shadow-sm" />
-                <span className="text-base font-light text-white">PaCE</span>
+                <img
+                  src="/logos/paceWhite.svg"
+                  alt="PaCE"
+                  className="drop-shadow-sm w-7 h-7 md:w-8 md:h-8"
+                />
+                <span className="font-light text-white text-lg md:text-xl leading-none">PaCE</span>
               </span>
             </p>
           </div>
