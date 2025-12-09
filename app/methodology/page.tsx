@@ -16,7 +16,7 @@ export default function MethodologyPage() {
       <section className="pt-14 pb-8 md:pt-16 md:pb-10 hero-background-network-image">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-2 leading-tight">Methodology</h1>
-          <p className="text-gray-600 md:text-lg font-light max-w-3xl">A compact, academically structured overview of data, methods, uncertainty, subnational modeling, validation, and limitations.</p>
+          <p className="text-gray-600 md:text-lg font-light max-w-3xl">Overview of PaCE’s forecasting methods.</p>
           <div className="mt-2 text-sm text-gray-700">
             <a href="#faq" className="text-link">Jump to Q&A</a>
             <span className="mx-1 text-gray-300">·</span>
@@ -317,4 +317,3 @@ export default function MethodologyPage() {
     </>
   )
 }
-
