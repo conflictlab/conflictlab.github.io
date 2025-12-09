@@ -83,6 +83,41 @@ export default function MethodologyStructuredDraftPage() {
               </div>
             </section>
 
+            {/* Why shape-based analog forecasting */}
+            <section id="why-analog">
+              <h2 className="text-2xl font-light text-gray-900 mb-2">Why Shape‑Based Analog Forecasting</h2>
+              <p className="mb-3">
+                We treat each evolving trajectory (country or grid cell) as a <em>shape in time</em> and search the historical
+                record for similar shapes. Those closest historical analogs provide plausible futures that we aggregate into a
+                forecast with uncertainty.
+              </p>
+              <p className="mb-3">
+                Concretely, given a recent window of outcomes, we use dynamic time warping (DTW) to align sequences at different
+                speeds and identify nearest analogs in the archive. We then follow each analog forward to obtain a set of
+                candidate futures. Averaging these futures yields a strong, transparent short‑horizon forecast; the spread gives
+                intervals and exceedances. See <a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">EPJ Data Science</a>
+                {' '}and the{' '}
+                <a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">JPR paper on variability</a>.
+              </p>
+              <p className="mb-6">
+                When covariates are available (e.g., population, access, economics, climate), we can enrich the similarity search.
+                But a key result across our studies is that <span className="font-medium">purely autoregressive</span> shape‑matching — using only past
+                fatalities or event intensity — performs on par with richer feature sets for short‑horizon forecasts. See also our
+                unrest and migration applications using the same pattern‑based strategy.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <figure className="bg-white border border-gray-200 rounded-lg p-3">
+                  <Image src="/academicPapers/methods/Figs/method1.png" alt="Analog matching step" width={1000} height={700} className="rounded w-full h-auto" />
+                  <figcaption className="text-sm text-gray-600 mt-2">Figure 2. Analog matching step: select K nearest historical windows via DTW.</figcaption>
+                </figure>
+                <figure className="bg-white border border-gray-200 rounded-lg p-3">
+                  <Image src="/academicPapers/methods/Figs/method2.png" alt="Forecast aggregation step" width={1000} height={700} className="rounded w-full h-auto" />
+                  <figcaption className="text-sm text-gray-600 mt-2">Figure 3. Forecast aggregation: collect analog futures and compute point and interval forecasts.</figcaption>
+                </figure>
+              </div>
+            </section>
+
             {/* Uncertainty */}
             <section id="uncertainty">
               <h2 className="text-2xl font-light text-gray-900 mb-2">Uncertainty</h2>
@@ -96,6 +131,12 @@ export default function MethodologyStructuredDraftPage() {
             {/* Subnational */}
             <section id="subnational">
               <h2 className="text-2xl font-light text-gray-900 mb-2">Subnational Modeling</h2>
+              <p className="mb-3">
+                We model how risk appears, persists, and spreads across adjacent PRIO‑GRID (0.5°) cells. The method combines
+                local history with neighborhood exposure to recover waves of escalation and hotspot formation that national
+                aggregates can hide.
+              </p>
+              <h3 className="text-xl font-light text-gray-900 mb-2">How the diffusion mechanism is captured</h3>
               <ul className="list-disc pl-6 space-y-1">
                 <li><span className="font-medium">Units:</span> PRIO‑GRID 0.5° cell‑months with local lag history.</li>
                 <li><span className="font-medium">Neighborhood exposure:</span> Distance‑decayed activity within 1–3 cells, optionally weighted by roads/travel time.</li>
@@ -105,13 +146,13 @@ export default function MethodologyStructuredDraftPage() {
               <div className="my-6">
                 <figure className="bg-white border border-gray-200 rounded-lg p-4">
                   <div className="mb-4"><PrioGridAnimation /></div>
-                  <figcaption className="text-sm text-gray-600">Figure 2. Diffusion and hotspot formation across PRIO‑GRID cells.</figcaption>
+                  <figcaption className="text-sm text-gray-600">Figure 4. Diffusion and hotspot formation across PRIO‑GRID cells.</figcaption>
                 </figure>
               </div>
               <div className="relative w-full max-w-4xl">
                 <figure>
                   <Image src="/academicPapers/methods/Figs/3dShapes.jpg" alt="3D space–time shapes" width={1400} height={900} className="rounded-lg border border-gray-200 w-full h-auto" />
-                  <figcaption className="text-sm text-gray-600 mt-2">Figure 3. Space–time trajectories as 3D shapes; similar shapes indicate comparable diffusion paths.</figcaption>
+                  <figcaption className="text-sm text-gray-600 mt-2">Figure 5. Space–time trajectories as 3D shapes; similar shapes indicate comparable diffusion paths.</figcaption>
                 </figure>
               </div>
             </section>
@@ -161,6 +202,7 @@ export default function MethodologyStructuredDraftPage() {
                 <li><a className="text-link" href="#overview">Overview</a></li>
                 <li><a className="text-link" href="#data">Data</a></li>
                 <li><a className="text-link" href="#methods">Methods</a></li>
+                <li><a className="text-link" href="#why-analog">Why analog</a></li>
                 <li><a className="text-link" href="#uncertainty">Uncertainty</a></li>
                 <li><a className="text-link" href="#subnational">Subnational</a></li>
                 <li><a className="text-link" href="#validation">Validation</a></li>
