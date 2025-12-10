@@ -172,6 +172,16 @@ export default function MethodologyPage() {
               </ul>
             </section>
 
+            {/* How to Cite */}
+            <section id="cite" className="py-0">
+              <h2 className="text-2xl font-light text-gray-900 mb-2">How to Cite</h2>
+              <p className="text-sm text-gray-700">
+                If you use these data or figures, please cite:
+                {' '}<span className="font-medium">Journal of Peace Research (2025). Accounting for variability in conflict dynamics.</span>
+                {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
+              </p>
+            </section>
+
             {/* Q&A from live page */}
             <section id="faq" className="py-0">
               <h2 className="text-2xl font-light text-gray-900 mb-2">Questions & Answers</h2>
@@ -305,6 +315,7 @@ export default function MethodologyPage() {
                 <li><a className="text-link" href="#uncertainty">Uncertainty</a></li>
                 <li><a className="text-link" href="#subnational">Subnational</a></li>
                 <li><a className="text-link" href="#validation">Validation</a></li>
+                <li><a className="text-link" href="#cite">Cite</a></li>
                 <li><a className="text-link" href="#faq">Q&A</a></li>
                 <li><a className="text-link" href="#limitations">Limitations</a></li>
                 <li><a className="text-link" href="#references">References</a></li>
