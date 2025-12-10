@@ -127,12 +127,8 @@ export default function PrioGridAnimation() {
             
             cell.style.background = colors[conflictLevel] || colors[0]
             
-            // Add diffusion animation for active conflicts
-            if (conflictLevel > 0 && Math.random() > 0.8) {
-              cell.style.animation = 'pulse 2s ease-in-out infinite'
-            } else {
-              cell.style.animation = 'none'
-            }
+            // Disable per-cell pulsing to avoid distracting blinking
+            cell.style.animation = 'none'
           }
         }
       }
