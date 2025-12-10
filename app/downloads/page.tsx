@@ -247,21 +247,11 @@ export default async function DataPage() {
 }`}                </pre>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">Methods (select one)</h3>
-                <ul className="text-sm text-gray-700 list-disc pl-5 space-y-1">
-                  <li>
-                    Chadefaux, T. (2023). An automated pattern recognition system for conflict. <em>Journal of Computational Science</em>.
-                    {' '}<a href="https://www.sciencedirect.com/science/article/pii/S1877750323001345" target="_blank" rel="noopener noreferrer" className="text-link">Link</a>
-                  </li>
-                  <li>
-                    EPJ Data Science (2025). Endogenous conflict and the limits of predictive optimization.
-                    {' '}<a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
-                  </li>
-                  <li>
-                    Journal of Peace Research (2025). Accounting for variability in conflict dynamics.
-                    {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
-                  </li>
-                </ul>
+                <h3 className="text-sm font-medium text-gray-900 mb-1">Method</h3>
+                <p className="text-sm text-gray-700">
+                  Journal of Peace Research (2025). Accounting for variability in conflict dynamics.
+                  {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
+                </p>
               </div>
             </div>
           </div>
