@@ -230,30 +230,12 @@ export default async function DataPage() {
 
           {/* How to Cite */}
           <div className="mt-8 border border-gray-200 rounded-lg p-4 bg-white">
-            <h2 id="cite" className="text-lg font-light text-gray-900 mb-2">How to Cite PaCE</h2>
-            <p className="text-sm text-gray-700 mb-3">If you use these data or figures, please cite the dataset and a core methods paper.</p>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">Dataset</h3>
-                <p className="text-sm text-gray-700">
-                  PaCE Conflict Research Lab (2025). Monthly Conflict Forecasts. Available at <a href="/downloads" className="text-link">/downloads</a>.
-                </p>
-                <pre className="text-[11px] bg-gray-50 p-3 border border-gray-200 rounded overflow-auto mt-2">
-{`@misc{pace-forecasts,
-  author = {PaCE Conflict Research Lab},
-  title = {Monthly Conflict Forecasts},
-  year = {2025},
-  url = {https://forecastlab.org/downloads}
-}`}                </pre>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">Method</h3>
-                <p className="text-sm text-gray-700">
-                  Journal of Peace Research (2025). Accounting for variability in conflict dynamics.
-                  {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
-                </p>
-              </div>
-            </div>
+            <h2 id="cite" className="text-lg font-light text-gray-900 mb-2">How to Cite</h2>
+            <p className="text-sm text-gray-700">
+              If you use these data or figures, please cite:
+              {' '}<span className="font-medium">Journal of Peace Research (2025). Accounting for variability in conflict dynamics.</span>
+              {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
+            </p>
           </div>
 
           {/* Quick links to forecast pages */}
