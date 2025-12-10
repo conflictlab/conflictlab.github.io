@@ -228,6 +228,44 @@ export default async function DataPage() {
             </div>
           </div>
 
+          {/* How to Cite */}
+          <div className="mt-8 border border-gray-200 rounded-lg p-4 bg-white">
+            <h2 id="cite" className="text-lg font-light text-gray-900 mb-2">How to Cite PaCE</h2>
+            <p className="text-sm text-gray-700 mb-3">If you use these data or figures, please cite the dataset and a core methods paper.</p>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-1">Dataset</h3>
+                <p className="text-sm text-gray-700">
+                  PaCE Conflict Research Lab (2025). Monthly Conflict Forecasts. Available at <a href="/downloads" className="text-link">/downloads</a>.
+                </p>
+                <pre className="text-[11px] bg-gray-50 p-3 border border-gray-200 rounded overflow-auto mt-2">
+{`@misc{pace-forecasts,
+  author = {PaCE Conflict Research Lab},
+  title = {Monthly Conflict Forecasts},
+  year = {2025},
+  url = {https://forecastlab.org/downloads}
+}`}                </pre>
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-1">Methods (select one)</h3>
+                <ul className="text-sm text-gray-700 list-disc pl-5 space-y-1">
+                  <li>
+                    Chadefaux, T. (2023). An automated pattern recognition system for conflict. <em>Journal of Computational Science</em>.
+                    {' '}<a href="https://www.sciencedirect.com/science/article/pii/S1877750323001345" target="_blank" rel="noopener noreferrer" className="text-link">Link</a>
+                  </li>
+                  <li>
+                    EPJ Data Science (2025). Endogenous conflict and the limits of predictive optimization.
+                    {' '}<a href="https://doi.org/10.1140/epjds/s13688-025-00599-x" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
+                  </li>
+                  <li>
+                    Journal of Peace Research (2025). Accounting for variability in conflict dynamics.
+                    {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* Quick links to forecast pages */}
           <div className="mt-10 text-sm text-gray-600">
             <span className="mr-2">See also:</span>
