@@ -175,11 +175,26 @@ export default function MethodologyPage() {
             {/* How to Cite */}
             <section id="cite" className="py-0">
               <h2 className="text-2xl font-light text-gray-900 mb-2">How to Cite</h2>
-              <p className="text-sm text-gray-700">
-                If you use these data or figures, please cite:
-                {' '}<span className="font-medium">Journal of Peace Research (2025). Accounting for variability in conflict dynamics.</span>
-                {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
-              </p>
+              <div className="text-sm text-gray-700 space-y-2">
+                <p>
+                  Suggested citation: <span className="font-medium">Schincariol, Frank &amp; Chadefaux (2025).</span>
+                  {' '}Accounting for variability in conflict dynamics. <em>Journal of Peace Research</em>.
+                  {' '}<a href="https://journals.sagepub.com/doi/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">https://doi.org/10.1177/00223433251330790</a>
+                </p>
+                <div>
+                  <div className="font-medium text-gray-900 mb-1">BibTeX</div>
+                  <pre className="text-[11px] bg-gray-50 p-3 border border-gray-200 rounded overflow-auto">
+{`@article{schincariol2025jpr,
+  author = {Schincariol and Frank and Chadefaux},
+  title = {Accounting for variability in conflict dynamics},
+  journal = {Journal of Peace Research},
+  year = {2025},
+  doi = {10.1177/00223433251330790},
+  url = {https://journals.sagepub.com/doi/10.1177/00223433251330790}
+}`}
+                  </pre>
+                </div>
+              </div>
             </section>
 
             {/* Q&A from live page */}
