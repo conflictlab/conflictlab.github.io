@@ -198,6 +198,9 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-xl font-light text-gray-900 mb-2">What happened and closest historical matches</h3>
+          <p className="text-sm text-gray-600 mb-3">
+            We compare the last 10 months in {entity.name} to historical trajectories worldwide and show the closest matches. Gray lines depict the matched past pattern, the dashed black line is {entity.name}'s recent path, and red shows how those cases evolved over the next six months. Lower “distance” means a closer match.
+          </p>
           <DTWMatches countryName={entity.name} />
         </div>
       </section>
