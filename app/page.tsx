@@ -183,9 +183,9 @@ export default async function Home() {
               <Image
                 src="/logos/erc-logo.png"
                 alt="European Research Council"
-                width={160} // Approximate width based on h-36 md:h-40 (144px for h-36, 160px for h-40)
-                height={160} // height needs to be set for Next/Image
-                className="h-36 md:h-40 object-contain"
+                width={192}
+                height={192}
+                className="h-40 md:h-48 object-contain"
               />
             </div>
           </div>
