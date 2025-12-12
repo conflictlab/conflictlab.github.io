@@ -52,20 +52,20 @@ export default function LandingBanner() {
         }
 
         .headline-fade-in {
-          /* Simple fade-in after 1.5s */
-          animation: fadeIn 1s ease-out 1.5s forwards;
+          /* Simple fade-in a bit sooner (was 1.5s) */
+          animation: fadeIn 1s ease-out 1.0s forwards;
           opacity: 0;
         }
 
         .counter-fade-in {
-          /* Keep ~1s after headline start (1.5s) */
-          animation: fadeIn 1s ease-out 2.5s forwards;
+          /* Show shortly after headline (was 2.5s) */
+          animation: fadeIn 1s ease-out 1.8s forwards;
           opacity: 0;
         }
 
         .scroll-indicator {
-          /* Keep ~2s after headline start (1.5s) */
-          animation: fadeIn 1s ease-out 3.5s forwards;
+          /* Appear a touch sooner as well (was 3.5s) */
+          animation: fadeIn 1s ease-out 2.8s forwards;
           opacity: 0;
         }
 
