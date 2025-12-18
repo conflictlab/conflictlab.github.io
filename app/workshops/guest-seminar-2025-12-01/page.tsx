@@ -16,7 +16,7 @@ export default function GuestSeminar2025Dec01() {
             Advances in Conflict Forecasting Research
           </h1>
           <p className="text-lg text-gray-700">
-            <span className="italic"></span>
+            <span className="italic">1 December 2025 • Trinity College Dublin, Ireland</span>
           </p>
         </div>
       </section>
