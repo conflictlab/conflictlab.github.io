@@ -479,7 +479,7 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
             <div key={idx} ref={(el) => { matchRefs.current[idx] = el }} className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <div className="text-sm font-medium text-gray-900">{it.name ? `${it.name}` : `Match ${idx + 1}`}</div>
-                <div className="text-xs text-gray-500">distance {Number(it.distance).toFixed(4)}</div>
+                <div className="text-xs text-gray-500">distance {Number(it.distance).toFixed(3)}</div>
               </div>
               <div className="text-xs text-gray-500 mb-2">{it.range || ''}</div>
               <svg role="img" aria-label={`Match ${idx + 1}`} viewBox={`0 0 ${tileW} ${mH}`} width="100%" height={mH}>
