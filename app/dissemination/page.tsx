@@ -46,8 +46,8 @@ export default function DisseminationPage() {
                 <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
                   <div className="relative h-48 w-full">
                     <Image
-                      src="/workshops/workshop4.jpeg"
-                      alt="PaCE Seminar December 2025"
+                      src="/workshops/simonPolichinel.jpg"
+                      alt="Dr. Simon Polichinel von der Maase"
                       fill
                       className="object-cover"
                     />
@@ -55,7 +55,7 @@ export default function DisseminationPage() {
                   <div className="p-4">
                     <p className="text-sm text-gray-600 mb-2">1 December 2025</p>
                     <h3 className="text-lg font-light text-gray-900 mb-2 group-hover:text-pace-red transition-colors">
-                      PaCE Seminar: Guest Talks
+                      Advances in Conflict Forecasting Research
                     </h3>
                     <p className="text-sm text-gray-600">Trinity College Dublin, Ireland</p>
                   </div>
