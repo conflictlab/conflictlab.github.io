@@ -289,8 +289,10 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
     }
     const H = 6
     return matches.map((m) => {
-      const n = 10 // Always show last 10 months
-      const src = histSeries.slice(-n)
+      // Match length may vary by entry; align the source window length so the dashed
+      // source line ends exactly at t=0 for each match tile.
+      const matchLen = (m.series?.values?.length || 10)
+      const src = histSeries.slice(-matchLen)
       let future: number[] | undefined
       let futureRange: string | undefined
       const nm = m.series?.name
