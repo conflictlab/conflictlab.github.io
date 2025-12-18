@@ -27,6 +27,20 @@ async function main() {
   // --limit 0 means copy all
   run('node scripts/mirror-raw-csvs.js --limit 0')
 
+  // Update min/max from local hist.csv (if present) and denormalize scenarios
+  try {
+    console.log('Prebuild: computing per-country min/max from hist.csv…')
+    run('node scripts/update-minmax-from-hist.js --noDownload')
+  } catch (e) {
+    console.warn('Prebuild: min/max update skipped or failed — proceeding.', e?.message || e)
+  }
+  try {
+    console.log('Prebuild: denormalizing scenarios into public/data/scenarios.denorm.json…')
+    run('node scripts/denorm-scenarios.js')
+  } catch (e) {
+    console.warn('Prebuild: scenario denormalization skipped or failed — proceeding.', e?.message || e)
+  }
+
   // Determine current period from latest snapshot to allow caching checks
   let period = null
   try {
