@@ -41,6 +41,26 @@ export default function DisseminationPage() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* PaCE Seminar December 2025 (Guest talks incl. Dr. Simon Polichinel von der Maase) */}
+              <Link href="/workshops/guest-seminar-2025-12-01" className="group">
+                <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src="/workshops/workshop4.jpeg"
+                      alt="PaCE Seminar December 2025"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <p className="text-sm text-gray-600 mb-2">1 December 2025</p>
+                    <h3 className="text-lg font-light text-gray-900 mb-2 group-hover:text-pace-red transition-colors">
+                      PaCE Seminar: Guest Talks
+                    </h3>
+                    <p className="text-sm text-gray-600">Trinity College Dublin, Ireland</p>
+                  </div>
+                </div>
+              </Link>
               {/* Conflict Forecasting Workshop */}
               <Link href="/workshops/conflict-forecasting-2024" className="group">
                 <div className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
