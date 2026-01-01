@@ -69,7 +69,7 @@
   },
   "Brazil": {
     "min": 20,
-    "max": 109
+    "max": 98
   },
   "Burkina Faso": {
     "min": 91,
@@ -105,7 +105,7 @@
   },
   "Colombia": {
     "min": 28,
-    "max": 226
+    "max": 124
   },
   "Comoros": {
     "min": 0,
@@ -125,7 +125,7 @@
   },
   "Dem. Rep. Congo": {
     "min": 131,
-    "max": 3699
+    "max": 572
   },
   "Ecuador": {
     "min": 0,
@@ -205,7 +205,7 @@
   },
   "Iraq": {
     "min": 2,
-    "max": 36
+    "max": 22
   },
   "Israel": {
     "min": 43,
@@ -249,7 +249,7 @@
   },
   "Lebanon": {
     "min": 21,
-    "max": 57
+    "max": 41
   },
   "Lesotho": {
     "min": 0,
@@ -269,7 +269,7 @@
   },
   "Malaysia": {
     "min": 0,
-    "max": 2
+    "max": 3
   },
   "Mali": {
     "min": 108,
@@ -284,8 +284,8 @@
     "max": 0.000001
   },
   "Mexico": {
-    "min": 238,
-    "max": 485
+    "min": 199,
+    "max": 406
   },
   "Moldova": {
     "min": 0,
@@ -293,14 +293,14 @@
   },
   "Morocco": {
     "min": 0,
-    "max": 7
+    "max": 3
   },
   "Mozambique": {
     "min": 29,
     "max": 70
   },
   "Myanmar": {
-    "min": 112,
+    "min": 98,
     "max": 246
   },
   "Namibia": {
@@ -320,7 +320,7 @@
     "max": 0.000001
   },
   "Niger": {
-    "min": 16,
+    "min": 29,
     "max": 209
   },
   "Nigeria": {
@@ -369,11 +369,11 @@
   },
   "Russia": {
     "min": 43,
-    "max": 1086
+    "max": 751
   },
   "Rwanda": {
     "min": 0,
-    "max": 5
+    "max": 0.000001
   },
   "Saudi Arabia": {
     "min": 0,
@@ -396,7 +396,7 @@
     "max": 0.000001
   },
   "Somalia": {
-    "min": 114,
+    "min": 149,
     "max": 640
   },
   "South Africa": {
@@ -424,7 +424,7 @@
     "max": 3
   },
   "Syria": {
-    "min": 124,
+    "min": 93,
     "max": 2521
   },
   "Tajikistan": {
@@ -457,11 +457,11 @@
   },
   "Uganda": {
     "min": 0,
-    "max": 5
+    "max": 30
   },
   "Ukraine": {
     "min": 3179,
-    "max": 10281
+    "max": 10350
   },
   "United Arab Emirates": {
     "min": 0,
@@ -477,7 +477,7 @@
   },
   "Uzbekistan": {
     "min": 0,
-    "max": 1
+    "max": 0.000001
   },
   "Venezuela": {
     "min": 0,
