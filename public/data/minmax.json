@@ -17,7 +17,7 @@
   },
   "Argentina": {
     "min": 0,
-    "max": 9
+    "max": 14
   },
   "Armenia": {
     "min": 0,
@@ -33,7 +33,7 @@
   },
   "Azerbaijan": {
     "min": 0,
-    "max": 4
+    "max": 0.000001
   },
   "Bahrain": {
     "min": 0,
@@ -45,7 +45,7 @@
   },
   "Belgium": {
     "min": 0,
-    "max": 1
+    "max": 0.000001
   },
   "Benin": {
     "min": 0,
@@ -77,11 +77,11 @@
   },
   "Burundi": {
     "min": 2,
-    "max": 20
+    "max": 32
   },
   "Cambodia": {
     "min": 0,
-    "max": 11
+    "max": 12
   },
   "Cameroon": {
     "min": 20,
@@ -93,10 +93,10 @@
   },
   "Central African Rep.": {
     "min": 6,
-    "max": 96
+    "max": 64
   },
   "Chad": {
-    "min": 1,
+    "min": 0,
     "max": 51
   },
   "China": {
@@ -104,7 +104,7 @@
     "max": 0.000001
   },
   "Colombia": {
-    "min": 28,
+    "min": 46,
     "max": 124
   },
   "Comoros": {
@@ -125,7 +125,7 @@
   },
   "Dem. Rep. Congo": {
     "min": 131,
-    "max": 572
+    "max": 661
   },
   "Ecuador": {
     "min": 0,
@@ -196,7 +196,7 @@
     "max": 125
   },
   "Indonesia": {
-    "min": 1,
+    "min": 4,
     "max": 37
   },
   "Iran": {
@@ -204,11 +204,11 @@
     "max": 1190
   },
   "Iraq": {
-    "min": 2,
+    "min": 1,
     "max": 22
   },
   "Israel": {
-    "min": 43,
+    "min": 64,
     "max": 2440
   },
   "Italy": {
@@ -233,7 +233,7 @@
   },
   "eSwatini": {
     "min": 0,
-    "max": 3
+    "max": 2
   },
   "Kuwait": {
     "min": 0,
@@ -248,7 +248,7 @@
     "max": 5
   },
   "Lebanon": {
-    "min": 21,
+    "min": 15,
     "max": 41
   },
   "Lesotho": {
@@ -272,7 +272,7 @@
     "max": 3
   },
   "Mali": {
-    "min": 108,
+    "min": 27,
     "max": 415
   },
   "Malta": {
@@ -284,7 +284,7 @@
     "max": 0.000001
   },
   "Mexico": {
-    "min": 199,
+    "min": 194,
     "max": 406
   },
   "Moldova": {
@@ -324,7 +324,7 @@
     "max": 209
   },
   "Nigeria": {
-    "min": 383,
+    "min": 353,
     "max": 1038
   },
   "Macedonia": {
@@ -396,8 +396,8 @@
     "max": 0.000001
   },
   "Somalia": {
-    "min": 149,
-    "max": 640
+    "min": 116,
+    "max": 530
   },
   "South Africa": {
     "min": 4,
@@ -429,7 +429,7 @@
   },
   "Tajikistan": {
     "min": 0,
-    "max": 7
+    "max": 5
   },
   "Tanzania": {
     "min": 0,
@@ -437,7 +437,7 @@
   },
   "Thailand": {
     "min": 0,
-    "max": 35
+    "max": 89
   },
   "Togo": {
     "min": 0,
@@ -453,7 +453,7 @@
   },
   "Turkey": {
     "min": 0,
-    "max": 2
+    "max": 9
   },
   "Uganda": {
     "min": 0,
