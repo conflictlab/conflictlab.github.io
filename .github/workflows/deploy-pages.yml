@@ -33,8 +33,12 @@ on:
       - 'postcss.config.js'
       - 'tsconfig.json'
       - '.github/workflows/deploy-pages.yml'
+  # Also deploy when data update workflows complete (their pushes use GITHUB_TOKEN and won't trigger push workflows)
   workflow_run:
-    workflows: ["Sync Forecast CSVs"]
+    workflows:
+      - "Sync Forecast CSVs"
+      - "Update minmax and denorm scenarios"
+      - "Update DTW matches JSON"
     types: [completed]
   workflow_dispatch: {}
 
@@ -125,7 +129,6 @@ jobs:
           path: ./out
 
   deploy:
-    if: github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     environment:

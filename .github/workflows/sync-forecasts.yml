@@ -15,7 +15,8 @@ on:
       - 'components/PrioGridMap.tsx'
       - '.github/workflows/sync-forecasts.yml'
   schedule:
-    - cron: '0 3 1 * *' # 03:00 UTC on the 1st of every month
+    # Run daily at 03:00 UTC to catch late upstream releases
+    - cron: '0 3 * * *'
   workflow_dispatch: {}
 
 jobs:
