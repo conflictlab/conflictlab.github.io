@@ -45,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm run csv:sync:github -- \
-            --repo ThomasSchinca/Pace-map-risk \
+            --repo conflictlab/Pace-map-risk \
             --dir Historical_Predictions \
             --branch main \
             --latestOnly \
