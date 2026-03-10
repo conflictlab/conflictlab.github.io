@@ -1,10 +1,11 @@
-name: Monthly PACE Forecasts
+name: Monthly PACE Forecasts (Sequential - DISABLED)
 
 on:
-  schedule:
-    # Run on the 1st of every month at 2:00 AM UTC
-    - cron: '0 2 1 * *'
-  workflow_dispatch:  # Allow manual triggering
+  # schedule:
+  #   # Run on the 1st of every month at 2:00 AM UTC
+  #   # DISABLED: Use monthly-forecasts-parallel.yml instead
+  #   - cron: '0 2 1 * *'
+  workflow_dispatch:  # Allow manual triggering as fallback
 
 jobs:
   generate-forecasts:

@@ -1,0 +1,573 @@
+name: Monthly PACE Forecasts (Parallel)
+
+on:
+  schedule:
+    # Run on the 1st of every month at 2:00 AM UTC
+    - cron: '0 2 1 * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  prepare-data:
+    runs-on: ubuntu-latest
+    outputs:
+      data-ready: ${{ steps.save-data.outputs.uploaded }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout Pace-map-risk subrepository
+        run: |
+          git clone https://github.com/conflictlab/Pace-map-risk.git Pace-map-risk-temp
+          cp -r Pace-map-risk-temp/* Pace-map-risk/ || true
+          rm -rf Pace-map-risk-temp
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          cd Pace-map-risk
+          pip install --upgrade pip
+          pip install pandas numpy geopandas matplotlib seaborn shapely scipy scikit-learn
+          pip install -r requirements.txt || true
+
+      - name: Download and process UCDP data
+        run: |
+          cd Pace-map-risk
+          python -c "
+import pandas as pd
+from datetime import datetime, timedelta
+import sys
+
+print('Loading UCDP data...')
+df = pd.read_csv('https://ucdp.uu.se/downloads/ged/ged251-csv.zip',
+                 parse_dates=['date_start', 'date_end'], low_memory=False)
+month = datetime.now().strftime('%m')
+
+if month == '01':
+    month = '13'
+for i in range(1, int(month)):
+    try:
+        df_can = pd.read_csv(f'https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_{i}.csv')
+        df_can.columns = df.columns
+        df_can['date_start'] = pd.to_datetime(df_can['date_start'])
+        df_can['date_end'] = pd.to_datetime(df_can['date_end'])
+        df_can = df_can.drop_duplicates()
+        df = pd.concat([df, df_can], axis=0)
+    except Exception as e:
+        print(f'Note: Could not load candidate data for month {i}: {e}')
+
+print('Processing data...')
+df_tot = pd.DataFrame(columns=df.country.unique(),
+                     index=pd.date_range(df.date_start.min(), df.date_end.max()))
+df_tot = df_tot.fillna(0)
+for i in df.country.unique():
+    df_sub = df[df.country == i]
+    for j in range(len(df_sub)):
+        if df_sub.date_start.iloc[j].month == df_sub.date_end.iloc[j].month:
+            df_tot.loc[df_sub.date_start.iloc[j], i] = \
+                df_tot.loc[df_sub.date_start.iloc[j], i] + df_sub.best.iloc[j]
+
+df_tot_m = df_tot.resample('M').sum()
+last_month = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+df_tot_m = df_tot_m.loc[:last_month, :]
+df_tot_m.to_csv('Conf.csv')
+
+print(f'Processed {len(df_tot_m.columns)} countries')
+print('Data preparation complete!')
+          "
+
+      - name: Save processed data as artifact
+        id: save-data
+        uses: actions/upload-artifact@v4
+        with:
+          name: processed-data
+          path: |
+            Pace-map-risk/Conf.csv
+            Pace-map-risk/reg_coun.csv
+            Pace-map-risk/shape.py
+          retention-days: 1
+
+  generate-h6:
+    needs: prepare-data
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chunk: [0, 1, 2, 3]
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Pace-map-risk subrepository
+        run: |
+          git clone https://github.com/conflictlab/Pace-map-risk.git Pace-map-risk-temp
+          cp -r Pace-map-risk-temp/* Pace-map-risk/ || true
+          rm -rf Pace-map-risk-temp
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          cd Pace-map-risk
+          pip install --upgrade pip
+          pip install pandas numpy geopandas matplotlib seaborn shapely scipy scikit-learn
+          pip install -r requirements.txt || true
+
+      - name: Download processed data
+        uses: actions/download-artifact@v4
+        with:
+          name: processed-data
+          path: Pace-map-risk/
+
+      - name: Generate h=6 forecasts for chunk ${{ matrix.chunk }}
+        run: |
+          cd Pace-map-risk
+          python -c "
+import sys
+sys.path.insert(0, '.')
+exec(open('generate_forecasts.py').read())
+import pickle
+
+df_tot_m = pd.read_csv('Conf.csv', index_col=0, parse_dates=True)
+df_conf = pd.read_csv('reg_coun.csv', index_col=0, squeeze=True)
+common_columns = df_tot_m.columns.intersection(df_conf.index)
+df_tot_m = df_tot_m.loc[:, common_columns]
+
+# Split countries into chunks
+chunk_id = ${{ matrix.chunk }}
+total_chunks = 4
+countries = list(df_tot_m.columns)
+chunk_size = len(countries) // total_chunks + (1 if len(countries) % total_chunks > chunk_id else 0)
+start_idx = sum(len(countries) // total_chunks + (1 if i < len(countries) % total_chunks else 0) for i in range(chunk_id))
+end_idx = start_idx + chunk_size
+chunk_countries = countries[start_idx:end_idx]
+
+print(f'Processing chunk {chunk_id}: {len(chunk_countries)} countries')
+print(f'Countries: {chunk_countries[:5]}...')
+
+# Filter to chunk
+df_tot_m_chunk = df_tot_m[chunk_countries]
+
+# Generate forecasts for this chunk
+results = generate_forecasts(df_tot_m_chunk, df_conf, h=6, h_train=24, output_suffix='_h6')
+
+# Save chunk results
+results['pred_df'].to_csv(f'forecasts_h6_chunk{chunk_id}.csv')
+results['pred_df_min'].to_csv(f'forecasts_h6_min_chunk{chunk_id}.csv')
+results['pred_df_max'].to_csv(f'forecasts_h6_max_chunk{chunk_id}.csv')
+results['df_perc'].to_csv(f'perc_h6_chunk{chunk_id}.csv')
+
+with open(f'dict_m_h6_chunk{chunk_id}.pkl', 'wb') as f:
+    pickle.dump(results['dict_m'], f)
+with open(f'dict_sce_h6_chunk{chunk_id}.pkl', 'wb') as f:
+    pickle.dump(results['dict_sce'], f)
+with open(f'sce_dictionary_h6_chunk{chunk_id}.pkl', 'wb') as f:
+    pickle.dump(results['dict_sce_plot'], f)
+
+print(f'Chunk {chunk_id} complete!')
+          "
+        timeout-minutes: 90
+
+      - name: Upload h6 chunk results
+        uses: actions/upload-artifact@v4
+        with:
+          name: h6-chunk-${{ matrix.chunk }}
+          path: |
+            Pace-map-risk/forecasts_h6_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/forecasts_h6_min_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/forecasts_h6_max_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/perc_h6_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/dict_m_h6_chunk${{ matrix.chunk }}.pkl
+            Pace-map-risk/dict_sce_h6_chunk${{ matrix.chunk }}.pkl
+            Pace-map-risk/sce_dictionary_h6_chunk${{ matrix.chunk }}.pkl
+          retention-days: 1
+
+  generate-h12:
+    needs: prepare-data
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chunk: [0, 1, 2, 3]
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Pace-map-risk subrepository
+        run: |
+          git clone https://github.com/conflictlab/Pace-map-risk.git Pace-map-risk-temp
+          cp -r Pace-map-risk-temp/* Pace-map-risk/ || true
+          rm -rf Pace-map-risk-temp
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          cd Pace-map-risk
+          pip install --upgrade pip
+          pip install pandas numpy geopandas matplotlib seaborn shapely scipy scikit-learn
+          pip install -r requirements.txt || true
+
+      - name: Download processed data
+        uses: actions/download-artifact@v4
+        with:
+          name: processed-data
+          path: Pace-map-risk/
+
+      - name: Generate h=12 forecasts for chunk ${{ matrix.chunk }}
+        run: |
+          cd Pace-map-risk
+          python -c "
+import sys
+sys.path.insert(0, '.')
+exec(open('generate_forecasts.py').read())
+import pickle
+
+df_tot_m = pd.read_csv('Conf.csv', index_col=0, parse_dates=True)
+df_conf = pd.read_csv('reg_coun.csv', index_col=0, squeeze=True)
+common_columns = df_tot_m.columns.intersection(df_conf.index)
+df_tot_m = df_tot_m.loc[:, common_columns]
+
+# Split countries into chunks
+chunk_id = ${{ matrix.chunk }}
+total_chunks = 4
+countries = list(df_tot_m.columns)
+chunk_size = len(countries) // total_chunks + (1 if len(countries) % total_chunks > chunk_id else 0)
+start_idx = sum(len(countries) // total_chunks + (1 if i < len(countries) % total_chunks else 0) for i in range(chunk_id))
+end_idx = start_idx + chunk_size
+chunk_countries = countries[start_idx:end_idx]
+
+print(f'Processing chunk {chunk_id}: {len(chunk_countries)} countries')
+
+# Filter to chunk
+df_tot_m_chunk = df_tot_m[chunk_countries]
+
+# Generate forecasts for this chunk
+results = generate_forecasts(df_tot_m_chunk, df_conf, h=12, h_train=24, output_suffix='_h12')
+
+# Save chunk results
+results['pred_df'].to_csv(f'forecasts_h12_chunk{chunk_id}.csv')
+results['pred_df_min'].to_csv(f'forecasts_h12_min_chunk{chunk_id}.csv')
+results['pred_df_max'].to_csv(f'forecasts_h12_max_chunk{chunk_id}.csv')
+results['df_perc'].to_csv(f'perc_h12_chunk{chunk_id}.csv')
+
+with open(f'dict_sce_h12_chunk{chunk_id}.pkl', 'wb') as f:
+    pickle.dump(results['dict_sce'], f)
+with open(f'sce_dictionary_h12_chunk{chunk_id}.pkl', 'wb') as f:
+    pickle.dump(results['dict_sce_plot'], f)
+
+print(f'Chunk {chunk_id} complete!')
+          "
+        timeout-minutes: 90
+
+      - name: Upload h12 chunk results
+        uses: actions/upload-artifact@v4
+        with:
+          name: h12-chunk-${{ matrix.chunk }}
+          path: |
+            Pace-map-risk/forecasts_h12_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/forecasts_h12_min_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/forecasts_h12_max_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/perc_h12_chunk${{ matrix.chunk }}.csv
+            Pace-map-risk/dict_sce_h12_chunk${{ matrix.chunk }}.pkl
+            Pace-map-risk/sce_dictionary_h12_chunk${{ matrix.chunk }}.pkl
+          retention-days: 1
+
+  merge-and-publish:
+    needs: [generate-h6, generate-h12]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install pandas numpy pickle5
+
+      - name: Download all h6 chunks
+        uses: actions/download-artifact@v4
+        with:
+          pattern: h6-chunk-*
+          path: h6-chunks/
+          merge-multiple: true
+
+      - name: Download all h12 chunks
+        uses: actions/download-artifact@v4
+        with:
+          pattern: h12-chunk-*
+          path: h12-chunks/
+          merge-multiple: true
+
+      - name: Download processed data for Hist.csv
+        uses: actions/download-artifact@v4
+        with:
+          name: processed-data
+          path: data/
+
+      - name: Merge h=6 results
+        run: |
+          python -c "
+import pandas as pd
+import pickle
+import glob
+import sys
+
+def rename_countries(df):
+    return df.rename(columns={
+        'Bosnia-Herzegovina': 'Bosnia and Herz.',
+        'Cambodia (Kampuchea)': 'Cambodia',
+        'Central African Republic': 'Central African Rep.',
+        'DR Congo (Zaire)': 'Dem. Rep. Congo',
+        'Ivory Coast': \"Côte d'Ivoire\",
+        'Kingdom of eSwatini (Swaziland)': 'eSwatini',
+        'Dominican Republic': 'Dominican Rep.',
+        'Macedonia, FYR': 'Macedonia',
+        'Madagascar (Malagasy)': 'Madagascar',
+        'Myanmar (Burma)': 'Myanmar',
+        'North Macedonia': 'Macedonia',
+        'Russia (Soviet Union)': 'Russia',
+        'Serbia (Yugoslavia)': 'Serbia',
+        'South Sudan': 'S. Sudan',
+        'Yemen (North Yemen)': 'Yemen',
+        'Zimbabwe (Rhodesia)': 'Zimbabwe',
+        'Vietnam (North Vietnam)': 'Vietnam'
+    })
+
+print('Merging h=6 forecasts...')
+
+# Merge CSVs
+for file_pattern in ['forecasts_h6_chunk', 'forecasts_h6_min_chunk', 'forecasts_h6_max_chunk', 'perc_h6_chunk']:
+    chunks = []
+    for f in sorted(glob.glob(f'h6-chunks/{file_pattern}*.csv')):
+        chunks.append(pd.read_csv(f, index_col=0))
+    merged = pd.concat(chunks, axis=1)
+    output_name = file_pattern.replace('_chunk', '').replace('perc_h6', 'perc') + '.csv'
+    merged.to_csv(output_name)
+    print(f'Saved {output_name}')
+
+# Merge pickles
+for file_pattern, output_name in [
+    ('dict_m_h6_chunk', 'saved_dictionary.pkl'),
+    ('dict_sce_h6_chunk', 'dict_sce.pkl'),
+    ('sce_dictionary_h6_chunk', 'sce_dictionary.pkl')
+]:
+    merged_dict = {}
+    for f in sorted(glob.glob(f'h6-chunks/{file_pattern}*.pkl')):
+        with open(f, 'rb') as pf:
+            chunk_dict = pickle.load(pf)
+            merged_dict.update(chunk_dict)
+    with open(output_name, 'wb') as pf:
+        pickle.dump(merged_dict, pf)
+    print(f'Saved {output_name}')
+
+# Create backward-compatible files
+pd.read_csv('forecasts_h6.csv', index_col=0).to_csv('Pred_df.csv')
+pd.read_csv('forecasts_h6_min.csv', index_col=0).to_csv('Pred_df_min.csv')
+pd.read_csv('forecasts_h6_max.csv', index_col=0).to_csv('Pred_df_max.csv')
+
+print('h=6 merge complete!')
+          "
+
+      - name: Merge h=12 results
+        run: |
+          python -c "
+import pandas as pd
+import pickle
+import glob
+
+print('Merging h=12 forecasts...')
+
+# Merge CSVs
+for file_pattern in ['forecasts_h12_chunk', 'forecasts_h12_min_chunk', 'forecasts_h12_max_chunk', 'perc_h12_chunk']:
+    chunks = []
+    for f in sorted(glob.glob(f'h12-chunks/{file_pattern}*.csv')):
+        chunks.append(pd.read_csv(f, index_col=0))
+    merged = pd.concat(chunks, axis=1)
+    output_name = file_pattern.replace('_chunk', '') + '.csv'
+    merged.to_csv(output_name)
+    print(f'Saved {output_name}')
+
+# Merge pickles
+for file_pattern, output_name in [
+    ('dict_sce_h12_chunk', 'dict_sce_h12.pkl'),
+    ('sce_dictionary_h12_chunk', 'sce_dictionary_h12.pkl')
+]:
+    merged_dict = {}
+    for f in sorted(glob.glob(f'h12-chunks/{file_pattern}*.pkl')):
+        with open(f, 'rb') as pf:
+            chunk_dict = pickle.load(pf)
+            merged_dict.update(chunk_dict)
+    with open(output_name, 'wb') as pf:
+        pickle.dump(merged_dict, pf)
+    print(f'Saved {output_name}')
+
+print('h=12 merge complete!')
+          "
+
+      - name: Create Hist.csv and metadata
+        run: |
+          python -c "
+import pandas as pd
+import json
+from datetime import datetime, timedelta
+
+def rename_countries(df):
+    return df.rename(columns={
+        'Bosnia-Herzegovina': 'Bosnia and Herz.',
+        'Cambodia (Kampuchea)': 'Cambodia',
+        'Central African Republic': 'Central African Rep.',
+        'DR Congo (Zaire)': 'Dem. Rep. Congo',
+        'Ivory Coast': \"Côte d'Ivoire\",
+        'Kingdom of eSwatini (Swaziland)': 'eSwatini',
+        'Dominican Republic': 'Dominican Rep.',
+        'Macedonia, FYR': 'Macedonia',
+        'Madagascar (Malagasy)': 'Madagascar',
+        'Myanmar (Burma)': 'Myanmar',
+        'North Macedonia': 'Macedonia',
+        'Russia (Soviet Union)': 'Russia',
+        'Serbia (Yugoslavia)': 'Serbia',
+        'South Sudan': 'S. Sudan',
+        'Yemen (North Yemen)': 'Yemen',
+        'Zimbabwe (Rhodesia)': 'Zimbabwe',
+        'Vietnam (North Vietnam)': 'Vietnam'
+    })
+
+# Create Hist.csv
+df_tot_m = pd.read_csv('data/Conf.csv', index_col=0, parse_dates=True)
+hist_full = rename_countries(df_tot_m)
+hist_full.to_csv('Hist.csv')
+
+# Create metadata
+last_month = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+metadata = {
+    'run_date': datetime.now().isoformat(),
+    'data_end_date': last_month.strftime('%Y-%m'),
+    'forecast_start_date': pd.Timestamp(last_month) + pd.DateOffset(months=1),
+    'h6_end_date': (pd.Timestamp(last_month) + pd.DateOffset(months=6)).strftime('%Y-%m'),
+    'h12_end_date': (pd.Timestamp(last_month) + pd.DateOffset(months=12)).strftime('%Y-%m'),
+    'training_window_months': 24,
+    'historical_start_date': df_tot_m.index[0].strftime('%Y-%m'),
+    'historical_end_date': last_month.strftime('%Y-%m'),
+    'total_historical_months': len(df_tot_m),
+    'parallelization': 'Matrix strategy with 4 chunks per horizon'
+}
+metadata['forecast_start_date'] = metadata['forecast_start_date'].strftime('%Y-%m')
+
+with open('forecast_metadata.json', 'w') as f:
+    json.dump(metadata, f, indent=2)
+
+print('Created Hist.csv and metadata')
+          "
+
+      - name: Prepare output directories
+        run: |
+          ARCHIVE_DIR="public/data/forecasts/archive/$(date +%Y-%m)"
+          mkdir -p public/data/forecasts/latest
+          mkdir -p "$ARCHIVE_DIR"
+          echo "ARCHIVE_DIR=$ARCHIVE_DIR" >> $GITHUB_ENV
+
+      - name: Copy forecasts to latest
+        run: |
+          # Copy forecast files to latest
+          cp Hist.csv public/data/forecasts/latest/
+          cp forecasts_h6.csv public/data/forecasts/latest/
+          cp forecasts_h6_min.csv public/data/forecasts/latest/
+          cp forecasts_h6_max.csv public/data/forecasts/latest/
+          cp forecasts_h12.csv public/data/forecasts/latest/
+          cp forecasts_h12_min.csv public/data/forecasts/latest/
+          cp forecasts_h12_max.csv public/data/forecasts/latest/
+          cp forecast_metadata.json public/data/forecasts/latest/metadata.json
+
+          # Backward-compatible files
+          cp Pred_df.csv public/data/forecasts/latest/
+          cp Pred_df_min.csv public/data/forecasts/latest/
+          cp Pred_df_max.csv public/data/forecasts/latest/
+          cp perc.csv public/data/forecasts/latest/
+          cp saved_dictionary.pkl public/data/forecasts/latest/ || true
+          cp dict_sce.pkl public/data/forecasts/latest/ || true
+          cp sce_dictionary.pkl public/data/forecasts/latest/ || true
+
+      - name: Archive forecasts
+        run: |
+          cp Hist.csv "$ARCHIVE_DIR/"
+          cp forecasts_h6.csv "$ARCHIVE_DIR/"
+          cp forecasts_h6_min.csv "$ARCHIVE_DIR/"
+          cp forecasts_h6_max.csv "$ARCHIVE_DIR/"
+          cp forecasts_h12.csv "$ARCHIVE_DIR/"
+          cp forecasts_h12_min.csv "$ARCHIVE_DIR/"
+          cp forecasts_h12_max.csv "$ARCHIVE_DIR/"
+          cp forecast_metadata.json "$ARCHIVE_DIR/metadata.json"
+
+      - name: Commit and push forecast data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add public/data/forecasts/
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore(data): update monthly forecasts for $(date +%Y-%m) (parallel)
+
+          - Generated h=6 and h=12 month forecasts in parallel
+          - Updated historical data through $(date +%Y-%m)
+          - Archived previous forecasts
+          - Used matrix parallelization for faster execution
+
+          🤖 Generated with GitHub Actions"
+
+            git push
+          fi
+
+      - name: Upload forecast artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: forecasts-${{ github.run_number }}
+          path: |
+            public/data/forecasts/latest/
+            public/data/forecasts/archive/
+          retention-days: 90
+
+      - name: Create summary
+        run: |
+          echo "## 📊 Parallel Forecast Generation Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Generated forecasts for $(date +%Y-%m)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Parallelization" >> $GITHUB_STEP_SUMMARY
+          echo "- Used 4 parallel workers per horizon (h=6 and h=12)" >> $GITHUB_STEP_SUMMARY
+          echo "- Total: 8 parallel jobs" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Output Files" >> $GITHUB_STEP_SUMMARY
+          echo "- 6-month forecasts: \`forecasts_h6.csv\`" >> $GITHUB_STEP_SUMMARY
+          echo "- 12-month forecasts: \`forecasts_h12.csv\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Historical data: \`Hist.csv\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Access URLs" >> $GITHUB_STEP_SUMMARY
+          echo "- Latest: https://conflictlab.github.io/data/forecasts/latest/" >> $GITHUB_STEP_SUMMARY
+          echo "- Archive: https://conflictlab.github.io/data/forecasts/archive/$(date +%Y-%m)/" >> $GITHUB_STEP_SUMMARY
