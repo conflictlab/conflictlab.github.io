@@ -195,16 +195,37 @@ wget ${GITHUB_BASE}/forecasts_h12.csv`}
             </div>
           </div>
 
+          {/* How to Cite */}
+          <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-xl font-light text-gray-900 mb-3">How to Cite</h2>
+            <p className="text-sm text-gray-700 mb-4">
+              If you use these data or figures, please cite:
+            </p>
+            <div className="bg-gray-50 border border-gray-200 rounded p-4 mb-4">
+              <p className="text-sm font-medium text-gray-900">
+                Schincariol, T., Frank, H., &amp; Chadefaux, T. (2025). Accounting for variability in conflict dynamics: A pattern-based predictive model.
+                <em> Journal of Peace Research</em>.{' '}
+                <a
+                  href="https://journals.sagepub.com/doi/10.1177/00223433251330790"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-link"
+                >
+                  https://doi.org/10.1177/00223433251330790
+                </a>
+              </p>
+            </div>
+            <p className="text-xs text-gray-600">
+              See <Link href="/downloads#cite" className="text-link">full citation guidelines</Link> for additional details.
+            </p>
+          </div>
+
           {/* Usage Terms */}
           <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-xl font-light text-gray-900 mb-3">Usage Terms</h2>
             <div className="text-sm text-gray-700 space-y-2">
               <p>
                 <span className="font-medium">License:</span> <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer" className="text-link">CC BY-NC 4.0</a> (Attribution-NonCommercial)
-              </p>
-              <p>
-                <span className="font-medium">Attribution:</span> PaCE (2025). Monthly Conflict Forecasts.
-                See <Link href="/downloads#cite" className="text-link">citation guidelines</Link>.
               </p>
               <p>
                 <span className="font-medium">Commercial Use:</span> For commercial use, please <Link href="/contact" className="text-link">contact us</Link>.
