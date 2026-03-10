@@ -1,0 +1,135 @@
+name: Monthly PACE Forecasts
+
+on:
+  schedule:
+    # Run on the 1st of every month at 2:00 AM UTC
+    - cron: '0 2 1 * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  generate-forecasts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout Pace-map-risk subrepository
+        run: |
+          git clone https://github.com/conflictlab/Pace-map-risk.git Pace-map-risk-temp
+          cp -r Pace-map-risk-temp/* Pace-map-risk/ || true
+          rm -rf Pace-map-risk-temp
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          cd Pace-map-risk
+          pip install --upgrade pip
+          pip install pandas numpy geopandas matplotlib seaborn shapely scipy scikit-learn
+          pip install -r requirements.txt || true
+
+      - name: Generate forecasts
+        run: |
+          cd Pace-map-risk
+          python generate_forecasts.py
+        timeout-minutes: 60
+
+      - name: Prepare output directories
+        run: |
+          ARCHIVE_DIR="public/data/forecasts/archive/$(date +%Y-%m)"
+          mkdir -p public/data/forecasts/latest
+          mkdir -p "$ARCHIVE_DIR"
+
+          echo "ARCHIVE_DIR=$ARCHIVE_DIR" >> $GITHUB_ENV
+
+      - name: Copy forecasts to latest
+        run: |
+          cd Pace-map-risk
+
+          # Copy forecast files
+          cp Hist.csv ../public/data/forecasts/latest/
+          cp forecasts_h6.csv ../public/data/forecasts/latest/
+          cp forecasts_h6_min.csv ../public/data/forecasts/latest/
+          cp forecasts_h6_max.csv ../public/data/forecasts/latest/
+          cp forecasts_h12.csv ../public/data/forecasts/latest/
+          cp forecasts_h12_min.csv ../public/data/forecasts/latest/
+          cp forecasts_h12_max.csv ../public/data/forecasts/latest/
+          cp forecast_metadata.json ../public/data/forecasts/latest/metadata.json
+
+          # Also copy backward-compatible files for website
+          cp Pred_df.csv ../public/data/forecasts/latest/
+          cp Pred_df_min.csv ../public/data/forecasts/latest/
+          cp Pred_df_max.csv ../public/data/forecasts/latest/
+          cp perc.csv ../public/data/forecasts/latest/
+          cp dec.csv ../public/data/forecasts/latest/
+          cp sta.csv ../public/data/forecasts/latest/
+          cp inc.csv ../public/data/forecasts/latest/
+          cp saved_dictionary.pkl ../public/data/forecasts/latest/ || true
+          cp dict_sce.pkl ../public/data/forecasts/latest/ || true
+          cp sce_dictionary.pkl ../public/data/forecasts/latest/ || true
+
+      - name: Archive forecasts
+        run: |
+          cd Pace-map-risk
+
+          # Copy to archive directory
+          cp Hist.csv "../$ARCHIVE_DIR/"
+          cp forecasts_h6.csv "../$ARCHIVE_DIR/"
+          cp forecasts_h6_min.csv "../$ARCHIVE_DIR/"
+          cp forecasts_h6_max.csv "../$ARCHIVE_DIR/"
+          cp forecasts_h12.csv "../$ARCHIVE_DIR/"
+          cp forecasts_h12_min.csv "../$ARCHIVE_DIR/"
+          cp forecasts_h12_max.csv "../$ARCHIVE_DIR/"
+          cp forecast_metadata.json "../$ARCHIVE_DIR/metadata.json"
+
+      - name: Commit and push forecast data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add public/data/forecasts/
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore(data): update monthly forecasts for $(date +%Y-%m)
+
+          - Generated h=6 and h=12 month forecasts
+          - Updated historical data through $(date +%Y-%m)
+          - Archived previous forecasts
+
+          🤖 Generated with GitHub Actions"
+
+            git push
+          fi
+
+      - name: Upload forecast artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: forecasts-${{ github.run_number }}
+          path: |
+            public/data/forecasts/latest/
+            public/data/forecasts/archive/
+          retention-days: 90
+
+      - name: Create summary
+        run: |
+          echo "## 📊 Forecast Generation Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Generated forecasts for $(date +%Y-%m)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Output Files" >> $GITHUB_STEP_SUMMARY
+          echo "- 6-month forecasts: \`forecasts_h6.csv\`" >> $GITHUB_STEP_SUMMARY
+          echo "- 12-month forecasts: \`forecasts_h12.csv\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Historical data: \`Hist.csv\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Access URLs" >> $GITHUB_STEP_SUMMARY
+          echo "- Latest: https://conflictlab.github.io/data/forecasts/latest/" >> $GITHUB_STEP_SUMMARY
+          echo "- Archive: https://conflictlab.github.io/data/forecasts/archive/$(date +%Y-%m)/" >> $GITHUB_STEP_SUMMARY
