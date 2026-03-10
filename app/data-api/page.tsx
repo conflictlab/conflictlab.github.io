@@ -140,7 +140,6 @@ wget ${GITHUB_BASE}/forecasts_h12.csv`}
                           readOnly
                           value={endpoint.url}
                           className="w-full px-2 py-1 text-xs font-mono bg-white border border-gray-300 rounded"
-                          onClick={(e) => e.currentTarget.select()}
                         />
                       </div>
                     </div>
