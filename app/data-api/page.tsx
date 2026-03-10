@@ -174,22 +174,39 @@ wget ${GITHUB_BASE}/forecasts_h12.csv`}
           <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-xl font-light text-gray-900 mb-3">Data Format</h2>
             <div className="space-y-4 text-sm text-gray-700">
+              <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-4">
+                <p className="font-medium text-gray-900 mb-2">📅 Understanding Forecast Periods</p>
+                <p className="text-gray-700 mb-2">
+                  Check <code className="px-1 py-0.5 bg-white border border-gray-300 rounded text-xs">forecast_metadata.json</code> to see exactly what months are being forecast:
+                </p>
+                <ul className="list-disc list-inside space-y-1 ml-2 text-gray-600 text-xs">
+                  <li><code>data_end_date</code>: Last month of historical data used (e.g., "2026-02")</li>
+                  <li><code>forecast_start_date</code>: First month being forecast (e.g., "2026-03")</li>
+                  <li><code>h6_end_date</code> / <code>h12_end_date</code>: Final forecast month</li>
+                </ul>
+              </div>
+
               <div>
                 <p className="font-medium mb-1">Forecast CSVs (forecasts_h6.csv, forecasts_h12.csv):</p>
                 <ul className="list-disc list-inside space-y-1 ml-2 text-gray-600">
-                  <li>Rows: Forecast months (6 or 12 rows)</li>
-                  <li>Columns: Countries</li>
-                  <li>Values: Predicted fatalities</li>
-                  <li>Index: Date (YYYY-MM-DD format)</li>
+                  <li><strong>Rows:</strong> Numbered 0 through 5 (h=6) or 0 through 11 (h=12)</li>
+                  <li><strong>Row 0 =</strong> First forecast month (see <code>forecast_start_date</code> in metadata)</li>
+                  <li><strong>Row 1 =</strong> Second forecast month, etc.</li>
+                  <li><strong>Columns:</strong> Countries (e.g., "Afghanistan", "Algeria", etc.)</li>
+                  <li><strong>Values:</strong> Predicted fatalities for that month</li>
                 </ul>
+                <p className="text-xs text-gray-500 mt-2">
+                  <strong>Example:</strong> If <code>forecast_start_date</code> is "2026-03", then row 0 = March 2026, row 1 = April 2026, etc.
+                </p>
               </div>
               <div>
                 <p className="font-medium mb-1">Historical CSV (Hist.csv):</p>
                 <ul className="list-disc list-inside space-y-1 ml-2 text-gray-600">
-                  <li>Rows: All available months from UCDP data inception</li>
-                  <li>Columns: Countries</li>
-                  <li>Values: Observed fatalities</li>
-                  <li>Index: Date (YYYY-MM-DD format)</li>
+                  <li><strong>Rows:</strong> All available months from UCDP data (1989-01-31 onwards)</li>
+                  <li><strong>First column:</strong> Date index (YYYY-MM-DD format)</li>
+                  <li><strong>Other columns:</strong> Countries</li>
+                  <li><strong>Values:</strong> Observed fatalities for that month</li>
+                  <li><strong>Coverage:</strong> From 1989 through <code>data_end_date</code> (see metadata)</li>
                 </ul>
               </div>
             </div>
