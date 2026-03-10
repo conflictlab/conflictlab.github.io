@@ -145,8 +145,13 @@ export default async function DataPage() {
 
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-sm text-gray-600 mb-8">
-            <Link href="/forecasts" className="text-link">Visualize these forecasts on the dashboard</Link>
+          <div className="text-sm text-gray-600 mb-8 space-y-2">
+            <div>
+              <Link href="/forecasts" className="text-link">Visualize these forecasts on the dashboard</Link>
+            </div>
+            <div>
+              <Link href="/data-api" className="text-link">Need programmatic access? See our Data API →</Link>
+            </div>
           </div>
 
 
@@ -244,6 +249,8 @@ export default async function DataPage() {
             <Link href="/forecasts" className="text-link">Country-level forecasts</Link>
             <span className="mx-2">·</span>
             <Link href="/forecasts-grid" className="text-link">Grid-level forecasts</Link>
+            <span className="mx-2">·</span>
+            <Link href="/data-api" className="text-link">Data API</Link>
           </div>
 
           {/* Acknowledgements footer */}
