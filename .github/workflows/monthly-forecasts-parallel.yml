@@ -306,7 +306,7 @@ print(f'Chunk {chunk_id} complete!')
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install pandas numpy pickle5
+        run: pip install pandas numpy
 
       - name: Download all h6 chunks
         uses: actions/download-artifact@v4
