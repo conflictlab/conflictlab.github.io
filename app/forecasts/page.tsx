@@ -61,12 +61,6 @@ export default async function ForecastsPage() {
     HIGH_THRESHOLD,
   } = summaryStats
 
-  const [year, month] = snapshot.period.split('-').map(Number);
-  const forecastDate = new Date(year, month); // month is 1-based, becomes month+1
-  const forecastMonth = forecastDate.toLocaleString('default', { month: 'long' });
-  const forecastYear = forecastDate.getFullYear();
-  const takeawaysDate = `${forecastMonth} ${forecastYear}`;
-
   return (
     <div className="bg-gray-50">
       {/* Hero */}
@@ -104,27 +98,7 @@ export default async function ForecastsPage() {
             <CountryChoropleth items={countryMapItems} showHotspots={true} hideDownloadButton={true} mobileControlsButtonPosition="top-right" />
           </LazyVisible>
         </div>
-        {/* Key takeaways below the map */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-railings rounded-lg p-4 mt-6 border border-railings-light">
-            <div className="flex items-start">
-              <div className="w-full md:w-1/3 md:pr-4 md:border-r md:border-railings-light">
-                <h3 className="text-lg font-semibold text-white">Key Takeaways for {takeawaysDate}</h3>
-              </div>
-              <div className="w-full md:w-2/3 md:pl-4 mt-3 md:mt-0">
-                <ul className="space-y-1">
-                  {keyTakeaways.map((item, i) => (
-                    <li key={i} className="flex items-start text-sm text-gray-200">
-                      <AlertTriangle className="w-4 h-4 text-pace-red mr-2 mt-1 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Summary cards below key takeaways, constrained */}
+        {/* Summary cards below map, constrained */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mt-6">
             <p className="text-gray-700 font-normal mb-3">
