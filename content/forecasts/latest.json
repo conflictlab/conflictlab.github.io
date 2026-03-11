@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-11T16:35:24.157Z",
+  "generatedAt": "2026-03-11T16:53:31.719Z",
   "period": "1989-01",
   "entities": [
     {
@@ -10,7 +10,7 @@
       "index": 691,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 691,
+      "deltaMoM": 671.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -72,7 +72,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -16.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -103,7 +103,7 @@
       "index": 252,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 252,
+      "deltaMoM": 251.5,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -165,7 +165,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -2.8,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -258,7 +258,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -2.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -320,7 +320,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -382,7 +382,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -34.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -444,7 +444,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.8,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -537,7 +537,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -13.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -568,7 +568,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -55.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -599,7 +599,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -58.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -630,7 +630,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -2.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -661,7 +661,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -8.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -723,7 +723,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -19.8,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -754,7 +754,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -11,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -785,7 +785,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -2.5,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -816,7 +816,7 @@
       "index": 9,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 9,
+      "deltaMoM": -31.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -971,7 +971,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1002,7 +1002,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -26.4,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1033,7 +1033,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -31.4,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1126,7 +1126,7 @@
       "index": 2716,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 2716,
+      "deltaMoM": 2669.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1157,7 +1157,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -14.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1188,7 +1188,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1219,7 +1219,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1250,7 +1250,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1281,7 +1281,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -19.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1312,7 +1312,7 @@
       "index": 30,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 30,
+      "deltaMoM": -12.8,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1436,7 +1436,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -29.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1467,7 +1467,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.4,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1498,7 +1498,7 @@
       "index": 49,
       "band": "medium",
       "confidence": 0.75,
-      "deltaMoM": 49,
+      "deltaMoM": 14.6,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1529,7 +1529,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -3.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1560,7 +1560,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -10.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1591,7 +1591,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -35.4,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1622,7 +1622,7 @@
       "index": 1,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 1,
+      "deltaMoM": -14.8,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1715,7 +1715,7 @@
       "index": 100,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 100,
+      "deltaMoM": 97.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1746,7 +1746,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -1.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1777,7 +1777,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -7.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1808,7 +1808,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -0.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1932,7 +1932,7 @@
       "index": 142,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 142,
+      "deltaMoM": 122.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -1994,7 +1994,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -2.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2025,7 +2025,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -0.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2087,7 +2087,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -18.6,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2118,7 +2118,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -34.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2180,7 +2180,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -27.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2211,7 +2211,7 @@
       "index": 2,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 2,
+      "deltaMoM": -32.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2273,7 +2273,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -13.6,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2304,7 +2304,7 @@
       "index": 60,
       "band": "medium",
       "confidence": 0.75,
-      "deltaMoM": 60,
+      "deltaMoM": 19.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2335,7 +2335,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -2.6,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2490,7 +2490,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -47.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2521,7 +2521,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -26.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2583,7 +2583,7 @@
       "index": 3,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 3,
+      "deltaMoM": -16.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2645,7 +2645,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -0.4,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2707,7 +2707,7 @@
       "index": 103,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 103,
+      "deltaMoM": 78.5,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2738,7 +2738,7 @@
       "index": 60,
       "band": "medium",
       "confidence": 0.75,
-      "deltaMoM": 60,
+      "deltaMoM": 30.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2862,7 +2862,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -25.4,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2893,7 +2893,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -6.5,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -2924,7 +2924,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -72.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3079,7 +3079,7 @@
       "index": 500,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 500,
+      "deltaMoM": 471.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3110,7 +3110,7 @@
       "index": 16,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 16,
+      "deltaMoM": 15.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3141,7 +3141,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -16.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3172,7 +3172,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -70.6,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3234,7 +3234,7 @@
       "index": 100,
       "band": "high",
       "confidence": 0.75,
-      "deltaMoM": 100,
+      "deltaMoM": 90.5,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3265,7 +3265,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -0.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3296,7 +3296,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -12.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3327,7 +3327,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -67.8,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3358,7 +3358,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -29.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3389,7 +3389,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -0.1,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3420,7 +3420,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -22.3,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3482,7 +3482,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -95.9,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3513,7 +3513,7 @@
       "index": 2,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 2,
+      "deltaMoM": -32,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3544,7 +3544,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -21.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3575,7 +3575,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -9.5,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3699,7 +3699,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -67.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3730,7 +3730,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -43.2,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
@@ -3761,7 +3761,7 @@
       "index": 0,
       "band": "low",
       "confidence": 0.75,
-      "deltaMoM": 0,
+      "deltaMoM": -11.7,
       "deltaYoY": 0,
       "horizons": {
         "1m": {
