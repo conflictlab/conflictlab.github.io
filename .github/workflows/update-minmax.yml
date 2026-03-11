@@ -33,7 +33,7 @@ jobs:
       - name: Download scenarios pickle (sce_dictionary.pkl)
         run: |
           set -e
-          REPO="${{ vars.SCE_REPO }}"; REPO="${REPO:-ThomasSchinca/Pace-map-risk}"
+          REPO="${{ vars.SCE_REPO }}"; REPO="${REPO:-conflictlab/Pace-map-risk}"
           BRANCH="${{ vars.SCE_BRANCH }}"; BRANCH="${BRANCH:-main}"
           PATH_IN_REPO="${{ vars.SCE_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-sce_dictionary.pkl}"
           URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
