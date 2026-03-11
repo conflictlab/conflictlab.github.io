@@ -246,7 +246,11 @@ async function main() {
     process.exit(1)
   }
   // Accept any CSV; derive period from first YYYY-MM in filename
-  const files = listing.filter(item => item.type === 'file' && /\.csv$/i.test(item.name))
+  // Filter to only files with YYYY-MM pattern (excludes latest.csv, Hist_latest.csv, etc.)
+  const files = listing.filter(item => {
+    if (item.type !== 'file' || !/\.csv$/i.test(item.name)) return false
+    return /\d{4}-\d{2}/.test(item.name)  // Must contain YYYY-MM
+  })
   if (!files.length) {
     console.warn('No CSV files matching YYYY-MM.csv found')
     process.exit(0)
