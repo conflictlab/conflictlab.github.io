@@ -245,11 +245,11 @@ async function main() {
     console.error('Unexpected listing response')
     process.exit(1)
   }
-  // Accept any CSV; derive period from first YYYY-MM in filename
-  // Filter to only files with YYYY-MM pattern (excludes latest.csv, Hist_latest.csv, etc.)
+  // Accept only files with YYYY-MM.csv format (excludes h6/h12 variants, latest.csv, etc.)
   const files = listing.filter(item => {
     if (item.type !== 'file' || !/\.csv$/i.test(item.name)) return false
-    return /\d{4}-\d{2}/.test(item.name)  // Must contain YYYY-MM
+    // Match exactly YYYY-MM.csv (not YYYY-MM_anything.csv)
+    return /^\d{4}-\d{2}\.csv$/i.test(item.name)
   })
   if (!files.length) {
     console.warn('No CSV files matching YYYY-MM.csv found')
