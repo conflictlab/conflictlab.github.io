@@ -321,8 +321,9 @@ async function main() {
       const csv = await fetchText(latestCsv.download_url, args.token)
       const { header, rows } = parseCSV(csv)
       const dateKey = header[0]
-      const lastRow = rows[rows.length - 1] || {}
-      const derived = parseYYYYMM(lastRow[dateKey])
+      // Use FIRST row (most recent date) not last row (oldest date from 1989)
+      const firstRow = rows[0] || {}
+      const derived = parseYYYYMM(firstRow[dateKey])
       if (derived) {
         const snapshot = buildSnapshotFromMatrix(header, rows, { period: derived, version: '1.0' }, prevIndexMap)
         const outFile = path.join(outDir, `${derived}.json`)
