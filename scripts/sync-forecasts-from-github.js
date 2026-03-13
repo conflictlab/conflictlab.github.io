@@ -266,7 +266,7 @@ async function main() {
     return maNum - mbNum
   })
   const targets = args.latestOnly ? [files[files.length - 1]] : files
-  const latestCsv = listing.find(item => item.type === 'file' && /latest\.csv$/i.test(item.name))
+  const latestCsv = listing.find(item => item.type === 'file' && /^latest\.csv$/i.test(item.name))
 
   const outDir = path.join(process.cwd(), 'content', 'forecasts')
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
