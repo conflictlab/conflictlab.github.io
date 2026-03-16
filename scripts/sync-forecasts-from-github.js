@@ -252,8 +252,41 @@ async function main() {
     return /^\d{4}-\d{2}\.csv$/i.test(item.name)
   })
   if (!files.length) {
-    console.warn('No CSV files matching YYYY-MM.csv found')
-    process.exit(0)
+    console.warn('No CSV files matching YYYY-MM.csv found; attempting Pred_df.csv fallback')
+    // Try to fetch Pred_df.csv from repo root (ThomasSchinca layout)
+    try {
+      const rootUrl = `https://api.github.com/repos/${args.repo}/contents/?ref=${encodeURIComponent(args.branch || 'main')}`
+      const root = await fetchJSON(rootUrl, args.token)
+      const pred = Array.isArray(root) ? root.find(item => item.type === 'file' && /^Pred_df\.csv$/i.test(item.name)) : null
+      if (!pred) {
+        console.warn('Pred_df.csv not found at repo root; nothing to sync')
+        process.exit(0)
+      }
+      const csv = await fetchText(pred.download_url, args.token)
+      const { header, rows } = parseCSV(csv)
+      const now = new Date()
+      const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`
+      const snapshot = buildSnapshotFromMatrix(header, rows, { period, version: '1.0' }, null)
+      const outDir = path.join(process.cwd(), 'content', 'forecasts')
+      if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
+      fs.writeFileSync(path.join(outDir, `${period}.json`), JSON.stringify(snapshot, null, 2))
+      fs.writeFileSync(path.join(outDir, 'latest.json'), JSON.stringify(snapshot, null, 2))
+      if (args.saveCsv) {
+        const rawDirAbs = path.join(process.cwd(), args.rawDir)
+        if (!fs.existsSync(rawDirAbs)) fs.mkdirSync(rawDirAbs, { recursive: true })
+        fs.writeFileSync(path.join(rawDirAbs, `${period}.csv`), csv)
+        fs.writeFileSync(path.join(rawDirAbs, `latest.csv`), csv)
+        const pubCsv = path.join(process.cwd(), 'public', 'data', 'csv')
+        if (!fs.existsSync(pubCsv)) fs.mkdirSync(pubCsv, { recursive: true })
+        fs.writeFileSync(path.join(pubCsv, `${period}.csv`), csv)
+        fs.writeFileSync(path.join(pubCsv, `latest.csv`), csv)
+      }
+      console.log(`Synced snapshot from Pred_df.csv. Latest: ${period}`)
+      process.exit(0)
+    } catch (e) {
+      console.error('Pred_df.csv fallback failed:', e?.message || e)
+      process.exit(1)
+    }
   }
   // Sort by detected period ascending
   files.sort((a, b) => {

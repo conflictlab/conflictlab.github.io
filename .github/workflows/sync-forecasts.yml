@@ -40,13 +40,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Sync forecasts from GitHub CSVs
+      - name: Sync forecasts from GitHub CSVs (ThomasSchinca layout)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm run csv:sync:github -- \
-            --repo conflictlab/Pace-map-risk \
-            --dir Historical_Predictions \
+            --repo ThomasSchinca/Pace-map-risk \
+            --dir '' \
             --branch main \
             --latestOnly \
             --saveCsv \
