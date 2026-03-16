@@ -165,7 +165,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             <div className="bg-gray-50 p-0 rounded-lg h-[540px]">
               <LazyVisible minHeight="540px">
                 {scenarios ? (
-                  <ScenariosChart data={scenarios} countryName={entity.name} maxTotalHeight={540} period={snapshot.period} />
+                  <ScenariosChart data={scenarios} countryName={entity.name} maxTotalHeight={540} />
                 ) : (
                   <div className="text-sm text-gray-500">No scenario data available.</div>
                 )}
@@ -205,20 +205,50 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         </div>
       </section>
 
-      {/* Charts Section */}
+      {/* Charts Section - TEMPORARILY COMMENTED OUT
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Forecast Line Plot: past 10 months + next 6 months */}
+            {/* Historical Time Series *}
+            {historicalSeries.length > 0 && (
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h2 className="text-2xl font-light text-gray-900 mb-4">Historical Trend</h2>
+              <LazyVisible minHeight="240px">
+                <TimeSeriesChart
+                  data={{
+                    historical: historicalSeries.map((s: { index: number; period: string }) => s.index),
+                    forecast: months,
+                    country: entity.name,
+                    histPeriods: historicalSeries.map((s: { index: number; period: string }) => s.period),
+                    forecastPeriods: (() => {
+                      const [yy, mm] = snapshot.period.split('-').map(Number)
+                      const start = new Date(Date.UTC(yy, (mm - 1), 1))
+                      const out: string[] = []
+                      for (let i = 0; i < 6; i++) {
+                        const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + i, 1))
+                        const y = d.getUTCFullYear()
+                        const m = String(d.getUTCMonth() + 1).padStart(2, '0')
+                        out.push(`${y}-${m}`)
+                      }
+                      return out
+                    })()
+                  }}
+                />
+              </LazyVisible>
+              </div>
+            )}
+
+            {/* Forecast Fan Chart *}
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h2 className="text-2xl font-light text-gray-900 mb-4">6‑Month Forecast</h2>
-              <LazyVisible minHeight="260px">
+              <h2 className="text-2xl font-light text-gray-900 mb-4">6-Month Forecast</h2>
+              <LazyVisible minHeight="240px">
                 <ForecastFanChart title="" months={months} countryName={entity.name} period={snapshot.period} />
               </LazyVisible>
             </div>
           </div>
         </div>
       </section>
+      END TEMPORARILY COMMENTED OUT */}
 
       
 

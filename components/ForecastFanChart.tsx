@@ -93,8 +93,7 @@ export default function ForecastFanChart({ title, horizons, months, countryName,
   let areaUnderPath = ''
   let monthPoints: Point[] = []
   let p50Points: Point[] = []
-  // Build time scale across past + future (window: -pastMonths..+6 relative to first forecast EOM)
-  const pastMonths = 10
+  // Build time scale across past + future (fixed window: -10..+6 relative to first forecast EOM)
   const parseMonthAdd = (d: Date, n: number) => d3.utcMonth.offset(d, n)
   const endOfMonth = (d: Date) => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0))
   const monthStart = (y: number, m: number) => new Date(Date.UTC(y, m, 1))
@@ -109,7 +108,7 @@ export default function ForecastFanChart({ title, horizons, months, countryName,
     // Positions at 1m, 3m, 6m ahead (EOM)
     futureDates = [0, 2, 5].map(n => endOfMonth(parseMonthAdd(firstFutureMonthStart, n)))
   }
-  const minDate = endOfMonth(parseMonthAdd(firstFutureMonthStart, -pastMonths))
+  const minDate = endOfMonth(parseMonthAdd(firstFutureMonthStart, -10))
   const maxDate = endOfMonth(parseMonthAdd(firstFutureMonthStart, 6))
   const xScaleTime = d3.scaleUtc().domain([minDate, maxDate]).range([mLeft, mLeft + innerW])
 
@@ -212,10 +211,10 @@ export default function ForecastFanChart({ title, horizons, months, countryName,
             />
           ))}
         </g>
-        {/* X Axis with relative month ticks (-pastMonths..+6) */}
+        {/* X Axis with relative month ticks (-10..+6) */}
         <g>
           <line x1={mLeft} y1={mTop + innerH} x2={mLeft + innerW} y2={mTop + innerH} stroke="#e5e7eb" />
-          {Array.from({ length: pastMonths + 1 + 6 }, (_, i) => i - pastMonths).map((rel) => {
+          {Array.from({ length: 17 }, (_, i) => i - 10).map((rel) => {
             const d = parseMonthAdd(firstFutureDate, rel)
             if (d < minDate || d > maxDate) return null
             const x = xScaleTime(d)
