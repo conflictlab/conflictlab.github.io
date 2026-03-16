@@ -26,9 +26,10 @@ interface ScenariosChartProps {
   countryName: string
   // Optional maximum total SVG height (including margins), e.g., to match sibling map height
   maxTotalHeight?: number
+  period?: string
 }
 
-export default function ScenariosChart({ data, countryName, maxTotalHeight }: ScenariosChartProps) {
+export default function ScenariosChart({ data, countryName, maxTotalHeight, period }: ScenariosChartProps) {
   const svgRef = useRef<SVGSVGElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState<number>(900)
@@ -41,7 +42,8 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight }: Sc
     async function loadHist() {
       try {
         const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        const res = await fetch(`${base}/data/hist.csv`)
+        const cacheBust = period ? `?v=${encodeURIComponent(period)}` : ''
+        const res = await fetch(`${base}/data/hist.csv${cacheBust}`)
         if (!res.ok) return
         const text = await res.text()
         const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
