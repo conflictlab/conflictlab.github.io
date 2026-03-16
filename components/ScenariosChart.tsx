@@ -201,7 +201,8 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight, peri
       firstFuture = d3.utcDay.offset(d3.utcMonth.offset(start, 1), -1)
     }
     // Limit visible past window to the last N months for clarity
-    const pastMonthsWindow = 10
+    // Show a broader context so users see pre-gap months
+    const pastMonthsWindow = 18
     const minPastDate = d3.utcMonth.offset(firstFuture, -pastMonthsWindow)
     const pastVals = pastSeries.filter(p => p.date >= minPastDate && p.date <= firstFuture)
 
