@@ -238,7 +238,8 @@ async function main() {
     console.error('Missing --repo owner/repo (or env GITHUB_REPO)')
     process.exit(1)
   }
-  const apiUrl = `https://api.github.com/repos/${args.repo}/contents/${args.dir}?ref=${encodeURIComponent(args.branch || 'main')}`
+  const dirArg = (typeof args.dir === 'string') ? args.dir : ''
+  const apiUrl = `https://api.github.com/repos/${args.repo}/contents/${dirArg}?ref=${encodeURIComponent(args.branch || 'main')}`
   console.log(`Listing CSVs from ${apiUrl}`)
   const listing = await fetchJSON(apiUrl, args.token)
   if (!Array.isArray(listing)) {
