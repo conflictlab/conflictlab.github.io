@@ -213,26 +213,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h2 className="text-2xl font-light text-gray-900 mb-4">6‑Month Forecast</h2>
               <LazyVisible minHeight="260px">
-                <TimeSeriesChart
-                  data={{
-                    historical: (historicalSeries.slice(-10)).map((s: { index: number; period: string }) => s.index),
-                    forecast: months,
-                    country: entity.name,
-                    histPeriods: (historicalSeries.slice(-10)).map((s: { index: number; period: string }) => s.period),
-                    forecastPeriods: (() => {
-                      const [yy, mm] = snapshot.period.split('-').map(Number)
-                      const start = new Date(Date.UTC(yy, (mm - 1), 1))
-                      const out: string[] = []
-                      for (let i = 0; i < 6; i++) {
-                        const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + i, 1))
-                        const y = d.getUTCFullYear()
-                        const m = String(d.getUTCMonth() + 1).padStart(2, '0')
-                        out.push(`${y}-${m}`)
-                      }
-                      return out
-                    })()
-                  }}
-                />
+                <ForecastFanChart title="" months={months} countryName={entity.name} period={snapshot.period} />
               </LazyVisible>
             </div>
           </div>
