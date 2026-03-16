@@ -242,7 +242,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h2 className="text-2xl font-light text-gray-900 mb-4">6-Month Forecast</h2>
               <LazyVisible minHeight="240px">
-                <ForecastFanChart title="" months={months} countryName={entity.name} />
+                <ForecastFanChart title="" months={months} countryName={entity.name} period={snapshot.period} />
               </LazyVisible>
             </div>
           </div>
