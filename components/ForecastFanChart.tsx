@@ -10,12 +10,11 @@ interface FanChartProps {
   horizons?: { [k in '1m' | '3m' | '6m']: { p10: number; p50: number; p90: number } }
   months?: number[]
   countryName?: string
-  period?: string
   width?: number
   height?: number
 }
 
-export default function ForecastFanChart({ title, horizons, months, countryName, period, width = 360, height = 360 }: FanChartProps) {
+export default function ForecastFanChart({ title, horizons, months, countryName, width = 360, height = 360 }: FanChartProps) {
   const [pastVals, setPastVals] = useState<Array<{ date: Date; value: number }>>([])
   const [tip, setTip] = useState<null | { x: number; y: number; text: string }>(null)
   // Load historical raw fatalities (wide CSV) similar to ScenariosChart
@@ -24,9 +23,7 @@ export default function ForecastFanChart({ title, horizons, months, countryName,
     async function loadHist() {
       if (!countryName) return
       try {
-        const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        const cacheBust = period ? `?v=${encodeURIComponent(period)}` : ''
-        const res = await fetch(`${base}/data/hist.csv${cacheBust}`)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/data/hist.csv`)
         if (!res.ok) return
         const text = await res.text()
         const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
