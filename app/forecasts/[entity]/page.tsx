@@ -209,17 +209,16 @@ export default async function EntityForecastPage({ params }: { params: { entity:
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Historical Time Series */}
-            {false && historicalSeries.length > 0 && (
-              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h2 className="text-2xl font-light text-gray-900 mb-4">Historical Trend</h2>
-              <LazyVisible minHeight="240px">
+            {/* Forecast Line Plot: past 10 months + next 6 months */}
+            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+              <h2 className="text-2xl font-light text-gray-900 mb-4">6‑Month Forecast</h2>
+              <LazyVisible minHeight="260px">
                 <TimeSeriesChart
                   data={{
-                    historical: historicalSeries.map((s: { index: number; period: string }) => s.index),
+                    historical: (historicalSeries.slice(-10)).map((s: { index: number; period: string }) => s.index),
                     forecast: months,
                     country: entity.name,
-                    histPeriods: historicalSeries.map((s: { index: number; period: string }) => s.period),
+                    histPeriods: (historicalSeries.slice(-10)).map((s: { index: number; period: string }) => s.period),
                     forecastPeriods: (() => {
                       const [yy, mm] = snapshot.period.split('-').map(Number)
                       const start = new Date(Date.UTC(yy, (mm - 1), 1))
@@ -234,15 +233,6 @@ export default async function EntityForecastPage({ params }: { params: { entity:
                     })()
                   }}
                 />
-              </LazyVisible>
-              </div>
-            )}
-
-            {/* Forecast Fan Chart */}
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h2 className="text-2xl font-light text-gray-900 mb-4">6-Month Forecast</h2>
-              <LazyVisible minHeight="240px">
-                <ForecastFanChart title="" months={months} countryName={entity.name} period={snapshot.period} />
               </LazyVisible>
             </div>
           </div>
