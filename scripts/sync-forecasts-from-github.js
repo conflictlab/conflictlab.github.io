@@ -88,6 +88,49 @@ function parseCSV(text) {
 
 function clamp(n, lo, hi) { return Math.min(hi, Math.max(lo, n)) }
 
+function readLocalHistMinMax(trainMonths = 24) {
+  try {
+    const histPath = path.join(process.cwd(), 'public', 'data', 'hist.csv')
+    if (!fs.existsSync(histPath)) return null
+    const text = fs.readFileSync(histPath, 'utf-8')
+    const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
+    if (lines.length < 3) return null
+    const header = splitCSVLine(lines[0])
+    const rows = lines.slice(1).map(l => splitCSVLine(l))
+    const last = rows.slice(-trainMonths)
+    const result = {}
+    for (let ci = 1; ci < header.length; ci++) {
+      const name = header[ci]
+      const vals = last.map(r => Number(r[ci] || '0')).filter(v => Number.isFinite(v))
+      if (!vals.length) continue
+      let min = Math.min(...vals), max = Math.max(...vals)
+      if (max === min) max = min + 1e-6
+      result[name] = { min, max }
+    }
+    return result
+  } catch { return null }
+}
+
+function denormalizeMatrix(header, rows, minmax) {
+  if (!header || header.length < 2 || !Array.isArray(rows) || !rows.length) return { header, rows }
+  const dateKey = header[0]
+  const names = header.slice(1)
+  const mm = minmax || {}
+  const newRows = rows.map(obj => {
+    const out = { ...obj }
+    names.forEach(name => {
+      const v = Number(obj[name])
+      const mmc = mm[name]
+      if (mmc && Number.isFinite(v)) {
+        const den = mmc.min + v * (mmc.max - mmc.min)
+        out[name] = String(den)
+      }
+    })
+    return out
+  })
+  return { header, rows: newRows, dateKey }
+}
+
 function buildSnapshotFromSchema(rows, meta) {
   const entities = rows.map(r => ({
     id: r.id,
@@ -266,10 +309,12 @@ async function main() {
           process.exit(0)
         }
         const csv = await fetchText(pred.download_url, args.token)
-        const { header, rows } = parseCSV(csv)
+        const parsed = parseCSV(csv)
+        const mm = readLocalHistMinMax(24) || readLocalHistMinMax(10) || {}
+        const dn = denormalizeMatrix(parsed.header, parsed.rows, mm)
         const now = new Date()
         const period = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`
-        const snapshot = buildSnapshotFromMatrix(header, rows, { period, version: '1.0' }, null)
+        const snapshot = buildSnapshotFromMatrix(dn.header, dn.rows, { period, version: '1.0' }, null)
         const outDir = path.join(process.cwd(), 'content', 'forecasts')
         if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
         fs.writeFileSync(path.join(outDir, `${period}.json`), JSON.stringify(snapshot, null, 2))
@@ -277,14 +322,16 @@ async function main() {
         if (args.saveCsv) {
           const rawDirAbs = path.join(process.cwd(), args.rawDir)
           if (!fs.existsSync(rawDirAbs)) fs.mkdirSync(rawDirAbs, { recursive: true })
-          fs.writeFileSync(path.join(rawDirAbs, `${period}.csv`), csv)
-          fs.writeFileSync(path.join(rawDirAbs, `latest.csv`), csv)
+          // Save denormalized CSV
+          const outLines = [parsed.header.join(','), ...dn.rows.map(r => dn.header.map(h => r[h] ?? '').join(','))].join('\n')
+          fs.writeFileSync(path.join(rawDirAbs, `${period}.csv`), outLines)
+          fs.writeFileSync(path.join(rawDirAbs, `latest.csv`), outLines)
           const pubCsv = path.join(process.cwd(), 'public', 'data', 'csv')
           if (!fs.existsSync(pubCsv)) fs.mkdirSync(pubCsv, { recursive: true })
-          fs.writeFileSync(path.join(pubCsv, `${period}.csv`), csv)
-          fs.writeFileSync(path.join(pubCsv, `latest.csv`), csv)
+          fs.writeFileSync(path.join(pubCsv, `${period}.csv`), outLines)
+          fs.writeFileSync(path.join(pubCsv, `latest.csv`), outLines)
         }
-        console.log(`Synced snapshot from Pred_df.csv (fallback). Latest: ${period}`)
+        console.log(`Synced snapshot from Pred_df.csv (fallback, denormalized). Latest: ${period}`)
         process.exit(0)
       }
       const csv = await fetchText(fh6.download_url, args.token)
