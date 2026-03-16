@@ -193,10 +193,13 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight }: Sc
 
     // Determine past values up to and including first future date (for domain and rendering)
     const firstFuture = parsedDates[0]
-    const pastVals = pastSeries.filter(p => p.date <= firstFuture)
+    // Limit visible past window to the last N months for clarity
+    const pastMonthsWindow = 10
+    const minPastDate = d3.utcMonth.offset(firstFuture, -pastMonthsWindow)
+    const pastVals = pastSeries.filter(p => p.date >= minPastDate && p.date <= firstFuture)
 
     // Create scales (include past range on x-axis)
-    const xMinDate = pastVals.length ? pastVals[0].date : parsedDates[0]
+    const xMinDate = pastVals.length ? minPastDate : parsedDates[0]
     const xMaxDate = parsedDates[parsedDates.length - 1]
     const xScale = d3.scaleUtc()
       .domain([xMinDate, xMaxDate])
