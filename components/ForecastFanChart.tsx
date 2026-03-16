@@ -94,7 +94,7 @@ export default function ForecastFanChart({ title, horizons, months, countryName,
   let monthPoints: Point[] = []
   let p50Points: Point[] = []
   // Build time scale across past + future (window: -pastMonths..+6 relative to first forecast EOM)
-  const pastMonths = 6
+  const pastMonths = 10
   const parseMonthAdd = (d: Date, n: number) => d3.utcMonth.offset(d, n)
   const endOfMonth = (d: Date) => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0))
   const monthStart = (y: number, m: number) => new Date(Date.UTC(y, m, 1))
