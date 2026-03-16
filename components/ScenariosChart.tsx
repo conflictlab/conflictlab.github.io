@@ -193,8 +193,13 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight, peri
       cl.values = cl.values.map(({ date, value }) => ({ date, value: Math.max(0, Number(value) || 0) }))
     }
 
-    // Determine past values up to and including first future date (for domain and rendering)
-    const firstFuture = parsedDates[0]
+    // Determine forecast boundary ("Now"): prefer provided snapshot period; fallback to first temporal date
+    let firstFuture = parsedDates[0]
+    if (period && /\d{4}-\d{2}/.test(period)) {
+      const [yy, mm] = period.split('-').map(Number)
+      const start = new Date(Date.UTC(yy, (mm || 1) - 1, 1))
+      firstFuture = d3.utcDay.offset(d3.utcMonth.offset(start, 1), -1)
+    }
     // Limit visible past window to the last N months for clarity
     const pastMonthsWindow = 10
     const minPastDate = d3.utcMonth.offset(firstFuture, -pastMonthsWindow)
