@@ -1,5 +1,5 @@
 'use client'
-
+// VERSION: 2026-03-17-v2 - Fixed forecast period calculation
 import { useState, useEffect, useMemo } from 'react'
 import * as d3 from 'd3'
 
