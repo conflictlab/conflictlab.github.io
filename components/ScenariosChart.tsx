@@ -26,9 +26,10 @@ interface ScenariosChartProps {
   countryName: string
   // Optional maximum total SVG height (including margins), e.g., to match sibling map height
   maxTotalHeight?: number
+  period?: string // 'YYYY-MM' to anchor the forecast boundary
 }
 
-export default function ScenariosChart({ data, countryName, maxTotalHeight }: ScenariosChartProps) {
+export default function ScenariosChart({ data, countryName, maxTotalHeight, period }: ScenariosChartProps) {
   const svgRef = useRef<SVGSVGElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState<number>(900)
@@ -191,13 +192,22 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight }: Sc
       cl.values = cl.values.map(({ date, value }) => ({ date, value: Math.max(0, Number(value) || 0) }))
     }
 
-    // Determine past values up to and including first future date (for domain and rendering)
-    const firstFuture = parsedDates[0]
-    const pastVals = pastSeries.filter(p => p.date <= firstFuture)
+    // Determine forecast boundary ("Now"): prefer provided snapshot period; fallback to first temporal date
+    let firstFuture = parsedDates[0]
+    if (period && /\d{4}-\d{2}/.test(period)) {
+      const [yy, mm] = period.split('-').map(Number)
+      const start = new Date(Date.UTC(yy, (mm || 1) - 1, 1))
+      firstFuture = d3.utcDay.offset(d3.utcMonth.offset(start, 1), -1)
+    }
+    // Limit visible past window to the last 10 months
+    const pastMonthsWindow = 10
+    const minPastDate = d3.utcMonth.offset(firstFuture, -pastMonthsWindow)
+    const pastVals = pastSeries.filter(p => p.date >= minPastDate && p.date <= firstFuture)
 
     // Create scales (include past range on x-axis)
-    const xMinDate = pastVals.length ? pastVals[0].date : parsedDates[0]
-    const xMaxDate = parsedDates[parsedDates.length - 1]
+    const xMinDate = pastVals.length ? minPastDate : parsedDates[0]
+    // Show exactly 6 months into the future from the forecast boundary
+    const xMaxDate = d3.utcDay.offset(d3.utcMonth.offset(firstFuture, 6), 0)
     const xScale = d3.scaleUtc()
       .domain([xMinDate, xMaxDate])
       .range([0, width])
