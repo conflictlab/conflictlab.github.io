@@ -329,11 +329,11 @@ export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }:
         <g transform="translate(48, 26)">
           <rect x="0" y="0" width="220" height="72" fill="white" stroke="#e5e7eb" rx="6"/>
           <line x1="10" y1="16" x2="30" y2="16" stroke="#374151" strokeWidth="3"/>
-          <text x="35" y="20" className="text-xs fill-gray-700">Past predictions</text>
+          <text x="35" y="20" className="text-xs fill-gray-700">TEST - Past predictions</text>
           <line x1="10" y1="34" x2="30" y2="34" stroke="#0ea5e9" strokeWidth="3"/>
-          <text x="35" y="38" className="text-xs fill-gray-700">Observed (actual)</text>
+          <text x="35" y="38" className="text-xs fill-gray-700">TEST - Observed (actual)</text>
           <line x1="10" y1="56" x2="30" y2="56" stroke="#B91C1C" strokeWidth="3" strokeDasharray="5,4"/>
-          <text x="35" y="60" className="text-xs fill-gray-700">Forecast (next 6 months)</text>
+          <text x="35" y="60" className="text-xs fill-gray-700">TEST - Forecast (next 6 months)</text>
         </g>
         
         {/* Current/Forecast label */}
