@@ -11,9 +11,11 @@ interface TimeSeriesChartProps {
     histPeriods?: string[] // 'YYYY-MM'
     forecastPeriods?: string[] // 'YYYY-MM'
   }
+  anchorPeriod?: string // 'YYYY-MM' to anchor x-axis
+  pastMonths?: number // how many past months to show from anchor
 }
 
-export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
+export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }: TimeSeriesChartProps) {
   const [animatedData, setAnimatedData] = useState<number[]>([])
   const [tip, setTip] = useState<null | { x: number; y: number; text: string }>(null)
   const { historical, forecast, country, histPeriods = [], forecastPeriods = [] } = data
@@ -55,9 +57,19 @@ export default function TimeSeriesChart({ data }: TimeSeriesChartProps) {
   }
   const histDates = histPeriods.length ? histPeriods.map(toEOM) : []
   const forecastDates = forecastPeriods.length ? forecastPeriods.map(toEOM) : []
-  const allDates = [...histDates, ...forecastDates]
-  const minDate = allDates[0] || new Date(Date.UTC(1970, 0, 31))
-  const maxDate = allDates[allDates.length - 1] || new Date(Date.UTC(1970, 5, 30))
+  let minDate: Date
+  let maxDate: Date
+  if (anchorPeriod && /\d{4}-\d{2}/.test(anchorPeriod)) {
+    const [yy, mm] = anchorPeriod.split('-').map(Number)
+    const start = new Date(Date.UTC(yy, (mm || 1) - 1, 1))
+    const anchorEOM = d3.utcDay.offset(d3.utcMonth.offset(start, 1), -1)
+    minDate = d3.utcDay.offset(d3.utcMonth.offset(anchorEOM, -pastMonths), 0)
+    maxDate = forecastDates.length ? forecastDates[forecastDates.length - 1] : d3.utcDay.offset(d3.utcMonth.offset(anchorEOM, 6), 0)
+  } else {
+    const allDates = [...histDates, ...forecastDates]
+    minDate = allDates[0] || new Date(Date.UTC(1970, 0, 31))
+    maxDate = allDates[allDates.length - 1] || new Date(Date.UTC(1970, 5, 30))
+  }
   const xScale = d3.scaleUtc().domain([minDate, maxDate]).range([40, 440])
   const nowDate = histDates.length ? histDates[histDates.length - 1] : minDate
 

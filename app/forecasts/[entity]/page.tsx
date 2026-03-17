@@ -231,6 +231,8 @@ export default async function EntityForecastPage({ params }: { params: { entity:
                       return out
                     })()
                   }}
+                  anchorPeriod={snapshot.period}
+                  pastMonths={10}
                 />
               </LazyVisible>
             </div>
