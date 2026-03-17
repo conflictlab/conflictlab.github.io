@@ -57,6 +57,16 @@ export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }:
   }
   const histDates = histPeriods.length ? histPeriods.map(toEOM) : []
   const forecastDates = forecastPeriods.length ? forecastPeriods.map(toEOM) : []
+
+  // DEBUG: Log what we're receiving
+  console.log('TimeSeriesChart DEBUG:', {
+    anchorPeriod,
+    forecastPeriods,
+    forecastDates: forecastDates.map(d => d.toISOString().substring(0, 10)),
+    histPeriods: histPeriods.slice(-3),
+    histDates: histDates.slice(-3).map(d => d.toISOString().substring(0, 10))
+  })
+
   let minDate: Date
   let maxDate: Date
   let nowDate: Date
@@ -85,6 +95,17 @@ export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }:
     }
   }
   const xScale = d3.scaleUtc().domain([minDate, maxDate]).range([40, 440])
+
+  // DEBUG: Log scale setup
+  console.log('xScale domain:', {
+    minDate: minDate.toISOString().substring(0, 10),
+    maxDate: maxDate.toISOString().substring(0, 10),
+    nowDate: nowDate.toISOString().substring(0, 10),
+    firstForecastDate: forecastDates[0]?.toISOString().substring(0, 10),
+    lastForecastDate: forecastDates[forecastDates.length - 1]?.toISOString().substring(0, 10),
+    firstForecastX: forecastDates[0] ? xScale(forecastDates[0]) : 'N/A',
+    lastForecastX: forecastDates[forecastDates.length - 1] ? xScale(forecastDates[forecastDates.length - 1]) : 'N/A'
+  })
 
   // Disable animation for clearer circle rendering of all points
   useEffect(() => { setAnimatedData(allData) }, [allData])
