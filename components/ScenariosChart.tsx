@@ -42,7 +42,9 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight, peri
     async function loadHist() {
       try {
         const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        const res = await fetch(`${base}/data/hist.csv`)
+        // Add cache buster tied to period to prevent stale CSV data
+        const cacheBuster = period || new Date().toISOString().slice(0, 7)
+        const res = await fetch(`${base}/data/hist.csv?v=${cacheBuster}`)
         if (!res.ok) return
         const text = await res.text()
         const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
@@ -91,7 +93,7 @@ export default function ScenariosChart({ data, countryName, maxTotalHeight, peri
     }
     loadHist()
     return () => { cancelled = true }
-  }, [countryName])
+  }, [countryName, period])
 
   // Observe container width for responsive sizing
   useEffect(() => {

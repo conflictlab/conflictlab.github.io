@@ -99,12 +99,16 @@ export function readAllSnapshots(): ForecastSnapshot[] {
   return periods.map((p) => readSnapshot(p))
 }
 
-export function getEntitySeries(entityId: string): Array<{ period: string; index: number; confidence: number }> {
+export function getEntitySeries(entityId: string): Array<{ period: string; index: number; confidence: number; p50?: number }> {
   const snaps = readAllSnapshots()
-  const series: Array<{ period: string; index: number; confidence: number }> = []
+  const series: Array<{ period: string; index: number; confidence: number; p50?: number }> = []
   for (const s of snaps) {
     const e = s.entities.find((x) => x.id === entityId || x.iso3 === entityId)
-    if (e) series.push({ period: s.period, index: e.index, confidence: e.confidence })
+    if (e) {
+      // Use p50 predicted fatalities if available (from horizons), fallback to index
+      const p50 = e.horizons?.['1m']?.p50 ?? e.index
+      series.push({ period: s.period, index: e.index, confidence: e.confidence, p50 })
+    }
   }
   return series
 }

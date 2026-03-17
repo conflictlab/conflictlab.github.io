@@ -214,13 +214,21 @@ export default async function EntityForecastPage({ params }: { params: { entity:
               <LazyVisible minHeight="260px">
                 <TimeSeriesChart
                   data={{
-                    historical: historicalSeries.slice(-10).map((s: { index: number; period: string }) => s.index),
+                    historical: (() => {
+                      // Filter to exclude current snapshot period and take last 10
+                      const filtered = historicalSeries.filter((s: { period: string }) => s.period < snapshot.period)
+                      return filtered.slice(-10).map((s: { p50?: number; index: number }) => s.p50 ?? s.index)
+                    })(),
                     forecast: months,
                     country: entity.name,
-                    histPeriods: historicalSeries.slice(-10).map((s: { index: number; period: string }) => s.period),
+                    histPeriods: (() => {
+                      const filtered = historicalSeries.filter((s: { period: string }) => s.period < snapshot.period)
+                      return filtered.slice(-10).map((s: { period: string }) => s.period)
+                    })(),
                     forecastPeriods: (() => {
                       const [yy, mm] = snapshot.period.split('-').map(Number)
-                      const start = new Date(Date.UTC(yy, (mm - 1), 1))
+                      // Start from the NEXT month after snapshot period
+                      const start = new Date(Date.UTC(yy, mm, 1))
                       const out: string[] = []
                       for (let i = 0; i < 6; i++) {
                         const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + i, 1))

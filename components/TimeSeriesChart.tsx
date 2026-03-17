@@ -59,19 +59,32 @@ export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }:
   const forecastDates = forecastPeriods.length ? forecastPeriods.map(toEOM) : []
   let minDate: Date
   let maxDate: Date
+  let nowDate: Date
+
+  // Always use anchor period if provided to ensure consistent domain
   if (anchorPeriod && /\d{4}-\d{2}/.test(anchorPeriod)) {
     const [yy, mm] = anchorPeriod.split('-').map(Number)
     const start = new Date(Date.UTC(yy, (mm || 1) - 1, 1))
     const anchorEOM = d3.utcDay.offset(d3.utcMonth.offset(start, 1), -1)
-    minDate = d3.utcDay.offset(d3.utcMonth.offset(anchorEOM, -pastMonths), 0)
-    maxDate = forecastDates.length ? forecastDates[forecastDates.length - 1] : d3.utcDay.offset(d3.utcMonth.offset(anchorEOM, 6), 0)
+    nowDate = anchorEOM
+    minDate = d3.utcMonth.offset(anchorEOM, -pastMonths)
+    maxDate = forecastDates.length ? forecastDates[forecastDates.length - 1] : d3.utcMonth.offset(anchorEOM, 6)
   } else {
+    // Fallback: try to infer from data, but clamp to reasonable window
     const allDates = [...histDates, ...forecastDates]
-    minDate = allDates[0] || new Date(Date.UTC(1970, 0, 31))
-    maxDate = allDates[allDates.length - 1] || new Date(Date.UTC(1970, 5, 30))
+    if (allDates.length > 0) {
+      // Infer "Now" as the boundary between hist and forecast
+      nowDate = histDates.length ? histDates[histDates.length - 1] : allDates[0]
+      // Clamp domain to last 10 months + next 6 months from inferred "Now"
+      minDate = d3.utcMonth.offset(nowDate, -pastMonths)
+      maxDate = forecastDates.length ? forecastDates[forecastDates.length - 1] : d3.utcMonth.offset(nowDate, 6)
+    } else {
+      nowDate = new Date(Date.UTC(1970, 0, 31))
+      minDate = nowDate
+      maxDate = new Date(Date.UTC(1970, 5, 30))
+    }
   }
   const xScale = d3.scaleUtc().domain([minDate, maxDate]).range([40, 440])
-  const nowDate = histDates.length ? histDates[histDates.length - 1] : minDate
 
   // Disable animation for clearer circle rendering of all points
   useEffect(() => { setAnimatedData(allData) }, [allData])
@@ -82,7 +95,9 @@ export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }:
     async function loadRaw() {
       try {
         const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        const res = await fetch(`${base}/data/hist.csv`)
+        // Add cache buster tied to anchor period to prevent stale CSV data
+        const cacheBuster = anchorPeriod || new Date().toISOString().slice(0, 7)
+        const res = await fetch(`${base}/data/hist.csv?v=${cacheBuster}`)
         if (!res.ok) return
         const text = await res.text()
         const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0)
@@ -119,7 +134,7 @@ export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }:
     }
     if (country) loadRaw()
     return () => { cancelled = true }
-  }, [country])
+  }, [country, anchorPeriod])
   
   // Convert data points to SVG coordinates
   const getY = (value: number) => {
@@ -293,11 +308,11 @@ export default function TimeSeriesChart({ data, anchorPeriod, pastMonths = 10 }:
         <g transform="translate(48, 26)">
           <rect x="0" y="0" width="220" height="72" fill="white" stroke="#e5e7eb" rx="6"/>
           <line x1="10" y1="16" x2="30" y2="16" stroke="#374151" strokeWidth="3"/>
-          <text x="35" y="20" className="text-xs fill-gray-700">Historical (monthly)</text>
+          <text x="35" y="20" className="text-xs fill-gray-700">Past predictions</text>
           <line x1="10" y1="34" x2="30" y2="34" stroke="#0ea5e9" strokeWidth="3"/>
-          <text x="35" y="38" className="text-xs fill-gray-700">Observed (monthly)</text>
+          <text x="35" y="38" className="text-xs fill-gray-700">Observed (actual)</text>
           <line x1="10" y1="56" x2="30" y2="56" stroke="#B91C1C" strokeWidth="3" strokeDasharray="5,4"/>
-          <text x="35" y="60" className="text-xs fill-gray-700">Forecast (months 1–6)</text>
+          <text x="35" y="60" className="text-xs fill-gray-700">Forecast (next 6 months)</text>
         </g>
         
         {/* Current/Forecast label */}
