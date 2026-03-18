@@ -87,27 +87,12 @@ node scripts/convert-scenarios-pkl.js --src /path/to/sce_dictionary.pkl --out pu
 Then run the site and click a country on the forecasts page to see the scenario plot.
 
 CI monthly refresh
-- The workflow `.github/workflows/update-minmax.yml` downloads `sce_dictionary.pkl` (defaults to `conflictlab/Pace-map-risk@main`) and converts it to `public/data/scenarios.json` each month, then rebuilds `public/data/minmax.json` and `public/data/scenarios.denorm.json`.
-- Configure via repository variables: `SCE_REPO` (owner/repo), `SCE_BRANCH` (branch), `SCE_PATH` (path to pickle). Defaults are `conflictlab/Pace-map-risk`, `main`, and `sce_dictionary.pkl`.
-
-- The workflow `.github/workflows/update-matches.yml` downloads the DTW matches pickle monthly and converts it to `public/data/matches.json` for country pages.
-  - Configure via repository variables: `MATCHES_REPO` (owner/repo), `MATCHES_BRANCH` (branch), `MATCHES_PATH` (path to pickle in repo). Defaults are `conflictlab/Pace-map-risk`, `main`, and `saved_dictionary.pkl`.
-  - The pickle is expected to map `country_name -> [Series, distance, Series, distance, ...]`. The converter normalizes to
-    `country_name -> [{ series: { values: [...], index?: [...] }, distance: <number> }, ...]`.
-  - Optional: provide a full historical monthly CSV to enable matched-future overlays by setting:
-    - `MATCHES_HIST_REPO` (owner/repo)
-    - `MATCHES_HIST_BRANCH` (branch)
-    - `MATCHES_HIST_PATH` (path in repo)
-    The workflow will download it to `public/data/hist_full.csv`. The UI will prefer this file and fall back to `public/data/hist.csv` if absent.
-  - If you already have a long-run monthly CSV named `Conf.csv` (as in Pace-map-risk), you can point `MATCHES_HIST_PATH` to `Conf.csv`. The UI will also look for `public/data/conf.csv` and prefer it when present.
-
-- CI automation (GitHub Actions)
-- `.github/workflows/sync-forecasts.yml` runs on `main` pushes and on the 28th/1st:
+- The scheduled workflow `.github/workflows/refresh-website.yml` runs on the 28th and the 1st:
   - Syncs forecast CSVs, rebuilds centroids, builds GeoJSON, builds monthly points, exports static API
-  - Commits generated files under `content/forecasts`, `public/data/csv`, `public/data/grid`, and `public/api`
-- `.github/workflows/update-minmax.yml` runs monthly:
-  - Downloads `sce_dictionary.pkl`, converts to `public/data/scenarios.json`, computes `public/data/minmax.json`, denormalizes to `public/data/scenarios.denorm.json`
-- `.github/workflows/health-check.yml` runs daily and after deploys:
+  - Updates scenarios/minmax from the forecasting repo pickles and writes denormalized scenarios
+  - Updates matches JSON
+  - Commits generated files under `content/forecasts`, `public/data/csv`, `public/data/grid`, `public/api`, and `public/data/*`
+- `.github/workflows/health-check.yml` runs on the 28th/1st and after deploys:
   - Fetches the live site `status.json` and a sample static API endpoint, opens a GitHub issue automatically if checks fail
   - A locally generated `public/status.json` is surfaced at `/status` on the site for quick visual health checks
 
@@ -121,8 +106,8 @@ Email notifications
   - `MAIL_FROM` (e.g., "PaCE Bot <bot@example.com>")
   - `MAIL_TO` (comma-separated list of recipients)
 - Emails are sent on:
-  - Success and failure: Update minmax/scenarios, Update matches, Deploy to Pages
-  - Failure only: Sync forecasts (daily), Health check (daily)
+  - Success and failure: Refresh Website Now, Deploy to Pages
+  - Failure only: Health check
 
 Forecast CSV sync (from GitHub)
 

@@ -17,7 +17,7 @@ Commands
 - npm run data:update — runs both steps above
 
 Automation
-- .github/workflows/update-minmax.yml runs monthly and on demand to refresh hist.csv, minmax.json, and scenarios.denorm.json, then commits the results.
+- Handled by the scheduled refresh workflow (`.github/workflows/refresh-website.yml`) which runs on the 28th and 1st and commits updated hist.csv, minmax.json, and scenarios.denorm.json.
 
 Plotting
 - lib/scenarios.ts prefers `public/data/scenarios.denorm.json` when present; otherwise it falls back to `scenarios.json`.

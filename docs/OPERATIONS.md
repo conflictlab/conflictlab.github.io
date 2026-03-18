@@ -18,10 +18,8 @@ This guide explains how the site updates each month, how to run a full refresh o
 ## Regular Schedules
 
 - 28th (pre-month) and 1st (fallback):
-  - 03:00 UTC — Minmax + scenarios: `.github/workflows/update-minmax.yml`
-  - 04:00 UTC — Matches: `.github/workflows/update-matches.yml`
-  - 03:00 UTC — Sync forecasts + grid build: `.github/workflows/sync-forecasts.yml`
-- Deploy to Pages: auto‑runs after the above workflows complete
+  - 03:00 UTC — Refresh (end‑to‑end): `.github/workflows/refresh-website.yml`
+- Deploy to Pages: auto‑runs after refresh completes or on push
   - Workflow: `.github/workflows/deploy-pages.yml`
 - Health check (live site): 06:00 UTC on 28th and 1st, and after deploys
   - Workflow: `.github/workflows/health-check.yml`
@@ -40,12 +38,9 @@ Set these repository secrets (Settings → Secrets and variables → Actions):
 
 When emails are sent:
 - Success + failure
-  - Update minmax/scenarios: `.github/workflows/update-minmax.yml`
-  - Update matches: `.github/workflows/update-matches.yml`
-  - Deploy to GitHub Pages: `.github/workflows/deploy-pages.yml`
   - Refresh Website Now: `.github/workflows/refresh-website.yml`
-- Failure only (to avoid daily noise)
-  - Daily forecast sync: `.github/workflows/sync-forecasts.yml`
+  - Deploy to GitHub Pages: `.github/workflows/deploy-pages.yml`
+- Failure only
   - Health check: `.github/workflows/health-check.yml`
 
 Test email:
@@ -64,19 +59,14 @@ Test email:
 
 ## Manual Triggers (Individual)
 
-- Forecast sync + grid build: Actions → "Sync Forecast CSVs"
-- Minmax/scenarios: Actions → "Update minmax and denorm scenarios"
-- Matches: Actions → "Update DTW matches JSON"
-- Deploy: Actions → "Deploy to GitHub Pages" (runs automatically after above jobs)
+- Refresh Website Now: Actions → "Refresh Website Now"
+- Deploy: Actions → "Deploy to GitHub Pages" (auto after refresh)
 - Health: Actions → "Health Check (Live Site)"
 
 CLI (optional):
 ```bash
 # Requires GitHub CLI (gh) authenticated
 gh workflow run "Refresh Website Now"
-gh workflow run "Update minmax and denorm scenarios"
-gh workflow run "Update DTW matches JSON"
-gh workflow run "Sync Forecast CSVs"
 ```
 
 ## Troubleshooting

@@ -10,6 +10,17 @@ on:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    concurrency:
+      group: monthly-forecasts
+      cancel-in-progress: false
+    env:
+      SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      MAIL_TO: ${{ secrets.MAIL_TO }}
+      MAIL_FROM: ${{ secrets.MAIL_FROM }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,3 +45,35 @@ jobs:
           else
             echo "No changes"
           fi
+      - name: Success email
+        if: ${{ success() && env.SMTP_SERVER != '' && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.MAIL_TO != '' && env.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ env.SMTP_SERVER }}
+          server_port: ${{ env.SMTP_PORT || 465 }}
+          secure: ${{ env.SMTP_SECURE == 'true' }}
+          username: ${{ env.SMTP_USERNAME }}
+          password: ${{ env.SMTP_PASSWORD }}
+          subject: "✅ Forecast generation succeeded: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ env.MAIL_TO }}
+          from: ${{ env.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Generate Monthly Forecasts</strong> completed successfully.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View run</a></p>
+      - name: Failure email
+        if: ${{ failure() && env.SMTP_SERVER != '' && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.MAIL_TO != '' && env.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ env.SMTP_SERVER }}
+          server_port: ${{ env.SMTP_PORT || 465 }}
+          secure: ${{ env.SMTP_SECURE == 'true' }}
+          username: ${{ env.SMTP_USERNAME }}
+          password: ${{ env.SMTP_PASSWORD }}
+          subject: "❌ Forecast generation FAILED: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ env.MAIL_TO }}
+          from: ${{ env.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Generate Monthly Forecasts</strong> failed.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View run</a></p>

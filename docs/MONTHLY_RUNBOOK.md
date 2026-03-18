@@ -26,14 +26,7 @@ Tip: A one-click manual refresh exists: `.github/workflows/refresh-website.yml` 
   - Scheduled on the 28th and 1st. Runs end‑to‑end refresh.
   - Manual: Actions → “Sync Forecast CSVs” → Run workflow.
 
-- Sync Forecast CSVs — `.github/workflows/sync-forecasts.yml`
-  - Manual only (ad‑hoc). Pulls latest CSV(s) from forecasting repo and rebuilds grid/static API.
-
-- Update minmax and denorm scenarios — `.github/workflows/update-minmax.yml`
-  - Manual only (ad‑hoc). Rebuilds scenarios/minmax artifacts.
-
-- Update DTW matches JSON — `.github/workflows/update-matches.yml`
-  - Manual only (ad‑hoc). Rebuilds matches JSON.
+Note: Legacy manual utility workflows were archived to reduce clutter.
 
 - Deploy to GitHub Pages — `.github/workflows/deploy-pages.yml`
   - Auto-triggered after the above via `workflow_run`. Builds static `out/`, uploads, deploys Pages. Also ensures `public/status.json` present.

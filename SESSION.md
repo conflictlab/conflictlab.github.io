@@ -12,6 +12,33 @@ This file tracks work done across Claude Code sessions for the diplomatic cables
 
 ---
 
+# Session Log: 2026-03-18 22:01 GMT
+
+## Website Ops: Status/Health, Email Alerts, Monthly Schedules, Simplification
+
+### Implemented (Website repo: conflictlab/conflictlab.github.io)
+- Added status generator (`scripts/generate-status.js`) and status page (`app/status/page.tsx`).
+- Added live health checks (`scripts/check-live.js`) with redirects; workflow opens issues on failure and emails when configured.
+- Wired SMTP email notifications across deploy + data jobs (`dawidd6/action-send-mail@v3`).
+- Exported static API endpoints from grid data; standardized data source to `conflictlab/Pace-map-risk`.
+- Simplified Actions: one scheduled runner — `Refresh Website Now` (28th/1st @ 03:00 UTC); deploy on push/refresh; health check at 06:00 on 28th/1st and post‑deploy.
+- Archived legacy utility workflows in website repo to reduce clutter.
+- Added docs: `docs/MONTHLY_RUNBOOK.md`, `docs/OPERATIONS.md`, and forecasting template `docs/FORECASTING_REPO_WORKFLOW_TEMPLATE.yml`.
+
+### Next (Forecasting repo: conflictlab/Pace-map-risk)
+- Consolidate to a single monthly generation workflow (28th/1st @ 01:00 UTC) with concurrency + email alerts.
+- Archived/deleted legacy workflows; kept only parallel monthly generation on 28th/1st.
+- Optional: cross‑repo dispatch to trigger website refresh on completion (requires PAT with repo/workflow).
+
+### Notes
+- Email steps require repo secrets: `SMTP_*`, `MAIL_FROM`, `MAIL_TO`.
+- Health check validates `/status.json`, a sample static API endpoint, and remote `forecast_metadata.json` freshness.
+
+### Next steps
+1) Apply and commit `docs/FORECASTING_REPO_WORKFLOW_TEMPLATE.yml` to `conflictlab/Pace-map-risk` as `.github/workflows/monthly-forecast-generation.yml` (28th/1st @ 01:00 UTC) and add SMTP/MAIL secrets there.
+2) Disable schedules on other forecasting workflows to reduce noise; retain manual dispatch where needed.
+3) (Optional) Provide PAT for cross‑repo trigger compute → website refresh.
+
 # Session Log: 2026-03-14 14:02 GMT
 
 ## Complete UCDP API Migration & Bug Fixes
