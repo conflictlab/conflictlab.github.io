@@ -2,7 +2,9 @@ name: Update DTW matches JSON
 
 on:
   schedule:
-    - cron: '0 4 1 * *' # monthly on the 1st at 04:00 UTC
+    - cron: '0 4 26 * *' # early run on the 26th at 04:00 UTC
+    - cron: '0 4 28 * *' # second early run on the 28th at 04:00 UTC
+    - cron: '0 4 1 * *'  # fallback on the 1st at 04:00 UTC
   workflow_dispatch: {}
 
 jobs:
@@ -43,6 +45,9 @@ jobs:
       - name: Convert matches pickle to JSON
         run: npm run matches:convert -- --src matches.pkl --out public/data/matches.json
 
+      - name: Generate status JSON
+        run: node scripts/generate-status.js
+
       - name: Download full historical monthly CSV (optional)
         run: |
           set -e
@@ -62,7 +67,7 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/matches.json
+          git add public/data/matches.json public/status.json
           if [ -f public/data/hist_full.csv ]; then
             git add public/data/hist_full.csv
           fi
@@ -72,3 +77,41 @@ jobs:
             git commit -m "chore(data): update DTW matches JSON"
             git push
           fi
+
+      - name: Send success email
+        if: ${{ success() && secrets.SMTP_SERVER != '' && secrets.SMTP_USERNAME != '' && secrets.SMTP_PASSWORD != '' && secrets.MAIL_TO != '' && secrets.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT || 465 }}
+          secure: ${{ secrets.SMTP_SECURE == 'true' }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "✅ Update matches succeeded: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Update DTW matches</strong> completed successfully.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View run</a></p>
+            <p>Commit: ${{ github.sha }}</p>
+            <p>Ref: ${{ github.ref }}</p>
+
+      - name: Send failure email
+        if: ${{ failure() && secrets.SMTP_SERVER != '' && secrets.SMTP_USERNAME != '' && secrets.SMTP_PASSWORD != '' && secrets.MAIL_TO != '' && secrets.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT || 465 }}
+          secure: ${{ secrets.SMTP_SECURE == 'true' }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "❌ Update matches FAILED: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Update DTW matches</strong> failed.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a></p>
+            <p>Commit: ${{ github.sha }}</p>
+            <p>Ref: ${{ github.ref }}</p>

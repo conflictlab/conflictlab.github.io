@@ -107,6 +107,22 @@ CI automation (GitHub Actions)
   - Commits generated files under `content/forecasts`, `public/data/csv`, `public/data/grid`, and `public/api`
 - `.github/workflows/update-minmax.yml` runs monthly:
   - Downloads `sce_dictionary.pkl`, converts to `public/data/scenarios.json`, computes `public/data/minmax.json`, denormalizes to `public/data/scenarios.denorm.json`
+- `.github/workflows/health-check.yml` runs daily and after deploys:
+  - Fetches the live site `status.json` and a sample static API endpoint, opens a GitHub issue automatically if checks fail
+  - A locally generated `public/status.json` is surfaced at `/status` on the site for quick visual health checks
+
+Email notifications
+- Workflows send emails using SMTP via `dawidd6/action-send-mail@v3`.
+- Add the following repository secrets to enable mail:
+  - `SMTP_SERVER` (e.g., smtp.gmail.com, smtp.sendgrid.net)
+  - `SMTP_PORT` (465 for SSL or 587 for STARTTLS)
+  - `SMTP_SECURE` (`true` for SSL/465, `false` for STARTTLS/587)
+  - `SMTP_USERNAME`, `SMTP_PASSWORD` (use app passwords where applicable)
+  - `MAIL_FROM` (e.g., "PaCE Bot <bot@example.com>")
+  - `MAIL_TO` (comma-separated list of recipients)
+- Emails are sent on:
+  - Success and failure: Update minmax/scenarios, Update matches, Deploy to Pages
+  - Failure only: Sync forecasts (daily), Health check (daily)
 
 Forecast CSV sync (from GitHub)
 

@@ -2,7 +2,9 @@ name: Update minmax and denorm scenarios
 
 on:
   schedule:
-    - cron: '0 3 1 * *' # monthly on the 1st at 03:00 UTC
+    - cron: '0 3 26 * *' # early run on the 26th at 03:00 UTC
+    - cron: '0 3 28 * *' # second early run on the 28th at 03:00 UTC
+    - cron: '0 3 1 * *'  # fallback on the 1st at 03:00 UTC
   workflow_dispatch: {}
 
 jobs:
@@ -46,11 +48,14 @@ jobs:
       - name: Build minmax and denormalized scenarios
         run: npm run data:update
 
+      - name: Generate status JSON
+        run: node scripts/generate-status.js
+
       - name: Commit and push changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/minmax.json public/data/scenarios.json public/data/scenarios.denorm.json
+          git add public/data/minmax.json public/data/scenarios.json public/data/scenarios.denorm.json public/status.json
           if [ -f public/data/hist.csv ]; then
             git add public/data/hist.csv
           fi
@@ -60,3 +65,41 @@ jobs:
             git commit -m "chore(data): update hist minmax and denormalized scenarios"
             git push
           fi
+
+      - name: Send success email
+        if: ${{ success() && secrets.SMTP_SERVER != '' && secrets.SMTP_USERNAME != '' && secrets.SMTP_PASSWORD != '' && secrets.MAIL_TO != '' && secrets.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT || 465 }}
+          secure: ${{ secrets.SMTP_SECURE == 'true' }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "✅ Update minmax/scenarios succeeded: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Update minmax and scenarios</strong> completed successfully.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View run</a></p>
+            <p>Commit: ${{ github.sha }}</p>
+            <p>Ref: ${{ github.ref }}</p>
+
+      - name: Send failure email
+        if: ${{ failure() && secrets.SMTP_SERVER != '' && secrets.SMTP_USERNAME != '' && secrets.SMTP_PASSWORD != '' && secrets.MAIL_TO != '' && secrets.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT || 465 }}
+          secure: ${{ secrets.SMTP_SECURE == 'true' }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "❌ Update minmax/scenarios FAILED: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Update minmax and scenarios</strong> failed.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a></p>
+            <p>Commit: ${{ github.sha }}</p>
+            <p>Ref: ${{ github.ref }}</p>

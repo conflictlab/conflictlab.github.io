@@ -71,12 +71,15 @@ jobs:
       - name: Export static API for grid points
         run: node scripts/export-static-api.js
 
+      - name: Generate status JSON
+        run: node scripts/generate-status.js
+
       - name: Commit changes (if any)
         run: |
           set -e
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git add content/forecasts public/data/csv public/data/grid public/api || true
+          git add content/forecasts public/data/csv public/data/grid public/api public/status.json || true
           if ! git diff --cached --quiet; then
             git commit -m "chore: sync forecasts + grid assets (centroids, geojson, monthly points)"
           fi
@@ -89,3 +92,20 @@ jobs:
           fi
           # Push rebased commit (or no-op if nothing changed)
           git push origin HEAD:main
+
+      - name: Send failure email
+        if: ${{ failure() && secrets.SMTP_SERVER != '' && secrets.SMTP_USERNAME != '' && secrets.SMTP_PASSWORD != '' && secrets.MAIL_TO != '' && secrets.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT || 465 }}
+          secure: ${{ secrets.SMTP_SECURE == 'true' }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "❌ Sync forecasts FAILED: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Sync Forecast CSVs</strong> failed.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a></p>

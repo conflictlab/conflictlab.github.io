@@ -1,0 +1,50 @@
+name: Test Email
+
+on:
+  workflow_dispatch:
+    inputs:
+      to:
+        description: "Recipients (comma-separated). Leave empty to use MAIL_TO secret"
+        required: false
+        default: ""
+      from:
+        description: "From address (optional, defaults to MAIL_FROM or SMTP_USERNAME)"
+        required: false
+        default: ""
+      subject:
+        description: "Email subject (optional)"
+        required: false
+        default: ""
+      body:
+        description: "Email body (optional)"
+        required: false
+        default: ""
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check required secrets
+        run: |
+          missing=()
+          [ -z "${{ secrets.SMTP_SERVER }}" ] && missing+=(SMTP_SERVER)
+          [ -z "${{ secrets.SMTP_USERNAME }}" ] && missing+=(SMTP_USERNAME)
+          [ -z "${{ secrets.SMTP_PASSWORD }}" ] && missing+=(SMTP_PASSWORD)
+          if [ ${#missing[@]} -ne 0 ]; then
+            echo "Missing required secrets: ${missing[*]}" >&2
+            exit 1
+          fi
+
+      - name: Send test email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT || 465 }}
+          secure: ${{ secrets.SMTP_SECURE == 'true' }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: ${{ inputs.subject != '' && inputs.subject || format('Test email from {0} #{1}', github.repository, github.run_number) }}
+          to: ${{ inputs.to != '' && inputs.to || secrets.MAIL_TO }}
+          from: ${{ inputs.from != '' && inputs.from || (secrets.MAIL_FROM != '' && secrets.MAIL_FROM || secrets.SMTP_USERNAME) }}
+          content_type: text/plain
+          body: ${{ inputs.body != '' && inputs.body || format('This is a test email from {0} run #{1} ({2}/{0}/actions/runs/{3})', github.repository, github.run_number, github.server_url, github.run_id) }}
