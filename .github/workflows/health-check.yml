@@ -10,7 +10,8 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
+  issues: write
 
 jobs:
   check:
@@ -60,6 +61,7 @@ jobs:
           title: "Health check failed for ${{ steps.base.outputs.url }}"
           content-filepath: health-report.md
           labels: "health,bug"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Send failure email
         if: ${{ failure() && env.SMTP_SERVER != '' && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.MAIL_TO != '' && env.MAIL_FROM != '' }}
