@@ -25,6 +25,14 @@ jobs:
     concurrency:
       group: sync-forecasts
       cancel-in-progress: true
+    env:
+      SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      MAIL_TO: ${{ secrets.MAIL_TO }}
+      MAIL_FROM: ${{ secrets.MAIL_FROM }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -94,17 +102,17 @@ jobs:
           git push origin HEAD:main
 
       - name: Send failure email
-        if: ${{ failure() && secrets.SMTP_SERVER != '' && secrets.SMTP_USERNAME != '' && secrets.SMTP_PASSWORD != '' && secrets.MAIL_TO != '' && secrets.MAIL_FROM != '' }}
+        if: ${{ failure() && env.SMTP_SERVER != '' && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.MAIL_TO != '' && env.MAIL_FROM != '' }}
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT || 465 }}
-          secure: ${{ secrets.SMTP_SECURE == 'true' }}
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
+          server_address: ${{ env.SMTP_SERVER }}
+          server_port: ${{ env.SMTP_PORT || 465 }}
+          secure: ${{ env.SMTP_SECURE == 'true' }}
+          username: ${{ env.SMTP_USERNAME }}
+          password: ${{ env.SMTP_PASSWORD }}
           subject: "❌ Sync forecasts FAILED: ${{ github.repository }}#${{ github.run_number }}"
-          to: ${{ secrets.MAIL_TO }}
-          from: ${{ secrets.MAIL_FROM }}
+          to: ${{ env.MAIL_TO }}
+          from: ${{ env.MAIL_FROM }}
           content_type: text/html
           html_body: |
             <p><strong>Sync Forecast CSVs</strong> failed.</p>
