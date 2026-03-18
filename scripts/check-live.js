@@ -24,9 +24,15 @@ function parseArgs(argv) {
   return out
 }
 
-function getJson(url) {
+function getJson(url, depth = 0) {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
+      // Follow common redirects
+      if ([301,302,303,307,308].includes(res.statusCode) && res.headers.location && depth < 5) {
+        const nextUrl = new URL(res.headers.location, url).toString()
+        res.resume()
+        return resolve(getJson(nextUrl, depth + 1))
+      }
       let data = ''
       res.on('data', d => { data += d })
       res.on('end', () => {
