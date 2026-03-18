@@ -112,15 +112,27 @@ jobs:
           set -e
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git add content/forecasts public/data public/api || true
+          # Stage all tracked changes produced by this job
+          git add -A
           if ! git diff --cached --quiet; then
             git commit -m "chore: monthly website refresh (forecasts, grid, scenarios, matches, API, status)"
           fi
           git fetch origin main
-          if ! git pull --rebase origin main; then
-            echo "Rebase failed; aborting rebase and skipping push to avoid conflicts." >&2
-            git rebase --abort || true
-            exit 1
+          # Attempt rebase with autostash; fall back to manual stash if needed
+          if ! git -c rebase.autoStash=true pull --rebase origin main; then
+            echo "Rebase failed; attempting manual stash-based rebase" >&2
+            git stash --all || true
+            if ! git pull --rebase origin main; then
+              echo "Rebase still failed; aborting to avoid conflicts." >&2
+              git rebase --abort || true
+              exit 1
+            fi
+            git stash pop || true
+            # If stash pop caused conflicts or changes, commit a follow-up
+            git add -A
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: monthly refresh (post-rebase adjustments)"
+            fi
           fi
           git push origin HEAD:main
 
@@ -157,4 +169,3 @@ jobs:
           html_body: |
             <p><strong>Refresh Website Now</strong> failed.</p>
             <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a></p>
-
