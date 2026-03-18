@@ -10,7 +10,7 @@
  *
  * Usage:
  *   node scripts/update-minmax-from-hist.js \
- *     [--src https://raw.githubusercontent.com/ThomasSchinca/Pace-map-risk/main/Hist.csv] \
+ *     [--src https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main/Hist.csv] \
  *     [--histOut public/data/hist.csv] \
  *     [--out public/data/minmax.json] \
  *     [--noDownload]
@@ -124,7 +124,7 @@ function computeMinMax(histCsvPath) {
 
 async function main() {
   const args = parseArgs(process.argv)
-  const src = args.src || 'https://raw.githubusercontent.com/ThomasSchinca/Pace-map-risk/main/Hist.csv'
+  const src = args.src || 'https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main/Hist.csv'
   const histOut = path.resolve(args.histOut || path.join('public', 'data', 'hist.csv'))
   const outPath = path.resolve(args.out || path.join('public', 'data', 'minmax.json'))
   const ensureDir = (p) => { const d = path.dirname(p); if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }) }
@@ -148,4 +148,3 @@ async function main() {
 if (require.main === module) {
   main().catch((e) => { console.error(e); process.exit(1) })
 }
-

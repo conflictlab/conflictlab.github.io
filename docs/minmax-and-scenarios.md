@@ -2,7 +2,7 @@ Min–Max Denormalization Pipeline
 
 Overview
 - Historical raw fatalities are provided as a wide CSV (Hist.csv) hosted at:
-  https://github.com/ThomasSchinca/Pace-map-risk/blob/main/Hist.csv
+  https://github.com/conflictlab/Pace-map-risk/blob/main/Hist.csv
 - For each country, the last 10 months were previously min–max scaled. Scenarios are based on that normalized series.
 - This repo now fetches Hist.csv monthly, computes per‑country min/max over the last 10 months, and uses it to denormalize scenario temporal values for plotting.
 

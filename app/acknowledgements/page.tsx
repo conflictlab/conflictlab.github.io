@@ -17,7 +17,7 @@ export default function AcknowledgementsPage() {
   const hannahPubs = filterPubsByAuthor('Frank')
 
   const repoLinks = [
-    { label: 'Pace-map-risk (historical predictions)', href: 'https://github.com/ThomasSchinca/Pace-map-risk' },
+    { label: 'Pace-map-risk (historical predictions)', href: 'https://github.com/conflictlab/Pace-map-risk' },
     { label: 'Live_3D_forecast (grid data feed)', href: 'https://github.com/ThomasSchinca/Live_3D_forecast' },
   ]
 
@@ -132,4 +132,3 @@ export default function AcknowledgementsPage() {
     </>
   )
 }
-

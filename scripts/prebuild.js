@@ -20,7 +20,7 @@ async function main() {
   }
 
   console.log('Prebuild: syncing forecasts from GitHub…')
-  run('node scripts/sync-forecasts-from-github.js --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv')
+  run('node scripts/sync-forecasts-from-github.js --repo conflictlab/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv')
 
   // Ensure recent raw CSVs are mirrored to public for downloads
   console.log('Prebuild: mirroring full raw CSV history to public/data/csv …')

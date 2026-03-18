@@ -1,0 +1,3225 @@
+{
+  "metadata": {
+    "period": "2026-03",
+    "generatedAt": "2026-03-18T04:58:44.363Z",
+    "totalCountries": 124,
+    "analysisDate": "2026-03-18T16:39:05.256Z"
+  },
+  "predictions": [
+    {
+      "country": "Iran",
+      "index": 10000,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 9995,
+        "1m_p50": 10000,
+        "1m_p90": 10005,
+        "3m_p50": 5938.9,
+        "6m_p50": 7935.2,
+        "6m_p90": 7945.2
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 19886,
+        "range": 19886
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Ukraine",
+      "index": 2299.8,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 2294.8,
+        "1m_p50": 2299.8,
+        "1m_p90": 2304.8,
+        "3m_p50": 10000,
+        "6m_p50": 8872,
+        "6m_p90": 8882
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 8463,
+        "range": 8463
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "4.8"
+      }
+    },
+    {
+      "country": "Israel",
+      "index": 980.5,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 975.5,
+        "1m_p50": 980.5,
+        "1m_p90": 985.5,
+        "3m_p50": 1989.8,
+        "6m_p50": 1980.5,
+        "6m_p90": 1990.5
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 175,
+        "range": 175
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "1031.7"
+      }
+    },
+    {
+      "country": "Somalia",
+      "index": 665,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 660,
+        "1m_p50": 665,
+        "1m_p90": 670,
+        "3m_p50": 152.1,
+        "6m_p50": 300.6,
+        "6m_p90": 310.6
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 964,
+        "range": 964
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Niger",
+      "index": 432.2,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 427.2,
+        "1m_p50": 432.2,
+        "1m_p90": 437.2,
+        "3m_p50": 112.7,
+        "6m_p50": 23.2,
+        "6m_p90": 33.2
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 137,
+        "range": 137
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Sudan",
+      "index": 378.1,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 373.1,
+        "1m_p50": 378.1,
+        "1m_p90": 383.1,
+        "3m_p50": 758.8,
+        "6m_p50": 69.8,
+        "6m_p90": 79.8
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 684,
+        "range": 684
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Bangladesh",
+      "index": 349.4,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 344.4,
+        "1m_p50": 349.4,
+        "1m_p90": 354.4,
+        "3m_p50": 354.9,
+        "6m_p50": 741.3,
+        "6m_p90": 751.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 15,
+        "range": 15
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "4842.0"
+      }
+    },
+    {
+      "country": "Nigeria",
+      "index": 247,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 242,
+        "1m_p50": 247,
+        "1m_p90": 252,
+        "3m_p50": 529.2,
+        "6m_p50": 298.3,
+        "6m_p90": 308.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 821,
+        "range": 821
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Mexico",
+      "index": 245.8,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 240.8,
+        "1m_p50": 245.8,
+        "1m_p90": 250.8,
+        "3m_p50": 867.3,
+        "6m_p50": 612,
+        "6m_p90": 622
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 271,
+        "range": 271
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "125.8"
+      }
+    },
+    {
+      "country": "Syria",
+      "index": 200.9,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 195.9,
+        "1m_p50": 200.9,
+        "1m_p90": 205.9,
+        "3m_p50": 628.9,
+        "6m_p50": 230.3,
+        "6m_p90": 240.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 121,
+        "range": 121
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "90.3"
+      }
+    },
+    {
+      "country": "Burkina Faso",
+      "index": 124.2,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 119.2,
+        "1m_p50": 124.2,
+        "1m_p90": 129.2,
+        "3m_p50": 215.3,
+        "6m_p50": 200.1,
+        "6m_p90": 210.1
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 162,
+        "range": 162
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "23.5"
+      }
+    },
+    {
+      "country": "Lebanon",
+      "index": 124,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 119,
+        "1m_p50": 124,
+        "1m_p90": 129,
+        "3m_p50": 240.8,
+        "6m_p50": 250.1,
+        "6m_p90": 260.1
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 22,
+        "range": 22
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "1036.8"
+      }
+    },
+    {
+      "country": "Haiti",
+      "index": 113.7,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 108.7,
+        "1m_p50": 113.7,
+        "1m_p90": 118.7,
+        "3m_p50": 113.9,
+        "6m_p50": 56.7,
+        "6m_p90": 66.7
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 3,
+        "range": 3
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "1790.0"
+      }
+    },
+    {
+      "country": "Venezuela",
+      "index": 112,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 107,
+        "1m_p50": 112,
+        "1m_p90": 117,
+        "3m_p50": 3280.5,
+        "6m_p50": 1359.9,
+        "6m_p90": 1369.9
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 84,
+        "range": 84
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "1518.9"
+      }
+    },
+    {
+      "country": "Ethiopia",
+      "index": 76.4,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 71.4,
+        "1m_p50": 76.4,
+        "1m_p90": 81.4,
+        "3m_p50": 101.2,
+        "6m_p50": 154.2,
+        "6m_p90": 164.2
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 272,
+        "range": 272
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Mali",
+      "index": 70.2,
+      "band": "high",
+      "predictions": {
+        "1m_p10": 65.2,
+        "1m_p50": 70.2,
+        "1m_p90": 75.2,
+        "3m_p50": 128.2,
+        "6m_p50": 183.1,
+        "6m_p90": 193.1
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 107,
+        "range": 107
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "71.1"
+      }
+    },
+    {
+      "country": "Mozambique",
+      "index": 64.3,
+      "band": "medium",
+      "predictions": {
+        "1m_p10": 59.3,
+        "1m_p50": 64.3,
+        "1m_p90": 69.3,
+        "3m_p50": 65.3,
+        "6m_p50": 49.5,
+        "6m_p90": 59.5
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 5,
+        "range": 5
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "890.0"
+      }
+    },
+    {
+      "country": "Angola",
+      "index": 39.4,
+      "band": "medium",
+      "predictions": {
+        "1m_p10": 34.4,
+        "1m_p50": 39.4,
+        "1m_p90": 44.4,
+        "3m_p50": 3.5,
+        "6m_p50": 33.5,
+        "6m_p90": 43.5
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "3349999900.0"
+      }
+    },
+    {
+      "country": "India",
+      "index": 39,
+      "band": "medium",
+      "predictions": {
+        "1m_p10": 34,
+        "1m_p50": 39,
+        "1m_p90": 44,
+        "3m_p50": 41.5,
+        "6m_p50": 62.7,
+        "6m_p90": 72.7
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 58,
+        "range": 58
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "8.1"
+      }
+    },
+    {
+      "country": "Brazil",
+      "index": 29.8,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 24.8,
+        "1m_p50": 29.8,
+        "1m_p90": 34.8,
+        "3m_p50": 35.9,
+        "6m_p50": 37.7,
+        "6m_p90": 47.7
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 34,
+        "range": 34
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "10.9"
+      }
+    },
+    {
+      "country": "Central African Rep.",
+      "index": 29.4,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 24.4,
+        "1m_p50": 29.4,
+        "1m_p90": 34.4,
+        "3m_p50": 28.6,
+        "6m_p50": 64.4,
+        "6m_p90": 74.4
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 34,
+        "range": 34
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "89.4"
+      }
+    },
+    {
+      "country": "Dem. Rep. Congo",
+      "index": 27.7,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 22.7,
+        "1m_p50": 27.7,
+        "1m_p90": 32.7,
+        "3m_p50": 33.1,
+        "6m_p50": 117.7,
+        "6m_p90": 127.7
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 189,
+        "range": 189
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Cameroon",
+      "index": 17.6,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 12.600000000000001,
+        "1m_p50": 17.6,
+        "1m_p90": 22.6,
+        "3m_p50": 2.6,
+        "6m_p50": 31.3,
+        "6m_p90": 41.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 39,
+        "range": 39
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Chad",
+      "index": 17.4,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 12.399999999999999,
+        "1m_p50": 17.4,
+        "1m_p90": 22.4,
+        "3m_p50": 28.8,
+        "6m_p50": 28.5,
+        "6m_p90": 38.5
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 6,
+        "range": 6
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "375.0"
+      }
+    },
+    {
+      "country": "Ecuador",
+      "index": 17.3,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 12.3,
+        "1m_p50": 17.3,
+        "1m_p90": 22.3,
+        "3m_p50": 65.7,
+        "6m_p50": 39.4,
+        "6m_p90": 49.4
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "3939999900.0"
+      }
+    },
+    {
+      "country": "S. Sudan",
+      "index": 17.3,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 12.3,
+        "1m_p50": 17.3,
+        "1m_p90": 22.3,
+        "3m_p50": 10000,
+        "6m_p50": 46.8,
+        "6m_p90": 56.8
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 108,
+        "range": 108
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Yemen",
+      "index": 16.8,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 11.8,
+        "1m_p50": 16.8,
+        "1m_p90": 21.8,
+        "3m_p50": 43.6,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 150,
+        "range": 150
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Philippines",
+      "index": 14.6,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 9.6,
+        "1m_p50": 14.6,
+        "1m_p90": 19.6,
+        "3m_p50": 9.1,
+        "6m_p50": 19.6,
+        "6m_p90": 29.6
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 9,
+        "range": 9
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "117.8"
+      }
+    },
+    {
+      "country": "Myanmar",
+      "index": 13.5,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 8.5,
+        "1m_p50": 13.5,
+        "1m_p90": 18.5,
+        "3m_p50": 28.2,
+        "6m_p50": 106.1,
+        "6m_p90": 116.1
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 115,
+        "range": 115
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Iraq",
+      "index": 11.6,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 6.6,
+        "1m_p50": 11.6,
+        "1m_p90": 16.6,
+        "3m_p50": 24.6,
+        "6m_p50": 25.5,
+        "6m_p90": 35.5
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 14,
+        "range": 14
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "82.1"
+      }
+    },
+    {
+      "country": "Pakistan",
+      "index": 10.8,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 5.800000000000001,
+        "1m_p50": 10.8,
+        "1m_p90": 15.8,
+        "3m_p50": 101.5,
+        "6m_p50": 74.8,
+        "6m_p90": 84.8
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 364,
+        "range": 364
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Afghanistan",
+      "index": 10.6,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 5.6,
+        "1m_p50": 10.6,
+        "1m_p90": 15.6,
+        "3m_p50": 8.9,
+        "6m_p50": 23.4,
+        "6m_p90": 33.4
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 12,
+        "range": 12
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "95.0"
+      }
+    },
+    {
+      "country": "Tanzania",
+      "index": 10.6,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 5.6,
+        "1m_p50": 10.6,
+        "1m_p90": 15.6,
+        "3m_p50": 0.3,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Papua New Guinea",
+      "index": 9.9,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 4.9,
+        "1m_p50": 9.9,
+        "1m_p90": 14.9,
+        "3m_p50": 5.4,
+        "6m_p50": 14.6,
+        "6m_p90": 24.6
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "1459999900.0"
+      }
+    },
+    {
+      "country": "Kenya",
+      "index": 9.5,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 4.5,
+        "1m_p50": 9.5,
+        "1m_p90": 14.5,
+        "3m_p50": 14.4,
+        "6m_p50": 8.3,
+        "6m_p90": 18.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 4,
+        "range": 4
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "107.5"
+      }
+    },
+    {
+      "country": "Togo",
+      "index": 9.5,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 4.5,
+        "1m_p50": 9.5,
+        "1m_p90": 14.5,
+        "3m_p50": 2.9,
+        "6m_p50": 6.6,
+        "6m_p90": 16.6
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 1,
+        "range": 1
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "560.0"
+      }
+    },
+    {
+      "country": "Russia",
+      "index": 6.9,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 1.9000000000000004,
+        "1m_p50": 6.9,
+        "1m_p90": 11.9,
+        "3m_p50": 6.1,
+        "6m_p50": 2.2,
+        "6m_p90": 12.2
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 8,
+        "range": 8
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Algeria",
+      "index": 6.4,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 1.4000000000000004,
+        "1m_p50": 6.4,
+        "1m_p90": 11.4,
+        "3m_p50": 7.4,
+        "6m_p50": 4,
+        "6m_p90": 14
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "399999900.0"
+      }
+    },
+    {
+      "country": "Libya",
+      "index": 5.7,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0.7000000000000002,
+        "1m_p50": 5.7,
+        "1m_p90": 10.7,
+        "3m_p50": 3.9,
+        "6m_p50": 12.1,
+        "6m_p90": 22.1
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 4,
+        "range": 4
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "202.5"
+      }
+    },
+    {
+      "country": "Ghana",
+      "index": 4.4,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 4.4,
+        "1m_p90": 9.4,
+        "3m_p50": 7.3,
+        "6m_p50": 3.3,
+        "6m_p90": 13.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 3,
+        "range": 3
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "10.0"
+      }
+    },
+    {
+      "country": "Indonesia",
+      "index": 4.3,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 4.3,
+        "1m_p90": 9.3,
+        "3m_p50": 4.7,
+        "6m_p50": 1.9,
+        "6m_p90": 11.9
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "189999900.0"
+      }
+    },
+    {
+      "country": "Germany",
+      "index": 4.2,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 4.2,
+        "1m_p90": 9.2,
+        "3m_p50": 7.2,
+        "6m_p50": 3.9,
+        "6m_p90": 13.9
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "389999900.0"
+      }
+    },
+    {
+      "country": "Benin",
+      "index": 2.7,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 2.7,
+        "1m_p90": 7.7,
+        "3m_p50": 7.9,
+        "6m_p50": 2.7,
+        "6m_p90": 12.7
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "269999900.0"
+      }
+    },
+    {
+      "country": "Liberia",
+      "index": 2.1,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 2.1,
+        "1m_p90": 7.1,
+        "3m_p50": 2.5,
+        "6m_p50": 1.3,
+        "6m_p90": 11.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "129999900.0"
+      }
+    },
+    {
+      "country": "Burundi",
+      "index": 1.9,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 1.9,
+        "1m_p90": 6.9,
+        "3m_p50": 1.8,
+        "6m_p50": 2.7,
+        "6m_p90": 12.7
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 3,
+        "range": 3
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Guatemala",
+      "index": 1.9,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 1.9,
+        "1m_p90": 6.9,
+        "3m_p50": 2.7,
+        "6m_p50": 1.7,
+        "6m_p90": 11.7
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "169999900.0"
+      }
+    },
+    {
+      "country": "Uganda",
+      "index": 1.9,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 1.9,
+        "1m_p90": 6.9,
+        "3m_p50": 2.5,
+        "6m_p50": 1.3,
+        "6m_p90": 11.3
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 1,
+        "range": 1
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "30.0"
+      }
+    },
+    {
+      "country": "France",
+      "index": 1.4,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 1.4,
+        "1m_p90": 6.4,
+        "3m_p50": 1,
+        "6m_p50": 3,
+        "6m_p90": 13
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "299999900.0"
+      }
+    },
+    {
+      "country": "Thailand",
+      "index": 1.3,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 1.3,
+        "1m_p90": 6.3,
+        "3m_p50": 1.8,
+        "6m_p50": 27.8,
+        "6m_p90": 37.8
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 1,
+        "range": 1
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": "2680.0"
+      }
+    },
+    {
+      "country": "Turkey",
+      "index": 1.3,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 1.3,
+        "1m_p90": 6.3,
+        "3m_p50": 1.4,
+        "6m_p50": 2.4,
+        "6m_p90": 12.4
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "239999900.0"
+      }
+    },
+    {
+      "country": "Honduras",
+      "index": 0.5,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0.5,
+        "1m_p90": 5.5,
+        "3m_p50": 1.2,
+        "6m_p50": 7.2,
+        "6m_p90": 17.2
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": true,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": "719999900.0"
+      }
+    },
+    {
+      "country": "South Africa",
+      "index": 0.3,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0.3,
+        "1m_p90": 5.3,
+        "3m_p50": 74.3,
+        "6m_p50": 0.6,
+        "6m_p90": 10.6
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 1,
+        "range": 1
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Albania",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Argentina",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 9,
+        "range": 9
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Armenia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Australia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Austria",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Azerbaijan",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Bahrain",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Belgium",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Bhutan",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Bolivia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Bosnia and Herz.",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Botswana",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Cambodia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Canada",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "China",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Colombia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 108.8,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 352,
+        "range": 352
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Comoros",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Congo",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Croatia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Djibouti",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 10,
+        "range": 10
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Egypt",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "El Salvador",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Eritrea",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Gambia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Georgia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Guinea",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Guinea-Bissau",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Guyana",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Italy",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Côte d'Ivoire",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Jamaica",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Jordan",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "eSwatini",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Kuwait",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Kyrgyzstan",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Laos",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Lesotho",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Madagascar",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Malaysia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Malta",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Mauritania",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Moldova",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Morocco",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Namibia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Nepal",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Netherlands",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Nicaragua",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Macedonia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Panama",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Paraguay",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Peru",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Poland",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Qatar",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Romania",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Rwanda",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Saudi Arabia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Senegal",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Serbia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Sierra Leone",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Solomon Islands",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Spain",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Sri Lanka",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Sweden",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Tajikistan",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Trinidad and Tobago",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Tunisia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 5,
+        "range": 5
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "United Arab Emirates",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "United Kingdom",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "United States of America",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 1,
+        "range": 1
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": false,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Uzbekistan",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Zambia",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    },
+    {
+      "country": "Zimbabwe",
+      "index": 0,
+      "band": "low",
+      "predictions": {
+        "1m_p10": 0,
+        "1m_p50": 0,
+        "1m_p90": 5,
+        "3m_p50": 0,
+        "6m_p50": 0,
+        "6m_p90": 10
+      },
+      "denormalization": {
+        "min": 0,
+        "max": 0.000001,
+        "range": 0.000001
+      },
+      "flags": {
+        "exceedsHistoricalMax": false,
+        "hasNegativeValue": false,
+        "zeroConflictCountry": true,
+        "percentOverMax": 0
+      }
+    }
+  ],
+  "issues": {
+    "negativeValues": [],
+    "exceedHistoricalMax": [
+      {
+        "country": "Bangladesh",
+        "prediction6m": 741.3,
+        "historicalMax": 15,
+        "percentOver": "4842.0"
+      },
+      {
+        "country": "Thailand",
+        "prediction6m": 27.8,
+        "historicalMax": 1,
+        "percentOver": "2680.0"
+      },
+      {
+        "country": "Haiti",
+        "prediction6m": 56.7,
+        "historicalMax": 3,
+        "percentOver": "1790.0"
+      },
+      {
+        "country": "Venezuela",
+        "prediction6m": 1359.9,
+        "historicalMax": 84,
+        "percentOver": "1518.9"
+      },
+      {
+        "country": "Lebanon",
+        "prediction6m": 250.1,
+        "historicalMax": 22,
+        "percentOver": "1036.8"
+      },
+      {
+        "country": "Israel",
+        "prediction6m": 1980.5,
+        "historicalMax": 175,
+        "percentOver": "1031.7"
+      },
+      {
+        "country": "Mozambique",
+        "prediction6m": 49.5,
+        "historicalMax": 5,
+        "percentOver": "890.0"
+      },
+      {
+        "country": "Togo",
+        "prediction6m": 6.6,
+        "historicalMax": 1,
+        "percentOver": "560.0"
+      },
+      {
+        "country": "Chad",
+        "prediction6m": 28.5,
+        "historicalMax": 6,
+        "percentOver": "375.0"
+      },
+      {
+        "country": "Libya",
+        "prediction6m": 12.1,
+        "historicalMax": 4,
+        "percentOver": "202.5"
+      },
+      {
+        "country": "Mexico",
+        "prediction6m": 612,
+        "historicalMax": 271,
+        "percentOver": "125.8"
+      },
+      {
+        "country": "Philippines",
+        "prediction6m": 19.6,
+        "historicalMax": 9,
+        "percentOver": "117.8"
+      },
+      {
+        "country": "Kenya",
+        "prediction6m": 8.3,
+        "historicalMax": 4,
+        "percentOver": "107.5"
+      },
+      {
+        "country": "Afghanistan",
+        "prediction6m": 23.4,
+        "historicalMax": 12,
+        "percentOver": "95.0"
+      },
+      {
+        "country": "Syria",
+        "prediction6m": 230.3,
+        "historicalMax": 121,
+        "percentOver": "90.3"
+      },
+      {
+        "country": "Central African Rep.",
+        "prediction6m": 64.4,
+        "historicalMax": 34,
+        "percentOver": "89.4"
+      },
+      {
+        "country": "Iraq",
+        "prediction6m": 25.5,
+        "historicalMax": 14,
+        "percentOver": "82.1"
+      },
+      {
+        "country": "Mali",
+        "prediction6m": 183.1,
+        "historicalMax": 107,
+        "percentOver": "71.1"
+      },
+      {
+        "country": "Uganda",
+        "prediction6m": 1.3,
+        "historicalMax": 1,
+        "percentOver": "30.0"
+      },
+      {
+        "country": "Burkina Faso",
+        "prediction6m": 200.1,
+        "historicalMax": 162,
+        "percentOver": "23.5"
+      },
+      {
+        "country": "Brazil",
+        "prediction6m": 37.7,
+        "historicalMax": 34,
+        "percentOver": "10.9"
+      },
+      {
+        "country": "Ghana",
+        "prediction6m": 3.3,
+        "historicalMax": 3,
+        "percentOver": "10.0"
+      },
+      {
+        "country": "India",
+        "prediction6m": 62.7,
+        "historicalMax": 58,
+        "percentOver": "8.1"
+      },
+      {
+        "country": "Ukraine",
+        "prediction6m": 8872,
+        "historicalMax": 8463,
+        "percentOver": "4.8"
+      }
+    ],
+    "zeroConflictCountries": [
+      "Albania",
+      "Algeria",
+      "Angola",
+      "Armenia",
+      "Australia",
+      "Austria",
+      "Azerbaijan",
+      "Bahrain",
+      "Belgium",
+      "Benin",
+      "Bhutan",
+      "Bolivia",
+      "Bosnia and Herz.",
+      "Botswana",
+      "Cambodia",
+      "Canada",
+      "China",
+      "Comoros",
+      "Congo",
+      "Croatia",
+      "Ecuador",
+      "Egypt",
+      "El Salvador",
+      "Eritrea",
+      "France",
+      "Gambia",
+      "Georgia",
+      "Germany",
+      "Guatemala",
+      "Guinea",
+      "Guinea-Bissau",
+      "Guyana",
+      "Honduras",
+      "Indonesia",
+      "Italy",
+      "Côte d'Ivoire",
+      "Jamaica",
+      "Jordan",
+      "eSwatini",
+      "Kuwait",
+      "Kyrgyzstan",
+      "Laos",
+      "Lesotho",
+      "Liberia",
+      "Madagascar",
+      "Malaysia",
+      "Malta",
+      "Mauritania",
+      "Moldova",
+      "Morocco",
+      "Namibia",
+      "Nepal",
+      "Netherlands",
+      "Nicaragua",
+      "Macedonia",
+      "Panama",
+      "Papua New Guinea",
+      "Paraguay",
+      "Peru",
+      "Poland",
+      "Qatar",
+      "Romania",
+      "Rwanda",
+      "Saudi Arabia",
+      "Senegal",
+      "Serbia",
+      "Sierra Leone",
+      "Solomon Islands",
+      "Spain",
+      "Sri Lanka",
+      "Sweden",
+      "Tajikistan",
+      "Tanzania",
+      "Trinidad and Tobago",
+      "Turkey",
+      "United Arab Emirates",
+      "United Kingdom",
+      "Uzbekistan",
+      "Zambia",
+      "Zimbabwe"
+    ]
+  },
+  "statistics": {
+    "avgPrediction1m": "136.15",
+    "avgPrediction6m": "194.64",
+    "maxPrediction1m": 10000,
+    "maxPrediction6m": 8872,
+    "totalExceedingMax": 24,
+    "totalWithNegatives": 0
+  }
+}

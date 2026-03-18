@@ -43,7 +43,7 @@ jobs:
       - name: Download DTW matches pickle
         run: |
           set -e
-          REPO="${{ vars.MATCHES_REPO }}"; REPO="${REPO:-ThomasSchinca/Pace-map-risk}"
+          REPO="${{ vars.MATCHES_REPO }}"; REPO="${REPO:-conflictlab/Pace-map-risk}"
           BRANCH="${{ vars.MATCHES_BRANCH }}"; BRANCH="${BRANCH:-main}"
           PATH_IN_REPO="${{ vars.MATCHES_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-saved_dictionary.pkl}"
           URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"

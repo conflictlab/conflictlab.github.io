@@ -87,11 +87,11 @@ node scripts/convert-scenarios-pkl.js --src /path/to/sce_dictionary.pkl --out pu
 Then run the site and click a country on the forecasts page to see the scenario plot.
 
 CI monthly refresh
-- The workflow `.github/workflows/update-minmax.yml` downloads `sce_dictionary.pkl` (defaults to `ThomasSchinca/Pace-map-risk@main`) and converts it to `public/data/scenarios.json` each month, then rebuilds `public/data/minmax.json` and `public/data/scenarios.denorm.json`.
-- Configure via repository variables: `SCE_REPO` (owner/repo), `SCE_BRANCH` (branch), `SCE_PATH` (path to pickle). Defaults are `ThomasSchinca/Pace-map-risk`, `main`, and `sce_dictionary.pkl`.
+- The workflow `.github/workflows/update-minmax.yml` downloads `sce_dictionary.pkl` (defaults to `conflictlab/Pace-map-risk@main`) and converts it to `public/data/scenarios.json` each month, then rebuilds `public/data/minmax.json` and `public/data/scenarios.denorm.json`.
+- Configure via repository variables: `SCE_REPO` (owner/repo), `SCE_BRANCH` (branch), `SCE_PATH` (path to pickle). Defaults are `conflictlab/Pace-map-risk`, `main`, and `sce_dictionary.pkl`.
 
 - The workflow `.github/workflows/update-matches.yml` downloads the DTW matches pickle monthly and converts it to `public/data/matches.json` for country pages.
-  - Configure via repository variables: `MATCHES_REPO` (owner/repo), `MATCHES_BRANCH` (branch), `MATCHES_PATH` (path to pickle in repo). Defaults are `ThomasSchinca/Pace-map-risk`, `main`, and `saved_dictionary.pkl`.
+  - Configure via repository variables: `MATCHES_REPO` (owner/repo), `MATCHES_BRANCH` (branch), `MATCHES_PATH` (path to pickle in repo). Defaults are `conflictlab/Pace-map-risk`, `main`, and `saved_dictionary.pkl`.
   - The pickle is expected to map `country_name -> [Series, distance, Series, distance, ...]`. The converter normalizes to
     `country_name -> [{ series: { values: [...], index?: [...] }, distance: <number> }, ...]`.
   - Optional: provide a full historical monthly CSV to enable matched-future overlays by setting:
@@ -129,19 +129,19 @@ Forecast CSV sync (from GitHub)
 Monthly (latest only, public repo — no token):
 
 ```bash
-npm run csv:sync:github -- --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv
+npm run csv:sync:github -- --repo conflictlab/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv
 ```
 
 All periods (one-time backfill):
 
 ```bash
-npm run csv:sync:github -- --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --saveCsv
+npm run csv:sync:github -- --repo conflictlab/Pace-map-risk --dir Historical_Predictions --branch main --saveCsv
 ```
 
 Optionally use a token to avoid API rate limits:
 
 ```bash
-npm run csv:sync:github -- --repo ThomasSchinca/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv --token $GITHUB_TOKEN
+npm run csv:sync:github -- --repo conflictlab/Pace-map-risk --dir Historical_Predictions --branch main --latestOnly --saveCsv --token $GITHUB_TOKEN
 ```
 
 Raw CSV downloads (from the site)
