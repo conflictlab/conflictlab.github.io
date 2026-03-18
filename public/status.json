@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-03-18T18:12:02.413Z",
+  "ok": true,
+  "summary": {
+    "latestPeriod": "2026-03",
+    "snapshotGeneratedAt": "2026-03-18T17:57:53.455Z",
+    "snapshotAgeDays": 0,
+    "minmaxCountries": 125,
+    "minmaxUpdatedAt": "2026-03-18T17:57:08.833Z",
+    "scenariosUpdatedAt": "2026-03-18T17:57:08.834Z",
+    "scenariosDenormUpdatedAt": "2026-03-18T17:57:08.834Z",
+    "matchesUpdatedAt": "2026-03-18T17:57:08.833Z",
+    "gridLatestPeriod": "2026-03",
+    "staticApiCandidate": "/api/v1/grid/2026-03/points-m1.json"
+  },
+  "warnings": [],
+  "errors": []
+}
