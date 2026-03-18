@@ -1,0 +1,160 @@
+name: Refresh Website Now
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      MAIL_TO: ${{ secrets.MAIL_TO }}
+      MAIL_FROM: ${{ secrets.MAIL_FROM }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "numpy==1.24.4" "pandas==1.5.3"
+
+      - name: Sync forecasts from GitHub CSVs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run csv:sync:github -- \
+            --repo ThomasSchinca/Pace-map-risk \
+            --dir '' \
+            --branch main \
+            --latestOnly \
+            --saveCsv \
+            --token $GITHUB_TOKEN
+
+      - name: Build PRIO-GRID centroids
+        run: npm run grid:centroids
+
+      - name: Build PRIO-GRID GeoJSON
+        run: npm run grid:build
+
+      - name: Build monthly point JSONs
+        run: node scripts/geojson-to-month-points.js
+
+      - name: Build grid CSV for current period
+        run: node scripts/grid-geojson-to-csv.js
+
+      - name: Build per-month grid CSVs (m1..m6)
+        run: node scripts/grid-month-points-to-csv.js
+
+      - name: Generate per-country grid files
+        run: node scripts/generate-country-grids.js
+
+      - name: Export static API for grid points
+        run: node scripts/export-static-api.js
+
+      - name: Download scenarios pickle
+        run: |
+          set -e
+          REPO="${{ vars.SCE_REPO }}"; REPO="${REPO:-conflictlab/Pace-map-risk}"
+          BRANCH="${{ vars.SCE_BRANCH }}"; BRANCH="${BRANCH:-main}"
+          PATH_IN_REPO="${{ vars.SCE_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-sce_dictionary.pkl}"
+          URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
+          echo "Downloading $URL"
+          curl -fsSL "$URL" -o sce_dictionary.pkl
+
+      - name: Convert scenarios to JSON
+        run: npm run scenarios:convert -- --src sce_dictionary.pkl --out public/data/scenarios.json
+
+      - name: Build minmax and denormalized scenarios
+        run: npm run data:update
+
+      - name: Download matches pickle
+        run: |
+          set -e
+          REPO="${{ vars.MATCHES_REPO }}"; REPO="${REPO:-ThomasSchinca/Pace-map-risk}"
+          BRANCH="${{ vars.MATCHES_BRANCH }}"; BRANCH="${BRANCH:-main}"
+          PATH_IN_REPO="${{ vars.MATCHES_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-saved_dictionary.pkl}"
+          URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
+          echo "Downloading $URL"
+          curl -fsSL "$URL" -o matches.pkl
+
+      - name: Convert matches to JSON
+        run: npm run matches:convert -- --src matches.pkl --out public/data/matches.json
+
+      - name: Generate status JSON
+        run: node scripts/generate-status.js
+
+      - name: Commit and push updates
+        run: |
+          set -e
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add content/forecasts public/data public/api || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: monthly website refresh (forecasts, grid, scenarios, matches, API, status)"
+          fi
+          git fetch origin main
+          if ! git pull --rebase origin main; then
+            echo "Rebase failed; aborting rebase and skipping push to avoid conflicts." >&2
+            git rebase --abort || true
+            exit 1
+          fi
+          git push origin HEAD:main
+
+      - name: Send success email
+        if: ${{ success() && env.SMTP_SERVER != '' && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.MAIL_TO != '' && env.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ env.SMTP_SERVER }}
+          server_port: ${{ env.SMTP_PORT || 465 }}
+          secure: ${{ env.SMTP_SECURE == 'true' }}
+          username: ${{ env.SMTP_USERNAME }}
+          password: ${{ env.SMTP_PASSWORD }}
+          subject: "✅ Refresh Website Now succeeded: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ env.MAIL_TO }}
+          from: ${{ env.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Refresh Website Now</strong> completed successfully.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View run</a></p>
+
+      - name: Send failure email
+        if: ${{ failure() && env.SMTP_SERVER != '' && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.MAIL_TO != '' && env.MAIL_FROM != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ env.SMTP_SERVER }}
+          server_port: ${{ env.SMTP_PORT || 465 }}
+          secure: ${{ env.SMTP_SECURE == 'true' }}
+          username: ${{ env.SMTP_USERNAME }}
+          password: ${{ env.SMTP_PASSWORD }}
+          subject: "❌ Refresh Website Now FAILED: ${{ github.repository }}#${{ github.run_number }}"
+          to: ${{ env.MAIL_TO }}
+          from: ${{ env.MAIL_FROM }}
+          content_type: text/html
+          html_body: |
+            <p><strong>Refresh Website Now</strong> failed.</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a></p>
+

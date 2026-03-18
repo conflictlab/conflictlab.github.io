@@ -39,6 +39,7 @@ on:
       - "Sync Forecast CSVs"
       - "Update minmax and denorm scenarios"
       - "Update DTW matches JSON"
+      - "Refresh Website Now"
     types: [completed]
   workflow_dispatch: {}
 
