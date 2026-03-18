@@ -103,6 +103,24 @@ function denormTemporal(temporal, mm) {
   return out
 }
 
+function shiftDates(temporal, yearShift) {
+  // Shift all date keys in temporal object by yearShift years
+  if (!temporal || typeof temporal !== 'object') return temporal
+  const out = {}
+  for (const [date, values] of Object.entries(temporal)) {
+    // Check if date looks like YYYY-MM-DD format
+    const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+    if (match) {
+      const year = parseInt(match[1], 10) + yearShift
+      const newDate = `${year}-${match[2]}-${match[3]}`
+      out[newDate] = values
+    } else {
+      out[date] = values
+    }
+  }
+  return out
+}
+
 function normalizeCountryEntry(entry, mm) {
   // Normalize entry into object shape; optionally denormalize values.
   let obj = null
@@ -112,6 +130,9 @@ function normalizeCountryEntry(entry, mm) {
     obj = adaptArrayCountryEntry(entry)
   }
   if (!obj) return entry // unknown shape — return as-is
+
+  // Shift dates from 2025 to 2026
+  obj.temporal = shiftDates(obj.temporal, 1)
 
   if (!mm) return obj
   if (looksNormalized(obj.temporal)) {

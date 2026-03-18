@@ -205,48 +205,7 @@ export default async function EntityForecastPage({ params }: { params: { entity:
         </div>
       </section>
 
-      {/* Forecast Line Plot: past 10 months and next 6 months */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h2 className="text-2xl font-light text-gray-900 mb-4">6‑Month Forecast</h2>
-              <LazyVisible minHeight="260px">
-                <TimeSeriesChart
-                  data={{
-                    historical: (() => {
-                      // Filter to exclude current snapshot period and take last 10
-                      const filtered = historicalSeries.filter((s: { period: string }) => s.period < snapshot.period)
-                      return filtered.slice(-10).map((s: { p50?: number; index: number }) => s.p50 ?? s.index)
-                    })(),
-                    forecast: months,
-                    country: entity.name,
-                    histPeriods: (() => {
-                      const filtered = historicalSeries.filter((s: { period: string }) => s.period < snapshot.period)
-                      return filtered.slice(-10).map((s: { period: string }) => s.period)
-                    })(),
-                    forecastPeriods: (() => {
-                      const [yy, mm] = snapshot.period.split('-').map(Number)
-                      // Start from the NEXT month after snapshot period
-                      const start = new Date(Date.UTC(yy, mm, 1))
-                      const out: string[] = []
-                      for (let i = 0; i < 6; i++) {
-                        const d = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + i, 1))
-                        const y = d.getUTCFullYear()
-                        const m = String(d.getUTCMonth() + 1).padStart(2, '0')
-                        out.push(`${y}-${m}`)
-                      }
-                      return out
-                    })()
-                  }}
-                  anchorPeriod={snapshot.period}
-                  pastMonths={10}
-                />
-              </LazyVisible>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Forecast Line Plot removed - using Scenarios chart instead */}
 
       
 
