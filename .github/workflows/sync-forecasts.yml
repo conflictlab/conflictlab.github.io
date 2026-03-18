@@ -14,10 +14,6 @@ on:
       - 'app/forecasts-grid/**'
       - 'components/PrioGridMap.tsx'
       - '.github/workflows/sync-forecasts.yml'
-  schedule:
-    # Run at 03:00 UTC on 28th (pre-month) and 1st (fallback)
-    - cron: '0 3 28 * *'
-    - cron: '0 3 1 * *'
   workflow_dispatch: {}
 
 jobs:

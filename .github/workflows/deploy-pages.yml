@@ -36,9 +36,6 @@ on:
   # Also deploy when data update workflows complete (their pushes use GITHUB_TOKEN and won't trigger push workflows)
   workflow_run:
     workflows:
-      - "Sync Forecast CSVs"
-      - "Update minmax and denorm scenarios"
-      - "Update DTW matches JSON"
       - "Refresh Website Now"
     types: [completed]
   workflow_dispatch: {}

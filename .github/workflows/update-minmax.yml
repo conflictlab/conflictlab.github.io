@@ -1,9 +1,6 @@
 name: Update minmax and denorm scenarios
 
 on:
-  schedule:
-    - cron: '0 3 28 * *' # monthly on the 28th at 03:00 UTC (pre-month)
-    - cron: '0 3 1 * *'  # monthly on the 1st at 03:00 UTC
   workflow_dispatch: {}
 
 jobs:

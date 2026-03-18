@@ -1,0 +1,36 @@
+# Template for conflictlab/Pace-map-risk monthly generation
+name: Generate Monthly Forecasts
+
+on:
+  schedule:
+    - cron: '0 1 28 * *' # 28th 01:00 UTC
+    - cron: '0 1 1 * *'  # 1st 01:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run forecast generation
+        run: |
+          python generate_forecasts.py
+          python scripts/prepare_historical_predictions.py
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add forecasts_h6.csv forecasts_h12.csv Hist.csv forecast_metadata.json Historical_Predictions || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: monthly forecasts"
+            git push
+          else
+            echo "No changes"
+          fi

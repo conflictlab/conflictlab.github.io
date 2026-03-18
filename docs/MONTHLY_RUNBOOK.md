@@ -10,32 +10,30 @@ This runbook lists what needs to run each month so the public website and API st
 ## Monthly Timeline (UTC)
 
 - 28th @ 01:00 — Forecast generation (in forecasting repo; see below)
-- 28th @ 03:00/04:00 — Website data updates (pre-month safety run)
-  - Min/max + scenarios (03:00): `.github/workflows/update-minmax.yml`
-  - Matches JSON (04:00): `.github/workflows/update-matches.yml`
-- 28th @ 03:00 — Forecast CSV sync + grid/static API build: `.github/workflows/sync-forecasts.yml`
-- 28th after updates — Deploy to GitHub Pages: `.github/workflows/deploy-pages.yml`
+- 28th @ 03:00 — Website refresh (scheduled): `.github/workflows/refresh-website.yml`
+  - Internally runs: sync forecasts + grid/static API, minmax/scenarios, matches, status, commit/push
+- 28th after refresh — Deploy to GitHub Pages: `.github/workflows/deploy-pages.yml`
 - 28th @ 06:00 — Health check: `.github/workflows/health-check.yml`
-- 1st @ 01:00 — Forecast generation (compute repo, fallback)
-- 1st @ 03:00/04:00 — Website data updates (fallback)
-- 1st @ 03:00 — Forecast CSV sync + grid/static API build (fallback)
-- 1st after updates — Deploy to GitHub Pages; Health check @ 06:00
+- 1st @ 01:00 — Forecast generation (fallback)
+- 1st @ 03:00 — Website refresh (fallback)
+- 1st after refresh — Deploy to GitHub Pages; Health check @ 06:00
 
 Tip: A one-click manual refresh exists: `.github/workflows/refresh-website.yml` (see Manual Triggers).
 
 ## Website Workflows (this repo)
 
-- Sync Forecast CSVs — `.github/workflows/sync-forecasts.yml`
-  - Runs on the 28th and 1st. Pulls latest CSV(s) from forecasting repo, snapshots JSON, rebuilds grid assets (centroids, GeoJSON, monthly points, CSVs), exports static API, updates `public/status.json`, commits changes.
+- Refresh Website Now — `.github/workflows/refresh-website.yml`
+  - Scheduled on the 28th and 1st. Runs end‑to‑end refresh.
   - Manual: Actions → “Sync Forecast CSVs” → Run workflow.
 
+- Sync Forecast CSVs — `.github/workflows/sync-forecasts.yml`
+  - Manual only (ad‑hoc). Pulls latest CSV(s) from forecasting repo and rebuilds grid/static API.
+
 - Update minmax and denorm scenarios — `.github/workflows/update-minmax.yml`
-  - Runs on 26th/28th/1st. Downloads `sce_dictionary.pkl`, converts to `public/data/scenarios.json`, recomputes `public/data/minmax.json`, writes `public/data/scenarios.denorm.json`, updates `public/status.json`, commits.
-  - Manual: Actions → “Update minmax and denorm scenarios” → Run workflow.
+  - Manual only (ad‑hoc). Rebuilds scenarios/minmax artifacts.
 
 - Update DTW matches JSON — `.github/workflows/update-matches.yml`
-  - Runs on 26th/28th/1st. Downloads `saved_dictionary.pkl`, converts to `public/data/matches.json`, updates `public/status.json`, commits.
-  - Manual: Actions → “Update DTW matches JSON” → Run workflow.
+  - Manual only (ad‑hoc). Rebuilds matches JSON.
 
 - Deploy to GitHub Pages — `.github/workflows/deploy-pages.yml`
   - Auto-triggered after the above via `workflow_run`. Builds static `out/`, uploads, deploys Pages. Also ensures `public/status.json` present.

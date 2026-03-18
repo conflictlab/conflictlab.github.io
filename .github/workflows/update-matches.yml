@@ -1,9 +1,6 @@
 name: Update DTW matches JSON
 
 on:
-  schedule:
-    - cron: '0 4 28 * *' # monthly on the 28th at 04:00 UTC (pre-month)
-    - cron: '0 4 1 * *'  # monthly on the 1st at 04:00 UTC
   workflow_dispatch: {}
 
 jobs:
