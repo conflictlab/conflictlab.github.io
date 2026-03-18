@@ -3,7 +3,7 @@ name: Generate Monthly Forecasts
 
 on:
   schedule:
-    - cron: '0 1 28 * *' # 28th 01:00 UTC
+    - cron: '0 1 24 * *' # 24th 01:00 UTC
     - cron: '0 1 1 * *'  # 1st 01:00 UTC
   workflow_dispatch: {}
 

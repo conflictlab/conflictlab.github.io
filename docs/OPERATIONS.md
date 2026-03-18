@@ -17,7 +17,7 @@ This guide explains how the site updates each month, how to run a full refresh o
 
 ## Regular Schedules
 
-- 28th (pre-month) and 1st (fallback):
+- 24th (pre-month) and 1st (fallback):
   - 03:00 UTC — Refresh (end‑to‑end): `.github/workflows/refresh-website.yml`
 - Deploy to Pages: auto‑runs after refresh completes or on push
   - Workflow: `.github/workflows/deploy-pages.yml`

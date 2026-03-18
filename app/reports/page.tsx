@@ -60,6 +60,24 @@ function getNewsletters(): NewsletterItem[] {
 export default function ReportsPage() {
   const newsletters = getNewsletters()
 
+  // Try to find an HTML companion for a given newsletter title (same month/year)
+  function findCompanionHtml(title: string): string | null {
+    try {
+      const dir = path.join(process.cwd(), 'public', 'newslettersAndReports')
+      const files = fs.readdirSync(dir)
+      const lower = (s: string) => s.toLowerCase()
+      // Expect filenames like Newsletter_Month Year.html
+      const parts = title.split(' ')
+      if (parts.length < 2) return null
+      const month = parts[0].toLowerCase()
+      const year = parts[1]
+      const match = files.find(f => /newsletter/i.test(f) && f.toLowerCase().endsWith('.html') && lower(f).includes(month) && f.includes(year))
+      return match ? `/newslettersAndReports/${match}` : null
+    } catch {
+      return null
+    }
+  }
+
   // Discover the latest Forecasting Report dynamically by filename
   function getLatestForecastReport(): { href: string, label: string } | null {
     try {
@@ -197,9 +215,18 @@ export default function ReportsPage() {
                 </div>
               </div>
               </Link>
-            ) : (
+            ) : null}
+            {newsletters.length > 0 ? (() => {
+              const html = findCompanionHtml(newsletters[0].title)
+              return html ? (
+                <div className="mt-3">
+                  <Link href={html} target="_blank" className="text-blue-600 hover:text-blue-700 text-sm underline">View Online (HTML)</Link>
+                </div>
+              ) : null
+            })() : null}
+            {newsletters.length === 0 ? (
               <div className="text-gray-600">No newsletters available yet.</div>
-            )}
+            ) : null}
           </div>
 
           {/* Email Signup Section */}
@@ -246,11 +273,15 @@ export default function ReportsPage() {
                     <h3 className="text-xl font-medium text-gray-900 mb-3">{year}</h3>
                     <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
                       {newslettersByYear[year].map((n, index) => (
-                        <li key={index} className="p-0">
-                          <Link href={n.file} target="_blank" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                        <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors">
+                          <div className="flex items-center gap-3">
                             <FileText size={20} className="text-gray-400 flex-shrink-0" />
                             <span className="text-gray-900 font-light">{n.title}</span>
-                          </Link>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Link href={n.file} target="_blank" className="text-blue-600 hover:text-blue-700 text-xs underline">PDF</Link>
+                            {(() => { const html = findCompanionHtml(n.title); return html ? (<Link href={html} target="_blank" className="text-blue-600 hover:text-blue-700 text-xs underline">Web</Link>) : null })()}
+                          </div>
                         </li>
                       ))}
                     </ul>

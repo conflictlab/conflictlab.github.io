@@ -2,7 +2,7 @@ name: Refresh Website Now
 
 on:
   schedule:
-    - cron: '0 3 28 * *' # 28th at 03:00 UTC (pre-month)
+    - cron: '0 3 24 * *' # 24th at 03:00 UTC (pre-month)
     - cron: '0 3 1 * *'  # 1st at 03:00 UTC
   workflow_dispatch: {}
 

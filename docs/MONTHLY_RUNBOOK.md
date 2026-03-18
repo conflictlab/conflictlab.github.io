@@ -9,11 +9,11 @@ This runbook lists what needs to run each month so the public website and API st
 
 ## Monthly Timeline (UTC)
 
-- 28th @ 01:00 — Forecast generation (in forecasting repo; see below)
-- 28th @ 03:00 — Website refresh (scheduled): `.github/workflows/refresh-website.yml`
+- 24th @ 01:00 — Forecast generation (in forecasting repo; see below)
+- 24th @ 03:00 — Website refresh (scheduled): `.github/workflows/refresh-website.yml`
   - Internally runs: sync forecasts + grid/static API, minmax/scenarios, matches, status, commit/push
-- 28th after refresh — Deploy to GitHub Pages: `.github/workflows/deploy-pages.yml`
-- 28th @ 06:00 — Health check: `.github/workflows/health-check.yml`
+- 24th after refresh — Deploy to GitHub Pages: `.github/workflows/deploy-pages.yml`
+- 24th @ 06:00 — Health check: `.github/workflows/health-check.yml`
 - 1st @ 01:00 — Forecast generation (fallback)
 - 1st @ 03:00 — Website refresh (fallback)
 - 1st after refresh — Deploy to GitHub Pages; Health check @ 06:00
