@@ -101,8 +101,8 @@ CI monthly refresh
     The workflow will download it to `public/data/hist_full.csv`. The UI will prefer this file and fall back to `public/data/hist.csv` if absent.
   - If you already have a long-run monthly CSV named `Conf.csv` (as in Pace-map-risk), you can point `MATCHES_HIST_PATH` to `Conf.csv`. The UI will also look for `public/data/conf.csv` and prefer it when present.
 
-CI automation (GitHub Actions)
-- `.github/workflows/sync-forecasts.yml` runs on `main` pushes and monthly schedule:
+- CI automation (GitHub Actions)
+- `.github/workflows/sync-forecasts.yml` runs on `main` pushes and on the 28th/1st:
   - Syncs forecast CSVs, rebuilds centroids, builds GeoJSON, builds monthly points, exports static API
   - Commits generated files under `content/forecasts`, `public/data/csv`, `public/data/grid`, and `public/api`
 - `.github/workflows/update-minmax.yml` runs monthly:

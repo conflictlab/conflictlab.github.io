@@ -17,15 +17,13 @@ This guide explains how the site updates each month, how to run a full refresh o
 
 ## Regular Schedules
 
-- Daily sync of forecasts + grid build: 03:00 UTC
-  - Workflow: `.github/workflows/sync-forecasts.yml`
-- Early monthly data updates for safety: 26th and 28th at 03:00/04:00 UTC
-  - Minmax + scenarios: `.github/workflows/update-minmax.yml`
-  - Matches: `.github/workflows/update-matches.yml`
-- Fallback monthly update: 1st at 03:00/04:00 UTC (same workflows)
+- 28th (pre-month) and 1st (fallback):
+  - 03:00 UTC — Minmax + scenarios: `.github/workflows/update-minmax.yml`
+  - 04:00 UTC — Matches: `.github/workflows/update-matches.yml`
+  - 03:00 UTC — Sync forecasts + grid build: `.github/workflows/sync-forecasts.yml`
 - Deploy to Pages: auto‑runs after the above workflows complete
   - Workflow: `.github/workflows/deploy-pages.yml`
-- Health check (live site): daily 06:00 UTC and after deploys
+- Health check (live site): 06:00 UTC on 28th and 1st, and after deploys
   - Workflow: `.github/workflows/health-check.yml`
 
 ## Email Notifications
@@ -113,4 +111,3 @@ gh workflow run "Sync Forecast CSVs"
 - Scripts
   - `scripts/generate-status.js` — writes `public/status.json`
   - `scripts/check-live.js` — fetches deployed status/API and CSV metadata
-

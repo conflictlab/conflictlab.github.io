@@ -2,7 +2,8 @@ name: Health Check (Live Site)
 
 on:
   schedule:
-    - cron: '0 6 * * *' # daily at 06:00 UTC
+    - cron: '0 6 28 * *' # 28th at 06:00 UTC
+    - cron: '0 6 1 * *'  # 1st at 06:00 UTC
   workflow_run:
     workflows:
       - "Deploy to GitHub Pages"
