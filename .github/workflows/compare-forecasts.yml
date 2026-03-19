@@ -45,11 +45,10 @@ jobs:
           name: compare-report
           path: compare-report.txt
 
-      - name: Fail if mismatches detected
+      - name: Fail if numeric mismatches detected
         run: |
-          if grep -Eq 'Mismatches:\s+([1-9][0-9]*|[1-9])' compare-report.txt; then
-            echo "Mismatches detected. See compare-report.txt artifact." >&2
+          if grep -Eq 'Numeric mismatches:\s+([1-9][0-9]*|[1-9])' compare-report.txt; then
+            echo "Numeric mismatches detected. See compare-report.txt artifact." >&2
             exit 1
           fi
           echo "No mismatches beyond tolerance."
-

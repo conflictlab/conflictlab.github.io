@@ -1,55 +1,30 @@
 import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import fs from 'fs'
+import path from 'path'
 
 const GITHUB_BASE = 'https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main'
 
-const API_ENDPOINTS = [
-  {
-    category: '12-Month Forecasts',
-    description: 'Forecasts 12 months ahead (mean, min, max)',
-    endpoints: [
-      { url: `${GITHUB_BASE}/forecasts_h12.csv`, label: 'forecasts_h12.csv', desc: 'Mean 12-month forecast' },
-      { url: `${GITHUB_BASE}/forecasts_h12_min.csv`, label: 'forecasts_h12_min.csv', desc: 'Lower bound (minimum scenario)' },
-      { url: `${GITHUB_BASE}/forecasts_h12_max.csv`, label: 'forecasts_h12_max.csv', desc: 'Upper bound (maximum scenario)' },
-    ]
-  },
-  {
-    category: '6-Month Forecasts',
-    description: 'Forecasts 6 months ahead (mean, min, max)',
-    endpoints: [
-      { url: `${GITHUB_BASE}/forecasts_h6.csv`, label: 'forecasts_h6.csv', desc: 'Mean 6-month forecast' },
-      { url: `${GITHUB_BASE}/forecasts_h6_min.csv`, label: 'forecasts_h6_min.csv', desc: 'Lower bound (minimum scenario)' },
-      { url: `${GITHUB_BASE}/forecasts_h6_max.csv`, label: 'forecasts_h6_max.csv', desc: 'Upper bound (maximum scenario)' },
-    ]
-  },
-  {
-    category: 'Site-hosted (with dates)',
-    description: 'Same forecasts as above, with a leading date (YYYY-MM) column added for each row',
-    endpoints: [
-      { url: `/data/forecasts/latest/forecasts_h12.csv`, label: 'forecasts_h12.csv (dated)', desc: 'Mean 12‑month forecast (YYYY‑MM column added)' },
-      { url: `/data/forecasts/latest/forecasts_h12_min.csv`, label: 'forecasts_h12_min.csv (dated)', desc: 'Lower bound (YYYY‑MM column added)' },
-      { url: `/data/forecasts/latest/forecasts_h12_max.csv`, label: 'forecasts_h12_max.csv (dated)', desc: 'Upper bound (YYYY‑MM column added)' },
-      { url: `/data/forecasts/latest/forecasts_h6.csv`, label: 'forecasts_h6.csv (dated)', desc: 'Mean 6‑month forecast (YYYY‑MM column added)' },
-      { url: `/data/forecasts/latest/forecasts_h6_min.csv`, label: 'forecasts_h6_min.csv (dated)', desc: 'Lower bound (YYYY‑MM column added)' },
-      { url: `/data/forecasts/latest/forecasts_h6_max.csv`, label: 'forecasts_h6_max.csv (dated)', desc: 'Upper bound (YYYY‑MM column added)' },
-    ]
-  },
-  {
-    category: 'Historical Data',
-    description: 'Complete historical time series',
-    endpoints: [
-      { url: `${GITHUB_BASE}/Hist.csv`, label: 'Hist.csv (raw)', desc: 'Full historical time series (raw, upstream repo)' },
-      { url: `/data/forecasts/latest/Hist.csv`, label: 'Hist.csv (site-hosted, latest)', desc: 'Mirrored historical series (for convenience)' },
-    ]
-  },
-  {
-    category: 'Metadata',
-    description: 'Information about the forecast run',
-    endpoints: [
-      { url: `${GITHUB_BASE}/forecast_metadata.json`, label: 'forecast_metadata.json', desc: 'Run date, data ranges, configuration' },
-    ]
-  }
-]
+function latestPeriod(): string | null {
+  try {
+    const p = path.join(process.cwd(), 'public', 'data', 'forecasts', 'latest', 'metadata.json')
+    const j = JSON.parse(fs.readFileSync(p, 'utf-8'))
+    return j?.forecast_start_date || j?.data_end_date || null
+  } catch { return null }
+}
+
+function listArchive(): string[] {
+  try {
+    const dir = path.join(process.cwd(), 'public', 'data', 'forecasts', 'archive')
+    return fs.readdirSync(dir, { withFileTypes: true })
+      .filter(d => d.isDirectory() && /^\d{4}-\d{2}$/.test(d.name))
+      .map(d => d.name)
+      .sort()
+      .reverse()
+  } catch { return [] }
+}
+
+
 
 export default function DataApiPage() {
   return (
@@ -76,30 +51,57 @@ export default function DataApiPage() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Quick Start */}
+          {/* Simple Downloads */}
           <div className="mb-12 border border-gray-200 rounded-lg p-6 bg-gray-50">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Quick Start</h2>
-            <p className="text-sm text-gray-700 mb-4">
-              All datasets are available as direct downloads via stable URLs.
-              Use these URLs in your scripts, notebooks, or automated pipelines.
-            </p>
-            <div className="bg-white border border-gray-200 rounded p-4">
-              <p className="text-xs text-gray-600 mb-2 font-mono">Example: Fetch 12-month forecasts</p>
-              <pre className="text-xs bg-gray-900 text-green-400 p-3 rounded overflow-x-auto">
-{`# Python
-import pandas as pd
-df = pd.read_csv('${GITHUB_BASE}/forecasts_h12.csv')
-
-# R
-df <- read.csv('${GITHUB_BASE}/forecasts_h12.csv')
-
-# curl
-curl -O ${GITHUB_BASE}/forecasts_h12.csv
-
-# wget
-wget ${GITHUB_BASE}/forecasts_h12.csv`}
-              </pre>
-            </div>
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Latest & Archive</h2>
+            {(() => {
+              const latest = latestPeriod()
+              const periods = listArchive()
+              return (
+                <div className="space-y-6">
+                  <div className="bg-white border border-gray-200 rounded p-4">
+                    <h3 className="text-lg font-light text-gray-900 mb-2">Latest bundle</h3>
+                    <p className="text-sm text-gray-700 mb-3">Predictions (h6 + h12, mean/min/max) + Hist.csv + metadata.json</p>
+                    {latest ? (
+                      <div className="flex items-center gap-3">
+                        <Link href={`/data/forecasts/archive/${latest}/forecasts-${latest}.zip`} className="btn-secondary">Download forecasts-{latest}.zip</Link>
+                        <Link href={`/data/forecasts/latest/Hist.csv`} className="text-xs underline">Hist.csv</Link>
+                        <Link href={`/data/forecasts/latest/metadata.json`} className="text-xs underline">metadata.json</Link>
+                      </div>
+                    ) : (
+                      <div className="text-xs text-gray-600">No latest bundle available yet.</div>
+                    )}
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded p-4">
+                    <h3 className="text-lg font-light text-gray-900 mb-2">Archive</h3>
+                    {periods.length ? (
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="text-left text-gray-500">
+                            <th className="py-2">Period</th>
+                            <th className="py-2">Bundle</th>
+                            <th className="py-2">Hist.csv</th>
+                            <th className="py-2">metadata.json</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {periods.map(p => (
+                            <tr key={p} className="border-t border-gray-100">
+                              <td className="py-2 font-mono">{p}</td>
+                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/forecasts-${p}.zip`} className="text-blue-600 underline">forecasts-{p}.zip</Link></td>
+                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/Hist.csv`} className="text-blue-600 underline">Hist.csv</Link></td>
+                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/metadata.json`} className="text-blue-600 underline">metadata.json</Link></td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <div className="text-xs text-gray-600">No archive found.</div>
+                    )}
+                  </div>
+                </div>
+              )
+            })()}
           </div>
 
           {/* Update Schedule */}
@@ -108,59 +110,21 @@ wget ${GITHUB_BASE}/forecasts_h12.csv`}
             <div className="space-y-2 text-sm text-gray-700">
               <div className="flex items-start">
                 <span className="font-medium mr-2">Forecast Generation:</span>
-                <span>1st of each month at 01:00 UTC</span>
+                <span>24th and 1st at 01:00 UTC</span>
               </div>
               <div className="flex items-start">
                 <span className="font-medium mr-2">Data Available:</span>
-                <span>Within 2 hours of generation (typically by 03:00 UTC)</span>
+                <span>After website refresh by 03:00 UTC (24th and 1st)</span>
               </div>
               <div className="flex items-start">
                 <span className="font-medium mr-2">URL Stability:</span>
                 <span>URLs never change, only content updates</span>
               </div>
-              <div className="flex items-start">
-                <span className="font-medium mr-2">Next Update:</span>
-                <span>April 1, 2026 (automated)</span>
-              </div>
+              
             </div>
       </div>
 
-      {/* Endpoints by Category */}
-      <div className="space-y-8">
-        {API_ENDPOINTS.map((category, idx) => (
-              <div key={idx} className="border border-gray-200 rounded-lg p-6 bg-white">
-                <h2 className="text-xl font-light text-gray-900 mb-2">{category.category}</h2>
-                <p className="text-sm text-gray-600 mb-4">{category.description}</p>
-                <div className="space-y-3">
-                  {category.endpoints.map((endpoint, endIdx) => (
-                    <div key={endIdx} className="bg-gray-50 border border-gray-200 rounded p-4">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900 mb-1">{endpoint.label}</p>
-                          <p className="text-xs text-gray-600">{endpoint.desc}</p>
-                        </div>
-                        <a
-                          href={endpoint.url}
-                          download
-                          className="ml-4 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition-colors"
-                        >
-                          Download
-                        </a>
-                      </div>
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          readOnly
-                          value={endpoint.url}
-                          className="w-full px-2 py-1 text-xs font-mono bg-white border border-gray-300 rounded"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Simplified endpoints presented above. Advanced/raw links are below. */}
 
           {/* Archive Pattern */}
           <div className="mt-12 border border-gray-200 rounded-lg p-6 bg-white">
@@ -176,7 +140,8 @@ https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h6.csv
 https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h6_min.csv
 https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h6_max.csv
 https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/Hist.csv
-https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/metadata.json`}
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/metadata.json
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.zip`}
             </pre>
           </div>
 
