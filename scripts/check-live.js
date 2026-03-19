@@ -93,19 +93,24 @@ async function main() {
 
   // 2) Sample static API endpoint (if available)
   if (status?.summary?.latestPeriod) {
-    const apiUrl = `${base}/api/v1/grid/${status.summary.latestPeriod}/points-m1.json`
-    try {
-      const api = await getJson(apiUrl)
-      const count = Array.isArray(api.points) ? api.points.length : 0
-      report.push(`\n## Static API\n- ${apiUrl} -> OK (${count} points)\n- period: ${api.period}`)
-      if (api.period !== status.summary.latestPeriod) {
+    const period = status.summary.latestPeriod
+    const monthChecks = []
+    for (let m = 1; m <= 6; m++) {
+      const apiUrl = `${base}/api/v1/grid/${period}/points-m${m}.json`
+      try {
+        const api = await getJson(apiUrl)
+        const count = Array.isArray(api.points) ? api.points.length : 0
+        monthChecks.push(`m${m}: OK (${count} pts)`)        
+        if (api.period !== period) {
+          ok = false
+          monthChecks.push(`m${m}: ERROR period mismatch (got ${api.period})`)
+        }
+      } catch (e) {
         ok = false
-        report.push(`- ERROR: API period mismatch with status.summary.latestPeriod`)
+        monthChecks.push(`m${m}: FAIL (${e.message})`)
       }
-    } catch (e) {
-      ok = false
-      report.push(`\n## Static API\n- ${apiUrl} -> FAIL (${e.message})`)
     }
+    report.push(`\n## Static API (grid points)\n- period: ${period}\n- ${monthChecks.join('\n- ')}`)
   } else {
     ok = false
     report.push(`\n## Static API\n- ERROR: No latestPeriod available from status.json`)
@@ -130,6 +135,46 @@ async function main() {
       } else {
         ok = false
         report.push(`- ERROR: forecast_metadata.json missing run_date`)
+      }
+
+      // Check CSV endpoints are present and non-empty
+      const csvEndpoints = [
+        `${baseCsv}/forecasts_h6.csv`,
+        `${baseCsv}/forecasts_h6_min.csv`,
+        `${baseCsv}/forecasts_h6_max.csv`,
+        `${baseCsv}/forecasts_h12.csv`,
+        `${baseCsv}/forecasts_h12_min.csv`,
+        `${baseCsv}/forecasts_h12_max.csv`,
+        `${baseCsv}/Hist.csv`
+      ]
+      for (const url of csvEndpoints) {
+        try {
+          const text = await new Promise((resolve, reject) => {
+            https.get(url, (res) => {
+              if ([301,302,303,307,308].includes(res.statusCode) && res.headers.location) {
+                const next = new URL(res.headers.location, url).toString()
+                res.resume()
+                https.get(next, (res2) => {
+                  let d = ''; res2.on('data', c=>d+=c); res2.on('end',()=> res2.statusCode===200 ? resolve(d) : reject(new Error(`GET ${next} -> ${res2.statusCode}`)))
+                }).on('error', reject)
+                return
+              }
+              let data = ''
+              res.on('data', c => data += c)
+              res.on('end', () => res.statusCode===200 ? resolve(data) : reject(new Error(`GET ${url} -> ${res.statusCode}`)))
+            }).on('error', reject)
+          })
+          const lines = String(text).trim().split(/\r?\n/)
+          if (lines.length < 2) {
+            ok = false
+            report.push(`- ${url} -> ERROR (too few rows: ${lines.length})`)
+          } else {
+            report.push(`- ${url} -> OK (${lines.length} lines)`)          
+          }
+        } catch (e) {
+          ok = false
+          report.push(`- ${url} -> FAIL (${e.message})`)
+        }
       }
     } else {
       report.push(`\n## Remote Data Base\n- Could not detect GITHUB_BASE from app/data-api/page.tsx`)
