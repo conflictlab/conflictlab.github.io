@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE = 'https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main';
-const OUT_DIR = path.join(process.cwd(), 'public', 'data', 'forecasts', 'latest');
+const LATEST_DIR = path.join(process.cwd(), 'public', 'data', 'forecasts', 'latest');
 
 async function fetchText(url) {
   const res = await fetch(url);
@@ -49,15 +49,30 @@ async function main() {
     'forecasts_h6.csv','forecasts_h6_min.csv','forecasts_h6_max.csv',
     'forecasts_h12.csv','forecasts_h12_min.csv','forecasts_h12_max.csv'
   ];
-  fs.mkdirSync(OUT_DIR, { recursive: true });
+  fs.mkdirSync(LATEST_DIR, { recursive: true });
   // Mirror metadata as well
-  fs.writeFileSync(path.join(OUT_DIR, 'metadata.json'), metaText);
+  fs.writeFileSync(path.join(LATEST_DIR, 'metadata.json'), metaText);
+  // Also write an archive snapshot for this period
+  const period = meta.forecast_start_date || meta.data_end_date;
+  const ARCH_DIR = path.join(process.cwd(), 'public', 'data', 'forecasts', 'archive', period);
+  fs.mkdirSync(ARCH_DIR, { recursive: true });
+  fs.writeFileSync(path.join(ARCH_DIR, 'metadata.json'), metaText);
+  // Mirror Hist.csv (historical series) as well
+  try {
+    const histText = await fetchText(`${BASE}/Hist.csv`)
+    fs.writeFileSync(path.join(LATEST_DIR, 'Hist.csv'), histText)
+    fs.writeFileSync(path.join(ARCH_DIR, 'Hist.csv'), histText)
+    console.log('Wrote latest and archive for Hist.csv')
+  } catch (e) {
+    console.warn('Skipping Hist.csv mirror:', e?.message || e)
+  }
   for (const f of files) {
     try {
       const text = await fetchText(`${BASE}/${f}`);
       const out = ensureDateColumn(text, startYM);
-      fs.writeFileSync(path.join(OUT_DIR, f), out);
-      console.log(`Wrote ${path.join('public','data','forecasts','latest', f)}`);
+      fs.writeFileSync(path.join(LATEST_DIR, f), out);
+      fs.writeFileSync(path.join(ARCH_DIR, f), out);
+      console.log(`Wrote latest and archive for ${f}`);
     } catch (e) {
       console.warn(`Skipping ${f}: ${e.message}`);
     }
@@ -67,4 +82,3 @@ async function main() {
 if (require.main === module) {
   main().catch(e => { console.error(e.message || e); process.exit(1); });
 }
-

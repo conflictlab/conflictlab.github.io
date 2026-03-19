@@ -38,7 +38,8 @@ const API_ENDPOINTS = [
     category: 'Historical Data',
     description: 'Complete historical time series',
     endpoints: [
-      { url: `${GITHUB_BASE}/Hist.csv`, label: 'Hist.csv', desc: 'Full historical time series (all available UCDP data)' },
+      { url: `${GITHUB_BASE}/Hist.csv`, label: 'Hist.csv (raw)', desc: 'Full historical time series (raw, upstream repo)' },
+      { url: `/data/forecasts/latest/Hist.csv`, label: 'Hist.csv (site-hosted, latest)', desc: 'Mirrored historical series (for convenience)' },
     ]
   },
   {
@@ -122,11 +123,11 @@ wget ${GITHUB_BASE}/forecasts_h12.csv`}
                 <span>April 1, 2026 (automated)</span>
               </div>
             </div>
-          </div>
+      </div>
 
-          {/* Endpoints by Category */}
-          <div className="space-y-8">
-            {API_ENDPOINTS.map((category, idx) => (
+      {/* Endpoints by Category */}
+      <div className="space-y-8">
+        {API_ENDPOINTS.map((category, idx) => (
               <div key={idx} className="border border-gray-200 rounded-lg p-6 bg-white">
                 <h2 className="text-xl font-light text-gray-900 mb-2">{category.category}</h2>
                 <p className="text-sm text-gray-600 mb-4">{category.description}</p>
@@ -159,6 +160,24 @@ wget ${GITHUB_BASE}/forecasts_h12.csv`}
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Archive Pattern */}
+          <div className="mt-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-xl font-light text-gray-900 mb-3">Archive Pattern</h2>
+            <p className="text-sm text-gray-700 mb-2">
+              Monthly archives (site-hosted) are available by forecast period (YYYY-MM):
+            </p>
+            <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">
+{`https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h12.csv
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h12_min.csv
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h12_max.csv
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h6.csv
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h6_min.csv
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts_h6_max.csv
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/Hist.csv
+https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/metadata.json`}
+            </pre>
           </div>
 
           {/* Metadata Format */}
