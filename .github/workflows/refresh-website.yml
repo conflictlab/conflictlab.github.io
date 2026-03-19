@@ -50,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm run csv:sync:github -- \
-            --repo ThomasSchinca/Pace-map-risk \
+            --repo conflictlab/Pace-map-risk \
             --dir '' \
             --branch main \
             --latestOnly \
@@ -97,7 +97,7 @@ jobs:
       - name: Download matches pickle
         run: |
           set -e
-          REPO="${{ vars.MATCHES_REPO }}"; REPO="${REPO:-ThomasSchinca/Pace-map-risk}"
+          REPO="${{ vars.MATCHES_REPO }}"; REPO="${REPO:-conflictlab/Pace-map-risk}"
           BRANCH="${{ vars.MATCHES_BRANCH }}"; BRANCH="${BRANCH:-main}"
           PATH_IN_REPO="${{ vars.MATCHES_PATH }}"; PATH_IN_REPO="${PATH_IN_REPO:-saved_dictionary.pkl}"
           URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PATH_IN_REPO}"
@@ -107,7 +107,7 @@ jobs:
       - name: Convert matches to JSON
         run: npm run matches:convert -- --src matches.pkl --out public/data/matches.json
 
-      - name: Fetch latest newsletter PDF from forecasting repo
+      - name: Fetch latest newsletter (PDF/HTML) from forecasting repo (optional)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -117,25 +117,48 @@ jobs:
           DIR=Newsletters
           api="https://api.github.com/repos/$OWNER/$REPO/contents/$DIR?ref=main"
           echo "Listing $api"
-          json=$(curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$api")
-          # Extract PDF names and pick the latest by parsing Month Year
-          echo "$json" | jq -r '.[] | select(.type=="file" and (.name|test("(?i)newsletter.*\\.pdf$"))) | .name' > /tmp/pdf_list.txt || true
-          if [ ! -s /tmp/pdf_list.txt ]; then
-            echo "No newsletter PDFs found; skipping"
-          else
-            latest=$(sed -E 's/_/ /g' /tmp/pdf_list.txt | awk '{print $0}' | while read line; do \
-              m=$(echo "$line" | grep -Eoi '(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*') || true; \
-              y=$(echo "$line" | grep -Eo '[0-9]{4}') || true; \
-              if [ -n "$m" ] && [ -n "$y" ]; then date -u -j -f '%b %Y' "${m:0:3} $y" +%s 2>/dev/null || date -u -d "$m 1 $y" +%s 2>/dev/null; fi; \
-            done | paste /tmp/pdf_list.txt - | sort -k2,2nr | head -n1 | cut -f1)
-            if [ -z "$latest" ]; then
-              latest=$(head -n1 /tmp/pdf_list.txt)
-            fi
-            echo "Latest newsletter: $latest"
-            url="https://raw.githubusercontent.com/$OWNER/$REPO/main/$DIR/$latest"
-            mkdir -p public/newslettersAndReports
-            curl -fsSL "$url" -o "public/newslettersAndReports/$latest" || echo "Warning: failed to download $url"
+          code=$(curl -s -o /tmp/news.json -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$api" || true)
+          if [ "$code" != "200" ]; then
+            echo "No Newsletters directory in forecasting repo (HTTP $code); skipping newsletter fetch"
+            exit 0
           fi
+          json=$(cat /tmp/news.json)
+          # Build candidate list
+          echo "$json" | jq -r '.[] | select(.type=="file") | .name' > /tmp/all_news.txt || true
+          grep -Ei '^newsletter_.*\.(pdf|html)$' /tmp/all_news.txt > /tmp/cand.txt || true
+          if [ ! -s /tmp/cand.txt ]; then
+            echo "No newsletter files found; skipping"
+            exit 0
+          fi
+          # Determine latest by parsing month/year from filename (Linux date -d)
+          awk '{print $0}' /tmp/cand.txt | while read fn; do \
+            base="$(echo "$fn" | sed -E 's/_/ /g')"; \
+            m=$(echo "$base" | grep -Eoi '(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*' | head -n1) || true; \
+            y=$(echo "$base" | grep -Eo '[0-9]{4}' | head -n1) || true; \
+            if [ -n "$m" ] && [ -n "$y" ]; then \
+              ts=$(date -u -d "${m} 1 ${y}" +%s 2>/dev/null || echo 0); \
+              echo "$fn $ts"; \
+            fi; \
+          done | sort -k2,2nr > /tmp/sorted_news.txt
+          latest_line=$(head -n1 /tmp/sorted_news.txt || true)
+          latest_file=$(echo "$latest_line" | awk '{print $1}')
+          if [ -z "$latest_file" ]; then
+            echo "Could not determine latest newsletter; skipping"
+            exit 0
+          fi
+          echo "Latest newsletter file: $latest_file"
+          # Download the latest PDF/HTML pair for that month/year
+          month=$(echo "$latest_file" | sed -E 's/_/ /g' | grep -Eoi '(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*' | head -n1)
+          year=$(echo "$latest_file" | grep -Eo '[0-9]{4}' | head -n1)
+          mkdir -p public/newslettersAndReports
+          for ext in pdf html; do
+            cand=$(grep -Ei "^newsletter_.*${month}.*${year}\.${ext}$" /tmp/cand.txt | head -n1 || true)
+            if [ -n "$cand" ]; then
+              url="https://raw.githubusercontent.com/$OWNER/$REPO/main/$DIR/$cand"
+              echo "Downloading $url"
+              curl -sSL "$url" -o "public/newslettersAndReports/$cand" || echo "Warning: failed to download $url"
+            fi
+          done
 
       - name: Generate status JSON
         run: node scripts/generate-status.js
