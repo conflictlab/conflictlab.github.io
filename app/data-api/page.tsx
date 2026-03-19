@@ -23,6 +23,18 @@ const API_ENDPOINTS = [
     ]
   },
   {
+    category: 'Site-hosted (with dates)',
+    description: 'Same forecasts as above, with a leading date (YYYY-MM) column added for each row',
+    endpoints: [
+      { url: `/data/forecasts/latest/forecasts_h12.csv`, label: 'forecasts_h12.csv (dated)', desc: 'Mean 12‑month forecast (YYYY‑MM column added)' },
+      { url: `/data/forecasts/latest/forecasts_h12_min.csv`, label: 'forecasts_h12_min.csv (dated)', desc: 'Lower bound (YYYY‑MM column added)' },
+      { url: `/data/forecasts/latest/forecasts_h12_max.csv`, label: 'forecasts_h12_max.csv (dated)', desc: 'Upper bound (YYYY‑MM column added)' },
+      { url: `/data/forecasts/latest/forecasts_h6.csv`, label: 'forecasts_h6.csv (dated)', desc: 'Mean 6‑month forecast (YYYY‑MM column added)' },
+      { url: `/data/forecasts/latest/forecasts_h6_min.csv`, label: 'forecasts_h6_min.csv (dated)', desc: 'Lower bound (YYYY‑MM column added)' },
+      { url: `/data/forecasts/latest/forecasts_h6_max.csv`, label: 'forecasts_h6_max.csv (dated)', desc: 'Upper bound (YYYY‑MM column added)' },
+    ]
+  },
+  {
     category: 'Historical Data',
     description: 'Complete historical time series',
     endpoints: [

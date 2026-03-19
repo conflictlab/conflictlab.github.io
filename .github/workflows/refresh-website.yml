@@ -107,6 +107,9 @@ jobs:
       - name: Convert matches to JSON
         run: npm run matches:convert -- --src matches.pkl --out public/data/matches.json
 
+      - name: Mirror forecast CSVs with 'date' column (site-hosted)
+        run: node scripts/mirror-forecasts-with-dates.js
+
       - name: Fetch latest newsletter (PDF/HTML) from forecasting repo (optional)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
