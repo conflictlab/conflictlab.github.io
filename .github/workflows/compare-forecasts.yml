@@ -1,0 +1,55 @@
+name: Compare Forecasts Between Repos
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_a:
+        description: "Primary repo (owner/repo)"
+        required: false
+        default: "conflictlab/Pace-map-risk"
+      repo_b:
+        description: "Compare against (owner/repo)"
+        required: false
+        default: "ThomasSchinca/Pace-map-risk"
+      tolerance:
+        description: "Numeric tolerance for equality (absolute diff)"
+        required: false
+        default: "0.1"
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Run comparison
+        run: |
+          set -e
+          node scripts/compare-forecasts.js \
+            --a "${{ inputs.repo_a }}" \
+            --b "${{ inputs.repo_b }}" \
+            --tol "${{ inputs.tolerance }}" | tee compare-report.txt
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: compare-report
+          path: compare-report.txt
+
+      - name: Fail if mismatches detected
+        run: |
+          if grep -Eq 'Mismatches:\s+([1-9][0-9]*|[1-9])' compare-report.txt; then
+            echo "Mismatches detected. See compare-report.txt artifact." >&2
+            exit 1
+          fi
+          echo "No mismatches beyond tolerance."
+
