@@ -2,9 +2,14 @@ name: Refresh Website Now
 
 on:
   schedule:
-    - cron: '0 3 24 * *' # 24th at 03:00 UTC (pre-month)
+    - cron: '0 3 27 * *' # 27th at 03:00 UTC (pre-month, after UCDP release)
     - cron: '0 3 1 * *'  # 1st at 03:00 UTC
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      skipWait:
+        description: "Skip wait-for-compute (useful if compute already finished)"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -41,29 +46,58 @@ jobs:
         run: npm ci
 
       - name: Wait for compute run (forecast_metadata fresh)
+        if: ${{ inputs.skipWait != 'true' }}
         env:
           REPO: conflictlab/Pace-map-risk
         run: |
           set -e
           ATTEMPTS=18 # up to ~90 minutes
+          URL="https://raw.githubusercontent.com/${REPO}/main/forecast_metadata.json"
           for i in $(seq 1 $ATTEMPTS); do
-            node - <<'NODE'
-            const https=require('https');
-            const url=`https://raw.githubusercontent.com/${process.env.REPO}/main/forecast_metadata.json`;
-            function get(u){return new Promise((res)=>https.get(u,(r)=>{let d='';r.on('data',c=>d+=c);r.on('end',()=>res({code:r.statusCode||0, body:d}))}).on('error',()=>res({code:0,body:''})))}
-            (async()=>{ const r=await get(url); if(r.code!==200){ console.log('HTTP',r.code); process.exit(2) }
-              let j; try{ j=JSON.parse(r.body) }catch{ console.log('invalid JSON'); process.exit(3) }
-              const rd = Date.parse(j.run_date||''); if(!rd){ console.log('no run_date'); process.exit(4) }
-              const ageMin = Math.floor((Date.now()-rd)/60000);
-              console.log('run_date age (min):', ageMin);
-              // consider fresh if <= 480 minutes (8 hours)
-              process.exit(ageMin<=480 ? 0 : 5);
-            })();
-            NODE
-            rc=$?
-            if [ $rc -eq 0 ]; then echo "Compute fresh."; break; fi
-            echo "Waiting for compute (attempt $i/$ATTEMPTS)"; sleep 300
+            code=$(curl -s -o /tmp/forecast_meta.json -w '%{http_code}' "$URL" || true)
+            if [ "$code" = "200" ]; then
+              # jq fromdate returns seconds since epoch for ISO-8601 date
+              ts=$(jq -r 'try ((.run_date // "") | fromdate) catch empty' /tmp/forecast_meta.json 2>/dev/null || echo "")
+              if [ -n "$ts" ] && [ "$ts" != "null" ]; then
+                now=$(date -u +%s)
+                age_min=$(( (now - ts) / 60 ))
+              else
+                age_min=999999
+              fi
+            else
+              age_min=999999
+            fi
+            if [ "$age_min" -le 480 ]; then echo "Compute fresh (age ${age_min} min)."; break; fi
+            echo "Waiting for compute (attempt $i/$ATTEMPTS) — current age ${age_min} min"; sleep 300
           done
+
+      - name: Validate UCDP data is non-zero
+        env:
+          REPO: conflictlab/Pace-map-risk
+        run: |
+          set -e
+          echo "Downloading Hist.csv to validate data quality..."
+          URL="https://raw.githubusercontent.com/${REPO}/main/Hist.csv"
+          curl -fsSL "$URL" -o /tmp/hist_check.csv
+
+          # Get the last line of data (skip header)
+          last_line=$(tail -n 1 /tmp/hist_check.csv)
+
+          # Sum all numeric values in the last row (skip first column which is date)
+          # Remove commas, extract numbers, sum them
+          total=$(echo "$last_line" | cut -d',' -f2- | tr ',' '\n' | grep -E '^[0-9]+(\.[0-9]+)?$' | awk '{sum+=$1} END {print sum}')
+
+          echo "Total fatalities in last month: $total"
+
+          # If total is 0 or empty, the data is bad
+          if [ -z "$total" ] || [ "$(echo "$total == 0" | bc -l 2>/dev/null || echo "0")" = "1" ]; then
+            echo "ERROR: UCDP data for the latest month appears to be all zeros!"
+            echo "This likely means UCDP has not released data yet."
+            echo "Aborting to prevent corrupted forecasts."
+            exit 1
+          fi
+
+          echo "✓ Data validation passed - latest month has $total total fatalities"
 
       - name: Install Python dependencies
         run: |
