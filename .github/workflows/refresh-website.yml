@@ -56,11 +56,18 @@ jobs:
           for i in $(seq 1 $ATTEMPTS); do
             code=$(curl -s -o /tmp/forecast_meta.json -w '%{http_code}' "$URL" || true)
             if [ "$code" = "200" ]; then
-              # jq fromdate returns seconds since epoch for ISO-8601 date
-              ts=$(jq -r 'try ((.run_date // "") | fromdate) catch empty' /tmp/forecast_meta.json 2>/dev/null || echo "")
-              if [ -n "$ts" ] && [ "$ts" != "null" ]; then
-                now=$(date -u +%s)
-                age_min=$(( (now - ts) / 60 ))
+              # Extract run_date and parse it (handles microseconds)
+              run_date=$(jq -r '.run_date // ""' /tmp/forecast_meta.json 2>/dev/null || echo "")
+              if [ -n "$run_date" ] && [ "$run_date" != "null" ]; then
+                # Strip microseconds if present, convert to epoch
+                clean_date=$(echo "$run_date" | sed 's/\.[0-9]*$//')
+                ts=$(date -d "$clean_date" +%s 2>/dev/null || echo "")
+                if [ -n "$ts" ]; then
+                  now=$(date -u +%s)
+                  age_min=$(( (now - ts) / 60 ))
+                else
+                  age_min=999999
+                fi
               else
                 age_min=999999
               fi
