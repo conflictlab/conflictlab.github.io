@@ -176,6 +176,9 @@ jobs:
       - name: Mirror forecast CSVs with 'date' column (site-hosted)
         run: node scripts/mirror-forecasts-with-dates.js
 
+      - name: Sync all Historical_Predictions to archive
+        run: node scripts/sync-historical-archive.js
+
       - name: Package monthly ZIP bundle
         run: |
           set -e

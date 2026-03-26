@@ -1,0 +1,12 @@
+{
+  "run_date": "2026-03-26T14:05:23.344Z",
+  "data_end_date": "2023-12",
+  "forecast_start_date": "2024-01",
+  "h6_end_date": "2024-06",
+  "h12_end_date": "2024-12",
+  "training_window_months": 24,
+  "historical_start_date": "1989-01",
+  "historical_end_date": "2023-12",
+  "source": "Historical_Predictions (archived)",
+  "note": "Min/max values are estimated at ±30% where not explicitly available"
+}
