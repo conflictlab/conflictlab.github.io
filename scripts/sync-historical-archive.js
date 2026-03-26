@@ -14,6 +14,7 @@ const { execSync } = require('child_process');
 
 const GITHUB_BASE = 'https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main';
 const ARCHIVE_BASE = path.join(process.cwd(), 'public', 'data', 'forecasts', 'archive');
+const LOCAL_CSV_DIR = path.join(process.cwd(), 'content', 'forecasts', 'csv');
 
 async function fetchText(url) {
   try {
@@ -51,41 +52,70 @@ function parseHistoricalPredictionFilename(filename) {
 async function main() {
   console.log('Syncing Historical_Predictions to website archive...\n');
 
-  // Fetch list of Historical_Predictions files
-  const histPredUrl = `https://api.github.com/repos/conflictlab/Pace-map-risk/contents/Historical_Predictions`;
-  const res = await fetch(histPredUrl, {
-    headers: { 'Accept': 'application/vnd.github+json' }
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch Historical_Predictions: ${res.status}`);
-  }
-
-  const files = await res.json();
-
-  // Group files by period
+  // Fetch list of Historical_Predictions files from GitHub
   const periods = new Map();
-  for (const file of files) {
-    if (file.type !== 'file') continue;
-    const parsed = parseHistoricalPredictionFilename(file.name);
-    if (!parsed) continue;
-
-    if (!periods.has(parsed.period)) {
-      periods.set(parsed.period, {});
+  try {
+    const histPredUrl = `https://api.github.com/repos/conflictlab/Pace-map-risk/contents/Historical_Predictions`;
+    const res = await fetch(histPredUrl, { headers: { 'Accept': 'application/vnd.github+json' } });
+    if (res.ok) {
+      const files = await res.json();
+      for (const file of files) {
+        if (file.type !== 'file') continue;
+        const parsed = parseHistoricalPredictionFilename(file.name);
+        if (!parsed) continue;
+        if (!periods.has(parsed.period)) periods.set(parsed.period, {});
+        const periodData = periods.get(parsed.period);
+        if (parsed.type === 'h6') periodData.h6 = file.download_url;
+        else if (parsed.type === 'h12') periodData.h12 = file.download_url;
+      }
+    } else {
+      console.warn(`Failed to fetch Historical_Predictions: ${res.status}`);
     }
-
-    const periodData = periods.get(parsed.period);
-    if (parsed.type === 'h6') {
-      periodData.h6 = file.download_url;
-    } else if (parsed.type === 'h12') {
-      periodData.h12 = file.download_url;
-    }
+  } catch (e) {
+    console.warn('Skipping GitHub Historical_Predictions fetch:', e?.message || e);
   }
 
-  console.log(`Found ${periods.size} periods with predictions\n`);
+  // Also include locally available CSV snapshots for missing periods (content/forecasts/csv/YYYY-MM.csv)
+  try {
+    if (fs.existsSync(LOCAL_CSV_DIR)) {
+      const files = fs.readdirSync(LOCAL_CSV_DIR).filter(f => /^(\d{4}-\d{2})\.csv$/.test(f));
+      for (const f of files) {
+        const m = f.match(/^(\d{4}-\d{2})\.csv$/);
+        if (!m) continue;
+        const period = m[1];
+        if (!periods.has(period)) periods.set(period, {});
+        const pd = periods.get(period);
+        pd.local = path.join(LOCAL_CSV_DIR, f);
+      }
+    }
+  } catch (e) {
+    console.warn('Skipping local CSV inclusion:', e?.message || e);
+  }
 
-  // Fetch Hist.csv once (it's the same for all periods)
+  console.log(`Found ${periods.size} periods with predictions (GitHub + local)\n`);
+
+  // Fetch Hist.csv once; we'll truncate per period to match historical_end_date
   const histCsv = await fetchText(`${GITHUB_BASE}/Hist.csv`);
+  function truncateHistCsv(csvText, period) {
+    if (!csvText) return null;
+    try {
+      const [yyyy, mm] = period.split('-').map(n => parseInt(n, 10));
+      const end = new Date(Date.UTC(yyyy, mm, 0)); // last day of month
+      const lines = String(csvText).split(/\r?\n/).filter(l => l.length > 0);
+      if (!lines.length) return null;
+      const header = lines[0];
+      const out = [header];
+      for (let i = 1; i < lines.length; i++) {
+        const parts = lines[i].split(',');
+        const d = parts[0];
+        if (!d) continue;
+        const dt = new Date(d);
+        if (!Number.isFinite(dt.getTime())) continue;
+        if (dt.getTime() <= end.getTime()) out.push(lines[i]);
+      }
+      return out.join('\n') + '\n';
+    } catch { return csvText }
+  }
 
   // Process each period
   for (const [period, urls] of Array.from(periods.entries()).sort()) {
@@ -95,17 +125,41 @@ async function main() {
     fs.mkdirSync(archiveDir, { recursive: true });
 
     // Fetch h6 and h12 predictions
-    const h6Data = urls.h6 ? await fetchText(urls.h6) : null;
-    const h12Data = urls.h12 ? await fetchText(urls.h12) : null;
+    let h6Data = urls.h6 ? await fetchText(urls.h6) : null;
+    let h12Data = urls.h12 ? await fetchText(urls.h12) : null;
+
+    // If not available from GitHub, try local content CSV (YYYY-MM.csv)
+    // Local CSVs contain a header plus 6 or 12 rows starting from the forecast start month.
+    if ((!h6Data || !h12Data) && urls.local) {
+      try {
+        const local = fs.readFileSync(urls.local, 'utf-8');
+        const lines = String(local).trim().split(/\r?\n/);
+        if (lines.length > 1) {
+          // Ensure first column header is 'date'
+          const headParts = lines[0].split(',');
+          if (!headParts[0] || headParts[0].toLowerCase() === '') headParts[0] = 'date';
+          const header = headParts.join(',');
+          const dataLines = lines.slice(1);
+          // h6 = first 6 rows
+          const h6Lines = [header, ...dataLines.slice(0, 6)];
+          h6Data = h6Data || (h6Lines.join('\n') + '\n');
+          // h12 = first 12 if available
+          if (dataLines.length >= 12) {
+            const h12Lines = [header, ...dataLines.slice(0, 12)];
+            h12Data = h12Data || (h12Lines.join('\n') + '\n');
+          }
+        }
+      } catch (e) {
+        console.warn(`  ⚠️  Could not use local CSV for ${period}: ${e?.message || e}`);
+      }
+    }
 
     if (!h6Data && !h12Data) {
       console.warn(`  ⚠️  No h6 or h12 data found, skipping`);
       continue;
     }
 
-    // Parse to get forecasts (they contain mean, min, max in separate rows or files)
-    // For now, we'll use the raw h6/h12 files as the mean forecasts
-    // We need to check the format
+    // Parse to get forecasts (we treat provided CSVs as mean forecasts)
 
     if (h6Data) {
       // Check if it has min/max columns or is just mean
@@ -174,30 +228,35 @@ async function main() {
       console.log(`  ✓ forecasts_h12_min/max.csv (estimated)`);
     }
 
-    // Write Hist.csv
+    // Write Hist.csv (truncated to period end)
     if (histCsv) {
-      fs.writeFileSync(path.join(archiveDir, 'Hist.csv'), histCsv);
-      console.log(`  ✓ Hist.csv`);
+      const histForPeriod = truncateHistCsv(histCsv, period) || histCsv;
+      fs.writeFileSync(path.join(archiveDir, 'Hist.csv'), histForPeriod);
+      console.log(`  ✓ Hist.csv (through ${period})`);
     }
 
-    // Create metadata.json
-    const [year, month] = period.split('-');
-    const nextMonth = new Date(Date.UTC(parseInt(year), parseInt(month), 1));
-    const h6End = new Date(nextMonth);
-    h6End.setUTCMonth(h6End.getUTCMonth() + 5);
-    const h12End = new Date(nextMonth);
-    h12End.setUTCMonth(h12End.getUTCMonth() + 11);
+    // Create metadata.json (use correct period semantics)
+    const [yy, mm] = period.split('-').map(n => parseInt(n, 10));
+    // start = forecast_start_date (period)
+    const start = new Date(Date.UTC(yy, mm - 1, 1));
+    // data_end_date = previous month
+    const dataEnd = new Date(Date.UTC(yy, mm - 1, 1));
+    dataEnd.setUTCMonth(dataEnd.getUTCMonth() - 1);
+    // h6 end = start + 5 months; h12 end = start + 11 months
+    const h6End = new Date(start); h6End.setUTCMonth(h6End.getUTCMonth() + 5);
+    const h12End = new Date(start); h12End.setUTCMonth(h12End.getUTCMonth() + 11);
 
+    const ym = (d) => `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`;
     const metadata = {
       run_date: new Date().toISOString(),
-      data_end_date: period,
-      forecast_start_date: `${nextMonth.getUTCFullYear()}-${String(nextMonth.getUTCMonth() + 1).padStart(2, '0')}`,
-      h6_end_date: `${h6End.getUTCFullYear()}-${String(h6End.getUTCMonth() + 1).padStart(2, '0')}`,
-      h12_end_date: `${h12End.getUTCFullYear()}-${String(h12End.getUTCMonth() + 1).padStart(2, '0')}`,
+      data_end_date: ym(dataEnd),
+      forecast_start_date: ym(start),
+      h6_end_date: ym(h6End),
+      h12_end_date: ym(h12End),
       training_window_months: 24,
       historical_start_date: '1989-01',
-      historical_end_date: period,
-      source: 'Historical_Predictions (archived)',
+      historical_end_date: ym(dataEnd),
+      source: urls.local ? 'content/forecasts/csv (local snapshot)' : 'Historical_Predictions (archived)',
       note: 'Min/max values are estimated at ±30% where not explicitly available'
     };
 

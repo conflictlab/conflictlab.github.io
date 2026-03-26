@@ -51,29 +51,17 @@ export default function DataApiPage() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Simple Downloads */}
+          {/* Archive */}
           <div className="mb-12 border border-gray-200 rounded-lg p-6 bg-gray-50">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Latest & Archive</h2>
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Archive</h2>
             {(() => {
-              const latest = latestPeriod()
               const periods = listArchive()
+              const hasFile = (period: string, file: string) => {
+                try { return fs.existsSync(path.join(process.cwd(), 'public', 'data', 'forecasts', 'archive', period, file)) } catch { return false }
+              }
               return (
                 <div className="space-y-6">
                   <div className="bg-white border border-gray-200 rounded p-4">
-                    <h3 className="text-lg font-light text-gray-900 mb-2">Latest bundle</h3>
-                    <p className="text-sm text-gray-700 mb-3">Predictions (h6 + h12, mean/min/max) + Hist.csv + metadata.json</p>
-                    {latest ? (
-                      <div className="flex items-center gap-3">
-                        <Link href={`/data/forecasts/archive/${latest}/forecasts-${latest}.zip`} className="btn-secondary">Download forecasts-{latest}.zip</Link>
-                        <Link href={`/data/forecasts/latest/Hist.csv`} className="text-xs underline">Hist.csv</Link>
-                        <Link href={`/data/forecasts/latest/metadata.json`} className="text-xs underline">metadata.json</Link>
-                      </div>
-                    ) : (
-                      <div className="text-xs text-gray-600">No latest bundle available yet.</div>
-                    )}
-                  </div>
-                  <div className="bg-white border border-gray-200 rounded p-4">
-                    <h3 className="text-lg font-light text-gray-900 mb-2">Archive</h3>
                     {periods.length ? (
                       <table className="w-full text-sm">
                         <thead>
@@ -82,15 +70,33 @@ export default function DataApiPage() {
                             <th className="py-2">Bundle</th>
                             <th className="py-2">Hist.csv</th>
                             <th className="py-2">metadata.json</th>
+                            <th className="py-2">h6 files</th>
+                            <th className="py-2">h12 files</th>
                           </tr>
                         </thead>
                         <tbody>
                           {periods.map(p => (
-                            <tr key={p} className="border-t border-gray-100">
+                            <tr key={p} className="border-t border-gray-100 align-top">
                               <td className="py-2 font-mono">{p}</td>
-                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/forecasts-${p}.zip`} className="text-blue-600 underline">forecasts-{p}.zip</Link></td>
-                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/Hist.csv`} className="text-blue-600 underline">Hist.csv</Link></td>
-                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/metadata.json`} className="text-blue-600 underline">metadata.json</Link></td>
+                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/forecasts-${p}.zip`} className="text-link">forecasts-{p}.zip</Link></td>
+                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/Hist.csv`} className="text-link">Hist.csv</Link></td>
+                              <td className="py-2"><Link href={`/data/forecasts/archive/${p}/metadata.json`} className="text-link">metadata.json</Link></td>
+                              <td className="py-2">
+                                <div className="flex flex-wrap gap-2">
+                                  {hasFile(p, 'forecasts_h6.csv') && (<Link href={`/data/forecasts/archive/${p}/forecasts_h6.csv`} className="text-link">mean</Link>)}
+                                  {hasFile(p, 'forecasts_h6_min.csv') && (<Link href={`/data/forecasts/archive/${p}/forecasts_h6_min.csv`} className="text-link">min</Link>)}
+                                  {hasFile(p, 'forecasts_h6_max.csv') && (<Link href={`/data/forecasts/archive/${p}/forecasts_h6_max.csv`} className="text-link">max</Link>)}
+                                  {!hasFile(p, 'forecasts_h6.csv') && (<span className="text-gray-400">n/a</span>)}
+                                </div>
+                              </td>
+                              <td className="py-2">
+                                <div className="flex flex-wrap gap-2">
+                                  {hasFile(p, 'forecasts_h12.csv') && (<Link href={`/data/forecasts/archive/${p}/forecasts_h12.csv`} className="text-link">mean</Link>)}
+                                  {hasFile(p, 'forecasts_h12_min.csv') && (<Link href={`/data/forecasts/archive/${p}/forecasts_h12_min.csv`} className="text-link">min</Link>)}
+                                  {hasFile(p, 'forecasts_h12_max.csv') && (<Link href={`/data/forecasts/archive/${p}/forecasts_h12_max.csv`} className="text-link">max</Link>)}
+                                  {!hasFile(p, 'forecasts_h12.csv') && (<span className="text-gray-400">n/a</span>)}
+                                </div>
+                              </td>
                             </tr>
                           ))}
                         </tbody>
