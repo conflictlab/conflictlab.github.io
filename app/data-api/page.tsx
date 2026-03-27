@@ -51,9 +51,64 @@ export default function DataApiPage() {
 
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-sm text-gray-700">
+            <div className="font-medium text-gray-900 mb-2">Contents</div>
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              <Link href="#overview" className="text-link">Overview</Link>
+              <Link href="#latest" className="text-link">Latest Endpoints</Link>
+              <Link href="#archive" className="text-link">Archive</Link>
+              <Link href="#grid" className="text-link">Grid API</Link>
+              <Link href="#formats" className="text-link">Formats</Link>
+              <Link href="#usage" className="text-link">Usage</Link>
+              <Link href="#support" className="text-link">Support</Link>
+            </div>
+          </div>
+
+          <div id="overview" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-xl font-light text-gray-900 mb-3">Overview & Base URLs</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+              <div>
+                <div className="font-medium text-gray-800 mb-1">Website (public)</div>
+                <pre className="bg-gray-900 text-green-400 p-3 rounded overflow-x-auto">{`${SITE_BASE.replace(/\/$/, '')}/data/forecasts/latest/forecasts_h6.csv
+${SITE_BASE.replace(/\/$/, '')}/data/forecasts/latest/forecasts_h12.csv
+${SITE_BASE.replace(/\/$/, '')}/data/forecasts/latest/metadata.json
+${SITE_BASE.replace(/\/$/, '')}/api/v1/grid/{period}/points-m{1..6}.json`}</pre>
+              </div>
+              <div>
+                <div className="font-medium text-gray-800 mb-1">GitHub raw (fallback)</div>
+                <pre className="bg-gray-900 text-green-400 p-3 rounded overflow-x-auto">{`${GITHUB_BASE}/forecasts_h6.csv
+${GITHUB_BASE}/forecasts_h12.csv
+${GITHUB_BASE}/Hist.csv
+${GITHUB_BASE}/forecast_metadata.json`}</pre>
+              </div>
+            </div>
+          </div>
+
+          <div id="latest" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-xl font-light text-gray-900 mb-3">Latest Endpoints</h2>
+            {(() => {
+              const latest = latestPeriod()
+              return (
+                <div className="text-xs space-y-3">
+                  <div>
+                    <div className="font-medium text-gray-800">Country forecasts (CSV)</div>
+                    <pre className="bg-gray-900 text-green-400 p-3 rounded overflow-x-auto">{`${SITE_BASE.replace(/\/$/, '')}/data/forecasts/latest/forecasts_h6.csv
+${SITE_BASE.replace(/\/$/, '')}/data/forecasts/latest/forecasts_h12.csv
+${SITE_BASE.replace(/\/$/, '')}/data/forecasts/latest/metadata.json`}</pre>
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-800">Grid API (JSON)</div>
+                    <pre className="bg-gray-900 text-green-400 p-3 rounded overflow-x-auto">{`${SITE_BASE.replace(/\/$/, '')}/api/v1/grid/${latest || '{period}'}/points-m1.json
+${SITE_BASE.replace(/\/$/, '')}/api/v1/grid/${latest || '{period}'}/points-m2.json
+... m3 .. m6`}</pre>
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
 
           {/* Archive */}
-          <div className="mb-12 border border-gray-200 rounded-lg p-6 bg-gray-50">
+          <div id="archive" className="mb-12 border border-gray-200 rounded-lg p-6 bg-gray-50">
             <h2 className="text-2xl font-light text-gray-900 mb-4">Archive</h2>
             {(() => {
               const periods = listArchive()
@@ -153,7 +208,7 @@ https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.z
           </div>
 
           {/* Metadata Format */}
-          <div className="mt-12 border border-gray-200 rounded-lg p-6 bg-white">
+          <div id="formats" className="mt-12 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-xl font-light text-gray-900 mb-3">Metadata Format</h2>
             <p className="text-sm text-gray-700 mb-4">
               The <code className="px-1 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">forecast_metadata.json</code> file contains:
@@ -314,7 +369,7 @@ https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.z
           </div>
 
           {/* Usage Terms */}
-          <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+          <div id="usage" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-xl font-light text-gray-900 mb-3">Usage Terms</h2>
             <div className="text-sm text-gray-700 space-y-2">
               <p>
@@ -331,7 +386,7 @@ https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.z
           </div>
 
           {/* Support & Questions */}
-          <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+          <div id="support" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-xl font-light text-gray-900 mb-3">Support & Questions</h2>
             <p className="text-sm text-gray-700 mb-4">
               For technical questions, data issues, or feature requests:
