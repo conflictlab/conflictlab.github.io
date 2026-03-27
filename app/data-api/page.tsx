@@ -255,7 +255,7 @@ https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.z
             ]
 
             return (
-              <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+              <div id="grid" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
                 <h2 className="text-xl font-light text-gray-900 mb-3">Grid‑level Forecasts (PRIO‑GRID)</h2>
                 <p className="text-sm text-gray-700 mb-4">
                   Latest grid period: <span className="font-mono">{gridPeriod}</span>. Downloads below are static files; programmatic access to grid JSON is also available under <span className="font-mono">/api/v1/grid/{gridPeriod}/points-mX.json</span>.
