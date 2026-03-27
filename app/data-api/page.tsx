@@ -409,19 +409,7 @@ https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.z
             </div>
           </div>
 
-          {/* Related Pages */}
-          <div className="mt-10 pt-8 border-t border-gray-200 text-center">
-            <p className="text-sm text-gray-600 mb-2">See also:</p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <Link href="/downloads" className="text-link">Interactive Downloads</Link>
-              <span className="text-gray-400">·</span>
-              <Link href="/forecasts" className="text-link">Forecast Dashboard</Link>
-              <span className="text-gray-400">·</span>
-              <Link href="/methodology" className="text-link">Methodology</Link>
-              <span className="text-gray-400">·</span>
-              <Link href="/faq" className="text-link">FAQ</Link>
-            </div>
-          </div>
+          
         </div>
       </section>
     </>
