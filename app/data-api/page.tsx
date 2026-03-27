@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import fs from 'fs'
 import path from 'path'
+import MultiFileDownloader from '@/components/MultiFileDownloader'
 
 const GITHUB_BASE = 'https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main'
 
@@ -213,6 +214,79 @@ https://conflictlab.github.io/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.z
               </div>
             </div>
           </div>
+
+          {/* Grid-level Forecasts */}
+          {(() => {
+            // Detect latest available grid period from public assets
+            let gridPeriod: string | null = null
+            try {
+              const gridDir = path.join(process.cwd(), 'public', 'data', 'grid')
+              const files = fs.readdirSync(gridDir)
+              const periods = files
+                .map((f) => {
+                  const m = f.match(/(\d{4}-\d{2})(?:\.geo\.json|\-m[1-6]\.json|\-m[1-6]\.csv|\.csv)$/)
+                  return m ? m[1] : null
+                })
+                .filter((p): p is string => !!p)
+                .sort()
+              if (periods.length) gridPeriod = periods[periods.length - 1]
+            } catch {}
+
+            if (!gridPeriod) return null
+
+            const gridCsvItems = [
+              { path: `/data/grid/${gridPeriod}-m1.csv`, label: `${gridPeriod}-m1.csv (month 1 points)` },
+              { path: `/data/grid/${gridPeriod}-m2.csv`, label: `${gridPeriod}-m2.csv (month 2 points)` },
+              { path: `/data/grid/${gridPeriod}-m3.csv`, label: `${gridPeriod}-m3.csv (month 3 points)` },
+              { path: `/data/grid/${gridPeriod}-m4.csv`, label: `${gridPeriod}-m4.csv (month 4 points)` },
+              { path: `/data/grid/${gridPeriod}-m5.csv`, label: `${gridPeriod}-m5.csv (month 5 points)` },
+              { path: `/data/grid/${gridPeriod}-m6.csv`, label: `${gridPeriod}-m6.csv (month 6 points)` },
+              { path: `/data/grid/${gridPeriod}.csv`, label: `${gridPeriod}.csv (all months as columns)` },
+            ]
+            const gridGeoJsonItems = [
+              { path: `/data/grid/${gridPeriod}.geo.json`, label: `${gridPeriod}.geo.json (polygons)` },
+              { path: `/data/grid/${gridPeriod}-m1.json`, label: `${gridPeriod}-m1.json (month 1 points)` },
+              { path: `/data/grid/${gridPeriod}-m2.json`, label: `${gridPeriod}-m2.json (month 2 points)` },
+              { path: `/data/grid/${gridPeriod}-m3.json`, label: `${gridPeriod}-m3.json (month 3 points)` },
+              { path: `/data/grid/${gridPeriod}-m4.json`, label: `${gridPeriod}-m4.json (month 4 points)` },
+              { path: `/data/grid/${gridPeriod}-m5.json`, label: `${gridPeriod}-m5.json (month 5 points)` },
+              { path: `/data/grid/${gridPeriod}-m6.json`, label: `${gridPeriod}-m6.json (month 6 points)` },
+              { path: `/data/grid/centroids.csv`, label: `centroids.csv (Sub‑national Area centers)` },
+            ]
+
+            return (
+              <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                <h2 className="text-xl font-light text-gray-900 mb-3">Grid‑level Forecasts (PRIO‑GRID)</h2>
+                <p className="text-sm text-gray-700 mb-4">
+                  Latest grid period: <span className="font-mono">{gridPeriod}</span>. Downloads below are static files; programmatic access to grid JSON is also available under <span className="font-mono">/api/v1/grid/{gridPeriod}/points-mX.json</span>.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="border border-gray-200 rounded p-4">
+                    <h3 className="text-lg font-light text-gray-900 mb-2">CSV Assets</h3>
+                    <MultiFileDownloader items={gridCsvItems} zipName={`PaCE-grid-${gridPeriod}-csv`} />
+                    <div className="mt-3 text-xs text-gray-600">
+                      <div className="font-medium text-gray-700 mb-1">Format</div>
+                      <div>- Monthly points CSVs: <span className="font-mono">lat,lon,v</span></div>
+                      <div>- Combined CSV: <span className="font-mono">lat,lon,m1..m6</span></div>
+                    </div>
+                  </div>
+                  <div className="border border-gray-200 rounded p-4">
+                    <h3 className="text-lg font-light text-gray-900 mb-2">GeoJSON / Points</h3>
+                    <MultiFileDownloader items={gridGeoJsonItems} zipName={`PaCE-grid-${gridPeriod}-json`} />
+                    <div className="mt-3 text-xs text-gray-600">
+                      <div className="font-medium text-gray-700 mb-1">API (static JSON)</div>
+                      <pre className="text-xs bg-gray-900 text-green-400 p-3 rounded overflow-x-auto">{`/api/v1/grid/${gridPeriod}/points-m1.json
+/api/v1/grid/${gridPeriod}/points-m2.json
+/api/v1/grid/${gridPeriod}/points-m3.json
+/api/v1/grid/${gridPeriod}/points-m4.json
+/api/v1/grid/${gridPeriod}/points-m5.json
+/api/v1/grid/${gridPeriod}/points-m6.json`}</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
 
           {/* How to Cite */}
           <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
