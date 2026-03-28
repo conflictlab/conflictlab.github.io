@@ -197,6 +197,7 @@ jobs:
           fi
 
       - name: Fetch latest newsletter (PDF/HTML) from forecasting repo (optional)
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -243,7 +244,9 @@ jobs:
           for ext in pdf html; do
             cand=$(grep -Ei "^newsletter_.*${month}.*${year}\.${ext}$" /tmp/cand.txt | head -n1 || true)
             if [ -n "$cand" ]; then
-              url="https://raw.githubusercontent.com/$OWNER/$REPO/main/$DIR/$cand"
+              # URL-encode spaces and special characters
+              encoded_cand=$(echo "$cand" | sed 's/ /%20/g')
+              url="https://raw.githubusercontent.com/$OWNER/$REPO/main/$DIR/$encoded_cand"
               echo "Downloading $url"
               curl -sSL "$url" -o "public/newslettersAndReports/$cand" || echo "Warning: failed to download $url"
             fi
@@ -263,20 +266,25 @@ jobs:
             git commit -m "chore: monthly website refresh (forecasts, grid, scenarios, matches, API, status)"
           fi
           git fetch origin main
-          # Attempt rebase with autostash; fall back to manual stash if needed
+          # Attempt rebase with autostash; fall back to manual conflict resolution if needed
           if ! git -c rebase.autoStash=true pull --rebase origin main; then
-            echo "Rebase failed; attempting manual stash-based rebase" >&2
-            git stash --all || true
-            if ! git pull --rebase origin main; then
-              echo "Rebase still failed; aborting to avoid conflicts." >&2
-              git rebase --abort || true
+            echo "Rebase failed; attempting manual conflict resolution" >&2
+            # Check if we're in a rebase state
+            if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+              # Resolve all conflicts by accepting our changes (--theirs in rebase context means ours)
+              git diff --name-only --diff-filter=U | while read file; do
+                echo "Resolving conflict in $file (keeping our version)"
+                git checkout --ours "$file"
+              done
+              git add -A
+              git rebase --continue || {
+                echo "Rebase continue failed; aborting" >&2
+                git rebase --abort || true
+                exit 1
+              }
+            else
+              echo "Not in rebase state; aborting" >&2
               exit 1
-            fi
-            git stash pop || true
-            # If stash pop caused conflicts or changes, commit a follow-up
-            git add -A
-            if ! git diff --cached --quiet; then
-              git commit -m "chore: monthly refresh (post-rebase adjustments)"
             fi
           fi
           git push origin HEAD:main
