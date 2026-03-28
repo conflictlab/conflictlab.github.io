@@ -70,12 +70,9 @@ export default function DataApiPage() {
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 leading-tight">
             Data API
           </h1>
-          <p className="text-xl text-gray-600 font-light leading-relaxed mb-4">
-            Programmatic access to <span className="word-emphasis">PaCE forecast data</span> via stable URLs.
+          <p className="text-xl text-gray-600 font-light leading-relaxed">
+            Programmatic access to <span className="word-emphasis">PaCE forecast data</span>.
             Updated automatically on the 1st of each month.
-          </p>
-          <p className="text-sm text-gray-500 font-light">
-            URLs remain constant. Only data updates monthly.
           </p>
         </div>
       </section>
@@ -89,7 +86,7 @@ export default function DataApiPage() {
               <Link href="#endpoints" className="text-link">Endpoints</Link>
               <Link href="#examples" className="text-link">Examples</Link>
               <Link href="#archive" className="text-link">Archive</Link>
-              <Link href="#grid" className="text-link">Grid</Link>
+              <Link href="#grid-downloads" className="text-link">Downloads</Link>
               <Link href="#formats" className="text-link">Formats</Link>
               <Link href="#errors" className="text-link">Errors</Link>
               <Link href="#usage" className="text-link">Usage</Link>
@@ -98,7 +95,10 @@ export default function DataApiPage() {
 
           {/* Endpoints */}
           <div id="endpoints" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">API Endpoints</h2>
+            <h2 className="text-2xl font-light text-gray-900 mb-3">API Endpoints</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              All URLs are stable and permanent. Only data content updates monthly.
+            </p>
 
             <div className="space-y-6">
               {/* Country Forecasts */}
@@ -114,10 +114,11 @@ GET ${SITE_BASE}/data/forecasts/latest/metadata.json`}</pre>
               </div>
 
               {/* Grid Forecasts */}
-              <div>
+              <div id="grid">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Grid Forecasts (PRIO-GRID)</h3>
                 <p className="text-sm text-gray-600 mb-3">
                   Spatial forecasts by month. Replace <code className="px-1 py-0.5 bg-gray-100 text-gray-800 rounded">{'{period}'}</code> with YYYY-MM (e.g., {latest || '2026-03'}).
+                  For bulk downloads, see <Link href="#grid-downloads" className="text-link">Grid Downloads</Link> below.
                 </p>
                 <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`GET ${SITE_BASE}/api/v1/grid/{period}/points-m1.json
 GET ${SITE_BASE}/api/v1/grid/{period}/points-m2.json
@@ -371,10 +372,10 @@ ${GITHUB_BASE}/forecast_metadata.json`}</pre>
             ]
 
             return (
-              <div id="grid" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-                <h2 className="text-2xl font-light text-gray-900 mb-4">Grid Downloads (PRIO-GRID)</h2>
+              <div id="grid-downloads" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+                <h2 className="text-2xl font-light text-gray-900 mb-4">Grid Downloads</h2>
                 <p className="text-sm text-gray-600 mb-4">
-                  Spatial forecasts for period <span className="font-mono font-medium">{gridPeriod}</span>. Use API endpoints above for programmatic access.
+                  Bulk download options for grid forecasts (period <span className="font-mono font-medium">{gridPeriod}</span>).
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border border-gray-200 rounded p-4">
