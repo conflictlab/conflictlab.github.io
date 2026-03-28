@@ -196,7 +196,7 @@ jobs:
             echo "Created $ARCH_DIR/forecasts-$per.zip"
           fi
 
-      - name: Fetch latest newsletter (PDF/HTML) from forecasting repo (optional)
+      - name: Fetch latest newsletter from forecasting repo (optional)
         continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -204,53 +204,47 @@ jobs:
           set -e
           OWNER=conflictlab
           REPO=Pace-map-risk
-          DIR=Newsletters
-          api="https://api.github.com/repos/$OWNER/$REPO/contents/$DIR?ref=main"
-          echo "Listing $api"
-          code=$(curl -s -o /tmp/news.json -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$api" || true)
-          if [ "$code" != "200" ]; then
-            echo "No Newsletters directory in forecasting repo (HTTP $code); skipping newsletter fetch"
-            exit 0
+
+          # Fetch Report.pdf from assets/ directory
+          report_url="https://raw.githubusercontent.com/$OWNER/$REPO/main/assets/Report.pdf"
+          echo "Fetching newsletter from $report_url"
+
+          # Get current forecast period from metadata to name the file
+          if [ -f public/data/forecasts/latest/metadata.json ]; then
+            period=$(jq -r '.forecast_start_date // .data_end_date' public/data/forecasts/latest/metadata.json 2>/dev/null || echo "")
           fi
-          json=$(cat /tmp/news.json)
-          # Build candidate list
-          echo "$json" | jq -r '.[] | select(.type=="file") | .name' > /tmp/all_news.txt || true
-          grep -Ei '^newsletter_.*\.(pdf|html)$' /tmp/all_news.txt > /tmp/cand.txt || true
-          if [ ! -s /tmp/cand.txt ]; then
-            echo "No newsletter files found; skipping"
-            exit 0
+
+          # If we have a period, parse month and year for filename
+          if [ -n "$period" ]; then
+            year=$(echo "$period" | cut -d'-' -f1)
+            month_num=$(echo "$period" | cut -d'-' -f2)
+            case $month_num in
+              01) month="January";;
+              02) month="February";;
+              03) month="March";;
+              04) month="April";;
+              05) month="May";;
+              06) month="June";;
+              07) month="July";;
+              08) month="August";;
+              09) month="September";;
+              10) month="October";;
+              11) month="November";;
+              12) month="December";;
+              *) month="Unknown";;
+            esac
+            filename="ForecastingReport_${month} ${year}.pdf"
+          else
+            # Fallback to current date
+            filename="ForecastingReport_$(date +"%B %Y").pdf"
           fi
-          # Determine latest by parsing month/year from filename (Linux date -d)
-          awk '{print $0}' /tmp/cand.txt | while read fn; do \
-            base="$(echo "$fn" | sed -E 's/_/ /g')"; \
-            m=$(echo "$base" | grep -Eoi '(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*' | head -n1) || true; \
-            y=$(echo "$base" | grep -Eo '[0-9]{4}' | head -n1) || true; \
-            if [ -n "$m" ] && [ -n "$y" ]; then \
-              ts=$(date -u -d "${m} 1 ${y}" +%s 2>/dev/null || echo 0); \
-              echo "$fn $ts"; \
-            fi; \
-          done | sort -k2,2nr > /tmp/sorted_news.txt
-          latest_line=$(head -n1 /tmp/sorted_news.txt || true)
-          latest_file=$(echo "$latest_line" | awk '{print $1}')
-          if [ -z "$latest_file" ]; then
-            echo "Could not determine latest newsletter; skipping"
-            exit 0
-          fi
-          echo "Latest newsletter file: $latest_file"
-          # Download the latest PDF/HTML pair for that month/year
-          month=$(echo "$latest_file" | sed -E 's/_/ /g' | grep -Eoi '(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*' | head -n1)
-          year=$(echo "$latest_file" | grep -Eo '[0-9]{4}' | head -n1)
+
           mkdir -p public/newslettersAndReports
-          for ext in pdf html; do
-            cand=$(grep -Ei "^newsletter_.*${month}.*${year}\.${ext}$" /tmp/cand.txt | head -n1 || true)
-            if [ -n "$cand" ]; then
-              # URL-encode spaces and special characters
-              encoded_cand=$(echo "$cand" | sed 's/ /%20/g')
-              url="https://raw.githubusercontent.com/$OWNER/$REPO/main/$DIR/$encoded_cand"
-              echo "Downloading $url"
-              curl -sSL "$url" -o "public/newslettersAndReports/$cand" || echo "Warning: failed to download $url"
-            fi
-          done
+          curl -sSL "$report_url" -o "public/newslettersAndReports/$filename" || {
+            echo "Warning: failed to download newsletter from $report_url"
+            exit 0
+          }
+          echo "Downloaded newsletter as: $filename"
 
       - name: Generate status JSON
         run: node scripts/generate-status.js
