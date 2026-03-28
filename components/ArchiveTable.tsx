@@ -3,16 +3,30 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-interface ArchiveTableProps {
-  periods: string[]
-  hasFile: (period: string, file: string) => boolean
+interface ArchiveEntry {
+  period: string
+  files: {
+    bundle: boolean
+    hist: boolean
+    metadata: boolean
+    h6_mean: boolean
+    h6_min: boolean
+    h6_max: boolean
+    h12_mean: boolean
+    h12_min: boolean
+    h12_max: boolean
+  }
 }
 
-export default function ArchiveTable({ periods, hasFile }: ArchiveTableProps) {
-  const [showAll, setShowAll] = useState(false)
-  const displayPeriods = showAll ? periods : periods.slice(0, 6)
+interface ArchiveTableProps {
+  archiveData: ArchiveEntry[]
+}
 
-  if (!periods.length) {
+export default function ArchiveTable({ archiveData }: ArchiveTableProps) {
+  const [showAll, setShowAll] = useState(false)
+  const displayData = showAll ? archiveData : archiveData.slice(0, 6)
+
+  if (!archiveData.length) {
     return <div className="text-xs text-gray-600">No archive found.</div>
   }
 
@@ -30,75 +44,79 @@ export default function ArchiveTable({ periods, hasFile }: ArchiveTableProps) {
           </tr>
         </thead>
         <tbody>
-          {displayPeriods.map(p => (
-            <tr key={p} className="border-t border-gray-100 align-top">
-              <td className="py-2 font-mono">{p}</td>
+          {displayData.map(({ period, files }) => (
+            <tr key={period} className="border-t border-gray-100 align-top">
+              <td className="py-2 font-mono">{period}</td>
               <td className="py-2">
-                <Link href={`/data/forecasts/archive/${p}/forecasts-${p}.zip`} className="text-link">
-                  forecasts-{p}.zip
+                <Link href={`/data/forecasts/archive/${period}/forecasts-${period}.zip`} className="text-link">
+                  forecasts-{period}.zip
                 </Link>
               </td>
               <td className="py-2">
-                <Link href={`/data/forecasts/archive/${p}/Hist.csv`} className="text-link">
-                  Hist.csv
-                </Link>
+                {files.hist && (
+                  <Link href={`/data/forecasts/archive/${period}/Hist.csv`} className="text-link">
+                    Hist.csv
+                  </Link>
+                )}
               </td>
               <td className="py-2">
-                <Link href={`/data/forecasts/archive/${p}/metadata.json`} className="text-link">
-                  metadata.json
-                </Link>
+                {files.metadata && (
+                  <Link href={`/data/forecasts/archive/${period}/metadata.json`} className="text-link">
+                    metadata.json
+                  </Link>
+                )}
               </td>
               <td className="py-2">
                 <div className="flex flex-wrap gap-2">
-                  {hasFile(p, 'forecasts_h6.csv') && (
-                    <Link href={`/data/forecasts/archive/${p}/forecasts_h6.csv`} className="text-link">
+                  {files.h6_mean && (
+                    <Link href={`/data/forecasts/archive/${period}/forecasts_h6.csv`} className="text-link">
                       mean
                     </Link>
                   )}
-                  {hasFile(p, 'forecasts_h6_min.csv') && (
-                    <Link href={`/data/forecasts/archive/${p}/forecasts_h6_min.csv`} className="text-link">
+                  {files.h6_min && (
+                    <Link href={`/data/forecasts/archive/${period}/forecasts_h6_min.csv`} className="text-link">
                       min
                     </Link>
                   )}
-                  {hasFile(p, 'forecasts_h6_max.csv') && (
-                    <Link href={`/data/forecasts/archive/${p}/forecasts_h6_max.csv`} className="text-link">
+                  {files.h6_max && (
+                    <Link href={`/data/forecasts/archive/${period}/forecasts_h6_max.csv`} className="text-link">
                       max
                     </Link>
                   )}
-                  {!hasFile(p, 'forecasts_h6.csv') && <span className="text-gray-400">n/a</span>}
+                  {!files.h6_mean && <span className="text-gray-400">n/a</span>}
                 </div>
               </td>
               <td className="py-2">
                 <div className="flex flex-wrap gap-2">
-                  {hasFile(p, 'forecasts_h12.csv') && (
-                    <Link href={`/data/forecasts/archive/${p}/forecasts_h12.csv`} className="text-link">
+                  {files.h12_mean && (
+                    <Link href={`/data/forecasts/archive/${period}/forecasts_h12.csv`} className="text-link">
                       mean
                     </Link>
                   )}
-                  {hasFile(p, 'forecasts_h12_min.csv') && (
-                    <Link href={`/data/forecasts/archive/${p}/forecasts_h12_min.csv`} className="text-link">
+                  {files.h12_min && (
+                    <Link href={`/data/forecasts/archive/${period}/forecasts_h12_min.csv`} className="text-link">
                       min
                     </Link>
                   )}
-                  {hasFile(p, 'forecasts_h12_max.csv') && (
-                    <Link href={`/data/forecasts/archive/${p}/forecasts_h12_max.csv`} className="text-link">
+                  {files.h12_max && (
+                    <Link href={`/data/forecasts/archive/${period}/forecasts_h12_max.csv`} className="text-link">
                       max
                     </Link>
                   )}
-                  {!hasFile(p, 'forecasts_h12.csv') && <span className="text-gray-400">n/a</span>}
+                  {!files.h12_mean && <span className="text-gray-400">n/a</span>}
                 </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {periods.length > 6 && (
+      {archiveData.length > 6 && (
         <div className="mt-4">
           <button
             onClick={() => setShowAll(!showAll)}
             className="text-sm text-blue-600 hover:text-blue-800 font-medium"
           >
-            {showAll ? '← Show less' : `Show all ${periods.length} periods →`}
+            {showAll ? '← Show less' : `Show all ${archiveData.length} periods →`}
           </button>
         </div>
       )}

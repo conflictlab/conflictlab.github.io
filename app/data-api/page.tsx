@@ -32,13 +32,32 @@ function listArchive(): string[] {
 export default function DataApiPage() {
   const latest = latestPeriod()
   const periods = listArchive()
-  const hasFile = (period: string, file: string) => {
-    try {
-      return fs.existsSync(path.join(process.cwd(), 'public', 'data', 'forecasts', 'archive', period, file))
-    } catch {
-      return false
+
+  // Pre-compute all file availability
+  const archiveData = periods.map(period => {
+    const hasFile = (file: string) => {
+      try {
+        return fs.existsSync(path.join(process.cwd(), 'public', 'data', 'forecasts', 'archive', period, file))
+      } catch {
+        return false
+      }
     }
-  }
+
+    return {
+      period,
+      files: {
+        bundle: true,
+        hist: hasFile('Hist.csv'),
+        metadata: hasFile('metadata.json'),
+        h6_mean: hasFile('forecasts_h6.csv'),
+        h6_min: hasFile('forecasts_h6_min.csv'),
+        h6_max: hasFile('forecasts_h6_max.csv'),
+        h12_mean: hasFile('forecasts_h12.csv'),
+        h12_min: hasFile('forecasts_h12_min.csv'),
+        h12_max: hasFile('forecasts_h12_max.csv'),
+      }
+    }
+  })
 
   return (
     <>
@@ -205,7 +224,7 @@ console.log('Forecast period:', metadata.forecast_start_date);`}</pre>
               Complete archive of monthly forecasts from 1989-01 to present. Each period includes all forecast files, historical data, and metadata.
             </p>
             <div className="bg-white border border-gray-200 rounded p-4">
-              <ArchiveTable periods={periods} hasFile={hasFile} />
+              <ArchiveTable archiveData={archiveData} />
             </div>
           </div>
 
