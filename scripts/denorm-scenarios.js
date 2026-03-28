@@ -131,8 +131,8 @@ function normalizeCountryEntry(entry, mm) {
   }
   if (!obj) return entry // unknown shape — return as-is
 
-  // Shift dates from 2025 to 2026
-  obj.temporal = shiftDates(obj.temporal, 1)
+  // Date shifting disabled - PKL files now contain correct forecast dates
+  // obj.temporal = shiftDates(obj.temporal, 1)
 
   if (!mm) return obj
   if (looksNormalized(obj.temporal)) {
