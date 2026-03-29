@@ -249,6 +249,55 @@ jobs:
       - name: Generate status JSON
         run: node scripts/generate-status.js
 
+      - name: Compare site vs compute forecasts (h=6) — equality check
+        env:
+          REPO: conflictlab/Pace-map-risk
+        run: |
+          set -e
+          per=$(jq -r '.forecast_start_date // .data_end_date' public/data/forecasts/latest/metadata.json)
+          if [ -z "$per" ] || [ "$per" = "null" ]; then
+            echo "Could not determine period for comparison" >&2; exit 1
+          fi
+          echo "Comparing $REPO forecasts_h6.csv to site mirror for $per"
+          # Download compute forecasts
+          curl -fsSL "https://raw.githubusercontent.com/${REPO}/main/forecasts_h6.csv" -o /tmp/compute_h6.csv
+          # Resolve site mirror path
+          SITE_H6="public/data/forecasts/latest/forecasts_h6.csv"
+          if [ ! -f "$SITE_H6" ]; then
+            echo "Missing $SITE_H6" >&2; exit 1
+          fi
+          # Normalize CSVs: sort columns (excluding 'date'), compare first data row
+          python - <<'PY'
+import pandas as pd, sys
+site = pd.read_csv('public/data/forecasts/latest/forecasts_h6.csv')
+comp = pd.read_csv('/tmp/compute_h6.csv')
+if site.columns[0].lower()!='date' or comp.columns[0].lower()!='date':
+    print('CSV missing leading date column', file=sys.stderr); sys.exit(1)
+sr, cr = site.iloc[0].copy(), comp.iloc[0].copy()
+sd = sr[1:].to_dict(); cd = cr[1:].to_dict()
+missing = sorted(set(cd.keys()) - set(sd.keys()))
+extra = sorted(set(sd.keys()) - set(cd.keys()))
+diffs = []
+for k in set(sd.keys()) & set(cd.keys()):
+    try:
+        sv = float(sd[k]); cv = float(cd[k])
+    except Exception:
+        continue
+    if abs(sv - cv) > 1e-6:
+        diffs.append((k, sv, cv))
+if missing or extra or diffs:
+    if missing:
+        print('Missing in site:', ', '.join(missing[:20]))
+    if extra:
+        print('Extra in site:', ', '.join(extra[:20]))
+    if diffs:
+        print('Value diffs (first 10):')
+        for k, sv, cv in diffs[:10]:
+            print(f'  {k}: site={sv} compute={cv}')
+    sys.exit(1)
+print('Site vs compute forecasts_h6.csv match for first row (1m).')
+PY
+
       - name: Fail if missing active countries in snapshot
         run: |
           set -e
