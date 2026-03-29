@@ -249,6 +249,20 @@ jobs:
       - name: Generate status JSON
         run: node scripts/generate-status.js
 
+      - name: Fail if missing active countries in snapshot
+        run: |
+          set -e
+          if [ ! -f public/status.json ]; then
+            echo "status.json not found" >&2; exit 1
+          fi
+          COUNT=$(jq -r '.summary.missingActiveCount // 0' public/status.json)
+          if [ "$COUNT" != "0" ]; then
+            echo "❌ Missing active countries in snapshot: $COUNT" >&2
+            jq -r '.missingActiveEntities[:20] | join(", ")' public/status.json
+            exit 1
+          fi
+          echo "✅ Snapshot completeness OK"
+
       - name: Commit and push updates
         run: |
           set -e
