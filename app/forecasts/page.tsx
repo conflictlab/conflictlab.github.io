@@ -9,6 +9,8 @@ import Link from 'next/link'
 const ForecastFanChart = dynamic(() => import('@/components/ForecastFanChart'), { ssr: false })
 import { AlertTriangle } from 'lucide-react'
 import type { Metadata } from 'next'
+import fs from 'fs'
+import path from 'path'
 
 export const metadata: Metadata = {
   title: 'Forecast Dashboard — PaCE',
@@ -61,6 +63,13 @@ export default async function ForecastsPage() {
     HIGH_THRESHOLD,
   } = summaryStats
 
+  // Load build-time status warnings (if available)
+  let status: any = null
+  try {
+    const statusPath = path.join(process.cwd(), 'public', 'status.json')
+    status = JSON.parse(fs.readFileSync(statusPath, 'utf-8'))
+  } catch {}
+
   return (
     <div className="bg-gray-50">
       {/* Hero */}
@@ -106,6 +115,16 @@ export default async function ForecastsPage() {
               <span className="text-gray-700"> · </span>
               Updated: {formatDMY(snapshot.generatedAt)}
             </p>
+            {status?.warnings?.length ? (
+              <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 p-3 text-amber-900">
+                <div className="font-medium mb-1 flex items-center gap-2"><AlertTriangle size={16} /> Data warnings</div>
+                <ul className="list-disc pl-5 text-sm">
+                  {status.warnings.map((w: string, i: number) => (
+                    <li key={i}>{w}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
             <p className="text-gray-700 text-sm">All values represent predicted <span className="font-medium text-gray-900">conflict fatalities</span> (deaths from state‑based, non‑state, and one‑sided violence) over the next 6 months. The table shows 1‑month ahead predictions and month‑over‑month changes. <Link href="/glossary" className="text-link">Glossary</Link></p>
           </div>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">

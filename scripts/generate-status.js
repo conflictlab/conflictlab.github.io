@@ -55,6 +55,7 @@ function main() {
   const scenarios = loadJsonSafe(scenariosPath)
   const scenariosDenorm = loadJsonSafe(scenariosDenormPath)
   const matches = loadJsonSafe(matchesPath)
+  const histCsvPath = path.join(cwd, 'public', 'data', 'hist.csv')
 
   const latestPeriod = latest?.period || findLatestGridPeriod(gridDir)
   const status = {
@@ -70,10 +71,12 @@ function main() {
       scenariosDenormUpdatedAt: mtimeISO(scenariosDenormPath),
       matchesUpdatedAt: mtimeISO(matchesPath),
       gridLatestPeriod: findLatestGridPeriod(gridDir),
-      staticApiCandidate: latestPeriod ? `/api/v1/grid/${latestPeriod}/points-m1.json` : null
+      staticApiCandidate: latestPeriod ? `/api/v1/grid/${latestPeriod}/points-m1.json` : null,
+      missingActiveCount: 0
     },
     warnings: [],
-    errors: []
+    errors: [],
+    missingActiveEntities: []
   }
 
   // Validate presence and freshness
@@ -101,6 +104,44 @@ function main() {
     status.warnings.push('Could not determine latest period for static API check')
   }
 
+  // Detect "active" countries missing from snapshot (e.g., Russia)
+  try {
+    if (exists(histCsvPath) && latest && Array.isArray(latest.entities)) {
+      const histText = fs.readFileSync(histCsvPath, 'utf-8')
+      const lines = histText.split(/\r?\n/).filter(Boolean)
+      if (lines.length > 2) {
+        const header = lines[0].split(',').slice(1)
+        const last12 = lines.slice(Math.max(1, lines.length - 13)) // header + last 12 rows
+        const sums = new Array(header.length).fill(0)
+        for (let i = 1; i < last12.length; i++) {
+          const cols = last12[i].split(',')
+          for (let c = 1; c < cols.length; c++) {
+            const v = Number(cols[c])
+            if (Number.isFinite(v)) sums[c - 1] += v
+          }
+        }
+        const snapshotNames = new Set(latest.entities.map(e => e.name))
+        const activeMissing = []
+        for (let i = 0; i < header.length; i++) {
+          const name = header[i]
+          if (!name || /Unnamed/i.test(name)) continue
+          if (sums[i] > 0 && !snapshotNames.has(name)) activeMissing.push(name)
+        }
+        if (activeMissing.length) {
+          status.summary.missingActiveCount = activeMissing.length
+          status.missingActiveEntities = activeMissing
+          const sample = activeMissing.slice(0, 5).join(', ')
+          status.warnings.push(`Missing active countries in snapshot: ${sample}${activeMissing.length > 5 ? '…' : ''}`)
+          if (activeMissing.includes('Russia')) {
+            status.warnings.push('Missing forecast for Russia in latest snapshot')
+          }
+        }
+      }
+    }
+  } catch (e) {
+    status.warnings.push(`Active-country check failed: ${e?.message || e}`)
+  }
+
   // Ensure output dir exists
   const outDir = path.dirname(outPath)
   if (!exists(outDir)) fs.mkdirSync(outDir, { recursive: true })
@@ -110,4 +151,3 @@ function main() {
 }
 
 if (require.main === module) main()
-
