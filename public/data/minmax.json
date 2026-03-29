@@ -494,5 +494,41 @@
   "Zimbabwe": {
     "min": 0,
     "max": 0.000001
+  },
+  "Dominica": {
+    "min": 0,
+    "max": 1
+  },
+  "Belize": {
+    "min": 0,
+    "max": 5
+  },
+  "Antigua & Barbuda": {
+    "min": 0,
+    "max": 1
+  },
+  "Barbados": {
+    "min": 0,
+    "max": 0.000001
+  },
+  "Costa Rica": {
+    "min": 0,
+    "max": 44
+  },
+  "Dominican Rep.": {
+    "min": 0,
+    "max": 7
+  },
+  "Greece": {
+    "min": 0,
+    "max": 0.000001
+  },
+  "Malawi": {
+    "min": 0,
+    "max": 0.000001
+  },
+  "Unnamed: 133": {
+    "min": 0,
+    "max": 0.000001
   }
 }

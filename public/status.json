@@ -1,32 +1,28 @@
 {
-  "generatedAt": "2026-03-29T20:27:03.642Z",
+  "generatedAt": "2026-03-29T21:10:24.179Z",
   "ok": true,
   "summary": {
     "latestPeriod": "2026-03",
-    "snapshotGeneratedAt": "2026-03-29T20:12:51.407Z",
+    "snapshotGeneratedAt": "2026-03-29T20:56:56.835Z",
     "snapshotAgeDays": 0,
-    "minmaxCountries": 124,
-    "minmaxUpdatedAt": "2026-03-29T20:26:54.463Z",
-    "scenariosUpdatedAt": "2026-03-29T20:26:54.067Z",
-    "scenariosDenormUpdatedAt": "2026-03-29T20:26:54.630Z",
-    "matchesUpdatedAt": "2026-03-29T20:26:55.450Z",
+    "minmaxCountries": 133,
+    "minmaxUpdatedAt": "2026-03-29T21:10:14.670Z",
+    "scenariosUpdatedAt": "2026-03-29T21:10:14.235Z",
+    "scenariosDenormUpdatedAt": "2026-03-29T21:10:14.831Z",
+    "matchesUpdatedAt": "2026-03-29T21:10:15.698Z",
     "gridLatestPeriod": "2026-03",
     "staticApiCandidate": "/api/v1/grid/2026-03/points-m1.json",
-    "missingActiveCount": 8
+    "missingActiveCount": 5
   },
   "warnings": [
-    "Missing active countries in snapshot: Central African Rep., Dem. Rep. Congo, Côte d'Ivoire, eSwatini, Myanmar…",
-    "Missing forecast for Russia in latest snapshot"
+    "Missing active countries in snapshot: Dominica, Belize, Antigua & Barbuda, Costa Rica, Dominican Rep."
   ],
   "errors": [],
   "missingActiveEntities": [
-    "Central African Rep.",
-    "Dem. Rep. Congo",
-    "Côte d'Ivoire",
-    "eSwatini",
-    "Myanmar",
-    "Russia",
-    "S. Sudan",
-    "Yemen"
+    "Dominica",
+    "Belize",
+    "Antigua & Barbuda",
+    "Costa Rica",
+    "Dominican Rep."
   ]
 }
