@@ -41,6 +41,7 @@ jobs:
         run: npm ci
 
       - name: Wait for compute run (forecast_metadata fresh)
+        if: ${{ github.event_name == 'schedule' }}
         env:
           REPO: conflictlab/Pace-map-risk
         run: |
