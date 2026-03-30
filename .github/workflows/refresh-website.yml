@@ -104,7 +104,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install "numpy==1.24.4" "pandas==1.5.3"
+          # Use versions compatible with pickles produced by compute (NumPy 2.x layout: numpy._core)
+          pip install "numpy>=2.0.0" "pandas>=2.0.0"
 
       - name: Sync forecasts from GitHub CSVs
         env:
