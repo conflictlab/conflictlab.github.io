@@ -2,14 +2,9 @@ name: Refresh Website Now
 
 on:
   schedule:
-    - cron: '0 3 27 * *' # 27th at 03:00 UTC (pre-month, after UCDP release)
-    - cron: '0 3 1 * *'  # 1st at 03:00 UTC
+    - cron: '0 3 24 * *' # 24th at 03:00 UTC (pre-month, shortly after parallel forecasts start at 01:00)
+    - cron: '0 3 1 * *'  # 1st at 03:00 UTC (shortly after parallel forecasts start at 01:00)
   workflow_dispatch:
-    inputs:
-      skipWait:
-        description: "Skip wait-for-compute (useful if compute already finished)"
-        required: false
-        default: "false"
 
 permissions:
   contents: write
@@ -46,7 +41,6 @@ jobs:
         run: npm ci
 
       - name: Wait for compute run (forecast_metadata fresh)
-        if: ${{ inputs.skipWait != 'true' }}
         env:
           REPO: conflictlab/Pace-map-risk
         run: |
