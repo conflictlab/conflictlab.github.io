@@ -120,12 +120,30 @@ function main() {
             if (Number.isFinite(v)) sums[c - 1] += v
           }
         }
-        const snapshotNames = new Set(latest.entities.map(e => e.name))
+        // Normalize names and apply common aliases for comparison
+        const normalize = (s) => String(s || '').toLowerCase().normalize('NFKD').replace(/[^a-z\s\-']/g, '').trim()
+        const alias = (n) => {
+          const m = {
+            'dominican rep': 'dominican republic',
+            'ivory coast': "cote divoire",
+            'eswatini': 'swaziland',
+            'russia': 'russian federation',
+            'burma': 'myanmar',
+            'congo kinshasa': 'democratic republic of the congo',
+            'congo brazzaville': 'republic of the congo',
+          }
+          return m[n] || n
+        }
+        const snapshotNames = new Set(
+          latest.entities.map(e => normalize(e.name)).map(alias)
+        )
+        const ACTIVE_MIN = 5 // ignore tiny blips in last 12 months
         const activeMissing = []
         for (let i = 0; i < header.length; i++) {
           const name = header[i]
           if (!name || /Unnamed/i.test(name)) continue
-          if (sums[i] > 0 && !snapshotNames.has(name)) activeMissing.push(name)
+          const norm = alias(normalize(name))
+          if (sums[i] > ACTIVE_MIN && !snapshotNames.has(norm)) activeMissing.push(name)
         }
         if (activeMissing.length) {
           status.summary.missingActiveCount = activeMissing.length
