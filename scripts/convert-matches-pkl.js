@@ -43,6 +43,19 @@ function main() {
   const outDir = path.dirname(outPath)
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
 
+  // Prefer actions/setup-python's interpreter to avoid version mismatches
+  function resolvePython() {
+    const pLoc = process.env.pythonLocation
+    if (pLoc) {
+      const cand = path.join(pLoc, 'bin', 'python')
+      const cand3 = path.join(pLoc, 'bin', 'python3')
+      if (fs.existsSync(cand)) return cand
+      if (fs.existsSync(cand3)) return cand3
+    }
+    if (process.env.PYTHON && fs.existsSync(process.env.PYTHON)) return process.env.PYTHON
+    return 'python3'
+  }
+
   const py = `import pickle, json, sys
 from collections.abc import Mapping, Sequence
 
@@ -151,7 +164,8 @@ json.dump(normalize(data), sys.stdout)
 `
 
   try {
-    const json = execFileSync('python3', ['-c', py, args.src], { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 32 })
+    const pyBin = resolvePython()
+    const json = execFileSync(pyBin, ['-c', py, args.src], { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 32 })
     fs.writeFileSync(outPath, json)
     console.log(`Wrote ${outPath}`)
   } catch (e) {

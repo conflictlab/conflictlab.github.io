@@ -35,6 +35,21 @@ function main() {
   const outDir = path.dirname(outPath)
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true })
 
+  // Prefer the Python installed by actions/setup-python (pythonLocation),
+  // then PYTHON env, then fall back to 'python3'. This avoids version
+  // mismatches (e.g., NumPy 2.x pickles) on runners with multiple pythons.
+  function resolvePython() {
+    const pLoc = process.env.pythonLocation
+    if (pLoc) {
+      const cand = path.join(pLoc, 'bin', 'python')
+      const cand3 = path.join(pLoc, 'bin', 'python3')
+      if (fs.existsSync(cand)) return cand
+      if (fs.existsSync(cand3)) return cand3
+    }
+    if (process.env.PYTHON && fs.existsSync(process.env.PYTHON)) return process.env.PYTHON
+    return 'python3'
+  }
+
   const py = `import pickle, json, sys
 from collections.abc import Mapping, Sequence
 
@@ -67,7 +82,8 @@ json.dump(sanitize(data), sys.stdout)
 `
 
   try {
-    const json = execFileSync('python3', ['-c', py, args.src], { encoding: 'utf-8' })
+    const pyBin = resolvePython()
+    const json = execFileSync(pyBin, ['-c', py, args.src], { encoding: 'utf-8' })
     fs.writeFileSync(outPath, json)
     console.log(`Wrote ${outPath}`)
   } catch (e) {
@@ -77,4 +93,3 @@ json.dump(sanitize(data), sys.stdout)
 }
 
 if (require.main === module) main()
-
