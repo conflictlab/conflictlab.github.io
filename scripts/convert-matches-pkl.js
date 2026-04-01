@@ -52,8 +52,45 @@ function main() {
       if (fs.existsSync(cand)) return cand
       if (fs.existsSync(cand3)) return cand3
     }
+    // Prefer local project venv if present
+    try {
+      const venvPy = path.join(process.cwd(), '.venv', 'bin', process.platform === 'win32' ? 'python.exe' : 'python')
+      if (fs.existsSync(venvPy)) return venvPy
+    } catch {}
     if (process.env.PYTHON && fs.existsSync(process.env.PYTHON)) return process.env.PYTHON
     return 'python3'
+  }
+
+  // Best-effort ensure required Python deps exist (numpy>=2, pandas>=2)
+  function ensurePythonDeps(pyBin) {
+    try {
+      const missing = execFileSync(pyBin, ['-c', `import json, importlib
+missing=[]
+try:
+    import numpy as np
+    import importlib as _il
+    try:
+        _il.import_module('numpy._core')
+    except Exception:
+        pass
+except Exception:
+    missing.append('numpy>=2.0.0')
+try:
+    import pandas as pd
+except Exception:
+    missing.append('pandas>=2.0.0')
+print(json.dumps(missing))
+`], { encoding: 'utf-8' })
+      const mods = JSON.parse(String(missing || '[]'))
+      if (Array.isArray(mods) && mods.length) {
+        try {
+          console.log('Installing missing Python packages:', mods.join(', '))
+          execFileSync(pyBin, ['-m', 'pip', 'install', ...mods], { stdio: 'inherit' })
+        } catch (e) {
+          console.warn('Warning: auto-install of Python deps failed; proceeding anyway')
+        }
+      }
+    } catch {}
   }
 
   const py = `import pickle, json, sys
@@ -67,6 +104,43 @@ try:
     import pandas as pd  # noqa: F401
 except Exception:
     pd = None  # type: ignore
+
+# Provide compatibility shims for older pandas pickles that reference
+# removed modules/classes like pandas.core.indexes.numeric.*Index.
+try:
+    import types as _types
+    import sys as _sys
+    import pandas as _pd  # noqa: F401
+    try:
+        if 'pandas.core.indexes.numeric' not in _sys.modules:
+            m = _types.ModuleType('pandas.core.indexes.numeric')
+            try:
+                from pandas import Index as _Index
+                m.Int64Index = _Index
+                m.UInt64Index = _Index
+                m.Float64Index = _Index
+            except Exception:
+                pass
+            _sys.modules['pandas.core.indexes.numeric'] = m
+    except Exception:
+        pass
+except Exception:
+    pass
+
+# Provide NumPy 2.x pickle compatibility on environments with NumPy 1.x
+try:
+    import sys as _sys, importlib as _il
+    import numpy as _np
+    try:
+        _il.import_module('numpy._core')
+    except Exception:
+        try:
+            import numpy.core as _np_core
+            _sys.modules['numpy._core'] = _np_core
+        except Exception:
+            pass
+except Exception:
+    pass
 
 def to_list(x):
     # Convert arrays/Series to plain lists; also return index if present
@@ -159,12 +233,32 @@ def normalize(matches):
 
 with open(sys.argv[1], 'rb') as f:
     data = pickle.load(f)
+def _sanitize(x):
+    # Recursively convert numpy/pandas scalars and arrays to JSON-safe types
+    if isinstance(x, (str, int, float, bool)) or x is None:
+        return x
+    try:
+        if np is not None and hasattr(x, 'item'):
+            return _sanitize(x.item())
+    except Exception:
+        pass
+    try:
+        if hasattr(x, 'tolist'):
+            return _sanitize(x.tolist())
+    except Exception:
+        pass
+    if isinstance(x, Mapping):
+        return { str(k): _sanitize(v) for k, v in x.items() }
+    if isinstance(x, Sequence) and not isinstance(x, (str, bytes, bytearray)):
+        return [ _sanitize(v) for v in x ]
+    return str(x)
 
-json.dump(normalize(data), sys.stdout)
+json.dump(_sanitize(normalize(data)), sys.stdout)
 `
 
   try {
     const pyBin = resolvePython()
+    ensurePythonDeps(pyBin)
     const json = execFileSync(pyBin, ['-c', py, args.src], { encoding: 'utf-8', maxBuffer: 1024 * 1024 * 32 })
     fs.writeFileSync(outPath, json)
     console.log(`Wrote ${outPath}`)
