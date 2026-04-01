@@ -183,11 +183,19 @@ def to_list(x):
     return { 'values': [to_primitive(x)] }
 
 def to_number(x):
+    # First convert numpy/pandas scalars to Python primitives
+    val = x
     try:
-        return float(x)
+        if np is not None and hasattr(x, 'item'):
+            val = x.item()
+    except Exception:
+        pass
+    # Now convert to float/int
+    try:
+        return float(val)
     except Exception:
         try:
-            return int(x)
+            return int(val)
         except Exception:
             return None
 
