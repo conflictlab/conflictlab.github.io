@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import MultiFileDownloader from '@/components/MultiFileDownloader'
 import ArchiveTable from '@/components/ArchiveTable'
+import CodeBlock from '@/components/CodeBlock'
 
 const SITE_BASE = 'https://forecastlab.org'
 const GITHUB_BASE = 'https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main'
@@ -83,6 +84,7 @@ export default function DataApiPage() {
           <div className="mb-10 text-sm text-gray-700">
             <div className="font-medium text-gray-900 mb-2">Contents</div>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
+              <Link href="#documentation" className="text-link">Documentation</Link>
               <Link href="#endpoints" className="text-link">Endpoints</Link>
               <Link href="#examples" className="text-link">Examples</Link>
               <Link href="#archive" className="text-link">Archive</Link>
@@ -90,6 +92,62 @@ export default function DataApiPage() {
               <Link href="#formats" className="text-link">Formats</Link>
               <Link href="#errors" className="text-link">Errors</Link>
               <Link href="#usage" className="text-link">Usage</Link>
+            </div>
+          </div>
+
+          {/* Documentation Section */}
+          <div id="documentation" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Documentation</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Comprehensive guides for integrating PaCE data into your systems.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <a
+                href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
+              >
+                <h3 className="font-medium text-gray-900 mb-1">Complete API Reference</h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  Full specification with URL patterns, formats, and integration patterns
+                </p>
+                <span className="text-xs text-blue-600">View on GitHub →</span>
+              </a>
+              <a
+                href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/QUICK_START.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
+              >
+                <h3 className="font-medium text-gray-900 mb-1">Quick Start Guide</h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  5-minute introduction with simple Python and R examples
+                </p>
+                <span className="text-xs text-blue-600">View on GitHub →</span>
+              </a>
+            </div>
+
+            <div className="mt-4 bg-blue-50 border border-blue-200 rounded p-4">
+              <h4 className="text-sm font-medium text-gray-900 mb-2">Example Scripts</h4>
+              <div className="flex gap-3">
+                <a
+                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/examples/fetch-forecasts.py"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  Python Client →
+                </a>
+                <a
+                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/examples/fetch-forecasts.R"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  R Client →
+                </a>
+              </div>
             </div>
           </div>
 
@@ -107,10 +165,10 @@ export default function DataApiPage() {
                 <p className="text-sm text-gray-600 mb-3">
                   6-month and 12-month ahead forecasts, updated monthly on the 1st.
                 </p>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`GET ${SITE_BASE}/data/forecasts/latest/forecasts_h6.csv
+                <CodeBlock code={`GET ${SITE_BASE}/data/forecasts/latest/forecasts_h6.csv
 GET ${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv
 GET ${SITE_BASE}/data/forecasts/latest/Hist.csv
-GET ${SITE_BASE}/data/forecasts/latest/metadata.json`}</pre>
+GET ${SITE_BASE}/data/forecasts/latest/metadata.json`} />
               </div>
 
               {/* Grid Forecasts */}
@@ -120,12 +178,12 @@ GET ${SITE_BASE}/data/forecasts/latest/metadata.json`}</pre>
                   Spatial forecasts by month. Replace <code className="px-1 py-0.5 bg-gray-100 text-gray-800 rounded">{'{period}'}</code> with YYYY-MM (e.g., {latest || '2026-03'}).
                   For bulk downloads, see <Link href="#grid-downloads" className="text-link">Grid Downloads</Link> below.
                 </p>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`GET ${SITE_BASE}/api/v1/grid/{period}/points-m1.json
+                <CodeBlock code={`GET ${SITE_BASE}/api/v1/grid/{period}/points-m1.json
 GET ${SITE_BASE}/api/v1/grid/{period}/points-m2.json
 GET ${SITE_BASE}/api/v1/grid/{period}/points-m3.json
 GET ${SITE_BASE}/api/v1/grid/{period}/points-m4.json
 GET ${SITE_BASE}/api/v1/grid/{period}/points-m5.json
-GET ${SITE_BASE}/api/v1/grid/{period}/points-m6.json`}</pre>
+GET ${SITE_BASE}/api/v1/grid/{period}/points-m6.json`} />
               </div>
 
               {/* Archive Pattern */}
@@ -134,11 +192,11 @@ GET ${SITE_BASE}/api/v1/grid/{period}/points-m6.json`}</pre>
                 <p className="text-sm text-gray-600 mb-3">
                   Access any historical forecast period. Replace <code className="px-1 py-0.5 bg-gray-100 text-gray-800 rounded">YYYY-MM</code> with the desired period.
                 </p>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts_h6.csv
+                <CodeBlock code={`GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts_h6.csv
 GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts_h12.csv
 GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/Hist.csv
 GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/metadata.json
-GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.zip`}</pre>
+GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.zip`} />
               </div>
             </div>
           </div>
@@ -151,7 +209,7 @@ GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.zip`}</pre>
               {/* Python */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Python</h3>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`import pandas as pd
+                <CodeBlock language="python" code={`import pandas as pd
 
 # Load latest 6-month forecasts
 url = "${SITE_BASE}/data/forecasts/latest/forecasts_h6.csv"
@@ -164,13 +222,13 @@ print(f"Forecast start: {metadata['forecast_start_date']}")
 
 # Get forecasts for a specific country
 afghanistan_forecast = df["Afghanistan"]
-print(afghanistan_forecast)`}</pre>
+print(afghanistan_forecast)`} />
               </div>
 
               {/* R */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">R</h3>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`library(readr)
+                <CodeBlock language="r" code={`library(readr)
 library(jsonlite)
 
 # Load latest 12-month forecasts
@@ -183,26 +241,26 @@ metadata <- fromJSON(metadata_url)
 cat("Forecast start:", metadata$forecast_start_date, "\\n")
 
 # Extract specific country
-syria_forecast <- forecasts$Syria`}</pre>
+syria_forecast <- forecasts$Syria`} />
               </div>
 
               {/* curl */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">curl / wget</h3>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`# Download latest forecasts
+                <CodeBlock language="bash" code={`# Download latest forecasts
 curl -O ${SITE_BASE}/data/forecasts/latest/forecasts_h6.csv
 
 # Download complete bundle for specific period
 curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip
 
 # Download grid forecast for month 1
-curl "${SITE_BASE}/api/v1/grid/2026-03/points-m1.json" > grid_m1.json`}</pre>
+curl "${SITE_BASE}/api/v1/grid/2026-03/points-m1.json" > grid_m1.json`} />
               </div>
 
               {/* JavaScript */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">JavaScript / Node.js</h3>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`// Fetch grid forecast data
+                <CodeBlock language="javascript" code={`// Fetch grid forecast data
 const response = await fetch(
   '${SITE_BASE}/api/v1/grid/${latest || '2026-03'}/points-m1.json'
 );
@@ -213,7 +271,7 @@ const metaResponse = await fetch(
   '${SITE_BASE}/data/forecasts/latest/metadata.json'
 );
 const metadata = await metaResponse.json();
-console.log('Forecast period:', metadata.forecast_start_date);`}</pre>
+console.log('Forecast period:', metadata.forecast_start_date);`} />
               </div>
             </div>
           </div>
@@ -240,7 +298,7 @@ console.log('Forecast period:', metadata.forecast_start_date);`}</pre>
                 <p className="text-sm text-gray-600 mb-3">
                   Contains forecast period information and data coverage details.
                 </p>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`{
+                <CodeBlock language="json" code={`{
   "run_date": "2026-03-01T01:15:43.123456",
   "data_end_date": "2026-02",
   "forecast_start_date": "2026-03",
@@ -249,7 +307,7 @@ console.log('Forecast period:', metadata.forecast_start_date);`}</pre>
   "training_window_months": 24,
   "historical_start_date": "1989-01",
   "total_historical_months": 445
-}`}</pre>
+}`} />
               </div>
 
               {/* Forecast CSVs */}
@@ -285,7 +343,7 @@ console.log('Forecast period:', metadata.forecast_start_date);`}</pre>
                 <p className="text-sm text-gray-600 mb-3">
                   GeoJSON FeatureCollection with point geometries for each grid cell.
                 </p>
-                <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">{`{
+                <CodeBlock language="json" code={`{
   "type": "FeatureCollection",
   "features": [
     {
@@ -294,7 +352,7 @@ console.log('Forecast period:', metadata.forecast_start_date);`}</pre>
       "properties": {"value": 2.34}
     }
   ]
-}`}</pre>
+}`} />
               </div>
             </div>
           </div>
@@ -323,13 +381,13 @@ console.log('Forecast period:', metadata.forecast_start_date);`}</pre>
               </div>
             </div>
             <div className="mt-4 bg-blue-50 border border-blue-200 rounded p-4">
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 mb-2">
                 <strong>GitHub Fallback:</strong> If website endpoints are unavailable, use raw GitHub URLs:
               </p>
-              <pre className="text-xs bg-gray-900 text-green-400 p-3 rounded overflow-x-auto mt-2">{`${GITHUB_BASE}/forecasts_h6.csv
+              <CodeBlock code={`${GITHUB_BASE}/forecasts_h6.csv
 ${GITHUB_BASE}/forecasts_h12.csv
 ${GITHUB_BASE}/Hist.csv
-${GITHUB_BASE}/forecast_metadata.json`}</pre>
+${GITHUB_BASE}/forecast_metadata.json`} />
             </div>
           </div>
 

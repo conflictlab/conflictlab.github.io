@@ -77,7 +77,8 @@ export default function Navigation() {
       sections: [
         { label: 'Dashboard', href: '/forecasts' },
         { label: 'Reports & Newsletters', href: '/reports' },
-        { label: 'Downloads', href: '/downloads' },
+        { label: 'Data API', href: '/data-api' },
+        { label: 'Downloads', href: '/data-api#grid-downloads' },
       ],
     },
     {
