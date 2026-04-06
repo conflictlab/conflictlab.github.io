@@ -18,7 +18,7 @@ This document describes the updated PACE forecast system that now generates both
 
 New Python script that:
 - Generates both h=6 and h=12 month forecasts in a single run
-- Uses extended training window (24 months instead of 10)
+- Uses 10-month training window (aligned with Thomas's newsletter panels)
 - Saves full historical data (all available UCDP data)
 - Creates standardized output files with clear naming
 - Generates metadata JSON with dates and configuration

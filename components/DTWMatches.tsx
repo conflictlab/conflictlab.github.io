@@ -281,6 +281,20 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
 
   const items = useMemo(() => {
     if (!matches || !histSeries.length || !histDates.length) return []
+    // Normalize dates to YYYY-MM so we can align indices regardless of day/time formatting
+    const normalizeToMonth = (s?: string): string | null => {
+      const d = parseUTCDate(s)
+      if (!d) {
+        // Try quick YYYY-MM fallback
+        if (!s) return null
+        const m = String(s).match(/^(\d{4})-(\d{2})/)
+        return m ? `${m[1]}-${m[2]}` : null
+      }
+      const y = d.getUTCFullYear()
+      const m = String(d.getUTCMonth() + 1).padStart(2, '0')
+      return `${y}-${m}`
+    }
+    const histMonths = histDates.map(d => normalizeToMonth(d) || '')
     const getCol = (nm?: string): number[] | undefined => {
       if (!nm) return undefined
       if (histColumns[nm]) return histColumns[nm]
@@ -298,8 +312,14 @@ export default function DTWMatches({ countryName }: { countryName: string }) {
       const nm = m.series?.name
       const col = getCol(nm ? (ALIASES[nm] || nm) : undefined)
       if (col && m.series?.index && m.series.index.length) {
-        const endDate = String(m.series.index[m.series.index.length - 1]).slice(0, 10)
-        const pos = histDates.indexOf(endDate)
+        const idxLast = String(m.series.index[m.series.index.length - 1])
+        // Try exact, YYYY-MM-DD, and finally align by month
+        const endFull = idxLast
+        const endYMD = idxLast.slice(0, 10)
+        const endMonth = normalizeToMonth(idxLast)
+        let pos = histDates.indexOf(endFull)
+        if (pos < 0) pos = histDates.indexOf(endYMD)
+        if (pos < 0 && endMonth) pos = histMonths.findIndex(mo => mo === endMonth)
         if (pos >= 0) {
           const arr = col.slice(pos + 1, pos + 1 + H).filter(v => Number.isFinite(v)) as number[]
           if (arr.length) {

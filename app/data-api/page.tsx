@@ -197,7 +197,10 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                     <div className="text-gray-500">... through m6.json</div>
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Spatial forecasts by month. Bulk downloads available below.
+                    Spatial forecasts by month. <span className="font-medium">period</span> is the forecast start date in YYYY-MM format (e.g., 2026-03).
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Bulk downloads available below.
                   </p>
                 </div>
 

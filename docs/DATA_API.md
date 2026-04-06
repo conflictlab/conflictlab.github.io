@@ -55,6 +55,32 @@ Each archive contains the same files as `/latest/`, frozen at the time of that f
 
 **Available periods:** Monthly from 2023-12 to present
 
+### Grid Forecasts (PRIO-GRID Spatial Data)
+
+```
+https://conflictlab.github.io/data/grid/{YYYY-MM}-m{1-6}.json
+```
+
+**Description:** Sub-national spatial forecasts at PRIO-GRID cell level (0.5° x 0.5° grid cells).
+
+**Parameters:**
+- `{YYYY-MM}` - Forecast period (e.g., `2026-03`)
+- `{1-6}` - Forecast month (1 = first month ahead, 6 = sixth month ahead)
+
+**Example:**
+```
+https://conflictlab.github.io/data/grid/2026-03-m1.json  # First month forecast
+https://conflictlab.github.io/data/grid/2026-03-m6.json  # Sixth month forecast
+```
+
+**Available formats:**
+- `{period}-m{1-6}.json` - Point data with lat/lon coordinates
+- `{period}.geo.json` - Full GeoJSON with polygons for all 6 months
+- `{period}.csv` - Tabular format with all months
+- `centroids.csv` - PRIO-GRID cell centroids reference
+
+**Note:** Grid forecasts are generated for the same periods as country-level forecasts (2023-12 to present).
+
 ---
 
 ## File Formats
@@ -99,7 +125,7 @@ date,Afghanistan,Albania,Algeria,...,Zimbabwe
   "forecast_start_date": "2026-03",
   "h6_end_date": "2026-08",
   "h12_end_date": "2027-02",
-  "training_window_months": 24,
+  "training_window_months": 10,
   "historical_start_date": "1989-01",
   "historical_end_date": "2026-02",
   "total_historical_months": 446
@@ -112,7 +138,7 @@ date,Afghanistan,Albania,Algeria,...,Zimbabwe
 - `forecast_start_date` - First month being forecasted (YYYY-MM)
 - `h6_end_date` - Last month of 6-month forecast (YYYY-MM)
 - `h12_end_date` - Last month of 12-month forecast (YYYY-MM)
-- `training_window_months` - Number of months used for pattern matching (24)
+- `training_window_months` - Number of months used for pattern matching (10)
 - `historical_start_date` - First month of historical data (1989-01)
 - `historical_end_date` - Last month of historical data (YYYY-MM)
 - `total_historical_months` - Total months in Hist.csv
@@ -196,6 +222,8 @@ cat(sprintf("Forecasting from %s\n", data$metadata$forecast_start_date))
 
 ### Fetching Specific Historical Periods
 
+**Data Availability:** Archived forecasts are available from **December 2023** (2023-12) to present, with monthly updates.
+
 To fetch a specific historical forecast (e.g., to compare accuracy):
 
 ```python
@@ -205,6 +233,7 @@ def fetch_forecast_by_period(period):
 
     Args:
         period: Forecast period in YYYY-MM format (e.g., '2025-06')
+                Available from 2023-12 onwards
 
     Returns:
         Dictionary with forecast data
@@ -271,7 +300,7 @@ if updated:
 ### Data Lineage
 - **Source:** Uppsala Conflict Data Program (UCDP) Georeferenced Event Dataset (GED)
 - **Methodology:** Dynamic Time Warping (DTW) pattern matching
-- **Training window:** 24 months
+- **Training window:** 10 months
 - **Update lag:** ~1 month (UCDP release schedule)
 
 ### Known Limitations

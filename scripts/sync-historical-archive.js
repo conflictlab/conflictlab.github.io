@@ -253,7 +253,7 @@ async function main() {
       forecast_start_date: ym(start),
       h6_end_date: ym(h6End),
       h12_end_date: ym(h12End),
-      training_window_months: 24,
+      training_window_months: 10,
       historical_start_date: '1989-01',
       historical_end_date: ym(dataEnd),
       source: urls.local ? 'content/forecasts/csv (local snapshot)' : 'Historical_Predictions (archived)',

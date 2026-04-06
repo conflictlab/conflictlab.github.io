@@ -33,9 +33,12 @@ function main() {
     }))
     .sort((a, b) => b.p50_1m - a.p50_1m)
 
+  // top4 in descending order
   const top4 = entities.slice(0, 4)
+  // Newsletter expects last row to be top-1; write in ascending rank order [4th,3rd,2nd,1st]
+  const ordered = top4.slice().reverse()
   const out = [',name,find']
-  top4.forEach((row, i) => { out.push(`${i},${row.name},0`) })
+  ordered.forEach((row, i) => { out.push(`${i},${row.name},0`) })
 
   const outPath = path.join(process.cwd(), args.out || path.join('Pace-map-risk', 'best.from_site.csv'))
   fs.writeFileSync(outPath, out.join('\n'))
@@ -45,4 +48,3 @@ function main() {
 }
 
 if (require.main === module) main()
-
