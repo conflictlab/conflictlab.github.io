@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import MultiFileDownloader from '@/components/MultiFileDownloader'
 import ArchiveTable from '@/components/ArchiveTable'
-import CodeBlock from '@/components/CodeBlock'
+import TabbedCodeExamples from '@/components/TabbedCodeExamples'
 
 const SITE_BASE = 'https://forecastlab.org'
 const GITHUB_BASE = 'https://raw.githubusercontent.com/conflictlab/Pace-map-risk/main'
@@ -60,6 +60,65 @@ export default function DataApiPage() {
     }
   })
 
+  // Code examples for tabbed interface
+  const quickStartExamples = [
+    {
+      label: 'Python',
+      language: 'python',
+      code: `import pandas as pd
+import requests
+
+# Fetch latest 12-month forecasts
+forecasts = pd.read_csv("${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv")
+metadata = requests.get("${SITE_BASE}/data/forecasts/latest/metadata.json").json()
+
+print(f"Forecast period: {metadata['forecast_start_date']}")
+print(forecasts["Ukraine"].head())  # First 5 months for Ukraine`
+    },
+    {
+      label: 'R',
+      language: 'r',
+      code: `library(readr)
+library(httr)
+library(jsonlite)
+
+# Fetch latest 12-month forecasts
+forecasts <- read_csv("${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv")
+metadata <- GET("${SITE_BASE}/data/forecasts/latest/metadata.json") %>%
+  content("text") %>% fromJSON()
+
+cat("Forecast period:", metadata$forecast_start_date, "\\n")
+head(forecasts$Ukraine)  # First 5 months for Ukraine`
+    },
+    {
+      label: 'JavaScript',
+      language: 'javascript',
+      code: `// Fetch latest forecasts
+const response = await fetch(
+  '${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv'
+);
+const csvText = await response.text();
+
+// Fetch metadata
+const meta = await fetch(
+  '${SITE_BASE}/data/forecasts/latest/metadata.json'
+).then(r => r.json());
+
+console.log('Forecast period:', meta.forecast_start_date);`
+    },
+    {
+      label: 'curl',
+      language: 'bash',
+      code: `# Download latest forecasts
+curl -O ${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv
+curl -O ${SITE_BASE}/data/forecasts/latest/Hist.csv
+curl -O ${SITE_BASE}/data/forecasts/latest/metadata.json
+
+# Download complete archive bundle
+curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
+    }
+  ]
+
   return (
     <>
       {/* Hero Section */}
@@ -84,195 +143,119 @@ export default function DataApiPage() {
           <div className="mb-10 text-sm text-gray-700">
             <div className="font-medium text-gray-900 mb-2">Contents</div>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
-              <Link href="#documentation" className="text-link">Documentation</Link>
+              <Link href="#quick-start" className="text-link">Quick Start</Link>
               <Link href="#endpoints" className="text-link">Endpoints</Link>
-              <Link href="#examples" className="text-link">Examples</Link>
+              <Link href="#documentation" className="text-link">Documentation</Link>
               <Link href="#archive" className="text-link">Archive</Link>
               <Link href="#grid-downloads" className="text-link">Downloads</Link>
-              <Link href="#formats" className="text-link">Formats</Link>
-              <Link href="#errors" className="text-link">Errors</Link>
               <Link href="#usage" className="text-link">Usage</Link>
             </div>
           </div>
 
-          {/* Documentation Section */}
-          <div id="documentation" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Documentation</h2>
-            <p className="text-sm text-gray-600 mb-4">
-              Comprehensive guides for integrating PaCE data into your systems.
+          {/* Quick Start with Tabbed Examples */}
+          <div id="quick-start" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-2xl font-light text-gray-900 mb-3">Quick Start</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Fetch the latest forecasts in your preferred language. All endpoints are stable and updated monthly on the 1st.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <a
-                href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
-              >
-                <h3 className="font-medium text-gray-900 mb-1">Complete API Reference</h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  Full specification with URL patterns, formats, and integration patterns
-                </p>
-                <span className="text-xs text-blue-600">View on GitHub →</span>
-              </a>
+            <TabbedCodeExamples examples={quickStartExamples} />
+          </div>
+
+          {/* API Endpoints */}
+          <div id="endpoints" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-2xl font-light text-gray-900 mb-4">API Endpoints</h2>
+
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Latest Forecasts */}
+                <div className="border border-gray-200 rounded p-4">
+                  <h3 className="font-medium text-gray-900 mb-2">Latest Forecasts</h3>
+                  <div className="text-xs space-y-1 font-mono text-gray-700">
+                    <div>/data/forecasts/latest/forecasts_h6.csv</div>
+                    <div>/data/forecasts/latest/forecasts_h12.csv</div>
+                    <div>/data/forecasts/latest/Hist.csv</div>
+                    <div>/data/forecasts/latest/metadata.json</div>
+                  </div>
+                </div>
+
+                {/* Archive */}
+                <div className="border border-gray-200 rounded p-4">
+                  <h3 className="font-medium text-gray-900 mb-2">Historical Archive</h3>
+                  <div className="text-xs space-y-1 font-mono text-gray-700">
+                    <div>/data/forecasts/archive/<span className="text-blue-600">YYYY-MM</span>/forecasts_h6.csv</div>
+                    <div>/data/forecasts/archive/<span className="text-blue-600">YYYY-MM</span>/forecasts_h12.csv</div>
+                    <div>/data/forecasts/archive/<span className="text-blue-600">YYYY-MM</span>/Hist.csv</div>
+                    <div>/data/forecasts/archive/<span className="text-blue-600">YYYY-MM</span>/metadata.json</div>
+                  </div>
+                </div>
+
+                {/* Grid Forecasts */}
+                <div className="border border-gray-200 rounded p-4">
+                  <h3 className="font-medium text-gray-900 mb-2">Grid Forecasts (PRIO-GRID)</h3>
+                  <div className="text-xs space-y-1 font-mono text-gray-700">
+                    <div>/api/v1/grid/<span className="text-blue-600">{'{period}'}</span>/points-m1.json</div>
+                    <div>/api/v1/grid/<span className="text-blue-600">{'{period}'}</span>/points-m2.json</div>
+                    <div className="text-gray-500">... through m6.json</div>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Spatial forecasts by month. See <Link href="#grid-downloads" className="text-link">bulk downloads</Link> below.
+                  </p>
+                </div>
+
+                {/* Data Formats */}
+                <div className="border border-gray-200 rounded p-4">
+                  <h3 className="font-medium text-gray-900 mb-2">Data Formats</h3>
+                  <div className="text-xs space-y-2 text-gray-700">
+                    <div><span className="font-medium">CSV:</span> Country forecasts (rows=months, cols=countries)</div>
+                    <div><span className="font-medium">JSON:</span> Metadata, grid data (GeoJSON)</div>
+                    <div><span className="font-medium">ZIP:</span> Complete period bundles</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Confidence Intervals */}
+              <div className="bg-blue-50 border border-blue-200 rounded p-4">
+                <div className="text-sm">
+                  <span className="font-medium text-gray-900">Confidence Intervals:</span> Add <code className="px-1.5 py-0.5 bg-white text-gray-800 rounded text-xs">_min</code> or <code className="px-1.5 py-0.5 bg-white text-gray-800 rounded text-xs">_max</code> to forecast filenames:
+                  <div className="mt-2 text-xs font-mono text-gray-700">
+                    forecasts_h12<span className="text-blue-600">_min</span>.csv, forecasts_h12<span className="text-blue-600">_max</span>.csv
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Documentation */}
+          <div id="documentation" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Documentation & Examples</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <a
                 href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/QUICK_START.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
               >
-                <h3 className="font-medium text-gray-900 mb-1">Quick Start Guide</h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  5-minute introduction with simple Python and R examples
-                </p>
-                <span className="text-xs text-blue-600">View on GitHub →</span>
+                <div className="text-sm font-medium text-gray-900 mb-1">Quick Start Guide</div>
+                <div className="text-xs text-gray-600">5-minute introduction with simple examples</div>
               </a>
-            </div>
-
-            <div className="mt-4 bg-blue-50 border border-blue-200 rounded p-4">
-              <h4 className="text-sm font-medium text-gray-900 mb-2">Example Scripts</h4>
-              <div className="flex gap-3">
-                <a
-                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/examples/fetch-forecasts.py"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  Python Client →
-                </a>
-                <a
-                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/examples/fetch-forecasts.R"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  R Client →
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Endpoints */}
-          <div id="endpoints" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-3">API Endpoints</h2>
-            <p className="text-sm text-gray-600 mb-6">
-              All URLs are stable and permanent. Only data content updates monthly.
-            </p>
-
-            <div className="space-y-6">
-              {/* Country Forecasts */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Country Forecasts</h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  6-month and 12-month ahead forecasts, updated monthly on the 1st.
-                </p>
-                <CodeBlock code={`GET ${SITE_BASE}/data/forecasts/latest/forecasts_h6.csv
-GET ${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv
-GET ${SITE_BASE}/data/forecasts/latest/Hist.csv
-GET ${SITE_BASE}/data/forecasts/latest/metadata.json`} />
-              </div>
-
-              {/* Grid Forecasts */}
-              <div id="grid">
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Grid Forecasts (PRIO-GRID)</h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  Spatial forecasts by month. Replace <code className="px-1 py-0.5 bg-gray-100 text-gray-800 rounded">{'{period}'}</code> with YYYY-MM (e.g., {latest || '2026-03'}).
-                  For bulk downloads, see <Link href="#grid-downloads" className="text-link">Grid Downloads</Link> below.
-                </p>
-                <CodeBlock code={`GET ${SITE_BASE}/api/v1/grid/{period}/points-m1.json
-GET ${SITE_BASE}/api/v1/grid/{period}/points-m2.json
-GET ${SITE_BASE}/api/v1/grid/{period}/points-m3.json
-GET ${SITE_BASE}/api/v1/grid/{period}/points-m4.json
-GET ${SITE_BASE}/api/v1/grid/{period}/points-m5.json
-GET ${SITE_BASE}/api/v1/grid/{period}/points-m6.json`} />
-              </div>
-
-              {/* Archive Pattern */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Historical Archive</h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  Access any historical forecast period. Replace <code className="px-1 py-0.5 bg-gray-100 text-gray-800 rounded">YYYY-MM</code> with the desired period.
-                </p>
-                <CodeBlock code={`GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts_h6.csv
-GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts_h12.csv
-GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/Hist.csv
-GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/metadata.json
-GET ${SITE_BASE}/data/forecasts/archive/YYYY-MM/forecasts-YYYY-MM.zip`} />
-              </div>
-            </div>
-          </div>
-
-          {/* Code Examples */}
-          <div id="examples" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Code Examples</h2>
-
-            <div className="space-y-6">
-              {/* Python */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Python</h3>
-                <CodeBlock language="python" code={`import pandas as pd
-
-# Load latest 6-month forecasts
-url = "${SITE_BASE}/data/forecasts/latest/forecasts_h6.csv"
-df = pd.read_csv(url, index_col=0)
-
-# Load metadata to understand forecast periods
-metadata_url = "${SITE_BASE}/data/forecasts/latest/metadata.json"
-metadata = pd.read_json(metadata_url, typ='series')
-print(f"Forecast start: {metadata['forecast_start_date']}")
-
-# Get forecasts for a specific country
-afghanistan_forecast = df["Afghanistan"]
-print(afghanistan_forecast)`} />
-              </div>
-
-              {/* R */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">R</h3>
-                <CodeBlock language="r" code={`library(readr)
-library(jsonlite)
-
-# Load latest 12-month forecasts
-url <- "${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv"
-forecasts <- read_csv(url)
-
-# Load metadata
-metadata_url <- "${SITE_BASE}/data/forecasts/latest/metadata.json"
-metadata <- fromJSON(metadata_url)
-cat("Forecast start:", metadata$forecast_start_date, "\\n")
-
-# Extract specific country
-syria_forecast <- forecasts$Syria`} />
-              </div>
-
-              {/* curl */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">curl / wget</h3>
-                <CodeBlock language="bash" code={`# Download latest forecasts
-curl -O ${SITE_BASE}/data/forecasts/latest/forecasts_h6.csv
-
-# Download complete bundle for specific period
-curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip
-
-# Download grid forecast for month 1
-curl "${SITE_BASE}/api/v1/grid/2026-03/points-m1.json" > grid_m1.json`} />
-              </div>
-
-              {/* JavaScript */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">JavaScript / Node.js</h3>
-                <CodeBlock language="javascript" code={`// Fetch grid forecast data
-const response = await fetch(
-  '${SITE_BASE}/api/v1/grid/${latest || '2026-03'}/points-m1.json'
-);
-const gridData = await response.json();
-
-// Fetch metadata
-const metaResponse = await fetch(
-  '${SITE_BASE}/data/forecasts/latest/metadata.json'
-);
-const metadata = await metaResponse.json();
-console.log('Forecast period:', metadata.forecast_start_date);`} />
-              </div>
+              <a
+                href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
+              >
+                <div className="text-sm font-medium text-gray-900 mb-1">Complete API Reference</div>
+                <div className="text-xs text-gray-600">Full specification and integration patterns</div>
+              </a>
+              <a
+                href="https://github.com/conflictlab/conflictlab.github.io/tree/main/examples"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
+              >
+                <div className="text-sm font-medium text-gray-900 mb-1">Example Scripts</div>
+                <div className="text-xs text-gray-600">Production-ready Python & R clients</div>
+              </a>
             </div>
           </div>
 
@@ -280,114 +263,10 @@ console.log('Forecast period:', metadata.forecast_start_date);`} />
           <div id="archive" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-2xl font-light text-gray-900 mb-4">Historical Archive</h2>
             <p className="text-sm text-gray-600 mb-4">
-              Complete archive of monthly forecasts from 1989-01 to present. Each period includes all forecast files, historical data, and metadata.
+              Access any historical forecast period from 1989 to present.
             </p>
             <div className="bg-white border border-gray-200 rounded p-4">
               <ArchiveTable archiveData={archiveData} />
-            </div>
-          </div>
-
-          {/* Data Formats */}
-          <div id="formats" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Data Formats</h2>
-
-            <div className="space-y-6">
-              {/* Metadata */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Metadata (JSON)</h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  Contains forecast period information and data coverage details.
-                </p>
-                <CodeBlock language="json" code={`{
-  "run_date": "2026-03-01T01:15:43.123456",
-  "data_end_date": "2026-02",
-  "forecast_start_date": "2026-03",
-  "h6_end_date": "2026-08",
-  "h12_end_date": "2027-02",
-  "training_window_months": 24,
-  "historical_start_date": "1989-01",
-  "total_historical_months": 445
-}`} />
-              </div>
-
-              {/* Forecast CSVs */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Forecast CSVs</h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  Country-level forecasts with rows as forecast months and columns as countries.
-                </p>
-                <ul className="text-sm text-gray-700 space-y-1 ml-4 list-disc">
-                  <li><strong>Rows:</strong> 0-5 (h6) or 0-11 (h12), starting from <code className="px-1 py-0.5 bg-gray-100 text-gray-800 rounded">forecast_start_date</code></li>
-                  <li><strong>Columns:</strong> Country names</li>
-                  <li><strong>Values:</strong> Predicted monthly fatalities</li>
-                  <li><strong>Variants:</strong> mean (default), min, max</li>
-                </ul>
-              </div>
-
-              {/* Historical CSV */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Historical CSV</h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  Observed fatality data from UCDP, 1989-present.
-                </p>
-                <ul className="text-sm text-gray-700 space-y-1 ml-4 list-disc">
-                  <li><strong>First column:</strong> Date (YYYY-MM-DD format)</li>
-                  <li><strong>Other columns:</strong> Country names</li>
-                  <li><strong>Values:</strong> Observed monthly fatalities</li>
-                </ul>
-              </div>
-
-              {/* Grid JSON */}
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Grid JSON</h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  GeoJSON FeatureCollection with point geometries for each grid cell.
-                </p>
-                <CodeBlock language="json" code={`{
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {"type": "Point", "coordinates": [lon, lat]},
-      "properties": {"value": 2.34}
-    }
-  ]
-}`} />
-              </div>
-            </div>
-          </div>
-
-          {/* Error Responses */}
-          <div id="errors" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Error Responses</h2>
-            <div className="space-y-4">
-              <div className="border-l-4 border-gray-400 pl-4">
-                <div className="font-mono text-sm text-gray-900 mb-1">404 Not Found</div>
-                <p className="text-sm text-gray-600">
-                  Requested period or file does not exist. Check available periods in the archive table.
-                </p>
-              </div>
-              <div className="border-l-4 border-yellow-400 pl-4">
-                <div className="font-mono text-sm text-gray-900 mb-1">429 Too Many Requests</div>
-                <p className="text-sm text-gray-600">
-                  Rate limit exceeded. Cache responses locally. Data updates monthly only.
-                </p>
-              </div>
-              <div className="border-l-4 border-red-400 pl-4">
-                <div className="font-mono text-sm text-gray-900 mb-1">503 Service Unavailable</div>
-                <p className="text-sm text-gray-600">
-                  Temporary server issue. Retry after a few minutes. Use GitHub fallback if persistent.
-                </p>
-              </div>
-            </div>
-            <div className="mt-4 bg-blue-50 border border-blue-200 rounded p-4">
-              <p className="text-sm text-gray-700 mb-2">
-                <strong>GitHub Fallback:</strong> If website endpoints are unavailable, use raw GitHub URLs:
-              </p>
-              <CodeBlock code={`${GITHUB_BASE}/forecasts_h6.csv
-${GITHUB_BASE}/forecasts_h12.csv
-${GITHUB_BASE}/Hist.csv
-${GITHUB_BASE}/forecast_metadata.json`} />
             </div>
           </div>
 
@@ -433,25 +312,16 @@ ${GITHUB_BASE}/forecast_metadata.json`} />
               <div id="grid-downloads" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
                 <h2 className="text-2xl font-light text-gray-900 mb-4">Grid Downloads</h2>
                 <p className="text-sm text-gray-600 mb-4">
-                  Bulk download options for grid forecasts (period <span className="font-mono font-medium">{gridPeriod}</span>).
+                  Bulk download spatial forecasts for period <span className="font-mono font-medium">{gridPeriod}</span>.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border border-gray-200 rounded p-4">
-                    <h3 className="text-lg font-medium text-gray-900 mb-3">CSV Files</h3>
+                    <h3 className="font-medium text-gray-900 mb-3">CSV Files</h3>
                     <MultiFileDownloader items={gridCsvItems} zipName={`PaCE-grid-${gridPeriod}-csv`} />
-                    <div className="mt-3 text-xs text-gray-600">
-                      <div className="font-medium text-gray-700 mb-1">Format</div>
-                      <div>Monthly: <span className="font-mono">lat,lon,value</span></div>
-                      <div>Combined: <span className="font-mono">lat,lon,m1,m2...m6</span></div>
-                    </div>
                   </div>
                   <div className="border border-gray-200 rounded p-4">
-                    <h3 className="text-lg font-medium text-gray-900 mb-3">GeoJSON Files</h3>
+                    <h3 className="font-medium text-gray-900 mb-3">GeoJSON Files</h3>
                     <MultiFileDownloader items={gridGeoJsonItems} zipName={`PaCE-grid-${gridPeriod}-json`} />
-                    <div className="mt-3 text-xs text-gray-600">
-                      <div className="font-medium text-gray-700 mb-1">Format</div>
-                      <div>Point geometries with forecast values</div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -461,59 +331,60 @@ ${GITHUB_BASE}/forecast_metadata.json`} />
           {/* Usage & License */}
           <div id="usage" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-2xl font-light text-gray-900 mb-4">Usage & License</h2>
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">License</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-2">License</h3>
                 <p className="text-sm text-gray-700">
-                  <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer" className="text-link">CC BY-NC 4.0</a> (Attribution-NonCommercial). For commercial use, <Link href="/contact" className="text-link">contact us</Link>.
+                  <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer" className="text-link">CC BY-NC 4.0</a>. For commercial use, <Link href="/contact" className="text-link">contact us</Link>.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">Rate Limits</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-2">Update Schedule</h3>
                 <p className="text-sm text-gray-700">
-                  Cache responses locally. Data updates monthly on the 1st only. Excessive requests may be rate-limited.
+                  Forecasts generated on the 1st at 01:00 UTC. Data available by 03:00 UTC.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">Update Schedule</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-2">Rate Limits</h3>
                 <p className="text-sm text-gray-700">
-                  Forecasts generated on the 24th and 1st at 01:00 UTC. Data available by 03:00 UTC same day.
+                  Cache responses locally. Data updates monthly only. Excessive requests may be rate-limited.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">Citation</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-2">Citation</h3>
                 <p className="text-sm text-gray-700">
-                  Schincariol, T., Frank, H., & Chadefaux, T. (2025). Accounting for variability in conflict dynamics: A pattern-based predictive model. <em>Journal of Peace Research</em>. <a href="https://doi.org/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI: 10.1177/00223433251330790</a>
-                </p>
-                <p className="text-xs text-gray-600 mt-1">
-                  See <Link href="/downloads#cite" className="text-link">full citation guidelines</Link>.
+                  Schincariol, T., Frank, H., & Chadefaux, T. (2025). JPR. <a href="https://doi.org/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
                 </p>
               </div>
+            </div>
 
-              <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-1">Support</h3>
-                <p className="text-sm text-gray-700 mb-2">
-                  Questions, issues, or feature requests:
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <Link
-                    href="/contact"
-                    className="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
-                  >
-                    Contact Us
-                  </Link>
-                  <a
-                    href="https://github.com/conflictlab/Pace-map-risk/issues"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded transition-colors"
-                  >
-                    GitHub Issues
-                  </a>
-                </div>
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
+                >
+                  Contact Us
+                </Link>
+                <a
+                  href="https://github.com/conflictlab/Pace-map-risk/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded transition-colors"
+                >
+                  GitHub Issues
+                </a>
+                <a
+                  href={`${GITHUB_BASE}/forecasts_h12.csv`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded transition-colors"
+                >
+                  GitHub Fallback URLs
+                </a>
               </div>
             </div>
           </div>
