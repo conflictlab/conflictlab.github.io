@@ -239,12 +239,17 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                 </div>
               </div>
 
-              {/* Confidence Intervals */}
+              {/* Prediction Bounds */}
               <div className="bg-blue-50 border border-blue-200 rounded p-4">
-                <div className="text-sm">
-                  <span className="font-medium text-gray-900">Confidence Intervals:</span> Add <code className="px-1.5 py-0.5 bg-white text-gray-800 rounded text-xs">_min</code> or <code className="px-1.5 py-0.5 bg-white text-gray-800 rounded text-xs">_max</code> to forecast filenames:
-                  <div className="mt-2 text-xs font-mono text-gray-700">
-                    forecasts_h12<span className="text-blue-600">_min</span>.csv, forecasts_h12<span className="text-blue-600">_max</span>.csv
+                <div className="text-sm space-y-2">
+                  <div>
+                    <span className="font-medium text-gray-900">Prediction Bounds:</span> Add <code className="px-1.5 py-0.5 bg-white text-gray-800 rounded text-xs">_min</code> or <code className="px-1.5 py-0.5 bg-white text-gray-800 rounded text-xs">_max</code> to forecast filenames:
+                    <div className="mt-1 text-xs font-mono text-gray-700">
+                      forecasts_h12<span className="text-blue-600">_min</span>.csv, forecasts_h12<span className="text-blue-600">_max</span>.csv
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-700 border-t border-blue-200 pt-2 mt-2">
+                    <span className="font-medium">What they represent:</span> Empirical bounds derived from historical analogues. The model identifies past conflict trajectories similar to the present situation, then uses the range of those outcomes to estimate lower and upper prediction bounds. Not statistical confidence intervals, but scenario-based uncertainty estimates.
                   </div>
                 </div>
               </div>
