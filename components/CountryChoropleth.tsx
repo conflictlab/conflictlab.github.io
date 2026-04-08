@@ -221,14 +221,16 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     }
   }
 
-  // Build a filtered GeoJSON with only non-zero countries for rendering and fitting
+  // Build a filtered GeoJSON with only countries that have forecast data
   const filtered = useMemo(() => {
     if (!world?.features?.length) return null
     const feats = [] as any[]
     for (const f of world.features) {
-      const name = normalizeName(f?.properties?.name || f?.properties?.NAME || '')
-      const v = Number(valueByName.get(name) || 0)
-      if (v > 0) feats.push(f)
+      const geoName = normalizeName(f?.properties?.name || f?.properties?.NAME || '')
+      // Include if this country has a value in valueByName (meaning it has forecast data)
+      if (valueByName.has(geoName)) {
+        feats.push(f)
+      }
     }
     if (feats.length === 0) return null
     return { type: 'FeatureCollection', features: feats }
