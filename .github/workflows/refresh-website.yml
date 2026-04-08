@@ -122,6 +122,9 @@ jobs:
       - name: Build dashboard snapshot from forecasts
         run: node scripts/build-snapshot-from-forecasts.js
 
+      - name: Verify snapshot is in sync with CSV
+        run: node scripts/check-snapshot-sync.js
+
       - name: Build PRIO-GRID centroids
         run: npm run grid:centroids
 
