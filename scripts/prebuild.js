@@ -69,6 +69,32 @@ async function main() {
 
   console.log('Prebuild: exporting static API endpoints…')
   run('node scripts/export-static-api.js')
+
+  // Regenerate snapshot and map CSVs to ensure they're always in sync with source data
+  console.log('Prebuild: regenerating dashboard snapshot from forecasts…')
+  run('node scripts/build-snapshot-from-forecasts.js')
+
+  console.log('Prebuild: syncing map CSV files with latest forecasts…')
+  const metadataPath = path.join(process.cwd(), 'public', 'data', 'forecasts', 'latest', 'metadata.json')
+  let periodFromMetadata = null
+  try {
+    const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'))
+    periodFromMetadata = metadata.forecast_start_date || metadata.data_end_date || null
+  } catch {}
+
+  if (periodFromMetadata) {
+    const sourceCsv = path.join(process.cwd(), 'public', 'data', 'forecasts', 'latest', 'forecasts_h6.csv')
+    const contentDir = path.join(process.cwd(), 'content', 'forecasts', 'csv')
+    if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir, { recursive: true })
+    fs.copyFileSync(sourceCsv, path.join(contentDir, `${periodFromMetadata}.csv`))
+    fs.copyFileSync(sourceCsv, path.join(contentDir, 'latest.csv'))
+    console.log(`Prebuild: updated content/forecasts/csv for period ${periodFromMetadata}`)
+  }
+
+  // Verify data sync
+  console.log('Prebuild: verifying data sync…')
+  run('node scripts/check-snapshot-sync.js')
+  run('node scripts/check-map-csv-sync.js')
 }
 
 main().catch(err => { console.error(err?.message || err); process.exit(1) })
