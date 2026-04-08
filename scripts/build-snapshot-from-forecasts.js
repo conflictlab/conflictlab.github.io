@@ -132,15 +132,42 @@ function main() {
       entities: entities
     }
 
-    // Write snapshot
+    // Validate snapshot sanity before writing
+    const placeholderCount = entities.filter(e => e.index === 0 || e.index > 9000).length
+    if (placeholderCount > entities.length * 0.5) {
+      console.error(`⚠️  WARNING: ${placeholderCount}/${entities.length} entities have suspicious values (0 or >9000)`)
+      console.error('This suggests the forecast CSV may be corrupted or incomplete.')
+      console.error('Aborting snapshot write to prevent stale data.')
+      process.exit(1)
+    }
+
+    // Compare with previous snapshot to detect silent failures
     const outputDir = path.join(process.cwd(), 'content', 'forecasts')
     fs.mkdirSync(outputDir, { recursive: true })
     const outputPath = path.join(outputDir, 'latest.json')
+    const prevSnapshot = (() => {
+      try {
+        return JSON.parse(fs.readFileSync(outputPath, 'utf-8'))
+      } catch {
+        return null
+      }
+    })()
+
+    // Check if snapshot actually changed (not just metadata)
+    const prevEntities = prevSnapshot?.entities || []
+    if (prevEntities.length === entities.length) {
+      const allSame = entities.every((e, i) => prevEntities[i]?.index === e.index)
+      if (allSame) {
+        console.warn(`⚠️  Snapshot unchanged from previous build (all ${entities.length} entities have identical values)`)
+      }
+    }
+
     fs.writeFileSync(outputPath, JSON.stringify(snapshot, null, 2))
 
     console.log(`✓ Built snapshot: ${outputPath}`)
     console.log(`  Period: ${snapshot.period}`)
     console.log(`  Entities: ${entities.length}`)
+    console.log(`  Non-zero entities: ${entities.filter(e => e.index > 0).length}`)
   } catch (err) {
     console.error('Error building snapshot:', err.message)
     process.exit(1)
