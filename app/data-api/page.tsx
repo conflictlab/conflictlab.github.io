@@ -28,11 +28,25 @@ function listArchive(): string[] {
   } catch { return [] }
 }
 
+function listGridPeriods(): string[] {
+  try {
+    const dir = path.join(process.cwd(), 'public', 'data', 'grid')
+    const files = fs.readdirSync(dir)
+    const periods = Array.from(new Set(
+      files
+        .map(f => { const m = f.match(/^(\d{4}-\d{2})[-.]/) ; return m ? m[1] : null })
+        .filter((p): p is string => !!p)
+    )).sort()
+    return periods
+  } catch { return [] }
+}
+
 
 
 export default function DataApiPage() {
   const latest = latestPeriod()
   const periods = listArchive()
+  const gridPeriods = listGridPeriods()
 
   // Pre-compute all file availability
   const archiveData = periods.map(period => {
@@ -186,6 +200,11 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                     <div>/data/forecasts/archive/<span className="text-blue-600">YYYY-MM</span>/Hist.csv</div>
                     <div>/data/forecasts/archive/<span className="text-blue-600">YYYY-MM</span>/metadata.json</div>
                   </div>
+                  {periods.length > 0 && (
+                    <p className="text-xs text-gray-600 mt-2">
+                      Available from <span className="font-medium">{periods[periods.length - 1]}</span> to <span className="font-medium">{periods[0]}</span>.
+                    </p>
+                  )}
                 </div>
 
                 {/* Grid Forecasts */}
@@ -197,9 +216,14 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                     <div className="text-gray-500">... through m6.json</div>
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Spatial forecasts by month. <span className="font-medium">period</span> is the forecast start date in YYYY-MM format (e.g., 2026-03).
+                    <span className="font-medium">period</span> is the forecast start date in YYYY-MM format.
                   </p>
-                  <p className="text-xs text-gray-600">
+                  {gridPeriods.length > 0 && (
+                    <p className="text-xs text-gray-600 mt-1">
+                      Available periods: <span className="font-mono">{gridPeriods.join(', ')}</span>.
+                    </p>
+                  )}
+                  <p className="text-xs text-gray-600 mt-1">
                     Bulk downloads available below.
                   </p>
                 </div>
@@ -323,7 +347,7 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
           <div id="archive" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-2xl font-light text-gray-900 mb-4">Historical Archive</h2>
             <p className="text-sm text-gray-600 mb-4">
-              Access any historical forecast period from 1989 to present.
+              Access any historical forecast period{periods.length > 0 ? ` from ${periods[periods.length - 1]} to ${periods[0]}` : ' from 1989-01 to present'}.
             </p>
             <div className="bg-white border border-gray-200 rounded p-4">
               <ArchiveTable archiveData={archiveData} />
