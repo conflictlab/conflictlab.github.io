@@ -133,6 +133,9 @@ jobs:
           cp public/data/forecasts/latest/forecasts_h6.csv content/forecasts/csv/latest.csv
           echo "Updated content/forecasts/csv with period ${PERIOD}"
 
+      - name: Verify map CSV is in sync with source
+        run: node scripts/check-map-csv-sync.js
+
       - name: Build dashboard snapshot from forecasts
         run: node scripts/build-snapshot-from-forecasts.js
 
