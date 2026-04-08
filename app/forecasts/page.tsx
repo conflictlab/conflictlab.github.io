@@ -83,7 +83,7 @@ export default async function ForecastsPage() {
           <div className="mt-4 flex flex-wrap gap-3">
             <Link href="/forecasts#dashboard" className="btn-secondary inline-flex items-center gap-1">Dashboard</Link>
             <Link href="/reports" className="btn-secondary inline-flex items-center gap-1">Reports</Link>
-            <Link href="/downloads" className="btn-secondary inline-flex items-center gap-1">Downloads</Link>
+            <Link href="/data-api" className="btn-secondary inline-flex items-center gap-1">Data & Downloads</Link>
           </div>
           <script
             type="application/ld+json"
