@@ -38,7 +38,7 @@ function HotspotMarkers({ hotspots, onHotspotClick }: { hotspots: Array<{ name: 
 
     if (!hotspots || hotspots.length === 0) return () => {}
 
-    const sorted = hotspots.slice().sort((a, b) => b.value - a.value).slice(0, 16)
+    const sorted = hotspots.slice().sort((a, b) => b.value - a.value).slice(0, 10)
     const values = sorted.map(s => s.value)
     const vmin = Math.min(...values), vmax = Math.max(...values)
     const scaleFor = (v: number) => {
@@ -47,16 +47,12 @@ function HotspotMarkers({ hotspots, onHotspotClick }: { hotspots: Array<{ name: 
       return 0.9 + t * 0.5 // scale ~ 0.9 → 1.4
     }
 
-    sorted.forEach((spot, idx) => {
-      const tier = idx < 6 ? 'primary' : 'secondary'
+    sorted.forEach((spot) => {
       const sz = scaleFor(spot.value)
-      const speed = tier === 'primary' ? '2.2s' : '2.6s'
-      const pulseColor = tier === 'primary' ? 'rgba(220,38,38,0.4)' : 'rgba(17,24,39,0.35)'
-      const strokeColor = tier === 'primary' ? '#dc2626' : '#374151'
       const icon = L.divIcon({
         className: 'hotspot-marker',
         html: `
-          <div class="hotspot-container" data-tier="${tier}" style="--sz:${sz};--speed:${speed};--pulse:${pulseColor};--stroke:${strokeColor};">
+          <div class="hotspot-container" style="--sz:${sz};--speed:2.2s;--pulse:rgba(220,38,38,0.4);--stroke:#dc2626;">
             <div class="hotspot-pulse"></div>
             <div class="hotspot-core"></div>
           </div>
@@ -678,16 +674,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                           <div className="w-2 h-2 rounded-full bg-red-600 border border-white shadow-sm" />
                         </div>
                       </div>
-                      <span className="text-[11px]">Top 6 countries</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="relative w-5 h-5">
-                        <div className="legend-hotspot-pulse-secondary" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-2 h-2 rounded-full bg-gray-700 border border-white shadow-sm" />
-                        </div>
-                      </div>
-                      <span className="text-[11px]">Next 10 countries</span>
+                      <span className="text-[11px]">Top 10 countries</span>
                     </div>
                     <div className={`text-[10px] italic mt-1 ${dimZoomControls ? 'text-gray-500' : 'text-gray-600'}`}>Size proportional to risk</div>
                   </div>
