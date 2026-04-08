@@ -158,9 +158,8 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
             <div className="font-medium text-gray-900 mb-2">Contents</div>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               <Link href="#quick-start" className="text-link">Quick Start</Link>
-              <Link href="#data-api" className="text-link">Data Download and API</Link>
-              <Link href="#documentation" className="text-link">Documentation</Link>
-              <Link href="#archive" className="text-link">Archive</Link>
+              <Link href="#country-forecasts" className="text-link">Country Forecasts</Link>
+              <Link href="#prio-grid" className="text-link">PRIO-GRID</Link>
               <Link href="#usage" className="text-link">Usage</Link>
             </div>
           </div>
@@ -172,11 +171,44 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
               Fetch the latest forecasts in your preferred language. All endpoints are stable and updated monthly on the 1st.
             </p>
             <TabbedCodeExamples examples={quickStartExamples} />
+
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Resources</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a
+                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/QUICK_START.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="text-sm font-medium text-gray-900 mb-1">Quick Start Guide</div>
+                  <div className="text-xs text-gray-600">5-minute introduction with simple examples</div>
+                </a>
+                <a
+                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="text-sm font-medium text-gray-900 mb-1">Complete API Reference</div>
+                  <div className="text-xs text-gray-600">Full specification and integration patterns</div>
+                </a>
+                <a
+                  href="https://github.com/conflictlab/conflictlab.github.io/tree/main/examples"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="text-sm font-medium text-gray-900 mb-1">Example Scripts</div>
+                  <div className="text-xs text-gray-600">Production-ready Python & R clients</div>
+                </a>
+              </div>
+            </div>
           </div>
 
-          {/* Data Download and API */}
-          <div id="data-api" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Data Download and API</h2>
+          {/* Country Forecasts */}
+          <div id="country-forecasts" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Country Forecasts</h2>
 
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -223,110 +255,76 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                 </div>
               </div>
 
-              {/* Grid Bulk Downloads */}
-              {(() => {
-                let gridPeriod: string | null = null
-                try {
-                  const gridDir = path.join(process.cwd(), 'public', 'data', 'grid')
-                  const files = fs.readdirSync(gridDir)
-                  const periods = files
-                    .map((f) => {
-                      const m = f.match(/(\d{4}-\d{2})(?:\.geo\.json|\-m[1-6]\.json|\-m[1-6]\.csv|\.csv)$/)
-                      return m ? m[1] : null
-                    })
-                    .filter((p): p is string => !!p)
-                    .sort()
-                  if (periods.length) gridPeriod = periods[periods.length - 1]
-                } catch {}
+              {/* Historical Archive Table */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Archive Downloads</h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Access any historical forecast period{periods.length > 0 ? ` from ${periods[periods.length - 1]} to ${periods[0]}` : ' from 1989-01 to present'}.
+                </p>
+                <div className="bg-white border border-gray-200 rounded p-4">
+                  <ArchiveTable archiveData={archiveData} />
+                </div>
+              </div>
+            </div>
+          </div>
 
-                if (!gridPeriod) return null
+          {/* Sub-national Forecasts (PRIO-GRID) */}
+          {(() => {
+            let gridPeriod: string | null = null
+            try {
+              const gridDir = path.join(process.cwd(), 'public', 'data', 'grid')
+              const files = fs.readdirSync(gridDir)
+              const periods = files
+                .map((f) => {
+                  const m = f.match(/(\d{4}-\d{2})(?:\.geo\.json|\-m[1-6]\.json|\-m[1-6]\.csv|\.csv)$/)
+                  return m ? m[1] : null
+                })
+                .filter((p): p is string => !!p)
+                .sort()
+              if (periods.length) gridPeriod = periods[periods.length - 1]
+            } catch {}
 
-                const gridCsvItems = [
-                  { path: `/data/grid/${gridPeriod}-m1.csv`, label: `${gridPeriod}-m1.csv` },
-                  { path: `/data/grid/${gridPeriod}-m2.csv`, label: `${gridPeriod}-m2.csv` },
-                  { path: `/data/grid/${gridPeriod}-m3.csv`, label: `${gridPeriod}-m3.csv` },
-                  { path: `/data/grid/${gridPeriod}-m4.csv`, label: `${gridPeriod}-m4.csv` },
-                  { path: `/data/grid/${gridPeriod}-m5.csv`, label: `${gridPeriod}-m5.csv` },
-                  { path: `/data/grid/${gridPeriod}-m6.csv`, label: `${gridPeriod}-m6.csv` },
-                  { path: `/data/grid/${gridPeriod}.csv`, label: `${gridPeriod}.csv (all months)` },
-                ]
-                const gridGeoJsonItems = [
-                  { path: `/data/grid/${gridPeriod}.geo.json`, label: `${gridPeriod}.geo.json (polygons)` },
-                  { path: `/data/grid/${gridPeriod}-m1.json`, label: `${gridPeriod}-m1.json` },
-                  { path: `/data/grid/${gridPeriod}-m2.json`, label: `${gridPeriod}-m2.json` },
-                  { path: `/data/grid/${gridPeriod}-m3.json`, label: `${gridPeriod}-m3.json` },
-                  { path: `/data/grid/${gridPeriod}-m4.json`, label: `${gridPeriod}-m4.json` },
-                  { path: `/data/grid/${gridPeriod}-m5.json`, label: `${gridPeriod}-m5.json` },
-                  { path: `/data/grid/${gridPeriod}-m6.json`, label: `${gridPeriod}-m6.json` },
-                  { path: `/data/grid/centroids.csv`, label: `centroids.csv` },
-                ]
+            if (!gridPeriod) return null
 
-                return (
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <h3 className="text-lg font-medium text-gray-900 mb-3">Grid Bulk Downloads</h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Download all spatial forecasts for period <span className="font-mono font-medium">{gridPeriod}</span>.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="border border-gray-200 rounded p-4">
-                        <h4 className="font-medium text-gray-900 mb-3">CSV Files</h4>
-                        <MultiFileDownloader items={gridCsvItems} zipName={`PaCE-grid-${gridPeriod}-csv`} />
-                      </div>
-                      <div className="border border-gray-200 rounded p-4">
-                        <h4 className="font-medium text-gray-900 mb-3">GeoJSON Files</h4>
-                        <MultiFileDownloader items={gridGeoJsonItems} zipName={`PaCE-grid-${gridPeriod}-json`} />
-                      </div>
-                    </div>
+            const gridCsvItems = [
+              { path: `/data/grid/${gridPeriod}-m1.csv`, label: `${gridPeriod}-m1.csv` },
+              { path: `/data/grid/${gridPeriod}-m2.csv`, label: `${gridPeriod}-m2.csv` },
+              { path: `/data/grid/${gridPeriod}-m3.csv`, label: `${gridPeriod}-m3.csv` },
+              { path: `/data/grid/${gridPeriod}-m4.csv`, label: `${gridPeriod}-m4.csv` },
+              { path: `/data/grid/${gridPeriod}-m5.csv`, label: `${gridPeriod}-m5.csv` },
+              { path: `/data/grid/${gridPeriod}-m6.csv`, label: `${gridPeriod}-m6.csv` },
+              { path: `/data/grid/${gridPeriod}.csv`, label: `${gridPeriod}.csv (all months)` },
+            ]
+            const gridGeoJsonItems = [
+              { path: `/data/grid/${gridPeriod}.geo.json`, label: `${gridPeriod}.geo.json (polygons)` },
+              { path: `/data/grid/${gridPeriod}-m1.json`, label: `${gridPeriod}-m1.json` },
+              { path: `/data/grid/${gridPeriod}-m2.json`, label: `${gridPeriod}-m2.json` },
+              { path: `/data/grid/${gridPeriod}-m3.json`, label: `${gridPeriod}-m3.json` },
+              { path: `/data/grid/${gridPeriod}-m4.json`, label: `${gridPeriod}-m4.json` },
+              { path: `/data/grid/${gridPeriod}-m5.json`, label: `${gridPeriod}-m5.json` },
+              { path: `/data/grid/${gridPeriod}-m6.json`, label: `${gridPeriod}-m6.json` },
+              { path: `/data/grid/centroids.csv`, label: `centroids.csv` },
+            ]
+
+            return (
+              <div id="prio-grid" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+                <h2 className="text-2xl font-light text-gray-900 mb-4">Sub-national Forecasts (PRIO-GRID)</h2>
+                <p className="text-sm text-gray-600 mb-6">
+                  High-resolution spatial forecasts on a 0.5° grid (~55 km cells). Download forecasts for period <span className="font-mono font-medium">{gridPeriod}</span> in CSV or GeoJSON format.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="border border-gray-200 rounded p-4">
+                    <h4 className="font-medium text-gray-900 mb-3">CSV Files</h4>
+                    <MultiFileDownloader items={gridCsvItems} zipName={`PaCE-grid-${gridPeriod}-csv`} />
                   </div>
-                )
-              })()}
-            </div>
-          </div>
-
-          {/* Documentation */}
-          <div id="documentation" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Documentation & Examples</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              <a
-                href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/QUICK_START.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
-              >
-                <div className="text-sm font-medium text-gray-900 mb-1">Quick Start Guide</div>
-                <div className="text-xs text-gray-600">5-minute introduction with simple examples</div>
-              </a>
-              <a
-                href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
-              >
-                <div className="text-sm font-medium text-gray-900 mb-1">Complete API Reference</div>
-                <div className="text-xs text-gray-600">Full specification and integration patterns</div>
-              </a>
-              <a
-                href="https://github.com/conflictlab/conflictlab.github.io/tree/main/examples"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
-              >
-                <div className="text-sm font-medium text-gray-900 mb-1">Example Scripts</div>
-                <div className="text-xs text-gray-600">Production-ready Python & R clients</div>
-              </a>
-            </div>
-          </div>
-
-          {/* Archive */}
-          <div id="archive" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Historical Archive</h2>
-            <p className="text-sm text-gray-600 mb-4">
-              Access any historical forecast period{periods.length > 0 ? ` from ${periods[periods.length - 1]} to ${periods[0]}` : ' from 1989-01 to present'}.
-            </p>
-            <div className="bg-white border border-gray-200 rounded p-4">
-              <ArchiveTable archiveData={archiveData} />
-            </div>
-          </div>
+                  <div className="border border-gray-200 rounded p-4">
+                    <h4 className="font-medium text-gray-900 mb-3">GeoJSON Files</h4>
+                    <MultiFileDownloader items={gridGeoJsonItems} zipName={`PaCE-grid-${gridPeriod}-json`} />
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
 
           {/* Usage & License */}
           <div id="usage" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
