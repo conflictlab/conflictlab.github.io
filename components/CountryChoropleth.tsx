@@ -617,9 +617,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
                     offset: [0, -10]
                   })
                   layer.on('click', () => {
-                    const entity = items.find(it => normalizeName(it.name) === normalizeName(name))
-                    if (entity && entity.id) {
-                      router.push(`/forecasts/${entity.id}`)
+                    const info = nameToEntity.get(normalizeName(name))
+                    if (info?.id) {
+                      router.push(`/forecasts/${info.id}`)
                     } else if (onSelect) {
                       onSelect(String(name))
                     }
