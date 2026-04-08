@@ -784,10 +784,11 @@ function calculateCentroid(geometry: any): [number, number] | null {
 function aliasFor(name: string): string | null {
   const n = normalizeName(name)
   const map: Record<string,string> = {
-    // Direct name mismatches
+    // Data name → GeoJSON name mismatches
     'united states of america': 'usa',
     'united states': 'usa',
     'cote divoire': 'ivory coast',
+    'antigua barbuda': 'antigua and barbuda',
     'bosnia and herz': 'bosnia and herzegovina',
     'central african rep': 'central african republic',
     'congo': 'republic of the congo',
@@ -795,22 +796,9 @@ function aliasFor(name: string): string | null {
     'dominican rep': 'dominican republic',
     'guinea bissau': 'guinea bissau',
     's sudan': 'south sudan',
+    'macedonia': 'north macedonia',
     'serbia': 'republic of serbia',
     'tanzania': 'united republic of tanzania',
-    // Existing aliases (kept for compatibility)
-    'congo kinshasa': 'democratic republic of the congo',
-    'congo brazzaville': 'republic of the congo',
-    'eswatini': 'swaziland',
-    'burma': 'myanmar',
-    'south korea': 'korea',
-    'north korea': 'korea',
-    'macedonia': 'north macedonia',
-    'russia': 'russian federation',
-    'bolivia': 'bolivia, plurinational state of',
-    'iran': 'iran, islamic republic of',
-    'moldova': 'moldova, republic of',
-    'syria': 'syrian arab republic',
-    'venezuela': 'venezuela, bolivarian republic of',
   }
   return map[n] || null
 }
