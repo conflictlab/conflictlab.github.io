@@ -17,7 +17,7 @@ All data is accessible via predictable URLs on GitHub Pages - no authentication 
 ## Base URL
 
 ```
-https://conflictlab.github.io/data/forecasts/
+https://forecastlab.org/data/forecasts/
 ```
 
 ---
@@ -27,7 +27,7 @@ https://conflictlab.github.io/data/forecasts/
 ### Latest Forecasts (Always Current)
 
 ```
-https://conflictlab.github.io/data/forecasts/latest/
+https://forecastlab.org/data/forecasts/latest/
 ```
 
 **Available files:**
@@ -43,12 +43,12 @@ https://conflictlab.github.io/data/forecasts/latest/
 ### Archived Forecasts (By Period)
 
 ```
-https://conflictlab.github.io/data/forecasts/archive/{YYYY-MM}/
+https://forecastlab.org/data/forecasts/archive/{YYYY-MM}/
 ```
 
 **Example:**
 ```
-https://conflictlab.github.io/data/forecasts/archive/2026-03/forecasts_h12.csv
+https://forecastlab.org/data/forecasts/archive/2026-03/forecasts_h12.csv
 ```
 
 Each archive contains the same files as `/latest/`, frozen at the time of that forecast run.
@@ -58,7 +58,7 @@ Each archive contains the same files as `/latest/`, frozen at the time of that f
 ### Grid Forecasts (PRIO-GRID Spatial Data)
 
 ```
-https://conflictlab.github.io/data/grid/{YYYY-MM}-m{1-6}.json
+https://forecastlab.org/data/grid/{YYYY-MM}-m{1-6}.json
 ```
 
 **Description:** Sub-national spatial forecasts at PRIO-GRID cell level (0.5° x 0.5° grid cells).
@@ -69,8 +69,8 @@ https://conflictlab.github.io/data/grid/{YYYY-MM}-m{1-6}.json
 
 **Example:**
 ```
-https://conflictlab.github.io/data/grid/2026-03-m1.json  # First month forecast
-https://conflictlab.github.io/data/grid/2026-03-m6.json  # Sixth month forecast
+https://forecastlab.org/data/grid/2026-03-m1.json  # First month forecast
+https://forecastlab.org/data/grid/2026-03-m6.json  # Sixth month forecast
 ```
 
 **Available formats:**
@@ -156,7 +156,7 @@ To fetch the latest forecasts every month:
 import pandas as pd
 from datetime import datetime
 
-BASE_URL = "https://conflictlab.github.io/data/forecasts"
+BASE_URL = "https://forecastlab.org/data/forecasts"
 
 def fetch_latest_forecasts():
     """Fetch the latest 12-month forecasts and historical data."""
@@ -191,7 +191,7 @@ print(f"Countries: {len(data['forecasts_mean'].columns) - 1}")
 library(httr)
 library(jsonlite)
 
-BASE_URL <- "https://conflictlab.github.io/data/forecasts"
+BASE_URL <- "https://forecastlab.org/data/forecasts"
 
 fetch_latest_forecasts <- function() {
   # Fetch metadata
@@ -475,7 +475,7 @@ def fetch_all_indicators(period='latest'):
 **Data citation:**
 ```
 PACE Conflict Forecasting System (2026). Monthly conflict fatality forecasts.
-Retrieved from https://conflictlab.github.io/data/forecasts/
+Retrieved from https://forecastlab.org/data/forecasts/
 ```
 
 ---
