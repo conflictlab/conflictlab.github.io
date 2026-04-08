@@ -206,16 +206,6 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                     </p>
                   )}
                 </div>
-
-                {/* Data Formats */}
-                <div className="border border-gray-200 rounded p-4">
-                  <h3 className="font-medium text-gray-900 mb-2">Data Formats</h3>
-                  <div className="text-xs space-y-2 text-gray-700">
-                    <div><span className="font-medium">CSV:</span> Country forecasts (rows=months, cols=countries)</div>
-                    <div><span className="font-medium">JSON:</span> Metadata, grid data (GeoJSON)</div>
-                    <div><span className="font-medium">ZIP:</span> Complete period bundles</div>
-                  </div>
-                </div>
               </div>
 
               {/* Prediction Bounds */}
