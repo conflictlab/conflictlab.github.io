@@ -165,7 +165,7 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
 
           {/* Quick Start with Tabbed Examples */}
           {/* Country Forecasts */}
-          <div id="country-forecasts" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+          <div id="country-forecasts" className="mb-12 border border-gray-200 rounded-lg p-6 bg-blue-50">
             <h2 className="text-2xl font-light text-gray-900 mb-4">Country Forecasts</h2>
 
             {/* Quick Start */}
@@ -267,7 +267,7 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
             ]
 
             return (
-              <div id="prio-grid" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
+              <div id="prio-grid" className="mb-12 border border-gray-200 rounded-lg p-6 bg-green-50">
                 <h2 className="text-2xl font-light text-gray-900 mb-4">Sub-national Forecasts (PRIO-GRID)</h2>
                 <p className="text-sm text-gray-600 mb-6">
                   High-resolution spatial forecasts on a 0.5° grid (~55 km cells). Download forecasts for period <span className="font-mono font-medium">{gridPeriod}</span> in CSV or GeoJSON format.
