@@ -119,6 +119,9 @@ jobs:
             --saveCsv \
             --token $GITHUB_TOKEN
 
+      - name: Build dashboard snapshot from forecasts
+        run: node scripts/build-snapshot-from-forecasts.js
+
       - name: Build PRIO-GRID centroids
         run: npm run grid:centroids
 
