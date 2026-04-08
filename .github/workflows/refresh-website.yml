@@ -119,6 +119,20 @@ jobs:
             --saveCsv \
             --token $GITHUB_TOKEN
 
+      - name: Update content/forecasts/csv with latest data
+        run: |
+          set -e
+          # Get period from metadata
+          PERIOD=$(jq -r '.forecast_start_date // .data_end_date' public/data/forecasts/latest/metadata.json)
+          if [ -z "$PERIOD" ] || [ "$PERIOD" = "null" ]; then
+            echo "Could not determine period" >&2; exit 1
+          fi
+          # Copy latest forecast to content directory for map fan charts
+          mkdir -p content/forecasts/csv
+          cp public/data/forecasts/latest/forecasts_h6.csv content/forecasts/csv/${PERIOD}.csv
+          cp public/data/forecasts/latest/forecasts_h6.csv content/forecasts/csv/latest.csv
+          echo "Updated content/forecasts/csv with period ${PERIOD}"
+
       - name: Build dashboard snapshot from forecasts
         run: node scripts/build-snapshot-from-forecasts.js
 
