@@ -9,7 +9,7 @@ export interface Publication {
 
 export const publications: Publication[] = [
   {
-    year: 2025,
+    year: 2026,
     authors: "Lu C & Chadefaux T",
     title: "Structured Pixels: Satellite Imagery as the Cause in Causal Effect Estimation",
     venue: "Hawaii International Conference on System Sciences",
