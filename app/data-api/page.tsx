@@ -172,38 +172,9 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
             </p>
             <TabbedCodeExamples examples={quickStartExamples} />
 
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Resources</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <a
-                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/QUICK_START.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="text-sm font-medium text-gray-900 mb-1">Quick Start Guide</div>
-                  <div className="text-xs text-gray-600">5-minute introduction with simple examples</div>
-                </a>
-                <a
-                  href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="text-sm font-medium text-gray-900 mb-1">Complete API Reference</div>
-                  <div className="text-xs text-gray-600">Full specification and integration patterns</div>
-                </a>
-                <a
-                  href="https://github.com/conflictlab/conflictlab.github.io/tree/main/examples"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-gray-200 rounded p-4 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="text-sm font-medium text-gray-900 mb-1">Example Scripts</div>
-                  <div className="text-xs text-gray-600">Production-ready Python & R clients</div>
-                </a>
-              </div>
-            </div>
+            <p className="text-sm text-gray-600 mt-6">
+              For full API specifications, see the <a href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md" target="_blank" rel="noopener noreferrer" className="text-link">Complete API Reference</a>.
+            </p>
           </div>
 
           {/* Country Forecasts */}
@@ -312,6 +283,31 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                 <p className="text-sm text-gray-600 mb-6">
                   High-resolution spatial forecasts on a 0.5° grid (~55 km cells). Download forecasts for period <span className="font-mono font-medium">{gridPeriod}</span> in CSV or GeoJSON format.
                 </p>
+
+                {/* Quick Start Examples for PRIO-GRID */}
+                <div className="mb-6 p-4 bg-gray-50 rounded border border-gray-200">
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Quick Example</h3>
+                  <div className="text-xs space-y-3">
+                    <div>
+                      <div className="font-mono text-gray-700 mb-1">Python:</div>
+                      <div className="bg-white p-2 rounded border border-gray-200 text-gray-700 overflow-x-auto">
+                        <code>{`import pandas as pd
+grid = pd.read_csv("${SITE_BASE}/data/grid/${gridPeriod}.csv")
+print(grid.head())  # View grid cells and predictions`}</code>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-mono text-gray-700 mb-1">JavaScript:</div>
+                      <div className="bg-white p-2 rounded border border-gray-200 text-gray-700 overflow-x-auto">
+                        <code>{`const geojson = await fetch(
+  '${SITE_BASE}/data/grid/${gridPeriod}.geo.json'
+).then(r => r.json());
+console.log(geojson.features.length);`}</code>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border border-gray-200 rounded p-4">
                     <h4 className="font-medium text-gray-900 mb-3">CSV Files</h4>
