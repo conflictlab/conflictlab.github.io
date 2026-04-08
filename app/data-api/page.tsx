@@ -157,7 +157,6 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
           <div className="mb-10 text-sm text-gray-700">
             <div className="font-medium text-gray-900 mb-2">Contents</div>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
-              <Link href="#quick-start" className="text-link">Quick Start</Link>
               <Link href="#country-forecasts" className="text-link">Country Forecasts</Link>
               <Link href="#prio-grid" className="text-link">PRIO-GRID</Link>
               <Link href="#usage" className="text-link">Usage</Link>
@@ -165,21 +164,21 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
           </div>
 
           {/* Quick Start with Tabbed Examples */}
-          <div id="quick-start" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-3">Quick Start</h2>
-            <p className="text-sm text-gray-600 mb-6">
-              Fetch the latest forecasts in your preferred language. All endpoints are stable and updated monthly on the 1st.
-            </p>
-            <TabbedCodeExamples examples={quickStartExamples} />
-
-            <p className="text-sm text-gray-600 mt-6">
-              For full API specifications, see the <a href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md" target="_blank" rel="noopener noreferrer" className="text-link">Complete API Reference</a>.
-            </p>
-          </div>
-
           {/* Country Forecasts */}
           <div id="country-forecasts" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
             <h2 className="text-2xl font-light text-gray-900 mb-4">Country Forecasts</h2>
+
+            {/* Quick Start */}
+            <div className="mb-6 pb-6 border-b border-gray-200">
+              <h3 className="text-lg font-medium text-gray-900 mb-3">Quick Start</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Fetch the latest forecasts in your preferred language. All endpoints are stable and updated monthly on the 1st.
+              </p>
+              <TabbedCodeExamples examples={quickStartExamples} />
+              <p className="text-sm text-gray-600 mt-4">
+                For full API specifications, see the <a href="https://github.com/conflictlab/conflictlab.github.io/blob/main/docs/DATA_API.md" target="_blank" rel="noopener noreferrer" className="text-link">Complete API Reference</a>.
+              </p>
+            </div>
 
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -275,26 +274,24 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                 </p>
 
                 {/* Quick Start Examples for PRIO-GRID */}
-                <div className="mb-6 p-4 bg-gray-50 rounded border border-gray-200">
-                  <h3 className="text-sm font-medium text-gray-900 mb-3">Quick Example</h3>
-                  <div className="text-xs space-y-3">
-                    <div>
-                      <div className="font-mono text-gray-700 mb-1">Python:</div>
-                      <div className="bg-white p-2 rounded border border-gray-200 text-gray-700 overflow-x-auto">
-                        <code>{`import pandas as pd
+                <div className="mb-6 space-y-4">
+                  <h3 className="text-sm font-medium text-gray-900">Quick Example</h3>
+                  <div>
+                    <div className="text-xs font-medium text-gray-700 mb-1">Python:</div>
+                    <pre className="bg-gray-900 text-gray-100 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono">
+{`import pandas as pd
 grid = pd.read_csv("${SITE_BASE}/data/grid/${gridPeriod}.csv")
-print(grid.head())  # View grid cells and predictions`}</code>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-mono text-gray-700 mb-1">JavaScript:</div>
-                      <div className="bg-white p-2 rounded border border-gray-200 text-gray-700 overflow-x-auto">
-                        <code>{`const geojson = await fetch(
+print(grid.head())  # View grid cells and predictions`}
+                    </pre>
+                  </div>
+                  <div>
+                    <div className="text-xs font-medium text-gray-700 mb-1">JavaScript:</div>
+                    <pre className="bg-gray-900 text-gray-100 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono">
+{`const geojson = await fetch(
   '${SITE_BASE}/data/grid/${gridPeriod}.geo.json'
 ).then(r => r.json());
-console.log(geojson.features.length);`}</code>
-                      </div>
-                    </div>
+console.log(geojson.features.length);`}
+                    </pre>
                   </div>
                 </div>
 
