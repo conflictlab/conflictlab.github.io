@@ -207,27 +207,6 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                   )}
                 </div>
 
-                {/* Grid Forecasts */}
-                <div className="border border-gray-200 rounded p-4">
-                  <h3 className="font-medium text-gray-900 mb-2">Grid Forecasts (PRIO-GRID)</h3>
-                  <div className="text-xs space-y-1 font-mono text-gray-700">
-                    <div>/api/v1/grid/<span className="text-blue-600">{'{period}'}</span>/points-m1.json</div>
-                    <div>/api/v1/grid/<span className="text-blue-600">{'{period}'}</span>/points-m2.json</div>
-                    <div className="text-gray-500">... through m6.json</div>
-                  </div>
-                  <p className="text-xs text-gray-600 mt-2">
-                    <span className="font-medium">period</span> is the forecast start date in YYYY-MM format.
-                  </p>
-                  {gridPeriods.length > 0 && (
-                    <p className="text-xs text-gray-600 mt-1">
-                      Available periods: <span className="font-mono">{gridPeriods.join(', ')}</span>.
-                    </p>
-                  )}
-                  <p className="text-xs text-gray-600 mt-1">
-                    Bulk downloads available below.
-                  </p>
-                </div>
-
                 {/* Data Formats */}
                 <div className="border border-gray-200 rounded p-4">
                   <h3 className="font-medium text-gray-900 mb-2">Data Formats</h3>

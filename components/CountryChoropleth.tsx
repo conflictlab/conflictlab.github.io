@@ -784,7 +784,8 @@ function calculateCentroid(geometry: any): [number, number] | null {
 function aliasFor(name: string): string | null {
   const n = normalizeName(name)
   const map: Record<string,string> = {
-    'united states': 'united states of america',
+    'united states of america': 'usa',
+    'united states': 'usa',
     'congo kinshasa': 'democratic republic of the congo',
     'congo brazzaville': 'republic of the congo',
     'ivory coast': 'cote divoire',
