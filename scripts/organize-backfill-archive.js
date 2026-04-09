@@ -43,12 +43,6 @@ function getPeriods() {
 function organizeBackfillForPeriod(period) {
   const archiveDir = path.join(ARCHIVE_DIR, period)
 
-  // Skip if already exists
-  if (fs.existsSync(archiveDir)) {
-    console.log(`  ⊘ ${period} already exists, skipping`)
-    return
-  }
-
   try {
     fs.mkdirSync(archiveDir, { recursive: true })
 
@@ -82,7 +76,7 @@ function organizeBackfillForPeriod(period) {
     } else if (filesFound < 7) {
       console.log(`  ✓ ${period} (${filesFound}/7 files)`)
     } else {
-      console.log(`  ✓ ${period}`)
+      console.log(`  ✓ ${period} (complete)`)
     }
   } catch (e) {
     console.error(`  ✗ Error organizing ${period}: ${e.message}`)
