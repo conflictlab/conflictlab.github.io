@@ -388,22 +388,12 @@ curl -O ${SITE_BASE}/data/grid/${gridPeriod}-m1.json`
             </div>
 
             <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
-                >
-                  Contact Us
-                </Link>
-                <a
-                  href={`${GITHUB_BASE}/forecasts_h12.csv`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded transition-colors"
-                >
-                  Alternative URLs (GitHub)
-                </a>
-              </div>
+              <Link
+                href="/contact"
+                className="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
+              >
+                Contact Us
+              </Link>
             </div>
           </div>
         </div>
