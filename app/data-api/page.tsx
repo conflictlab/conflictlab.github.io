@@ -290,7 +290,7 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                   <h3 className="text-sm font-medium text-gray-900">Quick Example</h3>
                   <div>
                     <div className="text-xs font-medium text-gray-700 mb-1">Python:</div>
-                    <pre className="bg-gray-900 text-gray-100 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono">
+                    <pre className="bg-slate-50 text-gray-900 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono border border-gray-200">
 {`import pandas as pd
 grid = pd.read_csv("${SITE_BASE}/data/grid/${gridPeriod}.csv")
 print(grid.head())  # View grid cells and predictions`}
@@ -298,7 +298,7 @@ print(grid.head())  # View grid cells and predictions`}
                   </div>
                   <div>
                     <div className="text-xs font-medium text-gray-700 mb-1">JavaScript:</div>
-                    <pre className="bg-gray-900 text-gray-100 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono">
+                    <pre className="bg-slate-50 text-gray-900 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono border border-gray-200">
 {`const geojson = await fetch(
   '${SITE_BASE}/data/grid/${gridPeriod}.geo.json'
 ).then(r => r.json());
