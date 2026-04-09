@@ -19,12 +19,12 @@ export default function CodeBlock({ code, language }: CodeBlockProps) {
 
   return (
     <div className="relative">
-      <pre className="text-xs bg-gray-900 text-green-400 p-4 rounded overflow-x-auto">
+      <pre className="text-xs bg-slate-50 text-gray-900 p-4 rounded overflow-x-auto border border-gray-200">
         {code}
       </pre>
       <button
         onClick={handleCopy}
-        className="absolute top-2 right-2 p-2 bg-gray-800 hover:bg-gray-700 rounded text-gray-300 transition-colors"
+        className="absolute top-2 right-2 p-2 bg-gray-100 hover:bg-gray-200 rounded text-gray-600 transition-colors"
         title="Copy to clipboard"
         aria-label="Copy code to clipboard"
       >

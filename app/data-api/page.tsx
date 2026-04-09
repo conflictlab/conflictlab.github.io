@@ -380,13 +380,6 @@ curl -O ${SITE_BASE}/data/grid/${gridPeriod}-m1.json`
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-2">Rate Limits</h3>
-                <p className="text-sm text-gray-700">
-                  Cache responses locally. Data updates monthly only. Excessive requests may be rate-limited.
-                </p>
-              </div>
-
-              <div>
                 <h3 className="text-sm font-medium text-gray-900 mb-2">Citation</h3>
                 <p className="text-sm text-gray-700">
                   Schincariol, T., Frank, H., & Chadefaux, T. (2025). JPR. <a href="https://doi.org/10.1177/00223433251330790" target="_blank" rel="noopener noreferrer" className="text-link">DOI</a>
