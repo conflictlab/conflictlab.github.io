@@ -82,8 +82,9 @@ export default function DataApiPage() {
       code: `import pandas as pd
 import requests
 
-# Fetch latest 12-month forecasts
+# Fetch latest forecasts and historical data
 forecasts = pd.read_csv("${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv")
+historical = pd.read_csv("${SITE_BASE}/data/forecasts/latest/Hist.csv")
 metadata = requests.get("${SITE_BASE}/data/forecasts/latest/metadata.json").json()
 
 print(f"Forecast period: {metadata['forecast_start_date']}")
@@ -96,8 +97,9 @@ print(forecasts["Ukraine"].head())  # First 5 months for Ukraine`
 library(httr)
 library(jsonlite)
 
-# Fetch latest 12-month forecasts
+# Fetch latest forecasts and historical data
 forecasts <- read_csv("${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv")
+historical <- read_csv("${SITE_BASE}/data/forecasts/latest/Hist.csv")
 metadata <- GET("${SITE_BASE}/data/forecasts/latest/metadata.json") %>%
   content("text") %>% fromJSON()
 
@@ -107,11 +109,13 @@ head(forecasts$Ukraine)  # First 5 months for Ukraine`
     {
       label: 'JavaScript',
       language: 'javascript',
-      code: `// Fetch latest forecasts
-const response = await fetch(
+      code: `// Fetch latest forecasts and historical data
+const forecasts = await fetch(
   '${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv'
-);
-const csvText = await response.text();
+).then(r => r.text());
+const historical = await fetch(
+  '${SITE_BASE}/data/forecasts/latest/Hist.csv'
+).then(r => r.text());
 
 // Fetch metadata
 const meta = await fetch(
