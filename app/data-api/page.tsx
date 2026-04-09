@@ -162,9 +162,9 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
           <div className="mb-10 text-sm text-gray-700">
             <div className="font-medium text-gray-900 mb-2">Contents</div>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
-              <Link href="#country-forecasts" className="text-link">Country Forecasts</Link>
-              <Link href="#prio-grid" className="text-link">PRIO-GRID Forecasts</Link>
-              <Link href="#usage" className="text-link">Usage</Link>
+              <a href="#country-forecasts" className="text-link">Country Forecasts</a>
+              <a href="#prio-grid" className="text-link">PRIO-GRID Forecasts</a>
+              <a href="#usage" className="text-link">Usage</a>
             </div>
           </div>
 
