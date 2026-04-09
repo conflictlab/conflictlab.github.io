@@ -278,6 +278,62 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
               { path: `/data/grid/centroids.csv`, label: `centroids.csv` },
             ]
 
+            const gridExamples = [
+              {
+                label: 'Python',
+                language: 'python',
+                code: `import pandas as pd
+import requests
+
+# Download grid forecasts
+grid = pd.read_csv("${SITE_BASE}/data/grid/${gridPeriod}.csv")
+geojson = requests.get("${SITE_BASE}/data/grid/${gridPeriod}.geo.json").json()
+
+print(f"Grid cells: {len(grid)}")
+print(grid.head())`
+              },
+              {
+                label: 'R',
+                language: 'r',
+                code: `library(readr)
+library(httr)
+library(jsonlite)
+
+# Download grid forecasts
+grid <- read_csv("${SITE_BASE}/data/grid/${gridPeriod}.csv")
+geojson <- GET("${SITE_BASE}/data/grid/${gridPeriod}.geo.json") %>%
+  content("text") %>% fromJSON()
+
+cat("Grid cells:", length(geojson$features), "\\n")
+head(grid)`
+              },
+              {
+                label: 'JavaScript',
+                language: 'javascript',
+                code: `// Download grid forecasts
+const grid = await fetch(
+  '${SITE_BASE}/data/grid/${gridPeriod}.csv'
+).then(r => r.text());
+const geojson = await fetch(
+  '${SITE_BASE}/data/grid/${gridPeriod}.geo.json'
+).then(r => r.json());
+
+console.log('Grid cells:', geojson.features.length);`
+              },
+              {
+                label: 'curl',
+                language: 'bash',
+                code: `# Download grid forecasts (CSV and GeoJSON)
+curl -O ${SITE_BASE}/data/grid/${gridPeriod}.csv
+curl -O ${SITE_BASE}/data/grid/${gridPeriod}.geo.json
+curl -O ${SITE_BASE}/data/grid/centroids.csv
+
+# Or download monthly files
+curl -O ${SITE_BASE}/data/grid/${gridPeriod}-m1.csv
+curl -O ${SITE_BASE}/data/grid/${gridPeriod}-m1.json`
+              }
+            ]
+
             return (
               <div id="prio-grid" className="mb-12 border border-gray-200 rounded-lg p-6 bg-green-50">
                 <h2 className="text-2xl font-light text-gray-900 mb-4">Sub-national Forecasts (PRIO-GRID)</h2>
@@ -286,25 +342,9 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                 </p>
 
                 {/* Quick Start Examples for PRIO-GRID */}
-                <div className="mb-6 space-y-4">
-                  <h3 className="text-sm font-medium text-gray-900">Quick Example</h3>
-                  <div>
-                    <div className="text-xs font-medium text-gray-700 mb-1">Python:</div>
-                    <pre className="bg-slate-50 text-gray-900 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono border border-gray-200">
-{`import pandas as pd
-grid = pd.read_csv("${SITE_BASE}/data/grid/${gridPeriod}.csv")
-print(grid.head())  # View grid cells and predictions`}
-                    </pre>
-                  </div>
-                  <div>
-                    <div className="text-xs font-medium text-gray-700 mb-1">JavaScript:</div>
-                    <pre className="bg-slate-50 text-gray-900 p-3 rounded overflow-x-auto text-xs leading-relaxed font-mono border border-gray-200">
-{`const geojson = await fetch(
-  '${SITE_BASE}/data/grid/${gridPeriod}.geo.json'
-).then(r => r.json());
-console.log(geojson.features.length);`}
-                    </pre>
-                  </div>
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Quick Start</h3>
+                  <TabbedCodeExamples examples={gridExamples} />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
