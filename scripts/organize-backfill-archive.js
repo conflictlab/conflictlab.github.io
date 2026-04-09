@@ -2,12 +2,16 @@
 /**
  * Organize backfill forecasts from Historical_Predictions into archive structure.
  *
- * Reads files like 2018-01_h6.csv and 2018-01_h12.csv and organizes them into:
+ * Reads files like 2018-01_h6.csv, 2018-01_h12.csv, 2018-01_h6_min.csv, etc. and organizes them into:
  *   public/data/forecasts/archive/2018-01/
  *     ├── forecasts_h6.csv
+ *     ├── forecasts_h6_min.csv
+ *     ├── forecasts_h6_max.csv
  *     ├── forecasts_h12.csv
- *     ├── metadata.json
- *     └── (other files as available)
+ *     ├── forecasts_h12_min.csv
+ *     ├── forecasts_h12_max.csv
+ *     ├── Hist.csv
+ *     └── metadata.json
  */
 
 const fs = require('fs')
@@ -22,7 +26,8 @@ function getPeriods() {
     const periods = new Set()
 
     files.forEach(file => {
-      const match = file.match(/^(\d{4}-\d{2})_h[0-9]+\.csv$/)
+      // Match any file pattern: YYYY-MM_h6, YYYY-MM_h6_min, YYYY-MM_Hist, etc.
+      const match = file.match(/^(\d{4}-\d{2})_/)
       if (match) {
         periods.add(match[1])
       }
@@ -47,20 +52,17 @@ function organizeBackfillForPeriod(period) {
   try {
     fs.mkdirSync(archiveDir, { recursive: true })
 
-    // Copy h6 and h12 files
-    const h6Source = path.join(BACKFILL_DIR, `${period}_h6.csv`)
-    const h12Source = path.join(BACKFILL_DIR, `${period}_h12.csv`)
+    // Copy forecast files (h6, h12, and their min/max variants)
+    const files = ['h6', 'h6_min', 'h6_max', 'h12', 'h12_min', 'h12_max', 'Hist']
+    let filesFound = 0
 
-    if (fs.existsSync(h6Source)) {
-      fs.copyFileSync(h6Source, path.join(archiveDir, 'forecasts_h6.csv'))
-    } else {
-      console.warn(`  ⚠ Missing h6 for ${period}`)
-    }
-
-    if (fs.existsSync(h12Source)) {
-      fs.copyFileSync(h12Source, path.join(archiveDir, 'forecasts_h12.csv'))
-    } else {
-      console.warn(`  ⚠ Missing h12 for ${period}`)
+    for (const fileBase of files) {
+      const source = path.join(BACKFILL_DIR, `${period}_${fileBase}.csv`)
+      if (fs.existsSync(source)) {
+        const dest = path.join(archiveDir, fileBase === 'Hist' ? 'Hist.csv' : `forecasts_${fileBase}.csv`)
+        fs.copyFileSync(source, dest)
+        filesFound++
+      }
     }
 
     // Create minimal metadata.json
@@ -75,7 +77,13 @@ function organizeBackfillForPeriod(period) {
       JSON.stringify(metadata, null, 2)
     )
 
-    console.log(`  ✓ ${period}`)
+    if (filesFound === 0) {
+      console.warn(`  ⚠ No forecast files found for ${period}`)
+    } else if (filesFound < 7) {
+      console.log(`  ✓ ${period} (${filesFound}/7 files)`)
+    } else {
+      console.log(`  ✓ ${period}`)
+    }
   } catch (e) {
     console.error(`  ✗ Error organizing ${period}: ${e.message}`)
   }
