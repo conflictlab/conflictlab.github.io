@@ -53,7 +53,7 @@ https://forecastlab.org/data/forecasts/archive/2026-03/forecasts_h12.csv
 
 Each archive contains the same files as `/latest/`, frozen at the time of that forecast run.
 
-**Available periods:** Monthly from 2023-12 to present
+**Available periods:** Monthly from 2018-01 to present
 
 ### Grid Forecasts (PRIO-GRID Spatial Data)
 
@@ -79,7 +79,7 @@ https://forecastlab.org/data/grid/2026-03-m6.json  # Sixth month forecast
 - `{period}.csv` - Tabular format with all months
 - `centroids.csv` - PRIO-GRID cell centroids reference
 
-**Note:** Grid forecasts are generated for the same periods as country-level forecasts (2023-12 to present).
+**Note:** Grid forecasts are generated for the same periods as country-level forecasts. Currently available from 2023-12 to present.
 
 ---
 
@@ -222,7 +222,7 @@ cat(sprintf("Forecasting from %s\n", data$metadata$forecast_start_date))
 
 ### Fetching Specific Historical Periods
 
-**Data Availability:** Archived forecasts are available from **December 2023** (2023-12) to present, with monthly updates.
+**Data Availability:** Archived forecasts are available from **January 2018** (2018-01) to present, with monthly updates.
 
 To fetch a specific historical forecast (e.g., to compare accuracy):
 
@@ -233,7 +233,7 @@ def fetch_forecast_by_period(period):
 
     Args:
         period: Forecast period in YYYY-MM format (e.g., '2025-06')
-                Available from 2023-12 onwards
+                Available from 2018-01 onwards
 
     Returns:
         Dictionary with forecast data
@@ -257,7 +257,7 @@ june_2025 = fetch_forecast_by_period('2025-06')
 **Forecasts are updated monthly:**
 - **Timing:** Between the 1st-5th of each month (after UCDP data release)
 - **Frequency:** Once per month
-- **Archive retention:** Indefinite (all monthly forecasts since 2023-12)
+- **Archive retention:** Indefinite (all monthly forecasts since 2018-01)
 
 **To detect new updates:**
 1. Check `/latest/metadata.json` for `run_date`
