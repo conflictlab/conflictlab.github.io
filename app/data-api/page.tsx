@@ -192,8 +192,16 @@ curl -O ${SITE_BASE}/data/forecasts/archive/2026-03/forecasts-2026-03.zip`
                   <div className="text-xs space-y-1 font-mono text-gray-700">
                     <div>/data/forecasts/latest/forecasts_h6.csv</div>
                     <div>/data/forecasts/latest/forecasts_h12.csv</div>
-                    <div>/data/forecasts/latest/Hist.csv</div>
                     <div>/data/forecasts/latest/metadata.json</div>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-gray-200">
+                    <h4 className="text-xs font-medium text-gray-900 mb-1">Historical Data</h4>
+                    <p className="text-xs text-gray-600 mb-1">
+                      Download the historical training data used to generate the predictions:
+                    </p>
+                    <div className="text-xs space-y-1 font-mono text-gray-700">
+                      <div>/data/forecasts/latest/Hist.csv</div>
+                    </div>
                   </div>
                 </div>
 
