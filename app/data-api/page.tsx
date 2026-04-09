@@ -96,6 +96,7 @@ print(forecasts["Ukraine"].head())  # First 5 months for Ukraine`
       code: `library(readr)
 library(httr)
 library(jsonlite)
+library(magrittr)
 
 # Fetch latest forecasts and historical data
 forecasts <- read_csv("${SITE_BASE}/data/forecasts/latest/forecasts_h12.csv")
@@ -104,7 +105,7 @@ metadata <- GET("${SITE_BASE}/data/forecasts/latest/metadata.json") %>%
   content("text") %>% fromJSON()
 
 cat("Forecast period:", metadata$forecast_start_date, "\\n")
-head(forecasts$Ukraine)  # First 5 months for Ukraine`
+head(forecasts$Ukraine)  # First 6 rows for Ukraine`
     },
     {
       label: 'JavaScript',
@@ -298,6 +299,7 @@ print(grid.head())`
                 code: `library(readr)
 library(httr)
 library(jsonlite)
+library(magrittr)
 
 # Download grid forecasts
 grid <- read_csv("${SITE_BASE}/data/grid/${gridPeriod}.csv")
