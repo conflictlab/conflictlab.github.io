@@ -361,9 +361,9 @@ curl -O ${SITE_BASE}/data/grid/${gridPeriod}-m1.json`
             )
           })()}
 
-          {/* Usage & License */}
+          {/* License and Citation */}
           <div id="usage" className="mb-12 border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-light text-gray-900 mb-4">Usage & License</h2>
+            <h2 className="text-2xl font-light text-gray-900 mb-4">License and Citation</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 className="text-sm font-medium text-gray-900 mb-2">License</h3>
@@ -396,20 +396,12 @@ curl -O ${SITE_BASE}/data/grid/${gridPeriod}-m1.json`
                   Contact Us
                 </Link>
                 <a
-                  href="https://github.com/conflictlab/Pace-map-risk/issues"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded transition-colors"
-                >
-                  GitHub Issues
-                </a>
-                <a
                   href={`${GITHUB_BASE}/forecasts_h12.csv`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded transition-colors"
                 >
-                  GitHub Fallback URLs
+                  Alternative URLs (GitHub)
                 </a>
               </div>
             </div>
