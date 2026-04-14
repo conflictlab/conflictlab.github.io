@@ -8,6 +8,7 @@ import fs from 'fs'
 import path from 'path'
 
 type NewsletterItem = { title: string; file: string; sort: number; year: number }
+type ForecastArchiveItem = { period: string; year: number; sort: number; href: string }
 
 function parseNewsletter(fileName: string): NewsletterItem | null {
   const base = fileName.replace(/[_-]+/g, ' ')
@@ -57,8 +58,38 @@ function getNewsletters(): NewsletterItem[] {
   }
 }
 
+function getForecastArchives(): ForecastArchiveItem[] {
+  try {
+    const dir = path.join(process.cwd(), 'public', 'data', 'forecasts', 'archive')
+    const dirs = fs.readdirSync(dir, { withFileTypes: true })
+      .filter(d => d.isDirectory())
+      .map(d => d.name)
+
+    const items = dirs
+      .filter(name => /^\d{4}-\d{2}$/.test(name))
+      .map(period => {
+        const [yearStr, monthStr] = period.split('-')
+        const year = parseInt(yearStr, 10)
+        const month = parseInt(monthStr, 10) - 1
+        const sort = new Date(Date.UTC(year, month, 1)).getTime()
+        return {
+          period,
+          year,
+          sort,
+          href: `/data/forecasts/archive/${period}`
+        }
+      })
+      .sort((a, b) => b.sort - a.sort)
+
+    return items
+  } catch {
+    return []
+  }
+}
+
 export default function ReportsPage() {
   const newsletters = getNewsletters()
+  const forecastArchives = getForecastArchives()
 
   // Try to find an HTML companion for a given newsletter title (same month/year)
   function findCompanionHtml(title: string): string | null {
@@ -250,6 +281,44 @@ export default function ReportsPage() {
                 Subscribe via Email
               </a>
             )}
+          </div>
+
+          {/* Forecast Archive */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
+              Forecast Archive
+            </h2>
+            <p className="text-gray-600 mb-6 leading-relaxed">
+              Download historical forecast data by period. Each archive contains CSV files with h6 forecasts, h12 forecasts, historical data, and uncertainty bounds (min/max).
+            </p>
+
+            {/* Group forecasts by year */}
+            {(() => {
+              const forecastsByYear: Record<string, ForecastArchiveItem[]> = {}
+              forecastArchives.forEach(f => {
+                const y = String(f.year)
+                if (!forecastsByYear[y]) forecastsByYear[y] = []
+                forecastsByYear[y].push(f)
+              })
+              return Object.keys(forecastsByYear)
+                .sort((a, b) => Number(b) - Number(a))
+                .map(year => (
+                  <div key={year} className="mb-8">
+                    <h3 className="text-xl font-medium text-gray-900 mb-3">{year}</h3>
+                    <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
+                      {forecastsByYear[year].map((f, index) => (
+                        <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors">
+                          <div className="flex items-center gap-3">
+                            <FileText size={20} className="text-gray-400 flex-shrink-0" />
+                            <span className="text-gray-900 font-light">{f.period}</span>
+                          </div>
+                          <Link href={f.href} className="text-blue-600 hover:text-blue-700 text-xs underline">Download</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+            })()}
           </div>
 
           {/* Past Newsletters Archive */}
