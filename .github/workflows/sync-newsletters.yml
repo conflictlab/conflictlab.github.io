@@ -2,7 +2,7 @@ name: Sync Newsletters from Pace-map-risk
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # Every 30 minutes
+    - cron: '0 3 1 * *' # 1st of month at 03:00 UTC (after monthly newsletter generation at 02:00)
   workflow_dispatch: {}
 
 jobs:
