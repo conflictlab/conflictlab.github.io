@@ -1,0 +1,72 @@
+name: Sync Newsletters from Pace-map-risk
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Every 30 minutes
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout website repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Checkout Pace-map-risk (newsletters only)
+        uses: actions/checkout@v4
+        with:
+          repository: conflictlab/Pace-map-risk
+          path: pace-map-risk-temp
+          sparse-checkout: |
+            Newsletters
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+
+      - name: Sync newsletters
+        run: |
+          set -e
+
+          # Check if any newsletters exist in source
+          if [ ! -d "pace-map-risk-temp/Newsletters" ] || [ -z "$(ls -A pace-map-risk-temp/Newsletters/ 2>/dev/null)" ]; then
+            echo "No newsletters found in Pace-map-risk"
+            exit 0
+          fi
+
+          # Create destination if needed
+          mkdir -p public/newslettersAndReports
+
+          # Copy all PDFs from Pace-map-risk/Newsletters to public/newslettersAndReports
+          echo "Syncing newsletters..."
+          cp -v pace-map-risk-temp/Newsletters/*.pdf public/newslettersAndReports/ || true
+
+          # Clean up temp checkout
+          rm -rf pace-map-risk-temp
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet public/newslettersAndReports/; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push if changed
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add public/newslettersAndReports/
+
+          # Get count of changed files
+          count=$(git diff --cached --name-only | wc -l)
+
+          git commit -m "chore(newsletters): sync from Pace-map-risk ($count new/updated)"
+          git push
+
+          echo "✓ Synced $count newsletter file(s)"
