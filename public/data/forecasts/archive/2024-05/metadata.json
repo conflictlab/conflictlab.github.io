@@ -1,6 +1,12 @@
 {
-  "period": "2024-05",
-  "data_end_date": "2024-05",
+  "run_date": "2026-04-14T21:21:39.294Z",
+  "data_end_date": "2024-04",
   "forecast_start_date": "2024-05",
-  "backfill": true
+  "h6_end_date": "2024-10",
+  "h12_end_date": "2025-04",
+  "training_window_months": 10,
+  "historical_start_date": "1989-01",
+  "historical_end_date": "2024-04",
+  "source": "content/forecasts/csv (local snapshot)",
+  "note": "Min/max values are estimated at ±30% where not explicitly available"
 }

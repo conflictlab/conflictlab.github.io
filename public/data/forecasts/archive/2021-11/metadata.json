@@ -1,6 +1,12 @@
 {
-  "period": "2021-11",
-  "data_end_date": "2021-11",
+  "run_date": "2026-04-14T21:21:34.262Z",
+  "data_end_date": "2021-10",
   "forecast_start_date": "2021-11",
-  "backfill": true
+  "h6_end_date": "2022-04",
+  "h12_end_date": "2022-10",
+  "training_window_months": 10,
+  "historical_start_date": "1989-01",
+  "historical_end_date": "2021-10",
+  "source": "Historical_Predictions (archived)",
+  "note": "Min/max values are estimated at ±30% where not explicitly available"
 }
