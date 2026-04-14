@@ -282,77 +282,87 @@ export default function ReportsPage() {
             )}
           </div>
 
-          {/* Forecast Archive */}
+          {/* Archive Section */}
           <div className="mb-16">
             <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
-              Forecast Archive
-            </h2>
-            <p className="text-gray-600 mb-6 leading-relaxed">
-              Historical forecast data available from January 2022 onwards. Each period contains CSV files with 6-month and 12-month forecast horizons, historical data, and uncertainty bounds (min/max values).
-            </p>
-
-            {/* Group forecasts by year */}
-            {(() => {
-              const forecastsByYear: Record<string, ForecastArchiveItem[]> = {}
-              forecastArchives.forEach(f => {
-                const y = String(f.year)
-                if (!forecastsByYear[y]) forecastsByYear[y] = []
-                forecastsByYear[y].push(f)
-              })
-              return Object.keys(forecastsByYear)
-                .sort((a, b) => Number(b) - Number(a))
-                .map(year => (
-                  <div key={year} className="mb-8">
-                    <h3 className="text-xl font-medium text-gray-900 mb-3">{year}</h3>
-                    <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
-                      {forecastsByYear[year].map((f, index) => (
-                        <li key={index} className="flex items-center gap-3 px-4 py-3">
-                          <FileText size={20} className="text-gray-400 flex-shrink-0" />
-                          <span className="text-gray-900 font-light">{f.period}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-            })()}
-          </div>
-
-          {/* Past Newsletters Archive */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
-              Newsletter Archive
+              Archive
             </h2>
 
-            {/* Group newsletters by year */}
-            {(() => {
-              const newslettersByYear: Record<string, NewsletterItem[]> = {}
-              newsletters.slice(1).forEach(n => {
-                const y = String(n.year)
-                if (!newslettersByYear[y]) newslettersByYear[y] = []
-                newslettersByYear[y].push(n)
-              })
-              return Object.keys(newslettersByYear)
-                .sort((a, b) => Number(b) - Number(a))
-                .map(year => (
-                  <div key={year} className="mb-8">
-                    <h3 className="text-xl font-medium text-gray-900 mb-3">{year}</h3>
-                    <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
-                      {newslettersByYear[year].map((n, index) => (
-                        <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors">
-                          <div className="flex items-center gap-3">
-                            <FileText size={20} className="text-gray-400 flex-shrink-0" />
-                            <span className="text-gray-900 font-light">{n.title}</span>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <Link href={n.file} target="_blank" className="text-blue-600 hover:text-blue-700 text-xs underline">PDF</Link>
-                            {(() => { const html = findCompanionHtml(n.title); return html ? (<Link href={html} target="_blank" className="text-blue-600 hover:text-blue-700 text-xs underline">Web</Link>) : null })()}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-            })()}
+            {/* Forecast Archive */}
+            <div className="mb-12">
+              <h3 className="text-2xl font-light text-gray-900 mb-4">Forecast Data</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Historical forecast data available from January 2022 onwards. Each period contains CSV files with 6-month and 12-month forecast horizons, historical data, and uncertainty bounds (min/max values).
+              </p>
+
+              {/* Group forecasts by year */}
+              {(() => {
+                const forecastsByYear: Record<string, ForecastArchiveItem[]> = {}
+                forecastArchives.forEach(f => {
+                  const y = String(f.year)
+                  if (!forecastsByYear[y]) forecastsByYear[y] = []
+                  forecastsByYear[y].push(f)
+                })
+                return Object.keys(forecastsByYear)
+                  .sort((a, b) => Number(b) - Number(a))
+                  .map(year => (
+                    <div key={year} className="mb-8">
+                      <h4 className="text-lg font-medium text-gray-900 mb-3">{year}</h4>
+                      <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
+                        {forecastsByYear[year].map((f, index) => (
+                          <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors">
+                            <div className="flex items-center gap-3">
+                              <FileText size={20} className="text-gray-400 flex-shrink-0" />
+                              <span className="text-gray-900 font-light">{f.period}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <a href={`/data/forecasts/archive/${f.period}/forecasts_h6.csv`} download className="text-blue-600 hover:text-blue-700 text-xs underline">h6</a>
+                              <a href={`/data/forecasts/archive/${f.period}/forecasts_h12.csv`} download className="text-blue-600 hover:text-blue-700 text-xs underline">h12</a>
+                              <a href={`/data/forecasts/archive/${f.period}/Hist.csv`} download className="text-blue-600 hover:text-blue-700 text-xs underline">Hist</a>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+              })()}
+            </div>
+
+            {/* Newsletters */}
+            <div>
+              <h3 className="text-2xl font-light text-gray-900 mb-4">Newsletters</h3>
+
+              {/* Group newsletters by year */}
+              {(() => {
+                const newslettersByYear: Record<string, NewsletterItem[]> = {}
+                newsletters.slice(1).forEach(n => {
+                  const y = String(n.year)
+                  if (!newslettersByYear[y]) newslettersByYear[y] = []
+                  newslettersByYear[y].push(n)
+                })
+                return Object.keys(newslettersByYear)
+                  .sort((a, b) => Number(b) - Number(a))
+                  .map(year => (
+                    <div key={year} className="mb-8">
+                      <h4 className="text-lg font-medium text-gray-900 mb-3">{year}</h4>
+                      <ul className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
+                        {newslettersByYear[year].map((n, index) => (
+                          <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors">
+                            <div className="flex items-center gap-3">
+                              <FileText size={20} className="text-gray-400 flex-shrink-0" />
+                              <span className="text-gray-900 font-light">{n.title}</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <Link href={n.file} target="_blank" className="text-blue-600 hover:text-blue-700 text-xs underline">PDF</Link>
+                              {(() => { const html = findCompanionHtml(n.title); return html ? (<Link href={html} target="_blank" className="text-blue-600 hover:text-blue-700 text-xs underline">Web</Link>) : null })()}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+              })()}
+            </div>
           </div>
 
           {/* Footer note */}
