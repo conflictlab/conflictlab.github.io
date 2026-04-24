@@ -42,6 +42,13 @@ export const publications: Publication[] = [
   },
   {
     year: 2025,
+    authors: "Han J",
+    title: "How reciprocal cooperation between international rivals shapes threat perceptions: Evidence from inter-Korean rapprochement in 2018",
+    venue: "Conflict Management and Peace Science, 07388942251395480",
+    abstract: "This article examines how reciprocal cooperation between international rivals shapes threat perceptions, using the 2018 inter-Korean rapprochement to assess how episodes of rapprochement alter views of an adversary."
+  },
+  {
+    year: 2025,
     authors: "Finkel M et al. (incl. Han J)",
     title: "Intersectional Hatred - An Application of Large Language Models to Detect Hate and Offensive Speech Targeted at Congressional Candidates in the 2024 U.S. Election",
     venue: "ACM Digital Library",
@@ -63,6 +70,14 @@ export const publications: Publication[] = [
     venue: "Statistics",
     abstract: "Although large models have shown a strong capacity to solve large-scale problems in many areas including natural language and computer vision, their voluminous parameters are hard to deploy in a real-time system due to computational and energy constraints. Addressing this, knowledge distillation through Teacher-Student architecture offers a sustainable pathway to compress the knowledge of large models into more manageable sizes without significantly compromising performance. To enhance the robustness and interpretability of this framework, it is critical to understand how individual training data impact model performance, which is an area that remains underexplored. We propose the Knowledge Distillation with Adaptive Influence Weight (KD-AIF) framework which leverages influence functions from robust statistics to assign weights to training data, grounded in the four key SAFE principles: Sustainability, Accuracy, Fairness, and Explainability. This novel approach not only optimizes distillation but also increases transparency by revealing the significance of different data. The exploration of various update mechanisms within the KD-AIF framework further elucidates its potential to significantly improve learning efficiency and generalization in student models, marking a step toward more explainable and deployable Large Models. KD-AIF is effective in knowledge distillation while also showing exceptional performance in semi-supervised learning with outperforms existing baselines and methods in multiple benchmarks (CIFAR-100, CIFAR-10-4k, SVHN-1k, and GLUE).",
     url: "https://www.tandfonline.com/doi/abs/10.1080/02331888.2025.2451944"
+  },
+  {
+    year: 2025,
+    authors: "Liu J, Luo X, Wu S, Sun G & Deng Y",
+    title: "Tracing Partisan Bias to its Emotional Fingerprints: A Computational Approach to Mitigation",
+    venue: "2025 IEEE International Conference on Big Data (BigData), 3591-3600",
+    abstract: "This conference paper traces partisan bias to its emotional fingerprints and presents a computational mitigation approach for abstractive and multi-document summarization in media-bias settings.",
+    url: "https://doi.org/10.1109/BigData66926.2025.11402001"
   },
   {
     year: 2024,
