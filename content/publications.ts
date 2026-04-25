@@ -44,7 +44,7 @@ export const publications: Publication[] = [
     year: 2025,
     authors: "Han J",
     title: "How reciprocal cooperation between international rivals shapes threat perceptions: Evidence from inter-Korean rapprochement in 2018",
-    venue: "Conflict Management and Peace Science, 07388942251395480",
+    venue: "Conflict Management and Peace Science",
     abstract: "This article examines how reciprocal cooperation between international rivals shapes threat perceptions, using the 2018 inter-Korean rapprochement to assess how episodes of rapprochement alter views of an adversary."
   },
   {
