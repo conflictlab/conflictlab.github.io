@@ -84,7 +84,16 @@ export const publications: Publication[] = [
     authors: "Xue Y, Schincariol T, Chadefaux T & Groen D",
     title: "Using machine learning to forecast conflict events for use in forced migration models",
     venue: "Scientific Reports",
-    abstract: "This article presents a machine-learning approach to forecasting conflict events as inputs to forced-migration models, integrating predicted conflict dynamics with downstream displacement modelling."
+    abstract: "This article presents a machine-learning approach to forecasting conflict events as inputs to forced-migration models, integrating predicted conflict dynamics with downstream displacement modelling.",
+    url: "https://www.nature.com/articles/s41598-025-11812-2"
+  },
+  {
+    year: 2025,
+    authors: "Schincariol T & Chadefaux T",
+    title: "Temporal Patterns in Migration Flows: Evidence from South Sudan",
+    venue: "Journal of Forecasting",
+    abstract: "What explains the variation in migration flows over time and space? Existing work has contributed to a rich understanding of the factors that affect why and when people leave. What is less understood are the dynamics of migration flows over time. Existing work typically focuses on static variables at the country-year level and ignores the temporal dynamics. Are there recurring temporal patterns in migration flows? And can we use these patterns to improve our forecasts of the number of migrants? Here, we introduce new methods to uncover temporal sequences-motifs-in the number of migrants over time and use these motifs for forecasting. By developing a multivariable shape similarity-based model, we show that temporal patterns do exist. Moreover, using these patterns results in better out-of-sample forecasts than a benchmark of statistical and neural networks models. We apply the new method to the case of South Sudan.",
+    url: "https://onlinelibrary.wiley.com/doi/10.1002/for.3209"
   },
   {
     year: 2024,
@@ -93,14 +102,6 @@ export const publications: Publication[] = [
     venue: "Proceedings of Machine Learning Research",
     abstract: "We propose an ensemble clustering framework to uncover latent cluster labels in functional data generated from a Gaussian process mixture. Our method exploits the fact that the projection coefficients of the functional data onto any given projection function follow a univariate Gaussian mixture model (GMM). By conducting multiple one-dimensional projections and learning a univariate GMM for each, we create an ensemble of GMMs. Each GMM serves as a base clustering, and applying ensemble clustering yields a consensus clustering. Our approach significantly reduces computational complexity compared to state-of-the-art methods, and we provide theoretical guarantees on the identifiability and learnability of Gaussian process mixtures. Extensive experiments on synthetic and real datasets confirm the superiority of our method over existing techniques.",
     url: "https://proceedings.mlr.press/v235/akeweje24a.html"
-  },
-  {
-    year: 2024,
-    authors: "Schincariol T & Chadefaux T",
-    title: "Temporal Patterns in Migration Flows: Evidence from South Sudan",
-    venue: "Journal of Forecasting",
-    abstract: "What explains the variation in migration flows over time and space? Existing work has contributed to a rich understanding of the factors that affect why and when people leave. What is less understood are the dynamics of migration flows over time. Existing work typically focuses on static variables at the country-year level and ignores the temporal dynamics. Are there recurring temporal patterns in migration flows? And can we use these patterns to improve our forecasts of the number of migrants? Here, we introduce new methods to uncover temporal sequences-motifs-in the number of migrants over time and use these motifs for forecasting. By developing a multivariable shape similarity-based model, we show that temporal patterns do exist. Moreover, using these patterns results in better out-of-sample forecasts than a benchmark of statistical and neural networks models. We apply the new method to the case of South Sudan.",
-    url: "https://onlinelibrary.wiley.com/doi/10.1002/for.3209"
   },
   {
     year: 2024,
