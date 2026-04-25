@@ -80,6 +80,13 @@ export const publications: Publication[] = [
     url: "https://doi.org/10.1109/BigData66926.2025.11402001"
   },
   {
+    year: 2025,
+    authors: "Xue Y, Schincariol T, Chadefaux T & Groen D",
+    title: "Using machine learning to forecast conflict events for use in forced migration models",
+    venue: "Scientific Reports",
+    abstract: "This article presents a machine-learning approach to forecasting conflict events as inputs to forced-migration models, integrating predicted conflict dynamics with downstream displacement modelling."
+  },
+  {
     year: 2024,
     authors: "Akeweje E & Zhang M",
     title: "Learning Mixtures of Gaussian Processes through Random Projection",
