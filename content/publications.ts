@@ -96,6 +96,14 @@ export const publications: Publication[] = [
     url: "https://onlinelibrary.wiley.com/doi/10.1002/for.3209"
   },
   {
+    year: 2025,
+    authors: "Cao J & Chadefaux T",
+    title: "Dynamic Synthetic Controls: Accounting for Varying Speeds in Comparative Case Studies",
+    venue: "Political Analysis 33(1)",
+    abstract: "Synthetic controls are widely used to estimate the causal effect of a treatment. However, they do not account for the different speeds at which units respond to changes. Reactions may be inelastic or 'sticky' and thus slower due to varying regulatory, institutional, or political environments. We show that these different reaction speeds can lead to biased estimates of causal effects. We therefore introduce a dynamic synthetic control approach that accommodates varying speeds in time series, resulting in improved synthetic control estimates. We apply our method to re-estimate the effects of terrorism on income, tobacco laws on consumption, and German reunification on GDP. We also assess the method's performance using Monte-Carlo simulations. We find that it reduces errors in the estimates of true treatment effects by up to 70% compared to traditional synthetic controls, improving our ability to make robust inferences. An open-source R package, dsc, is made available for easy implementation.",
+    url: "https://www.cambridge.org/core/journals/political-analysis/article/dynamic-synthetic-controls-accounting-for-varying-speeds-in-comparative-case-studies/4ADE012CC7688FC793D5F00C4AC94AD8"
+  },
+  {
     year: 2024,
     authors: "Akeweje E & Zhang M",
     title: "Learning Mixtures of Gaussian Processes through Random Projection",
@@ -120,20 +128,20 @@ export const publications: Publication[] = [
     url: "https://journals.sagepub.com/doi/10.1177/07388942231207029"
   },
   {
-    year: 2024,
-    authors: "Cao J & Chadefaux T",
-    title: "Dynamic Synthetic Controls: Accounting for Varying Speeds in Comparative Case Studies",
-    venue: "Political Analysis",
-    abstract: "Synthetic controls are widely used to estimate the causal effect of a treatment. However, they do not account for the different speeds at which units respond to changes. Reactions may be inelastic or 'sticky' and thus slower due to varying regulatory, institutional, or political environments. We show that these different reaction speeds can lead to biased estimates of causal effects. We therefore introduce a dynamic synthetic control approach that accommodates varying speeds in time series, resulting in improved synthetic control estimates. We apply our method to re-estimate the effects of terrorism on income, tobacco laws on consumption, and German reunification on GDP. We also assess the method's performance using Monte-Carlo simulations. We find that it reduces errors in the estimates of true treatment effects by up to 70% compared to traditional synthetic controls, improving our ability to make robust inferences. An open-source R package, dsc, is made available for easy implementation.",
-    url: "https://www.cambridge.org/core/journals/political-analysis/article/dynamic-synthetic-controls-accounting-for-varying-speeds-in-comparative-case-studies/4ADE012CC7688FC793D5F00C4AC94AD8"
-  },
-  {
     year: 2023,
     authors: "Chadefaux T",
     title: "An automated pattern recognition system for conflict",
     venue: "Journal of Computational Science",
     abstract: "This article introduces an automated pattern recognition system for conflict. The monitoring system aims to uncover, cluster, and classify temporal patterns of escalation to improve future forecasts and better understand the causes of escalation toward war. It identifies important temporal patterns in conflict data using novel pattern detection methods and new data. These patterns are used to forecast conflict, with live predictions released in real time. Finally, the discovery of recurring motifs-prototypes-can inform new or existing theoretical frameworks. In this article, I discuss the methodological innovations required to achieve these goals and the path to creating an autonomous conflict monitoring system. I also report on promising results obtained using these methods, which show that they perform well on true out-of- sample forecasts of the count of the number of fatalities per month from state-based conflict. The monitoring system has important implications for computational diplomacy, as it can alert diplomats of geopolitical risks.",
     url: "https://www.sciencedirect.com/science/article/pii/S1877750323001345"
+  },
+  {
+    year: 2023,
+    authors: "Turkoglu O & Chadefaux T",
+    title: "The effect of terrorist attacks on attitudes and its duration",
+    venue: "Political Science Research and Methods 11(4)",
+    abstract: "Is terrorism effective as a tool of political influence? In particular, do terrorists succeed in affecting their targets' attitudes, and how long does the effect last? Existing research unfortunately is either limited to small samples or does not address two main difficulties: issues of endogeneity and the inability to assess the duration of the effect. Here, we first exploit the exogeneity to the selection process of the success or failure of an attack as an identification mechanism. Second, we take advantage of the random allocation of survey respondents to interview times to estimate the duration of the impact of terrorist events on attitudes. Using survey data from 30 European democracies between 2002 and 2017, we find first that terrorism affects people's reported life satisfaction and happiness—a proxy for the cost of terrorism in terms of utility. However, we also find that terrorist attacks do not affect respondents' attitude toward their government, institutions, or immigrants. This suggests that terrorism is ineffective at translating discontent into political pressure. Importantly, we also find that all effects disappear within less than two weeks.",
+    url: "https://www.cambridge.org/core/journals/political-science-research-and-methods/article/effect-of-terrorist-attacks-on-attitudes-and-its-duration/79F97080265041F026C407844B983B3D"
   },
   {
     year: 2022,
@@ -150,14 +158,6 @@ export const publications: Publication[] = [
     venue: "International Interactions 48(4)",
     abstract: "Do conflict processes exhibit repeating patterns over time? And if so, can we exploit the recurring shapes and structures of the time series to forecast the evolution of conflict? Theory has long focused on the sequence of events that precedes conflicts (e.g., escalation or brinkmanship). Yet, current empirical research is unable to represent these complex interactions unfolding over time because it attempts to match cases on the raw value of covariates, and not on their structure or shape. As a result, it cannot easily represent real-world relations which may, for example, follow a long alternation of escalation and détente, in various orders and at various speeds. Here, I aim to address these issues using recent machine-learning methods derived from pattern recognition in time series to study the dynamics of casualties in civil war processes. I find that the methods perform well on out-of-sample forecasts of the count of the number of fatalities per month from state-based conflict. In particular, our results yield Mean Squared Errors that are lower than the competition benchmark. We discuss the implication for conflict research and the importance of comparing entire sequences rather than isolated observations in time.",
     url: "https://www.tandfonline.com/doi/full/10.1080/03050629.2022.2009821"
-  },
-  {
-    year: 2022,
-    authors: "Turkoglu O & Chadefaux T",
-    title: "The effect of terrorist attacks on attitudes and its duration",
-    venue: "Political Science Research and Methods (First View)",
-    abstract: "Is terrorism effective as a tool of political influence? In particular, do terrorists succeed in affecting their targets' attitudes, and how long does the effect last? Existing research unfortunately is either limited to small samples or does not address two main difficulties: issues of endogeneity and the inability to assess the duration of the effect. Here, we first exploit the exogeneity to the selection process of the success or failure of an attack as an identification mechanism. Second, we take advantage of the random allocation of survey respondents to interview times to estimate the duration of the impact of terrorist events on attitudes. Using survey data from 30 European democracies between 2002 and 2017, we find first that terrorism affects people's reported life satisfaction and happiness—a proxy for the cost of terrorism in terms of utility. However, we also find that terrorist attacks do not affect respondents' attitude toward their government, institutions, or immigrants. This suggests that terrorism is ineffective at translating discontent into political pressure. Importantly, we also find that all effects disappear within less than two weeks.",
-    url: "https://www.cambridge.org/core/journals/political-science-research-and-methods/article/effect-of-terrorist-attacks-on-attitudes-and-its-duration/79F97080265041F026C407844B983B3D"
   }
 ]
 
