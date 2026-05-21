@@ -136,12 +136,6 @@ jobs:
       - name: Verify map CSV is in sync with source
         run: node scripts/check-map-csv-sync.js
 
-      - name: Build dashboard snapshot from forecasts
-        run: node scripts/build-snapshot-from-forecasts.js
-
-      - name: Verify snapshot is in sync with CSV
-        run: node scripts/check-snapshot-sync.js
-
       - name: Build PRIO-GRID centroids
         run: npm run grid:centroids
 
@@ -194,6 +188,12 @@ jobs:
 
       - name: Mirror forecast CSVs with 'date' column (site-hosted)
         run: node scripts/mirror-forecasts-with-dates.js
+
+      - name: Build dashboard snapshot from forecasts
+        run: node scripts/build-snapshot-from-forecasts.js
+
+      - name: Verify snapshot is in sync with CSV
+        run: node scripts/check-snapshot-sync.js
 
       - name: Sync all Historical_Predictions to archive
         run: node scripts/sync-historical-archive.js
