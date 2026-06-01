@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-24T06:57:14.593Z",
+  "generatedAt": "2026-06-01T08:47:29.902Z",
   "ok": true,
   "summary": {
     "latestPeriod": "2026-05",
-    "snapshotGeneratedAt": "2026-05-24T06:56:48.712Z",
+    "snapshotGeneratedAt": "2026-06-01T08:46:53.046Z",
     "snapshotAgeDays": 0,
     "minmaxCountries": 134,
-    "minmaxUpdatedAt": "2026-05-24T06:56:46.295Z",
-    "scenariosUpdatedAt": "2026-05-24T06:56:45.888Z",
-    "scenariosDenormUpdatedAt": "2026-05-24T06:56:46.461Z",
-    "matchesUpdatedAt": "2026-05-24T06:56:48.081Z",
+    "minmaxUpdatedAt": "2026-06-01T08:46:50.098Z",
+    "scenariosUpdatedAt": "2026-06-01T08:46:49.659Z",
+    "scenariosDenormUpdatedAt": "2026-06-01T08:46:50.266Z",
+    "matchesUpdatedAt": "2026-06-01T08:46:51.787Z",
     "gridLatestPeriod": "2026-05",
     "staticApiCandidate": "/api/v1/grid/2026-05/points-m1.json",
     "missingActiveCount": 0
