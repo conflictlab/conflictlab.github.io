@@ -25,7 +25,7 @@ export default function DisseminationPage() {
           <div className="mb-12 pb-6 border-b border-gray-200">
             <nav className="flex space-x-6 text-lg">
               <a href="#workshops" className="text-pace-red hover:text-pace-red-dark">
-                Workshops
+                Workshops @ PaCE
               </a>
               <span className="text-gray-400">/</span>
               <a href="#presentations" className="text-pace-red hover:text-pace-red-dark">
@@ -37,7 +37,7 @@ export default function DisseminationPage() {
           {/* Workshops Section */}
           <div className="mb-16">
             <h2 id="workshops" className="text-3xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-2">
-              Workshops
+              Workshops @ PaCE
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
