@@ -219,6 +219,27 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 mb-1"><span className="font-light">The Dynamics of Competitive Intervention: Multiplicity, Rivalry, and Civil War Duration</span></p>
                   <p className="text-gray-600 text-sm">Eurasia Peace Science Conference, Athens, Greece</p>
                 </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">January 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Justice v. The Terminator: Militants and Policy Interactions in Conflict Zones</span></p>
+                  <p className="text-gray-600 text-sm">The Political Economy of International Organisation, Segovia, Spain</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">May 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
+                  <p className="text-gray-600 text-sm">American Political Science Association Annual Meeting, Philadelphia, USA</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">May 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
+                  <p className="text-gray-600 text-sm">The Fifth European Political Methodology Meeting, Trinity College Dublin, Ireland</p>
+                </div>
               </div>
             </div>
 
@@ -266,6 +287,20 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
                   <p className="text-gray-600 text-sm">Geschwister-Scholl-Institute of Political Science, Ludwig Maximilian University, Munich, Germany</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">October 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Following the Flag vs. Business as Usual: Sectoral Heterogeneity in How Multinationals Respond to Political Tensions</span></p>
+                  <p className="text-gray-600 text-sm">Political Studies Association of Ireland Annual Conference, Galway, Ireland</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">July 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
+                  <p className="text-gray-600 text-sm">International Political Science Association&apos;s 28th World Congress of Political Science, Seoul, Republic of Korea</p>
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
@@ -349,6 +384,13 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">Democratic Imprints from Abroad: How External Support from Democracies Can Promote Rebel Elections in Civil Wars</span></p>
                   <p className="text-gray-600 text-sm">The Annual Conference of American Political Science Association (APSA), Philadelphia, USA</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">September 2024</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
+                  <p className="text-gray-600 text-sm">American Political Science Association Annual Meeting, Philadelphia, USA</p>
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
@@ -439,6 +481,13 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 font-light mb-1">Thomas Schincariol</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">Leveraging Temporal Patterns in Forecasting Application in Human Migration Flow</span></p>
                   <p className="text-gray-600 text-sm">International conference on Time Series and Forecasting, Gran Canaria, Spain</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">June 2023</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Multinational Firms and the Impact of Trade Disputes on Investment Decisions</span></p>
+                  <p className="text-gray-600 text-sm">European Political Science Association Annual Conference, Glasgow, Scotland</p>
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
