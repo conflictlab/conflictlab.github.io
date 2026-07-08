@@ -153,6 +153,68 @@ export default function DisseminationPage() {
               Presentations
             </h2>
 
+            {/* 2026 Presentations */}
+            <div className="mb-12">
+              <h3 className="text-2xl font-light text-gray-900 mb-6">2026</h3>
+              <div className="space-y-6">
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">April 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Networked Rivalries, Enemy Image, and Public Opinion on Peace: Evidence from East Asia</span></p>
+                  <p className="text-gray-600 text-sm">Department of Psychology, University of Limerick, Limerick, Ireland</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">April 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Face-to-face Diplomacy and Public Perception of Status</span></p>
+                  <p className="text-gray-600 text-sm">Midwest Political Science Association Annual Conference, online</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">April 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Media Ideology and the Geography of Foreign News</span></p>
+                  <p className="text-gray-600 text-sm">Midwest Political Science Association Annual Conference, online</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">April 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
+                  <p className="text-gray-600 text-sm">Political Studies Association Annual Conference, Oxford, UK</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">April 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Media Ideology and the Geography of Foreign News</span></p>
+                  <p className="text-gray-600 text-sm">Political Studies Association Annual Conference, Oxford, UK</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">March 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Online Gendered Violence and Visibility in Electoral Autocracies: Evidence from Multi-level Elections in Turkey</span></p>
+                  <p className="text-gray-600 text-sm">Ford Institute for Human Security, University of Pittsburgh, Pittsburgh, USA</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">January 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
+                  <p className="text-gray-600 text-sm">Eurasia Peace Science Conference, Athens, Greece</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">January 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">The Dynamics of Competitive Intervention: Multiplicity, Rivalry, and Civil War Duration</span></p>
+                  <p className="text-gray-600 text-sm">Eurasia Peace Science Conference, Athens, Greece</p>
+                </div>
+              </div>
+            </div>
+
             {/* 2025 Presentations */}
             <div className="mb-12">
               <h3 className="text-2xl font-light text-gray-900 mb-6">2025</h3>
@@ -169,6 +231,34 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">The Dynamics of Competitive Intervention: Multiplicity, Rivalry, and Civil War Duration</span></p>
                   <p className="text-gray-600 text-sm">BISA-ISA Joint International Conference 2025, Newcastle, UK</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">December 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
+                  <p className="text-gray-600 text-sm">Violence, Instability, and Peace Workshop, online</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">October 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
+                  <p className="text-gray-600 text-sm">Conflict &amp; Change Workshop, University College London, London, UK</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">October 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
+                  <p className="text-gray-600 text-sm">Department of Public Economics, Max Planck Institute, Munich, Germany</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">October 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
+                  <p className="text-gray-600 text-sm">Geschwister-Scholl-Institute of Political Science, Ludwig Maximilian University, Munich, Germany</p>
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
