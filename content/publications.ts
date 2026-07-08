@@ -10,6 +10,13 @@ export interface Publication {
 export const publications: Publication[] = [
   {
     year: 2026,
+    authors: "Schincariol T & Chadefaux T",
+    title: "Echoes of Conflict: Quantifying Redundancy in Fatality Time Series",
+    venue: "Political Science Research and Methods (Forthcoming)",
+    abstract: ""
+  },
+  {
+    year: 2026,
     authors: "Lu C & Chadefaux T",
     title: "Structured Pixels: Satellite Imagery as the Cause in Causal Effect Estimation",
     venue: "Hawaii International Conference on System Sciences",
