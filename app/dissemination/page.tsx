@@ -158,6 +158,20 @@ export default function DisseminationPage() {
               <h3 className="text-2xl font-light text-gray-900 mb-6">2026</h3>
               <div className="space-y-6">
                 <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">May 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
+                  <p className="text-gray-600 text-sm">American Political Science Association Annual Meeting, Philadelphia, USA</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">May 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
+                  <p className="text-gray-600 text-sm">The Fifth European Political Methodology Meeting, Trinity College Dublin, Ireland</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
                   <p className="text-sm text-gray-600 mb-1">April 2026</p>
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">Networked Rivalries, Enemy Image, and Public Opinion on Peace: Evidence from East Asia</span></p>
@@ -226,20 +240,6 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 mb-1"><span className="font-light">Justice v. The Terminator: Militants and Policy Interactions in Conflict Zones</span></p>
                   <p className="text-gray-600 text-sm">The Political Economy of International Organisation, Segovia, Spain</p>
                 </div>
-
-                <div className="border-l-2 border-clairient-blue pl-4">
-                  <p className="text-sm text-gray-600 mb-1">May 2026</p>
-                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
-                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
-                  <p className="text-gray-600 text-sm">American Political Science Association Annual Meeting, Philadelphia, USA</p>
-                </div>
-
-                <div className="border-l-2 border-clairient-blue pl-4">
-                  <p className="text-sm text-gray-600 mb-1">May 2026</p>
-                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
-                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
-                  <p className="text-gray-600 text-sm">The Fifth European Political Methodology Meeting, Trinity College Dublin, Ireland</p>
-                </div>
               </div>
             </div>
 
@@ -247,6 +247,13 @@ export default function DisseminationPage() {
             <div className="mb-12">
               <h3 className="text-2xl font-light text-gray-900 mb-6">2025</h3>
               <div className="space-y-6">
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">December 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
+                  <p className="text-gray-600 text-sm">Violence, Instability, and Peace Workshop, online</p>
+                </div>
+
                 <div className="border-l-2 border-clairient-blue pl-4">
                   <p className="text-sm text-gray-600 mb-1">October 2025</p>
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
@@ -259,13 +266,6 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">The Dynamics of Competitive Intervention: Multiplicity, Rivalry, and Civil War Duration</span></p>
                   <p className="text-gray-600 text-sm">BISA-ISA Joint International Conference 2025, Newcastle, UK</p>
-                </div>
-
-                <div className="border-l-2 border-clairient-blue pl-4">
-                  <p className="text-sm text-gray-600 mb-1">December 2025</p>
-                  <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
-                  <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
-                  <p className="text-gray-600 text-sm">Violence, Instability, and Peace Workshop, online</p>
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
@@ -297,13 +297,6 @@ export default function DisseminationPage() {
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
-                  <p className="text-sm text-gray-600 mb-1">July 2025</p>
-                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
-                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
-                  <p className="text-gray-600 text-sm">International Political Science Association&apos;s 28th World Congress of Political Science, Seoul, Republic of Korea</p>
-                </div>
-
-                <div className="border-l-2 border-clairient-blue pl-4">
                   <p className="text-sm text-gray-600 mb-1">September 2025</p>
                   <p className="text-gray-900 font-light mb-1">Thomas Chadefaux</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">Advancing Methodological Approaches in Crisis Early Warning</span></p>
@@ -329,6 +322,13 @@ export default function DisseminationPage() {
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">The International Landscape of Peace: How Third-Party Interactions Shape Public Opinion on Rapprochement</span></p>
                   <p className="text-gray-600 text-sm">Seoul Workshop for Empirical Research in Politics, Seoul, South Korea (online)</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">July 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Yohan Park</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">A Doubly Robust Difference-in-Differences Estimator for Causal Inference with Time-Series Cross-Sectional Data</span></p>
+                  <p className="text-gray-600 text-sm">International Political Science Association&apos;s 28th World Congress of Political Science, Seoul, Republic of Korea</p>
                 </div>
 
                 <div className="border-l-2 border-clairient-blue pl-4">
