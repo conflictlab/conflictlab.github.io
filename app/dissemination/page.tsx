@@ -201,6 +201,13 @@ export default function DisseminationPage() {
 
                 <div className="border-l-2 border-clairient-blue pl-4">
                   <p className="text-sm text-gray-600 mb-1">January 2026</p>
+                  <p className="text-gray-900 font-light mb-1">Thomas Chadefaux</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Hospitals Under Fire? Causal Evidence from Satellite Imagery in Ukraine</span></p>
+                  <p className="text-gray-600 text-sm">AI &amp; Peace and Conflict Lecture, AI-HUB@LMU, Ludwig Maximilian University, Munich, Germany</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">January 2026</p>
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">How Patterns of Cooperation Shape Public Opinion on Rapprochement</span></p>
                   <p className="text-gray-600 text-sm">Eurasia Peace Science Conference, Athens, Greece</p>
