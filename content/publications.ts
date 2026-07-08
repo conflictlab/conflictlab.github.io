@@ -33,7 +33,7 @@ export const publications: Publication[] = [
     url: "https://journals.sagepub.com/doi/full/10.1177/00223433241300862"
   },
   {
-    year: 2025,
+    year: 2026,
     authors: "Han J, Finkel M, Finkel S, Dursab F & Yoruk E",
     title: "Online Gendered Violence and Visibility in Electoral Autocracies: Evidence from Multi-level Elections in Türkiye",
     venue: "European Journal of Political Research (Forthcoming)",
