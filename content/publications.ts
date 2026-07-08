@@ -13,7 +13,7 @@ export const publications: Publication[] = [
     authors: "Schincariol T & Chadefaux T",
     title: "Echoes of Conflict: Quantifying Redundancy in Fatality Time Series",
     venue: "Political Science Research and Methods (Forthcoming)",
-    abstract: ""
+    abstract: "Do wars follow predictable patterns, or are they chaotic and inherently unpredictable? Conflicts might be guided by underlying regularities shaped by political, economic, and social forces, or they could unfold as chaotic systems driven by randomness and local contingencies. We explore this question by quantifying temporal redundancy in conflict-related fatalities. Using entropy-based analysis and Dynamic Time Warping, we compare conflict dynamics with other complex systems such as seismology and finance. Our findings reveal that the dynamics of fatalities within conflicts exhibit high levels of entropy---they are largely unpredictable. Conflicts generally display higher entropy than climate or earthquake data, highlighting the challenges of predictive modeling. Moreover, conflict patterns are not region or decade-specific, which suggests a degree of universality. Our framework provides a quantitative basis for distinguishing between stable and chaotic phases in conflict dynamics, and assess the feasibility of predictive modeling in different conflict contexts."
   },
   {
     year: 2026,
@@ -44,7 +44,7 @@ export const publications: Publication[] = [
     authors: "Han J, Finkel M, Finkel S, Dursab F & Yoruk E",
     title: "Online Gendered Violence and Visibility in Electoral Autocracies: Evidence from Multi-level Elections in Türkiye",
     venue: "European Journal of Political Research (Forthcoming)",
-    abstract: ""
+    abstract: "Online platforms have become indispensable tools for political candidates to gain visibility, particularly for female candidates in electoral autocracies who often lack access to traditional networks, party hierarchies, and media platforms. We argue that online visibility, while a resource for female candidates, disproportionately exposes them to online violence that functions as a mechanism of political control, reinforcing patriarchal exclusion from the political sphere. Our analysis draws on more than three million tweets directed at 1,834 candidates across the 2023 parliamentary and 2024 local election campaigns in Türkiye, providing a rare opportunity to observe how these dynamics unfold at both the national and subnational levels. We find that while online visibility increases abuse for all candidates, the effect is markedly stronger for female candidates, who are disproportionately targeted across diverse forms of violence, including profanity, demeaning and ridiculing language, physical threats, and ethnic and religious hate speech. Also, our results suggest that in local elections, where candidates rely more heavily on personalized campaigns, increases in visibility are more strongly associated with female candidates' exposure to online violence."
   },
   {
     year: 2025,
