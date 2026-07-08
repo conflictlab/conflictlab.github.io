@@ -34,6 +34,13 @@ export const publications: Publication[] = [
   },
   {
     year: 2025,
+    authors: "Han J, Finkel M, Finkel S, Dursab F & Yoruk E",
+    title: "Online Gendered Violence and Visibility in Electoral Autocracies: Evidence from Multi-level Elections in Türkiye",
+    venue: "European Journal of Political Research (Forthcoming)",
+    abstract: ""
+  },
+  {
+    year: 2025,
     authors: "Han J, Han X & Zhang A",
     title: "How China's Multilateral Engagement Shapes Threat Perception Amid Rising Authoritarianism",
     venue: "Journal of Contemporary China",
