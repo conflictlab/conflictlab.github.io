@@ -271,6 +271,13 @@ export default function DisseminationPage() {
                 <div className="border-l-2 border-clairient-blue pl-4">
                   <p className="text-sm text-gray-600 mb-1">September 2025</p>
                   <p className="text-gray-900 font-light mb-1">Thomas Chadefaux</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Advancing Methodological Approaches in Crisis Early Warning</span></p>
+                  <p className="text-gray-600 text-sm">Symposium on Crisis Early Warning: The Potential of Data, AI, and Interdisciplinary Analysis in Situational Awareness and Decision Making, German Federal Foreign Office, Berlin, Germany</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">September 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Thomas Chadefaux</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">Strengthening Early Warning Systems for Genocide and Mass Atrocity Prevention: Reach, Use, and Future Directions</span> <span className="text-gray-500 text-sm">(invited talk)</span></p>
                   <p className="text-gray-600 text-sm">Simon-Skjodt Center for the Prevention of Genocide, United States Holocaust Memorial Museum, Washington, DC, USA</p>
                 </div>
