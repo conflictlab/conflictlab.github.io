@@ -270,6 +270,13 @@ export default function DisseminationPage() {
 
                 <div className="border-l-2 border-clairient-blue pl-4">
                   <p className="text-sm text-gray-600 mb-1">September 2025</p>
+                  <p className="text-gray-900 font-light mb-1">Thomas Chadefaux</p>
+                  <p className="text-gray-900 mb-1"><span className="font-light">Strengthening Early Warning Systems for Genocide and Mass Atrocity Prevention: Reach, Use, and Future Directions</span> <span className="text-gray-500 text-sm">(invited talk)</span></p>
+                  <p className="text-gray-600 text-sm">Simon-Skjodt Center for the Prevention of Genocide, United States Holocaust Memorial Museum, Washington, DC, USA</p>
+                </div>
+
+                <div className="border-l-2 border-clairient-blue pl-4">
+                  <p className="text-sm text-gray-600 mb-1">September 2025</p>
                   <p className="text-gray-900 font-light mb-1">Jungmin Han</p>
                   <p className="text-gray-900 mb-1"><span className="font-light">The International Landscape of Peace: How Third-Party Interactions Shape Public Opinion on Rapprochement</span></p>
                   <p className="text-gray-600 text-sm">Seoul Workshop for Empirical Research in Politics, Seoul, South Korea (online)</p>
