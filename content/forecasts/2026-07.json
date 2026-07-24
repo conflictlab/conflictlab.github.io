@@ -1,0 +1,4130 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-07-24T05:55:04.777Z",
+  "period": "2026-07",
+  "entities": [
+    {
+      "id": "AFGHANISTAN",
+      "name": "Afghanistan",
+      "entityType": "country",
+      "index": 660.7,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 660.7,
+          "p10": 655.7,
+          "p50": 660.7,
+          "p90": 665.7
+        },
+        "3m": {
+          "index": 160.6,
+          "p10": 153.6,
+          "p50": 160.6,
+          "p90": 167.6
+        },
+        "6m": {
+          "index": 165.3,
+          "p10": 155.3,
+          "p50": 165.3,
+          "p90": 175.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ALBANIA",
+      "name": "Albania",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ALGERIA",
+      "name": "Algeria",
+      "entityType": "country",
+      "index": 11.2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 11.2,
+          "p10": 6.199999999999999,
+          "p50": 11.2,
+          "p90": 16.2
+        },
+        "3m": {
+          "index": 9.9,
+          "p10": 2.9000000000000004,
+          "p50": 9.9,
+          "p90": 16.9
+        },
+        "6m": {
+          "index": 1.4,
+          "p10": 0,
+          "p50": 1.4,
+          "p90": 11.4
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ANGOLA",
+      "name": "Angola",
+      "entityType": "country",
+      "index": 1.4,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.4,
+          "p10": 0,
+          "p50": 1.4,
+          "p90": 6.4
+        },
+        "3m": {
+          "index": 0.4,
+          "p10": 0,
+          "p50": 0.4,
+          "p90": 7.4
+        },
+        "6m": {
+          "index": 0.2,
+          "p10": 0,
+          "p50": 0.2,
+          "p90": 10.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ARGENTINA",
+      "name": "Argentina",
+      "entityType": "country",
+      "index": 2.4,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 2.4,
+          "p10": 0,
+          "p50": 2.4,
+          "p90": 7.4
+        },
+        "3m": {
+          "index": 3.9,
+          "p10": 0,
+          "p50": 3.9,
+          "p90": 10.9
+        },
+        "6m": {
+          "index": 7,
+          "p10": 0,
+          "p50": 7,
+          "p90": 17
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ARMENIA",
+      "name": "Armenia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "AUSTRALIA",
+      "name": "Australia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "AUSTRIA",
+      "name": "Austria",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "AZERBAIJAN",
+      "name": "Azerbaijan",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BAHRAIN",
+      "name": "Bahrain",
+      "entityType": "country",
+      "index": 92.9,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 92.9,
+          "p10": 87.9,
+          "p50": 92.9,
+          "p90": 97.9
+        },
+        "3m": {
+          "index": 67.3,
+          "p10": 60.3,
+          "p50": 67.3,
+          "p90": 74.3
+        },
+        "6m": {
+          "index": 40.7,
+          "p10": 30.700000000000003,
+          "p50": 40.7,
+          "p90": 50.7
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BANGLADESH",
+      "name": "Bangladesh",
+      "entityType": "country",
+      "index": 18.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 18.7,
+          "p10": 13.7,
+          "p50": 18.7,
+          "p90": 23.7
+        },
+        "3m": {
+          "index": 9.6,
+          "p10": 2.5999999999999996,
+          "p50": 9.6,
+          "p90": 16.6
+        },
+        "6m": {
+          "index": 11.7,
+          "p10": 1.6999999999999993,
+          "p50": 11.7,
+          "p90": 21.7
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BELGIUM",
+      "name": "Belgium",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BENIN",
+      "name": "Benin",
+      "entityType": "country",
+      "index": 7.4,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 7.4,
+          "p10": 2.4000000000000004,
+          "p50": 7.4,
+          "p90": 12.4
+        },
+        "3m": {
+          "index": 1.4,
+          "p10": 0,
+          "p50": 1.4,
+          "p90": 8.4
+        },
+        "6m": {
+          "index": 67.8,
+          "p10": 57.8,
+          "p50": 67.8,
+          "p90": 77.8
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BHUTAN",
+      "name": "Bhutan",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BOLIVIA",
+      "name": "Bolivia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BOSNIA AND HERZ.",
+      "name": "Bosnia and Herz.",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BOTSWANA",
+      "name": "Botswana",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BRAZIL",
+      "name": "Brazil",
+      "entityType": "country",
+      "index": 20.5,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 20.5,
+          "p10": 15.5,
+          "p50": 20.5,
+          "p90": 25.5
+        },
+        "3m": {
+          "index": 20.8,
+          "p10": 13.8,
+          "p50": 20.8,
+          "p90": 27.8
+        },
+        "6m": {
+          "index": 21.2,
+          "p10": 11.2,
+          "p50": 21.2,
+          "p90": 31.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BURKINA FASO",
+      "name": "Burkina Faso",
+      "entityType": "country",
+      "index": 166.4,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 166.4,
+          "p10": 161.4,
+          "p50": 166.4,
+          "p90": 171.4
+        },
+        "3m": {
+          "index": 205.8,
+          "p10": 198.8,
+          "p50": 205.8,
+          "p90": 212.8
+        },
+        "6m": {
+          "index": 149.4,
+          "p10": 139.4,
+          "p50": 149.4,
+          "p90": 159.4
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BURUNDI",
+      "name": "Burundi",
+      "entityType": "country",
+      "index": 22.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 22.7,
+          "p10": 17.7,
+          "p50": 22.7,
+          "p90": 27.7
+        },
+        "3m": {
+          "index": 4.5,
+          "p10": 0,
+          "p50": 4.5,
+          "p90": 11.5
+        },
+        "6m": {
+          "index": 11.1,
+          "p10": 1.0999999999999996,
+          "p50": 11.1,
+          "p90": 21.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CAMBODIA",
+      "name": "Cambodia",
+      "entityType": "country",
+      "index": 81.6,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 81.6,
+          "p10": 76.6,
+          "p50": 81.6,
+          "p90": 86.6
+        },
+        "3m": {
+          "index": 6.4,
+          "p10": 0,
+          "p50": 6.4,
+          "p90": 13.4
+        },
+        "6m": {
+          "index": 14.6,
+          "p10": 4.6,
+          "p50": 14.6,
+          "p90": 24.6
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CAMEROON",
+      "name": "Cameroon",
+      "entityType": "country",
+      "index": 43.8,
+      "band": "medium",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 43.8,
+          "p10": 38.8,
+          "p50": 43.8,
+          "p90": 48.8
+        },
+        "3m": {
+          "index": 31.7,
+          "p10": 24.7,
+          "p50": 31.7,
+          "p90": 38.7
+        },
+        "6m": {
+          "index": 47,
+          "p10": 37,
+          "p50": 47,
+          "p90": 57
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CANADA",
+      "name": "Canada",
+      "entityType": "country",
+      "index": 7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 7,
+          "p10": 2,
+          "p50": 7,
+          "p90": 12
+        },
+        "3m": {
+          "index": 0.8,
+          "p10": 0,
+          "p50": 0.8,
+          "p90": 7.8
+        },
+        "6m": {
+          "index": 1.6,
+          "p10": 0,
+          "p50": 1.6,
+          "p90": 11.6
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CENTRAL AFRICAN REP.",
+      "name": "Central African Rep.",
+      "entityType": "country",
+      "index": 26.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 26.7,
+          "p10": 21.7,
+          "p50": 26.7,
+          "p90": 31.7
+        },
+        "3m": {
+          "index": 18.7,
+          "p10": 11.7,
+          "p50": 18.7,
+          "p90": 25.7
+        },
+        "6m": {
+          "index": 13.4,
+          "p10": 3.4000000000000004,
+          "p50": 13.4,
+          "p90": 23.4
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CHAD",
+      "name": "Chad",
+      "entityType": "country",
+      "index": 17.2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 17.2,
+          "p10": 12.2,
+          "p50": 17.2,
+          "p90": 22.2
+        },
+        "3m": {
+          "index": 26.6,
+          "p10": 19.6,
+          "p50": 26.6,
+          "p90": 33.6
+        },
+        "6m": {
+          "index": 16.7,
+          "p10": 6.699999999999999,
+          "p50": 16.7,
+          "p90": 26.7
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CHINA",
+      "name": "China",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "COLOMBIA",
+      "name": "Colombia",
+      "entityType": "country",
+      "index": 120,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 120,
+          "p10": 115,
+          "p50": 120,
+          "p90": 125
+        },
+        "3m": {
+          "index": 121.2,
+          "p10": 114.2,
+          "p50": 121.2,
+          "p90": 128.2
+        },
+        "6m": {
+          "index": 86.1,
+          "p10": 76.1,
+          "p50": 86.1,
+          "p90": 96.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "COMOROS",
+      "name": "Comoros",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CONGO",
+      "name": "Congo",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CROATIA",
+      "name": "Croatia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "DJIBOUTI",
+      "name": "Djibouti",
+      "entityType": "country",
+      "index": 5,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 5,
+          "p10": 0,
+          "p50": 5,
+          "p90": 10
+        },
+        "3m": {
+          "index": 0.2,
+          "p10": 0,
+          "p50": 0.2,
+          "p90": 7.2
+        },
+        "6m": {
+          "index": 7.4,
+          "p10": 0,
+          "p50": 7.4,
+          "p90": 17.4
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "DEM. REP. CONGO",
+      "name": "Dem. Rep. Congo",
+      "entityType": "country",
+      "index": 473,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 473,
+          "p10": 468,
+          "p50": 473,
+          "p90": 478
+        },
+        "3m": {
+          "index": 415.8,
+          "p10": 408.8,
+          "p50": 415.8,
+          "p90": 422.8
+        },
+        "6m": {
+          "index": 124.1,
+          "p10": 114.1,
+          "p50": 124.1,
+          "p90": 134.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ECUADOR",
+      "name": "Ecuador",
+      "entityType": "country",
+      "index": 23.4,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 23.4,
+          "p10": 18.4,
+          "p50": 23.4,
+          "p90": 28.4
+        },
+        "3m": {
+          "index": 24.7,
+          "p10": 17.7,
+          "p50": 24.7,
+          "p90": 31.7
+        },
+        "6m": {
+          "index": 21.3,
+          "p10": 11.3,
+          "p50": 21.3,
+          "p90": 31.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "EGYPT",
+      "name": "Egypt",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "EL SALVADOR",
+      "name": "El Salvador",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ERITREA",
+      "name": "Eritrea",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ETHIOPIA",
+      "name": "Ethiopia",
+      "entityType": "country",
+      "index": 298.9,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 298.9,
+          "p10": 293.9,
+          "p50": 298.9,
+          "p90": 303.9
+        },
+        "3m": {
+          "index": 428.8,
+          "p10": 421.8,
+          "p50": 428.8,
+          "p90": 435.8
+        },
+        "6m": {
+          "index": 321,
+          "p10": 311,
+          "p50": 321,
+          "p90": 331
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "FRANCE",
+      "name": "France",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GAMBIA",
+      "name": "Gambia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GEORGIA",
+      "name": "Georgia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GERMANY",
+      "name": "Germany",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GHANA",
+      "name": "Ghana",
+      "entityType": "country",
+      "index": 5.5,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 5.5,
+          "p10": 0.5,
+          "p50": 5.5,
+          "p90": 10.5
+        },
+        "3m": {
+          "index": 4.7,
+          "p10": 0,
+          "p50": 4.7,
+          "p90": 11.7
+        },
+        "6m": {
+          "index": 4.8,
+          "p10": 0,
+          "p50": 4.8,
+          "p90": 14.8
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GUATEMALA",
+      "name": "Guatemala",
+      "entityType": "country",
+      "index": 4.9,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 4.9,
+          "p10": 0,
+          "p50": 4.9,
+          "p90": 9.9
+        },
+        "3m": {
+          "index": 1,
+          "p10": 0,
+          "p50": 1,
+          "p90": 8
+        },
+        "6m": {
+          "index": 1.6,
+          "p10": 0,
+          "p50": 1.6,
+          "p90": 11.6
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GUINEA",
+      "name": "Guinea",
+      "entityType": "country",
+      "index": 1.1,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.1,
+          "p10": 0,
+          "p50": 1.1,
+          "p90": 6.1
+        },
+        "3m": {
+          "index": 8.8,
+          "p10": 1.8000000000000007,
+          "p50": 8.8,
+          "p90": 15.8
+        },
+        "6m": {
+          "index": 0.9,
+          "p10": 0,
+          "p50": 0.9,
+          "p90": 10.9
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GUINEA-BISSAU",
+      "name": "Guinea-Bissau",
+      "entityType": "country",
+      "index": 2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 2,
+          "p10": 0,
+          "p50": 2,
+          "p90": 7
+        },
+        "3m": {
+          "index": 6.1,
+          "p10": 0,
+          "p50": 6.1,
+          "p90": 13.1
+        },
+        "6m": {
+          "index": 1.3,
+          "p10": 0,
+          "p50": 1.3,
+          "p90": 11.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GUYANA",
+      "name": "Guyana",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "HAITI",
+      "name": "Haiti",
+      "entityType": "country",
+      "index": 21.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 21.7,
+          "p10": 16.7,
+          "p50": 21.7,
+          "p90": 26.7
+        },
+        "3m": {
+          "index": 26.8,
+          "p10": 19.8,
+          "p50": 26.8,
+          "p90": 33.8
+        },
+        "6m": {
+          "index": 53.5,
+          "p10": 43.5,
+          "p50": 53.5,
+          "p90": 63.5
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "HONDURAS",
+      "name": "Honduras",
+      "entityType": "country",
+      "index": 37.1,
+      "band": "medium",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 37.1,
+          "p10": 32.1,
+          "p50": 37.1,
+          "p90": 42.1
+        },
+        "3m": {
+          "index": 124.7,
+          "p10": 117.7,
+          "p50": 124.7,
+          "p90": 131.7
+        },
+        "6m": {
+          "index": 155.8,
+          "p10": 145.8,
+          "p50": 155.8,
+          "p90": 165.8
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "INDIA",
+      "name": "India",
+      "entityType": "country",
+      "index": 14,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 14,
+          "p10": 9,
+          "p50": 14,
+          "p90": 19
+        },
+        "3m": {
+          "index": 42.7,
+          "p10": 35.7,
+          "p50": 42.7,
+          "p90": 49.7
+        },
+        "6m": {
+          "index": 21.5,
+          "p10": 11.5,
+          "p50": 21.5,
+          "p90": 31.5
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "INDONESIA",
+      "name": "Indonesia",
+      "entityType": "country",
+      "index": 1.2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.2,
+          "p10": 0,
+          "p50": 1.2,
+          "p90": 6.2
+        },
+        "3m": {
+          "index": 3,
+          "p10": 0,
+          "p50": 3,
+          "p90": 10
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "IRAN",
+      "name": "Iran",
+      "entityType": "country",
+      "index": 10000,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 10000,
+          "p10": 9995,
+          "p50": 10000,
+          "p90": 10005
+        },
+        "3m": {
+          "index": 10000,
+          "p10": 9993,
+          "p50": 10000,
+          "p90": 10007
+        },
+        "6m": {
+          "index": 10000,
+          "p10": 9990,
+          "p50": 10000,
+          "p90": 10010
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "IRAQ",
+      "name": "Iraq",
+      "entityType": "country",
+      "index": 35.6,
+      "band": "medium",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 35.6,
+          "p10": 30.6,
+          "p50": 35.6,
+          "p90": 40.6
+        },
+        "3m": {
+          "index": 65.6,
+          "p10": 58.599999999999994,
+          "p50": 65.6,
+          "p90": 72.6
+        },
+        "6m": {
+          "index": 44.6,
+          "p10": 34.6,
+          "p50": 44.6,
+          "p90": 54.6
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ISRAEL",
+      "name": "Israel",
+      "entityType": "country",
+      "index": 124.8,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 124.8,
+          "p10": 119.8,
+          "p50": 124.8,
+          "p90": 129.8
+        },
+        "3m": {
+          "index": 65.9,
+          "p10": 58.900000000000006,
+          "p50": 65.9,
+          "p90": 72.9
+        },
+        "6m": {
+          "index": 64,
+          "p10": 54,
+          "p50": 64,
+          "p90": 74
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ITALY",
+      "name": "Italy",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "CÔTE D'IVOIRE",
+      "name": "Côte d'Ivoire",
+      "entityType": "country",
+      "index": 12.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 12.7,
+          "p10": 7.699999999999999,
+          "p50": 12.7,
+          "p90": 17.7
+        },
+        "3m": {
+          "index": 10.5,
+          "p10": 3.5,
+          "p50": 10.5,
+          "p90": 17.5
+        },
+        "6m": {
+          "index": 13,
+          "p10": 3,
+          "p50": 13,
+          "p90": 23
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "JAMAICA",
+      "name": "Jamaica",
+      "entityType": "country",
+      "index": 0.2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0.2,
+          "p10": 0,
+          "p50": 0.2,
+          "p90": 5.2
+        },
+        "3m": {
+          "index": 0.8,
+          "p10": 0,
+          "p50": 0.8,
+          "p90": 7.8
+        },
+        "6m": {
+          "index": 5.7,
+          "p10": 0,
+          "p50": 5.7,
+          "p90": 15.7
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "JORDAN",
+      "name": "Jordan",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "KENYA",
+      "name": "Kenya",
+      "entityType": "country",
+      "index": 6.6,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 6.6,
+          "p10": 1.5999999999999996,
+          "p50": 6.6,
+          "p90": 11.6
+        },
+        "3m": {
+          "index": 6.2,
+          "p10": 0,
+          "p50": 6.2,
+          "p90": 13.2
+        },
+        "6m": {
+          "index": 2.4,
+          "p10": 0,
+          "p50": 2.4,
+          "p90": 12.4
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ESWATINI",
+      "name": "eSwatini",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "KUWAIT",
+      "name": "Kuwait",
+      "entityType": "country",
+      "index": 29.4,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 29.4,
+          "p10": 24.4,
+          "p50": 29.4,
+          "p90": 34.4
+        },
+        "3m": {
+          "index": 22.5,
+          "p10": 15.5,
+          "p50": 22.5,
+          "p90": 29.5
+        },
+        "6m": {
+          "index": 4.1,
+          "p10": 0,
+          "p50": 4.1,
+          "p90": 14.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "KYRGYZSTAN",
+      "name": "Kyrgyzstan",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "LAOS",
+      "name": "Laos",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "LEBANON",
+      "name": "Lebanon",
+      "entityType": "country",
+      "index": 250.7,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 250.7,
+          "p10": 245.7,
+          "p50": 250.7,
+          "p90": 255.7
+        },
+        "3m": {
+          "index": 188.2,
+          "p10": 181.2,
+          "p50": 188.2,
+          "p90": 195.2
+        },
+        "6m": {
+          "index": 66.3,
+          "p10": 56.3,
+          "p50": 66.3,
+          "p90": 76.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "LESOTHO",
+      "name": "Lesotho",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "LIBERIA",
+      "name": "Liberia",
+      "entityType": "country",
+      "index": 2.3,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 2.3,
+          "p10": 0,
+          "p50": 2.3,
+          "p90": 7.3
+        },
+        "3m": {
+          "index": 2.9,
+          "p10": 0,
+          "p50": 2.9,
+          "p90": 9.9
+        },
+        "6m": {
+          "index": 3.2,
+          "p10": 0,
+          "p50": 3.2,
+          "p90": 13.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "LIBYA",
+      "name": "Libya",
+      "entityType": "country",
+      "index": 2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 2,
+          "p10": 0,
+          "p50": 2,
+          "p90": 7
+        },
+        "3m": {
+          "index": 1.6,
+          "p10": 0,
+          "p50": 1.6,
+          "p90": 8.6
+        },
+        "6m": {
+          "index": 238.8,
+          "p10": 228.8,
+          "p50": 238.8,
+          "p90": 248.8
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MADAGASCAR",
+      "name": "Madagascar",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MALAYSIA",
+      "name": "Malaysia",
+      "entityType": "country",
+      "index": 6.8,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 6.8,
+          "p10": 1.7999999999999998,
+          "p50": 6.8,
+          "p90": 11.8
+        },
+        "3m": {
+          "index": 8.8,
+          "p10": 1.8000000000000007,
+          "p50": 8.8,
+          "p90": 15.8
+        },
+        "6m": {
+          "index": 9.5,
+          "p10": 0,
+          "p50": 9.5,
+          "p90": 19.5
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MALI",
+      "name": "Mali",
+      "entityType": "country",
+      "index": 130.4,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 130.4,
+          "p10": 125.4,
+          "p50": 130.4,
+          "p90": 135.4
+        },
+        "3m": {
+          "index": 272,
+          "p10": 265,
+          "p50": 272,
+          "p90": 279
+        },
+        "6m": {
+          "index": 120.3,
+          "p10": 110.3,
+          "p50": 120.3,
+          "p90": 130.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MALTA",
+      "name": "Malta",
+      "entityType": "country",
+      "index": 1.2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.2,
+          "p10": 0,
+          "p50": 1.2,
+          "p90": 6.2
+        },
+        "3m": {
+          "index": 0.8,
+          "p10": 0,
+          "p50": 0.8,
+          "p90": 7.8
+        },
+        "6m": {
+          "index": 0.8,
+          "p10": 0,
+          "p50": 0.8,
+          "p90": 10.8
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MAURITANIA",
+      "name": "Mauritania",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MEXICO",
+      "name": "Mexico",
+      "entityType": "country",
+      "index": 236.3,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 236.3,
+          "p10": 231.3,
+          "p50": 236.3,
+          "p90": 241.3
+        },
+        "3m": {
+          "index": 248.2,
+          "p10": 241.2,
+          "p50": 248.2,
+          "p90": 255.2
+        },
+        "6m": {
+          "index": 237.1,
+          "p10": 227.1,
+          "p50": 237.1,
+          "p90": 247.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MOLDOVA",
+      "name": "Moldova",
+      "entityType": "country",
+      "index": 58.5,
+      "band": "medium",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 58.5,
+          "p10": 53.5,
+          "p50": 58.5,
+          "p90": 63.5
+        },
+        "3m": {
+          "index": 75.5,
+          "p10": 68.5,
+          "p50": 75.5,
+          "p90": 82.5
+        },
+        "6m": {
+          "index": 70.9,
+          "p10": 60.900000000000006,
+          "p50": 70.9,
+          "p90": 80.9
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MOROCCO",
+      "name": "Morocco",
+      "entityType": "country",
+      "index": 2.3,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 2.3,
+          "p10": 0,
+          "p50": 2.3,
+          "p90": 7.3
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 1.1,
+          "p10": 0,
+          "p50": 1.1,
+          "p90": 11.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MOZAMBIQUE",
+      "name": "Mozambique",
+      "entityType": "country",
+      "index": 66.2,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 66.2,
+          "p10": 61.2,
+          "p50": 66.2,
+          "p90": 71.2
+        },
+        "3m": {
+          "index": 44.7,
+          "p10": 37.7,
+          "p50": 44.7,
+          "p90": 51.7
+        },
+        "6m": {
+          "index": 31.2,
+          "p10": 21.2,
+          "p50": 31.2,
+          "p90": 41.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MYANMAR",
+      "name": "Myanmar",
+      "entityType": "country",
+      "index": 157.1,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 157.1,
+          "p10": 152.1,
+          "p50": 157.1,
+          "p90": 162.1
+        },
+        "3m": {
+          "index": 123.5,
+          "p10": 116.5,
+          "p50": 123.5,
+          "p90": 130.5
+        },
+        "6m": {
+          "index": 152.1,
+          "p10": 142.1,
+          "p50": 152.1,
+          "p90": 162.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "NAMIBIA",
+      "name": "Namibia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "NEPAL",
+      "name": "Nepal",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "NETHERLANDS",
+      "name": "Netherlands",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "NICARAGUA",
+      "name": "Nicaragua",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "NIGER",
+      "name": "Niger",
+      "entityType": "country",
+      "index": 110,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 110,
+          "p10": 105,
+          "p50": 110,
+          "p90": 115
+        },
+        "3m": {
+          "index": 70.3,
+          "p10": 63.3,
+          "p50": 70.3,
+          "p90": 77.3
+        },
+        "6m": {
+          "index": 94,
+          "p10": 84,
+          "p50": 94,
+          "p90": 104
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "NIGERIA",
+      "name": "Nigeria",
+      "entityType": "country",
+      "index": 655.2,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 655.2,
+          "p10": 650.2,
+          "p50": 655.2,
+          "p90": 660.2
+        },
+        "3m": {
+          "index": 918.6,
+          "p10": 911.6,
+          "p50": 918.6,
+          "p90": 925.6
+        },
+        "6m": {
+          "index": 1618.9,
+          "p10": 1608.9,
+          "p50": 1618.9,
+          "p90": 1628.9
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MACEDONIA",
+      "name": "Macedonia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "PAKISTAN",
+      "name": "Pakistan",
+      "entityType": "country",
+      "index": 440.5,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 440.5,
+          "p10": 435.5,
+          "p50": 440.5,
+          "p90": 445.5
+        },
+        "3m": {
+          "index": 386.5,
+          "p10": 379.5,
+          "p50": 386.5,
+          "p90": 393.5
+        },
+        "6m": {
+          "index": 476,
+          "p10": 466,
+          "p50": 476,
+          "p90": 486
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "PANAMA",
+      "name": "Panama",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "PAPUA NEW GUINEA",
+      "name": "Papua New Guinea",
+      "entityType": "country",
+      "index": 1.1,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.1,
+          "p10": 0,
+          "p50": 1.1,
+          "p90": 6.1
+        },
+        "3m": {
+          "index": 1.9,
+          "p10": 0,
+          "p50": 1.9,
+          "p90": 8.9
+        },
+        "6m": {
+          "index": 3.8,
+          "p10": 0,
+          "p50": 3.8,
+          "p90": 13.8
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "PARAGUAY",
+      "name": "Paraguay",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "PERU",
+      "name": "Peru",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "PHILIPPINES",
+      "name": "Philippines",
+      "entityType": "country",
+      "index": 14.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 14.7,
+          "p10": 9.7,
+          "p50": 14.7,
+          "p90": 19.7
+        },
+        "3m": {
+          "index": 20.7,
+          "p10": 13.7,
+          "p50": 20.7,
+          "p90": 27.7
+        },
+        "6m": {
+          "index": 2,
+          "p10": 0,
+          "p50": 2,
+          "p90": 12
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "POLAND",
+      "name": "Poland",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "QATAR",
+      "name": "Qatar",
+      "entityType": "country",
+      "index": 1.6,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.6,
+          "p10": 0,
+          "p50": 1.6,
+          "p90": 6.6
+        },
+        "3m": {
+          "index": 1.9,
+          "p10": 0,
+          "p50": 1.9,
+          "p90": 8.9
+        },
+        "6m": {
+          "index": 10.6,
+          "p10": 0.5999999999999996,
+          "p50": 10.6,
+          "p90": 20.6
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ROMANIA",
+      "name": "Romania",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "RUSSIA",
+      "name": "Russia",
+      "entityType": "country",
+      "index": 22.8,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 22.8,
+          "p10": 17.8,
+          "p50": 22.8,
+          "p90": 27.8
+        },
+        "3m": {
+          "index": 25,
+          "p10": 18,
+          "p50": 25,
+          "p90": 32
+        },
+        "6m": {
+          "index": 23.2,
+          "p10": 13.2,
+          "p50": 23.2,
+          "p90": 33.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "RWANDA",
+      "name": "Rwanda",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SAUDI ARABIA",
+      "name": "Saudi Arabia",
+      "entityType": "country",
+      "index": 1.2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.2,
+          "p10": 0,
+          "p50": 1.2,
+          "p90": 6.2
+        },
+        "3m": {
+          "index": 1.4,
+          "p10": 0,
+          "p50": 1.4,
+          "p90": 8.4
+        },
+        "6m": {
+          "index": 0.2,
+          "p10": 0,
+          "p50": 0.2,
+          "p90": 10.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SENEGAL",
+      "name": "Senegal",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SERBIA",
+      "name": "Serbia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SIERRA LEONE",
+      "name": "Sierra Leone",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SOLOMON ISLANDS",
+      "name": "Solomon Islands",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SOMALIA",
+      "name": "Somalia",
+      "entityType": "country",
+      "index": 10000,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 10000,
+          "p10": 9995,
+          "p50": 10000,
+          "p90": 10005
+        },
+        "3m": {
+          "index": 2026.8,
+          "p10": 2019.8,
+          "p50": 2026.8,
+          "p90": 2033.8
+        },
+        "6m": {
+          "index": 218.5,
+          "p10": 208.5,
+          "p50": 218.5,
+          "p90": 228.5
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SOUTH AFRICA",
+      "name": "South Africa",
+      "entityType": "country",
+      "index": 48.2,
+      "band": "medium",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 48.2,
+          "p10": 43.2,
+          "p50": 48.2,
+          "p90": 53.2
+        },
+        "3m": {
+          "index": 7.3,
+          "p10": 0.2999999999999998,
+          "p50": 7.3,
+          "p90": 14.3
+        },
+        "6m": {
+          "index": 115.1,
+          "p10": 105.1,
+          "p50": 115.1,
+          "p90": 125.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "S. SUDAN",
+      "name": "S. Sudan",
+      "entityType": "country",
+      "index": 106.9,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 106.9,
+          "p10": 101.9,
+          "p50": 106.9,
+          "p90": 111.9
+        },
+        "3m": {
+          "index": 55.2,
+          "p10": 48.2,
+          "p50": 55.2,
+          "p90": 62.2
+        },
+        "6m": {
+          "index": 17.3,
+          "p10": 7.300000000000001,
+          "p50": 17.3,
+          "p90": 27.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SPAIN",
+      "name": "Spain",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SRI LANKA",
+      "name": "Sri Lanka",
+      "entityType": "country",
+      "index": 74.1,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 74.1,
+          "p10": 69.1,
+          "p50": 74.1,
+          "p90": 79.1
+        },
+        "3m": {
+          "index": 51.1,
+          "p10": 44.1,
+          "p50": 51.1,
+          "p90": 58.1
+        },
+        "6m": {
+          "index": 36.4,
+          "p10": 26.4,
+          "p50": 36.4,
+          "p90": 46.4
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SUDAN",
+      "name": "Sudan",
+      "entityType": "country",
+      "index": 10000,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 10000,
+          "p10": 9995,
+          "p50": 10000,
+          "p90": 10005
+        },
+        "3m": {
+          "index": 315.9,
+          "p10": 308.9,
+          "p50": 315.9,
+          "p90": 322.9
+        },
+        "6m": {
+          "index": 324.7,
+          "p10": 314.7,
+          "p50": 324.7,
+          "p90": 334.7
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SWEDEN",
+      "name": "Sweden",
+      "entityType": "country",
+      "index": 0.9,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0.9,
+          "p10": 0,
+          "p50": 0.9,
+          "p90": 5.9
+        },
+        "3m": {
+          "index": 3.1,
+          "p10": 0,
+          "p50": 3.1,
+          "p90": 10.1
+        },
+        "6m": {
+          "index": 1.2,
+          "p10": 0,
+          "p50": 1.2,
+          "p90": 11.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "SYRIA",
+      "name": "Syria",
+      "entityType": "country",
+      "index": 88.2,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 88.2,
+          "p10": 83.2,
+          "p50": 88.2,
+          "p90": 93.2
+        },
+        "3m": {
+          "index": 78.2,
+          "p10": 71.2,
+          "p50": 78.2,
+          "p90": 85.2
+        },
+        "6m": {
+          "index": 66.6,
+          "p10": 56.599999999999994,
+          "p50": 66.6,
+          "p90": 76.6
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "TAJIKISTAN",
+      "name": "Tajikistan",
+      "entityType": "country",
+      "index": 3.3,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 3.3,
+          "p10": 0,
+          "p50": 3.3,
+          "p90": 8.3
+        },
+        "3m": {
+          "index": 1.7,
+          "p10": 0,
+          "p50": 1.7,
+          "p90": 8.7
+        },
+        "6m": {
+          "index": 1.9,
+          "p10": 0,
+          "p50": 1.9,
+          "p90": 11.9
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "TANZANIA",
+      "name": "Tanzania",
+      "entityType": "country",
+      "index": 0.3,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0.3,
+          "p10": 0,
+          "p50": 0.3,
+          "p90": 5.3
+        },
+        "3m": {
+          "index": 0.7,
+          "p10": 0,
+          "p50": 0.7,
+          "p90": 7.7
+        },
+        "6m": {
+          "index": 4.3,
+          "p10": 0,
+          "p50": 4.3,
+          "p90": 14.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "THAILAND",
+      "name": "Thailand",
+      "entityType": "country",
+      "index": 14,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 14,
+          "p10": 9,
+          "p50": 14,
+          "p90": 19
+        },
+        "3m": {
+          "index": 4.5,
+          "p10": 0,
+          "p50": 4.5,
+          "p90": 11.5
+        },
+        "6m": {
+          "index": 18,
+          "p10": 8,
+          "p50": 18,
+          "p90": 28
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "TOGO",
+      "name": "Togo",
+      "entityType": "country",
+      "index": 42.9,
+      "band": "medium",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 42.9,
+          "p10": 37.9,
+          "p50": 42.9,
+          "p90": 47.9
+        },
+        "3m": {
+          "index": 85.7,
+          "p10": 78.7,
+          "p50": 85.7,
+          "p90": 92.7
+        },
+        "6m": {
+          "index": 14.3,
+          "p10": 4.300000000000001,
+          "p50": 14.3,
+          "p90": 24.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "TRINIDAD AND TOBAGO",
+      "name": "Trinidad and Tobago",
+      "entityType": "country",
+      "index": 3.5,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 3.5,
+          "p10": 0,
+          "p50": 3.5,
+          "p90": 8.5
+        },
+        "3m": {
+          "index": 3.9,
+          "p10": 0,
+          "p50": 3.9,
+          "p90": 10.9
+        },
+        "6m": {
+          "index": 2.2,
+          "p10": 0,
+          "p50": 2.2,
+          "p90": 12.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "TUNISIA",
+      "name": "Tunisia",
+      "entityType": "country",
+      "index": 4.1,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 4.1,
+          "p10": 0,
+          "p50": 4.1,
+          "p90": 9.1
+        },
+        "3m": {
+          "index": 0.8,
+          "p10": 0,
+          "p50": 0.8,
+          "p90": 7.8
+        },
+        "6m": {
+          "index": 2.3,
+          "p10": 0,
+          "p50": 2.3,
+          "p90": 12.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "TURKEY",
+      "name": "Turkey",
+      "entityType": "country",
+      "index": 1.3,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.3,
+          "p10": 0,
+          "p50": 1.3,
+          "p90": 6.3
+        },
+        "3m": {
+          "index": 1.1,
+          "p10": 0,
+          "p50": 1.1,
+          "p90": 8.1
+        },
+        "6m": {
+          "index": 1.2,
+          "p10": 0,
+          "p50": 1.2,
+          "p90": 11.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "UGANDA",
+      "name": "Uganda",
+      "entityType": "country",
+      "index": 4.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 4.7,
+          "p10": 0,
+          "p50": 4.7,
+          "p90": 9.7
+        },
+        "3m": {
+          "index": 12.6,
+          "p10": 5.6,
+          "p50": 12.6,
+          "p90": 19.6
+        },
+        "6m": {
+          "index": 21.5,
+          "p10": 11.5,
+          "p50": 21.5,
+          "p90": 31.5
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "UKRAINE",
+      "name": "Ukraine",
+      "entityType": "country",
+      "index": 5036.8,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 5036.8,
+          "p10": 5031.8,
+          "p50": 5036.8,
+          "p90": 5041.8
+        },
+        "3m": {
+          "index": 5652.3,
+          "p10": 5645.3,
+          "p50": 5652.3,
+          "p90": 5659.3
+        },
+        "6m": {
+          "index": 6222.7,
+          "p10": 6212.7,
+          "p50": 6222.7,
+          "p90": 6232.7
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "UNITED ARAB EMIRATES",
+      "name": "United Arab Emirates",
+      "entityType": "country",
+      "index": 1.5,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.5,
+          "p10": 0,
+          "p50": 1.5,
+          "p90": 6.5
+        },
+        "3m": {
+          "index": 0.3,
+          "p10": 0,
+          "p50": 0.3,
+          "p90": 7.3
+        },
+        "6m": {
+          "index": 0.3,
+          "p10": 0,
+          "p50": 0.3,
+          "p90": 10.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "UNITED KINGDOM",
+      "name": "United Kingdom",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "UNITED STATES OF AMERICA",
+      "name": "United States of America",
+      "entityType": "country",
+      "index": 4.6,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 4.6,
+          "p10": 0,
+          "p50": 4.6,
+          "p90": 9.6
+        },
+        "3m": {
+          "index": 0.5,
+          "p10": 0,
+          "p50": 0.5,
+          "p90": 7.5
+        },
+        "6m": {
+          "index": 0.2,
+          "p10": 0,
+          "p50": 0.2,
+          "p90": 10.2
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "UZBEKISTAN",
+      "name": "Uzbekistan",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "VENEZUELA",
+      "name": "Venezuela",
+      "entityType": "country",
+      "index": 3.2,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 3.2,
+          "p10": 0,
+          "p50": 3.2,
+          "p90": 8.2
+        },
+        "3m": {
+          "index": 16.2,
+          "p10": 9.2,
+          "p50": 16.2,
+          "p90": 23.2
+        },
+        "6m": {
+          "index": 50.1,
+          "p10": 40.1,
+          "p50": 50.1,
+          "p90": 60.1
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "YEMEN",
+      "name": "Yemen",
+      "entityType": "country",
+      "index": 179.3,
+      "band": "high",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 179.3,
+          "p10": 174.3,
+          "p50": 179.3,
+          "p90": 184.3
+        },
+        "3m": {
+          "index": 171.8,
+          "p10": 164.8,
+          "p50": 171.8,
+          "p90": 178.8
+        },
+        "6m": {
+          "index": 106.4,
+          "p10": 96.4,
+          "p50": 106.4,
+          "p90": 116.4
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ZAMBIA",
+      "name": "Zambia",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ZIMBABWE",
+      "name": "Zimbabwe",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "DOMINICA",
+      "name": "Dominica",
+      "entityType": "country",
+      "index": 0.3,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0.3,
+          "p10": 0,
+          "p50": 0.3,
+          "p90": 5.3
+        },
+        "3m": {
+          "index": 0.4,
+          "p10": 0,
+          "p50": 0.4,
+          "p90": 7.4
+        },
+        "6m": {
+          "index": 1.3,
+          "p10": 0,
+          "p50": 1.3,
+          "p90": 11.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BELIZE",
+      "name": "Belize",
+      "entityType": "country",
+      "index": 1.9,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 1.9,
+          "p10": 0,
+          "p50": 1.9,
+          "p90": 6.9
+        },
+        "3m": {
+          "index": 3.7,
+          "p10": 0,
+          "p50": 3.7,
+          "p90": 10.7
+        },
+        "6m": {
+          "index": 0.6,
+          "p10": 0,
+          "p50": 0.6,
+          "p90": 10.6
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "DOMINICAN REP.",
+      "name": "Dominican Rep.",
+      "entityType": "country",
+      "index": 0.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0.7,
+          "p10": 0,
+          "p50": 0.7,
+          "p90": 5.7
+        },
+        "3m": {
+          "index": 0.4,
+          "p10": 0,
+          "p50": 0.4,
+          "p90": 7.4
+        },
+        "6m": {
+          "index": 1.3,
+          "p10": 0,
+          "p50": 1.3,
+          "p90": 11.3
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "OMAN",
+      "name": "Oman",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 12,
+          "p10": 5,
+          "p50": 12,
+          "p90": 19
+        },
+        "6m": {
+          "index": 66,
+          "p10": 56,
+          "p50": 66,
+          "p90": 76
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "ANTIGUA & BARBUDA",
+      "name": "Antigua & Barbuda",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "BARBADOS",
+      "name": "Barbados",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "COSTA RICA",
+      "name": "Costa Rica",
+      "entityType": "country",
+      "index": 0.7,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0.7,
+          "p10": 0,
+          "p50": 0.7,
+          "p90": 5.7
+        },
+        "3m": {
+          "index": 0.8,
+          "p10": 0,
+          "p50": 0.8,
+          "p90": 7.8
+        },
+        "6m": {
+          "index": 1,
+          "p10": 0,
+          "p50": 1,
+          "p90": 11
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "GREECE",
+      "name": "Greece",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    },
+    {
+      "id": "MALAWI",
+      "name": "Malawi",
+      "entityType": "country",
+      "index": 0,
+      "band": "low",
+      "confidence": 0.75,
+      "deltaMoM": 0,
+      "deltaYoY": 0,
+      "horizons": {
+        "1m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 5
+        },
+        "3m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 7
+        },
+        "6m": {
+          "index": 0,
+          "p10": 0,
+          "p50": 0,
+          "p90": 10
+        }
+      },
+      "drivers": []
+    }
+  ]
+}
