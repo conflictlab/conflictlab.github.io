@@ -1,0 +1,12 @@
+{
+  "run_date": "2026-08-24T04:14:55.815Z",
+  "data_end_date": "2026-07",
+  "forecast_start_date": "2026-08",
+  "h6_end_date": "2027-01",
+  "h12_end_date": "2027-07",
+  "training_window_months": 10,
+  "historical_start_date": "1989-01",
+  "historical_end_date": "2026-07",
+  "source": "content/forecasts/csv (local snapshot)",
+  "note": "Min/max values are estimated at ±30% where not explicitly available"
+}

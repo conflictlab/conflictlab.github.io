@@ -68,7 +68,7 @@
     "max": 0.000001
   },
   "Brazil": {
-    "min": 20,
+    "min": 13,
     "max": 34
   },
   "Burkina Faso": {
@@ -85,7 +85,7 @@
   },
   "Cameroon": {
     "min": 31,
-    "max": 54
+    "max": 71
   },
   "Canada": {
     "min": 0,
@@ -93,7 +93,7 @@
   },
   "Central African Rep.": {
     "min": 6,
-    "max": 55
+    "max": 40
   },
   "Chad": {
     "min": 0,
@@ -144,7 +144,7 @@
     "max": 0.000001
   },
   "Ethiopia": {
-    "min": 189,
+    "min": 187,
     "max": 608
   },
   "France": {
@@ -161,10 +161,10 @@
   },
   "Germany": {
     "min": 0,
-    "max": 0.000001
+    "max": 2
   },
   "Ghana": {
-    "min": 1,
+    "min": 0,
     "max": 13
   },
   "Guatemala": {
@@ -192,7 +192,7 @@
     "max": 20
   },
   "India": {
-    "min": 13,
+    "min": 8,
     "max": 58
   },
   "Indonesia": {
@@ -209,7 +209,7 @@
   },
   "Israel": {
     "min": 64,
-    "max": 2183
+    "max": 642
   },
   "Italy": {
     "min": 0,
@@ -225,7 +225,7 @@
   },
   "Jordan": {
     "min": 0,
-    "max": 0.000001
+    "max": 3
   },
   "Kenya": {
     "min": 0,
@@ -285,7 +285,7 @@
   },
   "Mexico": {
     "min": 149,
-    "max": 341
+    "max": 330
   },
   "Moldova": {
     "min": 0,
@@ -297,10 +297,10 @@
   },
   "Mozambique": {
     "min": 5,
-    "max": 66
+    "max": 54
   },
   "Myanmar": {
-    "min": 89,
+    "min": 81,
     "max": 268
   },
   "Namibia": {
@@ -309,7 +309,7 @@
   },
   "Nepal": {
     "min": 0,
-    "max": 0.000001
+    "max": 3
   },
   "Netherlands": {
     "min": 0,
@@ -333,7 +333,7 @@
   },
   "Pakistan": {
     "min": 193,
-    "max": 479
+    "max": 744
   },
   "Panama": {
     "min": 0,
@@ -349,7 +349,7 @@
   },
   "Peru": {
     "min": 0,
-    "max": 0.000001
+    "max": 6
   },
   "Philippines": {
     "min": 1,
@@ -361,7 +361,7 @@
   },
   "Qatar": {
     "min": 0,
-    "max": 6
+    "max": 0.000001
   },
   "Romania": {
     "min": 0,
@@ -369,7 +369,7 @@
   },
   "Russia": {
     "min": 2,
-    "max": 79
+    "max": 55
   },
   "Rwanda": {
     "min": 0,
@@ -421,7 +421,7 @@
   },
   "Sweden": {
     "min": 0,
-    "max": 3
+    "max": 2
   },
   "Syria": {
     "min": 54,
@@ -473,7 +473,7 @@
   },
   "United States of America": {
     "min": 0,
-    "max": 4
+    "max": 3
   },
   "Uzbekistan": {
     "min": 0,
