@@ -211,8 +211,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     return {
       weight: val === 0 ? 0.3 : 0.6,
       color: val === 0 ? '#dddddd' : '#ffffff',
-      fillColor: getRiskColor(val),
-      fillOpacity: val === 0 ? 0.35 : 0.8,
+      // Keep zero-risk countries visibly distinct from the neutral sea.
+      fillColor: val === 0 ? '#e5e7eb' : getRiskColor(val),
+      fillOpacity: val === 0 ? 0.9 : 0.8,
       cursor: 'pointer',
     }
   }
