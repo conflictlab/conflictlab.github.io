@@ -512,9 +512,10 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               }
               return <CtrlScrollZoom />
             })()}
+            {/* Keep the landing-page map independent of a provider API key. */}
             <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-              attribution="&copy; OpenStreetMap contributors &copy; CARTO"
+              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
               noWrap={true}
               detectRetina={false}
             />
@@ -724,7 +725,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
       </div>
       {/* Map attribution below map */}
       {!error && (
-        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Map data © OpenStreetMap contributors, © CARTO</p>
+        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Map data © OpenStreetMap contributors</p>
       )}
       {/* Controls moved below map */}
       {!hideLegend && (
