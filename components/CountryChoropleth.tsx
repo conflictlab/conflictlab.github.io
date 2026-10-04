@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
+import { MapContainer, GeoJSON, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 // TopoJSON client for converting topology to GeoJSON (loaded only if used)
@@ -469,6 +469,9 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             style={{
               height: '100%',
               width: '100%',
+              // The forecast polygons provide the map detail; keeping the sea
+              // neutral avoids external tiles, API-key messages, and place labels.
+              backgroundColor: '#f7f7f7',
               touchAction: mapControlsEnabled ? 'none' : 'pan-y'
             }}
           >
@@ -512,13 +515,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               }
               return <CtrlScrollZoom />
             })()}
-            {/* Keep the landing-page map independent of a provider API key. */}
-            <TileLayer
-              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
-              noWrap={true}
-              detectRetina={false}
-            />
             {(filtered || world) && (
               <GeoJSON
                 data={filtered || world}
@@ -723,10 +719,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
 
       </div>
-      {/* Map attribution below map */}
-      {!error && (
-        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Map data © OpenStreetMap contributors</p>
-      )}
       {/* Controls moved below map */}
       {!hideLegend && (
         <div className="px-4 py-2">
