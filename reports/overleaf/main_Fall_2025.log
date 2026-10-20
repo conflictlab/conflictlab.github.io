@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.26)  26 NOV 2025 11:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.26)  20 OCT 2026 12:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1017,7 +1017,7 @@ LaTeX Font Warning: Font shape `T1/xifg/bx/n' in size <18> not available
 LaTeX Font Warning: Font shape `T1/xifg/k/n' undefined
 (Font)              using `T1/xifg/m/n' instead on input line 80.
 
-<Fig/PaCE_top.pdf, id=44, 95.06717pt x 94.27591pt>
+<Fig/PaCE_top.pdf, id=45, 95.06717pt x 94.27591pt>
 File: Fig/PaCE_top.pdf Graphic file (type pdf)
 <use Fig/PaCE_top.pdf>
 Package pdftex.def Info: Fig/PaCE_top.pdf  used on input line 80.
@@ -1039,7 +1039,7 @@ LaTeX Font Warning: Font shape `T1/xifg/h/n' undefined
 LaTeX Font Warning: Font shape `T1/xifg/m/n' in size <20> not available
 (Font)              size <20.74> substituted on input line 80.
 
-<Fig/slide1.png, id=45, 783.8886pt x 417.2388pt>
+<Fig/slide1.png, id=46, 783.8886pt x 417.2388pt>
 File: Fig/slide1.png Graphic file (type png)
 <use Fig/slide1.png>
 Package pdftex.def Info: Fig/slide1.png  used on input line 80.
@@ -1122,22 +1122,22 @@ LaTeX Font Warning: Font shape `TS1/xjgi/m/n' undefined
 LaTeX Font Warning: Font shape `T1/xjgi/bx/n' undefined
 (Font)              using `T1/xjgi/m/n' instead on input line 94.
 
-<Fig_2025/dtw_best.png, id=66, 1799.523pt x 860.7357pt>
+<Fig_2025/dtw_best.png, id=67, 1799.523pt x 860.7357pt>
 File: Fig_2025/dtw_best.png Graphic file (type png)
 <use Fig_2025/dtw_best.png>
 Package pdftex.def Info: Fig_2025/dtw_best.png  used on input line 107.
 (pdftex.def)             Requested size: 531.78218pt x 254.34824pt.
-<Fig_2025/pred_map.pdf, id=67, 1729.5415pt x 849.1725pt>
+<Fig_2025/pred_map.pdf, id=68, 1729.5415pt x 849.1725pt>
 File: Fig_2025/pred_map.pdf Graphic file (type pdf)
 <use Fig_2025/pred_map.pdf>
 Package pdftex.def Info: Fig_2025/pred_map.pdf  used on input line 117.
 (pdftex.def)             Requested size: 425.42735pt x 208.87187pt.
-<Fig_2025/true_map.pdf, id=68, 1729.5415pt x 849.1725pt>
+<Fig_2025/true_map.pdf, id=69, 1729.5415pt x 849.1725pt>
 File: Fig_2025/true_map.pdf Graphic file (type pdf)
 <use Fig_2025/true_map.pdf>
 Package pdftex.def Info: Fig_2025/true_map.pdf  used on input line 127.
 (pdftex.def)             Requested size: 425.42735pt x 208.87187pt.
-<Fig_2025/Fore_map.png, id=69, 1746.7659pt x 849.1725pt>
+<Fig_2025/Fore_map.png, id=70, 1746.7659pt x 849.1725pt>
 File: Fig_2025/Fore_map.png Graphic file (type png)
 <use Fig_2025/Fore_map.png>
 Package pdftex.def Info: Fig_2025/Fore_map.png  used on input line 137.
@@ -1160,18 +1160,31 @@ Overfull \vbox (47.3491pt too high) has occurred while \output is active []
 
 [3 <./Fig_2025/pred_map.pdf> <./Fig_2025/true_map.pdf> <./Fig_2025/Fore_map.png
 >]
-<Fig_2025/Fore_all.png, id=108, 859.65166pt x 714.38895pt>
+<Fig_2025/Fore_all.png, id=109, 859.65166pt x 714.38895pt>
 File: Fig_2025/Fore_all.png Graphic file (type png)
 <use Fig_2025/Fore_all.png>
 Package pdftex.def Info: Fig_2025/Fore_all.png  used on input line 157.
 (pdftex.def)             Requested size: 531.78218pt x 441.9246pt.
  [4 <./Fig_2025/Fore_all.png>] Excluding 'comment' comment.
-<Fig_2025/Heatmap.png, id=115, 620.43794pt x 505.52866pt>
+<Fig_2025/Heatmap.png, id=116, 620.43794pt x 505.52866pt>
 File: Fig_2025/Heatmap.png Graphic file (type png)
 <use Fig_2025/Heatmap.png>
 Package pdftex.def Info: Fig_2025/Heatmap.png  used on input line 195.
 (pdftex.def)             Requested size: 425.42735pt x 346.64758pt.
- [5 <./Fig_2025/Heatmap.png>] [6]
+ [5 <./Fig_2025/Heatmap.png>]
+<Fig_2025/ConflictForecast_1.png, id=128, 840.13875pt x 1003.46895pt>
+File: Fig_2025/ConflictForecast_1.png Graphic file (type png)
+<use Fig_2025/ConflictForecast_1.png>
+Package pdftex.def Info: Fig_2025/ConflictForecast_1.png  used on input line 23
+0.
+(pdftex.def)             Requested size: 229.72629pt x 274.38536pt.
+<Fig_2025/ConflictForecast_2.png, id=129, 845.559pt x 1003.46895pt>
+File: Fig_2025/ConflictForecast_2.png Graphic file (type png)
+<use Fig_2025/ConflictForecast_2.png>
+Package pdftex.def Info: Fig_2025/ConflictForecast_2.png  used on input line 23
+0.
+(pdftex.def)             Requested size: 229.72629pt x 272.62453pt.
+ [6 <./Fig_2025/ConflictForecast_1.png> <./Fig_2025/ConflictForecast_2.png>]
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
 (hyperref)                be the same. Added a new anchor on input line 246.
@@ -1193,7 +1206,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 295.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 295.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 295.
 Package rerunfilecheck Info: File `main_Fall_2025.out' has not changed.
-(rerunfilecheck)             Checksum: D44983413B74B5212F3D519BF9680B6B;738.
+(rerunfilecheck)             Checksum: 3FA64E123313EF23E7B64AF639672020;738.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -1205,10 +1218,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 295.
  ) 
 Here is how much of TeX's memory you used:
- 19704 strings out of 492616
- 341173 string characters out of 6129480
- 499537 words of memory out of 5000000
- 23386 multiletter control sequences out of 15000+600000
+ 19720 strings out of 492616
+ 341566 string characters out of 6129480
+ 499860 words of memory out of 5000000
+ 23400 multiletter control sequences out of 15000+600000
  544061 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,13n,63p,1344b,482s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1225,10 +1238,10 @@ f-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2019/texmf-
 dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2019/texmf-di
 st/fonts/type1/public/cm-super/sfrm2074.pfb></usr/local/texlive/2019/texmf-dist
 /fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on main_Fall_2025.pdf (11 pages, 3189814 bytes).
+Output written on main_Fall_2025.pdf (11 pages, 3596009 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
- 162 compressed objects within 2 object streams
- 28 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 218 PDF objects out of 1000 (max. 8388607)
+ 163 compressed objects within 2 object streams
+ 29 named destinations out of 1000 (max. 500000)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
 

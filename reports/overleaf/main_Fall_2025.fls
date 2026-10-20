@@ -1,4 +1,4 @@
-PWD /Users/chadefaux/Library/CloudStorage/Dropbox/ERC/websitePaCE/reports/overleaf
+PWD /Users/chadefaux/Dropbox/ERC/websitePaCE/reports/overleaf
 INPUT /usr/local/texlive/2019/texmf.cnf
 INPUT /usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt
@@ -228,6 +228,13 @@ INPUT Fig_2025/Heatmap.png
 INPUT ./Fig_2025/Heatmap.png
 INPUT ./Fig_2025/Heatmap.png
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/jknappen/ec/ecrm0700.tfm
+INPUT Fig_2025/ConflictForecast_1.png
+INPUT Fig_2025/ConflictForecast_1.png
+INPUT ./Fig_2025/ConflictForecast_1.png
+INPUT ./Fig_2025/ConflictForecast_1.png
+INPUT Fig_2025/ConflictForecast_2.png
+INPUT ./Fig_2025/ConflictForecast_2.png
+INPUT ./Fig_2025/ConflictForecast_2.png
 INPUT main_Fall_2025.bbl
 INPUT main_Fall_2025.bbl
 INPUT main_Fall_2025.aux
