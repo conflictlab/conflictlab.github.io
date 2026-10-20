@@ -13,7 +13,7 @@
   },
   "Angola": {
     "min": 0,
-    "max": 2
+    "max": 1
   },
   "Argentina": {
     "min": 0,
@@ -149,7 +149,7 @@
   },
   "France": {
     "min": 0,
-    "max": 0.000001
+    "max": 1
   },
   "Gambia": {
     "min": 0,
@@ -173,7 +173,7 @@
   },
   "Guinea": {
     "min": 0,
-    "max": 1
+    "max": 0.000001
   },
   "Guinea-Bissau": {
     "min": 0,
@@ -209,7 +209,7 @@
   },
   "Israel": {
     "min": 64,
-    "max": 642
+    "max": 176
   },
   "Italy": {
     "min": 0,
@@ -217,11 +217,11 @@
   },
   "Côte d'Ivoire": {
     "min": 0,
-    "max": 5
+    "max": 7
   },
   "Jamaica": {
     "min": 0,
-    "max": 5
+    "max": 4
   },
   "Jordan": {
     "min": 0,
@@ -277,7 +277,7 @@
   },
   "Malta": {
     "min": 0,
-    "max": 1
+    "max": 0.000001
   },
   "Mauritania": {
     "min": 0,
@@ -285,7 +285,7 @@
   },
   "Mexico": {
     "min": 149,
-    "max": 330
+    "max": 283
   },
   "Moldova": {
     "min": 0,
@@ -404,12 +404,12 @@
     "max": 53
   },
   "S. Sudan": {
-    "min": 16,
+    "min": 23,
     "max": 128
   },
   "Spain": {
     "min": 0,
-    "max": 0.000001
+    "max": 3
   },
   "Sri Lanka": {
     "min": 0,
@@ -417,7 +417,7 @@
   },
   "Sudan": {
     "min": 242,
-    "max": 4592
+    "max": 925
   },
   "Sweden": {
     "min": 0,
@@ -425,7 +425,7 @@
   },
   "Syria": {
     "min": 54,
-    "max": 125
+    "max": 121
   },
   "Tajikistan": {
     "min": 0,
@@ -445,7 +445,7 @@
   },
   "Trinidad and Tobago": {
     "min": 0,
-    "max": 10
+    "max": 2
   },
   "Tunisia": {
     "min": 0,
@@ -485,11 +485,11 @@
   },
   "Yemen": {
     "min": 48,
-    "max": 210
+    "max": 643
   },
   "Zambia": {
     "min": 0,
-    "max": 0.000001
+    "max": 1
   },
   "Zimbabwe": {
     "min": 0,
@@ -511,6 +511,10 @@
     "min": 0,
     "max": 3
   },
+  "Chile": {
+    "min": 0,
+    "max": 2
+  },
   "Antigua & Barbuda": {
     "min": 0,
     "max": 0.000001
@@ -531,7 +535,7 @@
     "min": 0,
     "max": 0.000001
   },
-  "Unnamed: 134": {
+  "Unnamed: 135": {
     "min": 0,
     "max": 0.000001
   }
