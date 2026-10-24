@@ -40,7 +40,7 @@
     "max": 3
   },
   "Bangladesh": {
-    "min": 0,
+    "min": 3,
     "max": 15
   },
   "Belgium": {
@@ -72,7 +72,7 @@
     "max": 34
   },
   "Burkina Faso": {
-    "min": 129,
+    "min": 36,
     "max": 453
   },
   "Burundi": {
@@ -129,7 +129,7 @@
   },
   "Ecuador": {
     "min": 0,
-    "max": 67
+    "max": 69
   },
   "Egypt": {
     "min": 0,
@@ -200,7 +200,7 @@
     "max": 34
   },
   "Iran": {
-    "min": 1,
+    "min": 10,
     "max": 19886
   },
   "Iraq": {
@@ -257,7 +257,7 @@
   },
   "Liberia": {
     "min": 0,
-    "max": 1
+    "max": 0.000001
   },
   "Libya": {
     "min": 0,
@@ -269,7 +269,7 @@
   },
   "Malaysia": {
     "min": 0,
-    "max": 3
+    "max": 0.000001
   },
   "Mali": {
     "min": 27,
@@ -297,7 +297,7 @@
   },
   "Mozambique": {
     "min": 5,
-    "max": 54
+    "max": 47
   },
   "Myanmar": {
     "min": 81,
@@ -320,7 +320,7 @@
     "max": 0.000001
   },
   "Niger": {
-    "min": 29,
+    "min": 42,
     "max": 250
   },
   "Nigeria": {
@@ -341,7 +341,7 @@
   },
   "Papua New Guinea": {
     "min": 0,
-    "max": 6
+    "max": 12
   },
   "Paraguay": {
     "min": 0,
@@ -377,7 +377,7 @@
   },
   "Saudi Arabia": {
     "min": 0,
-    "max": 4
+    "max": 25
   },
   "Senegal": {
     "min": 0,
@@ -401,10 +401,10 @@
   },
   "South Africa": {
     "min": 1,
-    "max": 53
+    "max": 74
   },
   "S. Sudan": {
-    "min": 23,
+    "min": 16,
     "max": 128
   },
   "Spain": {
@@ -424,7 +424,7 @@
     "max": 2
   },
   "Syria": {
-    "min": 54,
+    "min": 40,
     "max": 121
   },
   "Tajikistan": {
@@ -445,7 +445,7 @@
   },
   "Trinidad and Tobago": {
     "min": 0,
-    "max": 2
+    "max": 0.000001
   },
   "Tunisia": {
     "min": 0,
@@ -457,11 +457,11 @@
   },
   "Uganda": {
     "min": 0,
-    "max": 30
+    "max": 5
   },
   "Ukraine": {
     "min": 4725,
-    "max": 10350
+    "max": 10117
   },
   "United Arab Emirates": {
     "min": 0,
@@ -485,7 +485,7 @@
   },
   "Yemen": {
     "min": 48,
-    "max": 643
+    "max": 2853
   },
   "Zambia": {
     "min": 0,
@@ -525,7 +525,7 @@
   },
   "Costa Rica": {
     "min": 0,
-    "max": 2
+    "max": 0.000001
   },
   "Greece": {
     "min": 0,
