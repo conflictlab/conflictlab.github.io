@@ -10,6 +10,14 @@ export interface Publication {
 export const publications: Publication[] = [
   {
     year: 2026,
+    authors: "Frank H & Chadefaux T",
+    title: "The Dynamics of Dissent: Patterns in Protest Cycles",
+    venue: "International Interactions (Forthcoming)",
+    abstract: "",
+    url: "https://doi.org/10.1080/03050629.2026.2759298"
+  },
+  {
+    year: 2026,
     authors: "Schincariol T, Frank H & Chadefaux T",
     title: "Leveraging temporal patterns in forecasting",
     venue: "Scientific Reports",

@@ -239,6 +239,7 @@ export default function PublicationsPage() {
 
                         <div className="flex gap-3 mb-2">
                           {/* Abstract */}
+                          {pub.abstract && (
                           <details className="group">
                             <summary className="cursor-pointer text-sm text-gray-600 hover:text-gray-900 transition-colors list-none">
                               <span className="inline-flex items-center">
@@ -250,6 +251,7 @@ export default function PublicationsPage() {
                               {pub.abstract}
                             </p>
                           </details>
+                          )}
 
                           {/* Cite button */}
                           <button
