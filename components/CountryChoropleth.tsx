@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { MapContainer, GeoJSON, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 // TopoJSON client for converting topology to GeoJSON (loaded only if used)
@@ -211,9 +211,8 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     return {
       weight: val === 0 ? 0.3 : 0.6,
       color: val === 0 ? '#dddddd' : '#ffffff',
-      // Keep zero-risk countries visibly distinct from the neutral sea.
-      fillColor: val === 0 ? '#e5e7eb' : getRiskColor(val),
-      fillOpacity: val === 0 ? 0.9 : 0.8,
+      fillColor: getRiskColor(val),
+      fillOpacity: val === 0 ? 0.35 : 0.8,
       cursor: 'pointer',
     }
   }
@@ -470,9 +469,6 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
             style={{
               height: '100%',
               width: '100%',
-              // The forecast polygons provide the map detail; keeping the sea
-              // neutral avoids external tiles, API-key messages, and place labels.
-              backgroundColor: '#f7f7f7',
               touchAction: mapControlsEnabled ? 'none' : 'pan-y'
             }}
           >
@@ -516,6 +512,12 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               }
               return <CtrlScrollZoom />
             })()}
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              attribution="&copy; OpenStreetMap contributors &copy; CARTO"
+              noWrap={true}
+              detectRetina={false}
+            />
             {(filtered || world) && (
               <GeoJSON
                 data={filtered || world}
@@ -720,6 +722,10 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
         )}
 
       </div>
+      {/* Map attribution below map */}
+      {!error && (
+        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Map data © OpenStreetMap contributors, © CARTO</p>
+      )}
       {/* Controls moved below map */}
       {!hideLegend && (
         <div className="px-4 py-2">
