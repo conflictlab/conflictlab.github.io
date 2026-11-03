@@ -10,6 +10,14 @@ export interface Publication {
 export const publications: Publication[] = [
   {
     year: 2026,
+    authors: "Schincariol T, Frank H & Chadefaux T",
+    title: "Leveraging temporal patterns in forecasting",
+    venue: "Scientific Reports",
+    abstract: "Recurring temporal patterns emerge naturally from underlying processes and interactions in a variety of disciplines, ranging from epidemiology and ecology to social sciences and physics. These patterns hold considerable promise for enhancing time series forecasting. This study introduces a method that identifies these repeating patterns and incorporates them as dynamic covariates in traditional time series forecasting models. Using subsequence time series clustering, we obtain cluster solutions for various window lengths and k combinations, and only retain the ones with the lowest standard deviation at t+1, indicative of the level of signal entailed in the clusters. Our methodology is evaluated with three widely used forecasting models: Autoregressive Integrated Moving Average (ARIMA), Random Forest (RF), and Long Short-Term Memory (LSTM). Each model is implemented in its standard form and subsequently augmented with dynamic covariates. The empirical evaluation draws on a data set comprising 1000 time series spanning a broad array of domains. The results show that the introduction of dynamic covariates significantly improves the prediction accuracy. Through combining static and dynamic variants in a compound model, our algorithm effectively filters out conditions under which time series clusters pick up meaningful signal and discards noise.",
+    url: "https://www.nature.com/articles/s41598-026-68707-z"
+  },
+  {
+    year: 2026,
     authors: "Schincariol T & Chadefaux T",
     title: "Echoes of Conflict: Quantifying Redundancy in Fatality Time Series",
     venue: "Political Science Research and Methods (Forthcoming)",
