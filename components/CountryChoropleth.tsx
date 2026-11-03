@@ -513,8 +513,8 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
               return <CtrlScrollZoom />
             })()}
             <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-              attribution="&copy; OpenStreetMap contributors &copy; CARTO"
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+              attribution="Tiles &copy; Esri — Esri, HERE, Garmin, &copy; OpenStreetMap contributors"
               noWrap={true}
               detectRetina={false}
             />
@@ -724,7 +724,7 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
       </div>
       {/* Map attribution below map */}
       {!error && (
-        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Map data © OpenStreetMap contributors, © CARTO</p>
+        <p className="text-[10px] text-gray-500 text-right px-2 py-1">Basemap © Esri, HERE, Garmin, © OpenStreetMap contributors</p>
       )}
       {/* Controls moved below map */}
       {!hideLegend && (
