@@ -6,8 +6,6 @@ import { usePathname, useRouter } from 'next/navigation'
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-// TopoJSON client for converting topology to GeoJSON (loaded only if used)
-import { feature as topoFeature } from 'topojson-client'
 import { RISK_THRESHOLDS, getRiskColor } from '@/lib/config'
 
 type CountryValue = { id?: string; name: string; iso3?: string; value?: number; months?: number[] }
@@ -130,28 +128,13 @@ export default function CountryChoropleth({ items, onSelect, hideDownloadButton 
     async function load() {
       setError(null)
       try {
-        // Prefer simplified TopoJSON if available, fallback to GeoJSON
         const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-        // Try TopoJSON first
-        let json: any | null = null
-        try {
-          const topoRes = await fetch(`${base}/data/world.topo.json`)
-          if (topoRes.ok) {
-            const topology = await topoRes.json()
-            const objName = Object.keys(topology.objects || {})[0]
-            if (objName) {
-              const geo = topoFeature(topology, topology.objects[objName] as any)
-              json = geo
-            }
-          }
-        } catch (_) {
-          // ignore and fallback below
-        }
-        if (!json) {
-          const res = await fetch(`${base}/data/world.geojson`)
-          if (!res.ok) throw new Error('Failed to load world geometry')
-          json = await res.json()
-        }
+        // Mid-resolution Natural Earth geometry (simplified from world.geojson);
+        // fall back to the full-resolution file if it is unavailable.
+        let res = await fetch(`${base}/data/world.medium.geojson`)
+        if (!res.ok) res = await fetch(`${base}/data/world.geojson`)
+        if (!res.ok) throw new Error('Failed to load world geometry')
+        const json = await res.json()
         if (!cancelled) setWorld(json)
       } catch (e: any) {
         if (!cancelled) setError(e?.message || 'Failed to load world geometry')
@@ -777,7 +760,9 @@ function aliasFor(name: string): string | null {
     'united states of america': 'usa',
     'united states': 'usa',
     'cote divoire': 'ivory coast',
+    "cote d'ivoire": 'ivory coast',
     'antigua barbuda': 'antigua and barbuda',
+    'antigua  barbuda': 'antigua and barbuda',
     'bosnia and herz': 'bosnia and herzegovina',
     'central african rep': 'central african republic',
     'congo': 'republic of the congo',
