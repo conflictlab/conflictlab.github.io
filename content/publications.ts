@@ -28,16 +28,17 @@ export const publications: Publication[] = [
     year: 2026,
     authors: "Schincariol T & Chadefaux T",
     title: "Echoes of Conflict: Quantifying Redundancy in Fatality Time Series",
-    venue: "Political Science Research and Methods (Forthcoming)",
+    venue: "Political Science Research and Methods",
+    url: "https://doi.org/10.1017/psrm.2026.10119",
     abstract: "Do wars follow predictable patterns, or are they chaotic and inherently unpredictable? Conflicts might be guided by underlying regularities shaped by political, economic, and social forces, or they could unfold as chaotic systems driven by randomness and local contingencies. We explore this question by quantifying temporal redundancy in conflict-related fatalities. Using entropy-based analysis and Dynamic Time Warping, we compare conflict dynamics with other complex systems such as seismology and finance. Our findings reveal that the dynamics of fatalities within conflicts exhibit high levels of entropy---they are largely unpredictable. Conflicts generally display higher entropy than climate or earthquake data, highlighting the challenges of predictive modeling. Moreover, conflict patterns are not region or decade-specific, which suggests a degree of universality. Our framework provides a quantitative basis for distinguishing between stable and chaotic phases in conflict dynamics, and assess the feasibility of predictive modeling in different conflict contexts."
   },
   {
     year: 2026,
     authors: "Lu C & Chadefaux T",
     title: "Structured Pixels: Satellite Imagery as the Cause in Causal Effect Estimation",
-    venue: "Hawaii International Conference on System Sciences",
+    venue: "Proceedings of the 59th Hawaii International Conference on System Sciences",
     abstract: "We present Structured Pixels (SP), a causal inference model that positions satellite imagery as a cause/treatment in a causal graph, rather than merely a proxy for outcomes or confounders. Built on the generalized Robinson decomposition and a two-step, R-learner-inspired algorithm, SP uses learned latent representations to partial out confounding influences and isolate the causal effect. Its modular training pipeline supports integration with diverse machine learning models across domains. We evaluate SP using semi-synthesized datasets on two tasks: the impact of environmental conditions on mosquito populations and the influence of coastal characteristics on dark vessel prevalence. SP consistently outperforms baseline methods, and its learned representations capture meaningful environmental patterns. We further demonstrate SP's applicability by re-examining the relationship between deforestation and agricultural productivity with real-world data; the results align with prior work. These findings highlight SP's potential to advance GeoAI for environmental monitoring and resource management.",
-    url: "https://www.tara.tcd.ie/tara8/server/api/core/bitstreams/713446e0-0cce-4ea0-950d-7a367e4434c4/content"
+    url: "https://doi.org/10.24251/hicss.2026.192"
   },
   {
     year: 2025,
