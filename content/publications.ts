@@ -10,6 +10,22 @@ export interface Publication {
 export const publications: Publication[] = [
   {
     year: 2026,
+    authors: "Millard A, Murphy J, Green PL & Maskell S",
+    title: "Investigating Batch Inference in a Sequential Monte Carlo Framework for Neural Networks",
+    venue: "ICASSP 2026 - IEEE International Conference on Acoustics, Speech and Signal Processing",
+    abstract: "",
+    url: "https://doi.org/10.1109/icassp55912.2026.11464387"
+  },
+  {
+    year: 2026,
+    authors: "Millard A, Murphy J, Zhao Z & Maskell S",
+    title: "Utilising Gradient-Based Proposals within Sequential Monte Carlo Samplers for Training of Partial Bayesian Neural Networks",
+    venue: "ICASSP 2026 - IEEE International Conference on Acoustics, Speech and Signal Processing",
+    abstract: "",
+    url: "https://doi.org/10.1109/icassp55912.2026.11462484"
+  },
+  {
+    year: 2026,
     authors: "Frank H & Chadefaux T",
     title: "The Dynamics of Dissent: Patterns in Protest Cycles",
     venue: "International Interactions (Forthcoming)",
@@ -73,11 +89,12 @@ export const publications: Publication[] = [
     url: "https://www.tandfonline.com/doi/full/10.1080/10670564.2025.2549103"
   },
   {
-    year: 2025,
+    year: 2026,
     authors: "Han J",
     title: "How reciprocal cooperation between international rivals shapes threat perceptions: Evidence from inter-Korean rapprochement in 2018",
     venue: "Conflict Management and Peace Science",
-    abstract: "This article examines how reciprocal cooperation between international rivals shapes threat perceptions, using the 2018 inter-Korean rapprochement to assess how episodes of rapprochement alter views of an adversary."
+    abstract: "Past research emphasizes the role of reciprocal cooperation in reducing perceived threats from a foreign adversary and in building public support for rapprochement. This paper challenges the assumption of a uniform public response to such cooperation, arguing that its impact depends on citizens' social identities tied to key peace advocates, particularly their incumbent leader and the rival state. Using a three-wave panel survey from South Korea during the 2018 inter-Korean rapprochement, the findings reveal that the extent to which North Korea's reciprocated cooperation reduces antagonism depends primarily on (1) respondents' partisan alignment with then South Korea's ruling party and (2) their sense of ethnic identification with North Koreans.",
+    url: "https://doi.org/10.1177/07388942251395480"
   },
   {
     year: 2025,
